@@ -1,17 +1,1017 @@
 ---
+import Layout from '../layouts/Layout.astro'
+import logoUrl from '../assets/logo.svg'
+import pockyIdleUrl from '../assets/pocky-idle.svg'
+import pockyWritingUrl from '../assets/pocky-writing.svg'
 
+const logoSrc = typeof logoUrl === 'string' ? logoUrl : logoUrl.src;
+const pockyIdleSrc = typeof pockyIdleUrl === 'string' ? pockyIdleUrl : pockyIdleUrl.src;
+const pockyWritingSrc = typeof pockyWritingUrl === 'string' ? pockyWritingUrl : pockyWritingUrl.src;
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout>
+  <div id="root"></div>
+
+  <script is:inline define:vars={{ logoSrc, pockyIdleSrc, pockyWritingSrc }} type="text/babel">
+const ASSETS = {
+  logo: logoSrc,
+  pockyIdle: pockyIdleSrc,
+  pockyProfile: pockyWritingSrc,
+};
+
+
+
+
+/* ─── TWEAKS ─────────────────────────────────────────────────────── */
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "heroHeadline": "Hi, I'm Jeen.\nI design systems\nthat think.",
+  "accentColor": "#F3FE52",
+  "showScrollHint": true,
+  "workStyle": "rows"
+} /*EDITMODE-END*/;
+
+/* ─── HEADER ─────────────────────────────────────────────────────── */
+const Header = () => {
+  const [scrolled, setScrolled] = React.useState(false);
+  const [menuOpen, setMenuOpen] = React.useState(false);
+
+  React.useEffect(() => {
+    const fn = () => setScrolled(window.scrollY > 40);
+    window.addEventListener('scroll', fn);
+    return () => window.removeEventListener('scroll', fn);
+  }, []);
+
+  const scrollTo = (id) => {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    setMenuOpen(false);
+  };
+
+  const navStyle = {
+    position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100,
+    transition: 'all 250ms cubic-bezier(0.22,1,0.36,1)',
+    padding: '0 48px',
+    background: scrolled || menuOpen ? 'rgba(10,10,10,0.96)' : 'transparent',
+    backdropFilter: scrolled || menuOpen ? 'blur(16px)' : 'none',
+    borderBottom: scrolled || menuOpen ? '1px solid rgba(255,255,255,0.08)' : '1px solid transparent',
+  };
+
+  const linkStyle = {
+    fontFamily: "'DM Sans', sans-serif", fontSize: 14, fontWeight: 500,
+    color: '#FAFAFA', background: 'none', border: 'none', cursor: 'pointer',
+    padding: '6px 12px', borderRadius: 99, transition: 'color 150ms',
+    letterSpacing: '0.01em',
+  };
+
+  return (
+    <nav style={navStyle}>
+      <div style={{ maxWidth: 1200, margin: '0 auto', height: 64, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        {/* Logo */}
+        <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          style={{ display: 'flex', alignItems: 'center', gap: 8, background: 'none', border: 'none', cursor: 'pointer' }}>
+          <img src={ASSETS.logo} width="26" height="26" alt="Jeen" style={{ borderRadius: '50%', padding: 2, background: '#FFFFFF', width: 32, height: 32, objectFit: 'cover' }} />
+          <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: 18, color: '#FAFAFA' }}>Jeen</span>
+        </button>
+
+        {/* Desktop nav */}
+        <div className="nav-links-desktop" style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+          {[['Playground', 'playground'], ['About', 'about'], ['Work', 'work']].map(([label, id]) => (
+            <button key={id} className="nav-link" style={linkStyle} onClick={() => scrollTo(id)}>{label}</button>
+          ))}
+          <button className="nav-cta" onClick={() => scrollTo('footer')} style={{
+            fontFamily: "'DM Sans', sans-serif", fontSize: 13, fontWeight: 600,
+            background: '#F3FE52', color: '#0A0A0A', padding: '9px 20px',
+            borderRadius: 99, border: '1.5px solid #F3FE52', cursor: 'pointer',
+            marginLeft: 8, transition: 'transform 150ms, box-shadow 150ms',
+            boxShadow: '2px 2px 0 0 rgba(243,254,82,0.4)',
+          }}
+            onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-1px)'; }}
+            onMouseLeave={e => { e.currentTarget.style.transform = ''; }}
+          >Say hi →</button>
+        </div>
+
+        {/* Mobile hamburger */}
+        <button className="mobile-menu-btn" onClick={() => setMenuOpen(m => !m)} aria-label="Menu">
+          <span style={{ transform: menuOpen ? 'rotate(45deg) translate(4px, 4px)' : 'none' }} />
+          <span style={{ opacity: menuOpen ? 0 : 1 }} />
+          <span style={{ transform: menuOpen ? 'rotate(-45deg) translate(4px, -4px)' : 'none' }} />
+        </button>
+      </div>
+
+      {/* Mobile dropdown */}
+      {menuOpen && (
+        <div style={{
+          background: 'rgba(10,10,10,0.98)', borderTop: '1px solid rgba(255,255,255,0.08)',
+          padding: '8px 24px 24px', display: 'flex', flexDirection: 'column',
+        }}>
+          {[['Playground', 'playground'], ['About', 'about'], ['Work', 'work'], ['Say hi →', 'footer']].map(([label, id]) => (
+            <button key={id} onClick={() => scrollTo(id)} style={{
+              fontFamily: "'DM Sans', sans-serif", fontSize: 18, fontWeight: 500,
+              color: id === 'footer' ? '#F3FE52' : '#FAFAFA',
+              background: 'none', border: 'none', borderBottom: '1px solid rgba(255,255,255,0.06)',
+              cursor: 'pointer', padding: '14px 0', textAlign: 'left',
+            }}>{label}</button>
+          ))}
+        </div>
+      )}
+    </nav>
+  );
+
+};
+
+/* ─── HERO ───────────────────────────────────────────────────────── */
+const Hero = () => {
+  const scrollTo = (id) => {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
+  return (
+    <section id="hero" style={{
+      background: '#0A0A0A', minHeight: '100vh', position: 'relative',
+      overflow: 'hidden', display: 'flex', flexDirection: 'column',
+    }}>
+      {/* Subtle grid */}
+      <div style={{
+        position: 'absolute', inset: 0, opacity: 0.035,
+        backgroundImage: 'linear-gradient(#FAFAFA 1px, transparent 1px), linear-gradient(90deg, #FAFAFA 1px, transparent 1px)',
+        backgroundSize: '56px 56px', pointerEvents: 'none',
+      }} />
+
+      {/* Two-column layout: text left, Pocky right */}
+      <div className="hero-grid" style={{
+        flex: 1, display: 'grid', gridTemplateColumns: '1fr min(400px, 36vw)',
+        maxWidth: 1280, margin: '0 auto', width: '100%',
+        padding: '80px 48px 100px', gap: 48, alignItems: 'center',
+        position: 'relative', zIndex: 1,
+      }}>
+        {/* LEFT: text */}
+        <div className="hero-text">
+          {/* Badge */}
+          <div className="fade-up fade-up-1" style={{
+            display: 'inline-flex', alignItems: 'center', gap: 8,
+            background: 'rgba(243,254,82,0.12)', border: '1px solid rgba(243,254,82,0.3)',
+            borderRadius: 99, padding: '6px 16px', marginBottom: 36
+          }}>
+            <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#3DFE87', display: 'block', flexShrink: 0 }} />
+            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 12, color: '#F3FE52', letterSpacing: '0.05em' }}>
+              Portfolio + living design system
+            </span>
+          </div>
+
+          {/* Headline */}
+          <h1 className="fade-up fade-up-2" style={{
+            fontFamily: "'Space Grotesk', sans-serif",
+            fontWeight: 700,
+            fontSize: 'clamp(52px, 7.5vw, 100px)',
+            lineHeight: 1.04,
+            letterSpacing: '-0.03em',
+            color: '#FAFAFA',
+            textWrap: 'pretty',
+            marginBottom: 28
+          }}>
+            Hi, I'm Jeen.<br />
+            I design systems that{' '}
+            <span style={{ color: '#F3FE52', position: 'relative' }}>
+              think.
+              {/* underline squiggle */}
+              <svg style={{ position: 'absolute', bottom: 2, left: '-2%', width: '104%' }} viewBox="0 0 220 18" preserveAspectRatio="none" height="14">
+                {/* Paintbrush-style: thick tapered stroke with slight roughness */}
+                <path d="M4 12 Q30 5 70 10 Q110 15 150 9 Q180 5 216 11" stroke="#F3FE52" strokeWidth="8" fill="none" strokeLinecap="round" strokeLinejoin="round" opacity="0.5" />
+                <path d="M2 11 Q40 6 80 11 Q120 16 160 8 Q188 4 218 10" stroke="#F3FE52" strokeWidth="5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </span>
+          </h1>
+
+          {/* Sub */}
+          <p className="fade-up fade-up-3" style={{
+            fontFamily: "'DM Sans', sans-serif", fontSize: 18, lineHeight: 1.7,
+            color: '#C8C8C0', maxWidth: 460, marginBottom: 44,
+            textWrap: 'pretty'
+          }}>
+            Designer at the intersection of AI and design systems. My mascot — and AI agent — is a cat named Pocky. 🐱
+          </p>
+
+          {/* CTAs */}
+          <div className="fade-up fade-up-4" style={{ display: 'flex', gap: 12, flexWrap: 'wrap', alignItems: 'center' }}>
+            <button
+              style={{
+                fontFamily: "'DM Sans', sans-serif", fontWeight: 600, fontSize: 15,
+                background: '#F3FE52', color: '#0A0A0A', padding: '14px 30px',
+                borderRadius: 99, border: '1.5px solid #F3FE52',
+                boxShadow: '3px 3px 0 0 rgba(243,254,82,0.35)', cursor: 'pointer',
+                transition: 'transform 200ms cubic-bezier(0.34,1.56,0.64,1), box-shadow 200ms'
+              }}
+              onMouseEnter={(e) => {e.currentTarget.style.transform = 'translateY(-2px)';e.currentTarget.style.boxShadow = '5px 5px 0 0 rgba(243,254,82,0.4)';}}
+              onMouseLeave={(e) => {e.currentTarget.style.transform = '';e.currentTarget.style.boxShadow = '3px 3px 0 0 rgba(243,254,82,0.35)';}}
+              onMouseDown={(e) => {e.currentTarget.style.transform = 'translateY(2px)';e.currentTarget.style.boxShadow = 'none';}}
+              onMouseUp={(e) => {e.currentTarget.style.transform = 'translateY(-2px)';e.currentTarget.style.boxShadow = '5px 5px 0 0 rgba(243,254,82,0.4)';}}
+              onClick={() => scrollTo('work')}>
+              
+              See my work
+            </button>
+            <button
+              style={{
+                fontFamily: "'DM Sans', sans-serif", fontWeight: 500, fontSize: 15,
+                background: 'transparent', color: '#FAFAFA', padding: '14px 30px',
+                borderRadius: 99, border: '1.5px solid rgba(250,250,250,0.2)',
+                cursor: 'pointer', transition: 'border-color 150ms, background 150ms'
+              }}
+              onMouseEnter={(e) => {e.currentTarget.style.borderColor = 'rgba(250,250,250,0.5)';e.currentTarget.style.background = 'rgba(250,250,250,0.05)';}}
+              onMouseLeave={(e) => {e.currentTarget.style.borderColor = 'rgba(250,250,250,0.2)';e.currentTarget.style.background = 'transparent';}}
+              onClick={() => scrollTo('playground')}>
+              
+              Explore playground →
+            </button>
+          </div>
+
+          {/* Quick links row */}
+          <div style={{ display: 'flex', gap: 20, marginTop: 56, alignItems: 'center' }}>
+            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, color: '#C8C8C0', letterSpacing: '0.08em', textTransform: 'uppercase' }}>Find me on</span>
+            {[
+            { label: 'Twitter / X', href: '#' },
+            { label: 'GitHub', href: '#' },
+            { label: 'LinkedIn', href: '#' }].
+            map(({ label, href }) =>
+            <a key={label} href={href}
+            style={{
+              fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: '#9A9A90',
+              textDecoration: 'none', transition: 'color 150ms',
+              borderBottom: '1px solid transparent'
+            }}
+            onMouseEnter={(e) => {e.currentTarget.style.color = '#F3FE52';e.currentTarget.style.borderBottomColor = '#F3FE52';}}
+            onMouseLeave={(e) => {e.currentTarget.style.color = '#9A9A90';e.currentTarget.style.borderBottomColor = 'transparent';}}>
+              
+                {label}
+              </a>
+            )}
+          </div>
+        </div>
+
+        {/* RIGHT: Pocky in yellow circle */}
+        <div className="pocky-circle" style={{
+          width: 'min(360px, 32vw)', height: 'min(360px, 32vw)',
+          borderRadius: '50%', background: '#F3FE52',
+          position: 'relative', alignSelf: 'center', flexShrink: 0,
+          overflow: 'hidden',
+          transform: 'translateZ(0)',
+          clipPath: 'circle(50% at 50% 50%)',
+        }}>
+          <img src={ASSETS.pockyIdle} alt="Pocky"
+            style={{
+              position: 'absolute', top: '50%', left: '50%',
+              transform: 'translate(-50%, -50%)',
+              width: '65%', height: 'auto',
+              pointerEvents: 'none', userSelect: 'none',
+              animation: 'float-centered 5s ease-in-out infinite',
+            }} />
+        </div>
+      </div>
+
+      {/* Scroll indicator */}
+      <div style={{
+        position: 'absolute', bottom: 32, left: '50%', transform: 'translateX(-50%)',
+        display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8,
+        color: '#9A9A90', cursor: 'pointer', zIndex: 1
+      }} onClick={() => scrollTo('playground')}>
+        <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: '0.1em', color: '#9A9A90' }}>SCROLL</span>
+        <div style={{
+          width: 24, height: 38, borderRadius: 12, border: '1.5px solid #6A6A60',
+          display: 'flex', alignItems: 'flex-start', justifyContent: 'center', padding: 5
+        }}>
+          <div style={{
+            width: 4, height: 8, borderRadius: 2, background: '#F3FE52',
+            animation: 'scroll-indicator 1.8s ease-in-out infinite'
+          }} />
+        </div>
+      </div>
+    </section>);
+
+};
+
+/* ─── PLAYGROUND ─────────────────────────────────────────────────── */
+const PlaygroundCard = ({ tag, title, desc, emoji, accent }) => {
+  const [h, setH] = React.useState(false);
+  return (
+    <div className="play-card"
+    style={{
+      background: accent ? '#F3FE52' : '#FAFAFA',
+      border: '1.5px solid #0A0A0A', borderRadius: 12,
+      padding: '28px', boxShadow: h ? '5px 5px 0 0 #0A0A0A' : '3px 3px 0 0 #0A0A0A',
+      transition: 'transform 200ms cubic-bezier(0.34,1.56,0.64,1), box-shadow 200ms',
+      cursor: 'pointer', display: 'flex', flexDirection: 'column', gap: 14
+    }}
+    onMouseEnter={() => setH(true)} onMouseLeave={() => setH(false)}>
+      
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <span style={{
+          fontFamily: "'DM Sans', sans-serif", fontSize: 11, fontWeight: 600,
+          background: accent ? '#0A0A0A' : '#F3FE52', color: accent ? '#F3FE52' : '#0A0A0A',
+          padding: '3px 10px', borderRadius: 99, border: '1.5px solid #0A0A0A',
+          letterSpacing: '0.02em'
+        }}>{tag}</span>
+      </div>
+      <div>
+        <h3 style={{
+          fontFamily: "'Space Grotesk', sans-serif", fontWeight: 600, fontSize: 20,
+          color: '#0A0A0A', marginBottom: 8, lineHeight: 1.2
+        }}>{title}</h3>
+        <p style={{
+          fontFamily: "'DM Sans', sans-serif", fontSize: 14, color: accent ? '#3A3A35' : '#6A6A60',
+          lineHeight: 1.6
+        }}>{desc}</p>
+      </div>
+      <span style={{
+        fontFamily: "'DM Sans', sans-serif", fontSize: 13, fontWeight: 600,
+        color: '#0A0A0A', opacity: h ? 1 : 0.4, transition: 'opacity 150ms', alignSelf: 'flex-start'
+      }}>Explore →</span>
+    </div>);
+
+};
+
+const DiaryCard = ({ date, title, tag, readTime }) => {
+  const [h, setH] = React.useState(false);
+  return (
+    <div className="diary-card"
+    style={{
+      background: '#FAFAFA', border: '1.5px solid #0A0A0A', borderRadius: 12,
+      padding: '20px 24px',
+      boxShadow: h ? '5px 5px 0 0 #0A0A0A' : '3px 3px 0 0 #0A0A0A',
+      transition: 'transform 200ms cubic-bezier(0.34,1.56,0.64,1), box-shadow 200ms',
+      cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 16
+    }}
+    onMouseEnter={() => setH(true)} onMouseLeave={() => setH(false)}>
+      
+      <div style={{
+        width: 48, height: 48, background: '#0A0A0A', borderRadius: 8,
+        display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+        flexShrink: 0
+      }}>
+        <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 16, fontWeight: 700, color: '#F3FE52', lineHeight: 1 }}>{date.split(' ')[0]}</span>
+        <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, color: '#6A6A60', letterSpacing: '0.05em' }}>{date.split(' ')[1]}</span>
+      </div>
+      <div style={{ flex: 1, minWidth: 0 }}>
+        <p style={{
+          fontFamily: "'Space Grotesk', sans-serif", fontWeight: 600, fontSize: 16,
+          color: '#0A0A0A', lineHeight: 1.3, marginBottom: 4, whiteSpace: 'nowrap',
+          overflow: 'hidden', textOverflow: 'ellipsis'
+        }}>{title}</p>
+        <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+          <span style={{
+            fontFamily: "'DM Sans', sans-serif", fontSize: 11, fontWeight: 600,
+            background: '#F3FE52', color: '#0A0A0A', padding: '2px 8px',
+            borderRadius: 4, border: '1px solid #0A0A0A'
+          }}>{tag}</span>
+          <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, color: '#9A9A90' }}>{readTime} read</span>
+        </div>
+      </div>
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style={{ flexShrink: 0, opacity: h ? 1 : 0.3, transition: 'opacity 150ms, transform 150ms', transform: h ? 'translateX(2px)' : '' }}>
+        <path d="M3 8h10M9 4l4 4-4 4" stroke="#0A0A0A" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    </div>);
+
+};
+
+const PlaygroundSection = () => {
+  const experiments = [
+  { tag: 'Experiment', title: 'Ask Pocky', desc: 'My AI design agent — query the design system, my process, and work history via chat.', emoji: '🐱', accent: true },
+  { tag: 'Experiment', title: 'Token explorer', desc: 'Browse every design token as structured data. Filter by type, value, or usage context.', emoji: '🔍', accent: false },
+  { tag: 'Experiment', title: 'Design dashboard', desc: 'A live public view of the system — components, colors, decisions, all in one place.', emoji: '📊', accent: false },
+  { tag: 'Experiment', title: 'Component sandbox', desc: 'Interactive playground to test and compose components from the design system in real time.', emoji: '⚡', accent: false }];
+
+
+  const diary = [
+  { date: '22 APR', title: 'Why I made my portfolio a design system', tag: 'Essay', readTime: '5 min' },
+  { date: '14 APR', title: 'Designing with AI: what actually changed', tag: 'Reflection', readTime: '8 min' },
+  { date: '03 APR', title: 'Naming my AI agent after my cat (and why it matters)', tag: 'Process', readTime: '3 min' },
+  { date: '21 MAR', title: 'Building a living design system from scratch', tag: 'Tutorial', readTime: '12 min' },
+  { date: '09 MAR', title: "Design tokens are databases. Let's treat them that way.", tag: 'Opinion', readTime: '6 min' }];
+
+
+  return (
+    <section id="playground" className="playground-section" style={{ background: '#F5F5F0', padding: '100px 48px' }}>
+      <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+
+        {/* Section header */}
+        <div style={{ marginBottom: 56 }}>
+          <div style={{
+            fontFamily: "'JetBrains Mono', monospace", fontSize: 11, color: '#9A9A90',
+            letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 10
+          }}>playground</div>
+          <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', flexWrap: 'wrap', gap: 16 }}>
+            <h2 style={{
+              fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: 'clamp(32px, 4vw, 52px)',
+              color: '#0A0A0A', letterSpacing: '-0.025em', lineHeight: 1.1
+            }}>
+              Things I'm<br />building and writing
+            </h2>
+            <p style={{
+              fontFamily: "'DM Sans', sans-serif", fontSize: 16, color: '#6A6A60',
+              maxWidth: 340, lineHeight: 1.6, textWrap: 'pretty'
+            }}>
+              Experiments, tools, and ideas I'm exploring in the open. No gatekeeping — just building.
+            </p>
+          </div>
+        </div>
+
+        {/* Experiment cards */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))',
+          gap: 16, marginBottom: 64
+        }}>
+          {experiments.map((e, i) => <PlaygroundCard key={i} {...e} />)}
+        </div>
+
+        {/* Diary header */}
+        <div style={{
+          display: 'flex', alignItems: 'center', gap: 16, marginBottom: 20,
+          paddingBottom: 16, borderBottom: '1.5px solid #E8E8E0'
+        }}>
+          <span style={{
+            fontFamily: "'Space Grotesk', sans-serif", fontWeight: 600, fontSize: 22, color: '#0A0A0A'
+          }}>Diary</span>
+          <span style={{
+            fontFamily: "'JetBrains Mono', monospace", fontSize: 11, color: '#9A9A90'
+          }}>{diary.length} entries</span>
+          <a href="#" style={{
+            marginLeft: 'auto', fontFamily: "'DM Sans', sans-serif", fontSize: 13,
+            fontWeight: 500, color: '#0A0A0A', textDecoration: 'none',
+            borderBottom: '1.5px solid #F3FE52', paddingBottom: 1
+          }}>Read all</a>
+        </div>
+
+        {/* Diary cards */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+          {diary.map((d, i) => <DiaryCard key={i} {...d} />)}
+        </div>
+      </div>
+    </section>);
+
+};
+
+/* ─── ABOUT ──────────────────────────────────────────────────────── */
+const AboutSection = () => {
+  const skills = ['Design systems', 'AI × design', 'Agentic UX', 'Design tokens', 'Building in public', 'Talks & content'];
+
+  return (
+    <section id="about" className="about-section" style={{ background: '#F3FE52', padding: '100px 48px', position: 'relative', overflow: 'hidden' }}>
+
+
+      <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+        <div style={{
+          display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 80, alignItems: 'center'
+        }}>
+          {/* Left: text */}
+          <div>
+            <div style={{
+              fontFamily: "'JetBrains Mono', monospace", fontSize: 11, color: '#6A6A60',
+              letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 16
+            }}>about me</div>
+            <h2 style={{
+              fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700,
+              fontSize: 'clamp(36px, 4.5vw, 60px)',
+              color: '#0A0A0A', lineHeight: 1.1, letterSpacing: '-0.025em', marginBottom: 24
+            }}>
+              I learn by<br />building in public.
+            </h2>
+            <p style={{
+              fontFamily: "'DM Sans', sans-serif", fontSize: 17, color: '#3A3A35',
+              lineHeight: 1.7, marginBottom: 16, textWrap: 'pretty'
+            }}>
+              I'm a designer obsessed with the intersection of AI and design systems. I think design decisions should be structured, queryable, and alive — not buried in Figma files no one opens.
+            </p>
+            <p style={{
+              fontFamily: "'DM Sans', sans-serif", fontSize: 17, color: '#3A3A35',
+              lineHeight: 1.7, marginBottom: 32, textWrap: 'pretty'
+            }}>
+              This portfolio is the system. Pocky — my cat-turned-AI-agent — is the interface. The work speaks for itself.
+            </p>
+            <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+              {skills.map((s) =>
+              <span key={s} style={{
+                fontFamily: "'DM Sans', sans-serif", fontSize: 12, fontWeight: 600,
+                padding: '6px 14px', borderRadius: 99,
+                background: '#0A0A0A', color: '#F3FE52',
+                border: '1.5px solid #0A0A0A'
+              }}>{s}</span>
+              )}
+            </div>
+          </div>
+
+          {/* Right: Pocky card */}
+          <div>
+            <div style={{
+              background: '#FAFAFA', border: '1.5px solid #0A0A0A', borderRadius: 16,
+              padding: '32px', boxShadow: '6px 6px 0 0 #0A0A0A'
+            }}>
+              {/* Pocky profile */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 24, paddingBottom: 24, borderBottom: '1px solid #E8E8E0' }}>
+                <img src={ASSETS.logo} alt="Jeen"
+                style={{ width: 72, height: 72, borderRadius: '50%', border: '2px solid #0A0A0A', objectFit: 'cover', flexShrink: 0, background: '#FAFAFA', padding: 8 }} />
+                <div>
+                  <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: 22, color: '#0A0A0A' }}>Jeen</div>
+                  <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: '#9A9A90' }}>Agentic System Designer</div>
+
+                </div>
+              </div>
+
+              {/* Quote */}
+              <p style={{
+                fontFamily: "'DM Sans', sans-serif", fontSize: 15, lineHeight: 1.7,
+                color: '#3A3A35', fontStyle: 'italic', marginBottom: 24
+              }}>
+                "My portfolio is a design system. The design system is the portfolio. Pocky knows everything."
+              </p>
+
+              {/* Stats */}
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 12 }}>
+                {[
+                { num: '4+', label: 'Years designing' },
+                { num: '12+', label: 'Projects shipped' },
+                { num: '3', label: 'Talks given' }].
+                map(({ num, label }) =>
+                <div key={label} style={{ textAlign: 'center' }}>
+                    <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: 28, color: '#0A0A0A', lineHeight: 1 }}>{num}</div>
+                    <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 11, color: '#9A9A90', marginTop: 4 }}>{label}</div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>);
+
+};
+
+/* ─── WORK ───────────────────────────────────────────────────────── */
+const WorkSection = () => {
+  const [active, setActive] = React.useState(null);
+
+  const projects = [
+  {
+    num: '01',
+    tag: 'Design system',
+    title: 'Agentic design system',
+    desc: 'A living portfolio that exists as structured, queryable data. The system is the product — and this site is the demo.',
+    year: '2026',
+    role: 'Solo — design + build',
+    tools: ['Figma', 'React', 'Claude API']
+  },
+  {
+    num: '02',
+    tag: 'Product design',
+    title: 'Ask Pocky — AI design interface',
+    desc: 'Chat-based interface for querying design decisions, process notes, and past work. Built on Claude, styled with Jeen\'s design system.',
+    year: '2026',
+    role: 'Design lead',
+    tools: ['Figma', 'React', 'Anthropic API']
+  },
+  {
+    num: '03',
+    tag: 'Talk',
+    title: 'Design × AI — a field guide',
+    desc: 'A 40-minute talk on what actually changes when you design with and for AI systems. Slides, notes, and video published publicly.',
+    year: '2025',
+    role: 'Speaker + deck design',
+    tools: ['Keynote', 'Figma']
+  },
+  {
+    num: '04',
+    tag: 'Dashboard',
+    title: 'Public design dashboard',
+    desc: 'The design system made visible — tokens, components, and decisions exposed as a shareable, browsable artifact.',
+    year: '2025',
+    role: 'Solo — design + code',
+    tools: ['Next.js', 'Figma', 'Vercel']
+  },
+  {
+    num: '05',
+    tag: 'Content',
+    title: 'Design tokens are databases',
+    desc: 'Article + video series on treating design tokens as structured data. 10k+ views. Turned into a talk at Config 2025.',
+    year: '2025',
+    role: 'Writer + designer',
+    tools: ['Substack', 'Figma']
+  }];
+
+
+  return (
+    <section id="work" className="work-section" style={{ background: '#0A0A0A', padding: '100px 48px' }}>
+      <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+
+        {/* Header */}
+        <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: 48, flexWrap: 'wrap', gap: 16 }}>
+          <div>
+            <div style={{
+              fontFamily: "'JetBrains Mono', monospace", fontSize: 11, color: '#9A9A90',
+              letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 10
+            }}>work</div>
+            <h2 style={{
+              fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700,
+              fontSize: 'clamp(32px, 4vw, 52px)',
+              color: '#FAFAFA', letterSpacing: '-0.025em', lineHeight: 1.1, margin: 0
+            }}>Selected projects</h2>
+          </div>
+          <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 12, color: '#9A9A90', paddingBottom: 4 }}>
+            {projects.length} projects
+          </span>
+        </div>
+
+        {/* Table header */}
+        <div style={{
+          display: 'grid', gridTemplateColumns: '48px 1fr auto',
+          gap: 16, padding: '0 20px 12px',
+          borderBottom: '1px solid #1A1A15'
+        }}>
+          {['#', 'Project', 'Year'].map((h) =>
+          <span key={h} style={{
+            fontFamily: "'JetBrains Mono', monospace", fontSize: 10,
+            color: '#9A9A90', letterSpacing: '0.1em', textTransform: 'uppercase'
+          }}>{h}</span>
+          )}
+        </div>
+
+        {/* Project rows */}
+        <div>
+          {projects.map((p, i) => {
+            const isActive = active === i;
+            return (
+              <div key={i}
+              className="work-row"
+              style={{
+                background: isActive ? '#F3FE52' : 'transparent',
+                borderBottom: '1px solid #1A1A15',
+                transition: 'background 200ms cubic-bezier(0.22,1,0.36,1)',
+                cursor: 'pointer'
+              }}
+              onMouseEnter={() => setActive(i)}
+              onMouseLeave={() => setActive(null)}>
+                
+                {/* Main row */}
+                <div style={{
+                  display: 'grid', gridTemplateColumns: '48px 1fr auto',
+                  gap: 16, padding: '20px',
+                  alignItems: 'center'
+                }}>
+                  <span style={{
+                    fontFamily: "'JetBrains Mono', monospace", fontSize: 12,
+                    color: isActive ? '#0A0A0A' : '#9A9A90',
+                    transition: 'color 200ms'
+                  }}>{p.num}</span>
+
+                  <div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 4 }}>
+                      <span style={{
+                        fontFamily: "'DM Sans', sans-serif", fontSize: 11, fontWeight: 600,
+                        background: isActive ? '#0A0A0A' : '#1A1A15', color: isActive ? '#F3FE52' : '#9A9A90',
+                        padding: '2px 8px', borderRadius: 4,
+                        transition: 'background 200ms, color 200ms'
+                      }}>{p.tag}</span>
+                    </div>
+                    <div style={{
+                      fontFamily: "'Space Grotesk', sans-serif", fontWeight: 600,
+                      fontSize: 20, color: isActive ? '#0A0A0A' : '#FAFAFA',
+                      lineHeight: 1.2, transition: 'color 200ms'
+                    }}>{p.title}</div>
+
+                    {/* Expanded detail */}
+                    <div style={{
+                      overflow: 'hidden',
+                      maxHeight: isActive ? 200 : 0,
+                      opacity: isActive ? 1 : 0,
+                      transition: 'max-height 300ms cubic-bezier(0.22,1,0.36,1), opacity 200ms'
+                    }}>
+                      <p style={{
+                        fontFamily: "'DM Sans', sans-serif", fontSize: 14,
+                        color: isActive ? '#3A3A35' : '#C8C8C0', lineHeight: 1.6, margin: '10px 0 0',
+                        maxWidth: 560
+                      }}>{p.desc}</p>
+                      <div className="work-detail-row" style={{ display: 'flex', gap: 12, marginTop: 12, alignItems: 'center' }}>
+                        <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, color: isActive ? '#6A6A60' : '#9A9A90' }}>{p.role}</span>
+                        <span style={{ color: isActive ? '#6A6A60' : '#9A9A90', fontSize: 11 }}>·</span>
+                        <div style={{ display: 'flex', gap: 6 }}>
+                          {p.tools.map((t) =>
+                          <span key={t} style={{
+                            fontFamily: "'JetBrains Mono', monospace", fontSize: 10,
+                            border: `1px solid ${isActive ? '#6A6A60' : '#9A9A90'}`, borderRadius: 4,
+                            padding: '2px 6px', color: isActive ? '#6A6A60' : '#9A9A90'
+                          }}>{t}</span>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                    <span style={{
+                      fontFamily: "'JetBrains Mono', monospace", fontSize: 12,
+                      color: isActive ? '#0A0A0A' : '#9A9A90', transition: 'color 200ms'
+                    }}>{p.year}</span>
+                    <span className="work-arrow" style={{
+                      fontSize: 16, color: isActive ? '#0A0A0A' : '#9A9A90',
+                      opacity: isActive ? 1 : 0.3,
+                      transition: 'transform 200ms cubic-bezier(0.34,1.56,0.64,1), opacity 200ms, color 200ms'
+                    }}>→</span>
+                  </div>
+                </div>
+              </div>);
+
+          })}
+        </div>
+      </div>
+    </section>);
+
+};
+
+/* ─── FOOTER ─────────────────────────────────────────────────────── */
+const Footer = () => {
+  const [email, setEmail] = React.useState('');
+  const [sent, setSent] = React.useState(false);
+
+  const handleSend = () => {
+    if (email.trim()) {setSent(true);}
+  };
+
+  const scrollTo = (id) => {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
+  return (
+    <footer id="footer" style={{ background: '#0A0A0A', borderTop: '1px solid #1A1A15' }}>
+
+      {/* CTA band */}
+      <div style={{
+        background: '#F3FE52', padding: '64px 48px',
+        position: 'relative', overflow: 'hidden'
+      }}>
+
+
+        <div style={{ maxWidth: 1200, margin: '0 auto', position: 'relative', zIndex: 1 }}>
+          <div style={{ maxWidth: 600 }}>
+            <div style={{
+              fontFamily: "'JetBrains Mono', monospace", fontSize: 11, color: '#6A6A60',
+              letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 16
+            }}>let's talk</div>
+            <h2 style={{
+              fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700,
+              fontSize: 'clamp(32px, 4.5vw, 58px)',
+              color: '#0A0A0A', letterSpacing: '-0.025em', lineHeight: 1.1, marginBottom: 20
+            }}>
+              Got a project, collab,<br />or just want to say hi?
+            </h2>
+            <p style={{
+              fontFamily: "'DM Sans', sans-serif", fontSize: 17, color: '#3A3A35',
+              lineHeight: 1.6, marginBottom: 36, maxWidth: 420, textWrap: 'pretty'
+            }}>
+              I'm always up for interesting conversations about design, AI, and building things in public. Drop me a line.
+            </p>
+
+            {/* Email input */}
+            {!sent ?
+            <div style={{
+              display: 'flex', gap: 8, alignItems: 'center',
+              background: '#FAFAFA', border: '1.5px solid #0A0A0A', borderRadius: 99,
+              padding: '8px 8px 8px 24px',
+              boxShadow: '4px 4px 0 0 #0A0A0A',
+              maxWidth: 440
+            }}>
+                <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                onKeyDown={(e) => e.key === 'Enter' && handleSend()}
+                placeholder="your@email.com"
+                style={{
+                  flex: 1, background: 'transparent', border: 'none', outline: 'none',
+                  fontFamily: "'DM Sans', sans-serif", fontSize: 15, color: '#0A0A0A'
+                }} />
+              
+                <button onClick={handleSend} style={{
+                fontFamily: "'DM Sans', sans-serif", fontSize: 13, fontWeight: 600,
+                background: '#0A0A0A', color: '#F3FE52', padding: '11px 22px',
+                borderRadius: 99, border: 'none', cursor: 'pointer',
+                transition: 'transform 150ms'
+              }}
+              onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-1px)'}
+              onMouseLeave={(e) => e.currentTarget.style.transform = ''}>
+                
+                  Send →
+                </button>
+              </div> :
+
+            <div style={{
+              display: 'inline-flex', alignItems: 'center', gap: 10,
+              background: '#0A0A0A', color: '#3DFE87', padding: '14px 24px',
+              borderRadius: 99, fontFamily: "'DM Sans', sans-serif", fontSize: 15, fontWeight: 500
+            }}>
+                <span style={{ width: 8, height: 8, borderRadius: '50%', background: '#3DFE87', display: 'block' }} />
+                Got it! I'll be in touch soon.
+              </div>
+            }
+
+            <div style={{ display: 'flex', gap: 16, marginTop: 24, flexWrap: 'wrap' }}>
+              <a href="mailto:jeen@example.com" style={{
+                fontFamily: "'DM Sans', sans-serif", fontSize: 14, color: '#3A3A35',
+                textDecoration: 'none', borderBottom: '1.5px solid #0A0A0A', paddingBottom: 1
+              }}>jeen@example.com</a>
+              <span style={{ color: '#6A6A60' }}>or find me on</span>
+              {['Twitter / X', 'LinkedIn', 'GitHub'].map((s) =>
+              <a key={s} href="#" style={{
+                fontFamily: "'DM Sans', sans-serif", fontSize: 14, color: '#3A3A35',
+                textDecoration: 'none', borderBottom: '1.5px solid #0A0A0A', paddingBottom: 1,
+                transition: 'color 150ms'
+              }}
+              onMouseEnter={(e) => e.currentTarget.style.color = '#0A0A0A'}
+              onMouseLeave={(e) => e.currentTarget.style.color = '#3A3A35'}>
+                {s}</a>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Footer bottom */}
+      <div className="footer-bottom" style={{ padding: '48px 48px 36px' }}>
+        <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+          <div className="footer-cols" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 32, marginBottom: 40 }}>
+
+            {/* Left: brand */}
+            <div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 10 }}>
+                <img src={ASSETS.logo} width="22" height="22" alt="Jeen" style={{ borderRadius: 3, filter: 'invert(1)' }} />
+                <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: 18, color: '#FAFAFA' }}>Jeen</span>
+              </div>
+              <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: '#9A9A90', maxWidth: 220, lineHeight: 1.6 }}>
+                Designer building at the intersection of AI and design systems.
+              </p>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 12 }}>
+                <img src={ASSETS.pockyProfile} alt="Pocky" style={{ width: 24, height: 24, borderRadius: '50%', border: '1px solid #6A6A60' }} />
+                <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, color: '#9A9A90' }}>Powered by Pocky 🐱</span>
+              </div>
+            </div>
+
+            {/* Nav columns */}
+            <div style={{ display: 'flex', gap: 48, flexWrap: 'wrap' }}>
+              {[
+              { title: 'Navigate', links: [['Playground', 'playground'], ['About', 'about'], ['Work', 'work']] },
+              { title: 'Connect', links: [['Twitter / X', null], ['GitHub', null], ['LinkedIn', null], ['Email', null]] }].
+              map((col) =>
+              <div key={col.title} style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                  <div style={{
+                  fontFamily: "'DM Sans', sans-serif", fontSize: 11, fontWeight: 600,
+                  textTransform: 'uppercase', letterSpacing: '0.1em', color: '#9A9A90', marginBottom: 4
+                }}>{col.title}</div>
+                  {col.links.map(([label, id]) =>
+                <button key={label} className="footer-link"
+                style={{
+                  fontFamily: "'DM Sans', sans-serif", fontSize: 14, color: '#9A9A90',
+                  background: 'none', border: 'none', cursor: 'pointer', padding: 0,
+                  textAlign: 'left', transition: 'color 150ms'
+                }}
+                onClick={() => id && scrollTo(id)}>
+                  {label}</button>
+                )}
+                </div>
+              )}
+
+              {/* Status */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                <div style={{
+                  fontFamily: "'DM Sans', sans-serif", fontSize: 11, fontWeight: 600,
+                  textTransform: 'uppercase', letterSpacing: '0.1em', color: '#9A9A90', marginBottom: 4
+                }}>Status</div>
+                <div style={{
+                  display: 'inline-flex', alignItems: 'center', gap: 6,
+                  fontFamily: "'JetBrains Mono', monospace", fontSize: 10,
+                  background: '#1A1A15', color: '#F3FE52', padding: '5px 10px',
+                  borderRadius: 4, border: '1px solid #6A6A60'
+                }}>
+                  <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#3DFE87', display: 'block' }} />
+                  System live
+                </div>
+                <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, color: '#9A9A90' }}>v1.0 · April 2026</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Bottom bar */}
+          <div style={{
+            borderTop: '1px solid #1A1A15', paddingTop: 24,
+            display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12
+          }}>
+            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, color: '#9A9A90' }}>
+              © 2026 Jeen. Built as a living system.
+            </span>
+            <div style={{ display: 'flex', gap: 8 }}>
+              {['Twitter', 'GitHub', 'LinkedIn'].map((s) =>
+              <a key={s} href="#" className="social-pill" style={{
+                fontFamily: "'DM Sans', sans-serif", fontSize: 12, color: '#9A9A90',
+                border: '1px solid #6A6A60', borderRadius: 99, padding: '5px 12px',
+                cursor: 'pointer', transition: 'border-color 150ms, color 150ms',
+                textDecoration: 'none'
+              }}>{s}</a>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>);
+
+};
+
+/* ─── TWEAKS PANEL ───────────────────────────────────────────────── */
+const TweaksPanel = () => {
+  const [visible, setVisible] = React.useState(false);
+  const [tweaks, setTweaks] = React.useState(TWEAK_DEFAULTS);
+
+  React.useEffect(() => {
+    window.addEventListener('message', (e) => {
+      if (e.data?.type === '__activate_edit_mode') setVisible(true);
+      if (e.data?.type === '__deactivate_edit_mode') setVisible(false);
+    });
+    window.parent.postMessage({ type: '__edit_mode_available' }, '*');
+  }, []);
+
+  const set = (key, val) => {
+    const next = { ...tweaks, [key]: val };
+    setTweaks(next);
+    window.parent.postMessage({ type: '__edit_mode_set_keys', edits: { [key]: val } }, '*');
+  };
+
+  if (!visible) return null;
+
+  return (
+    <div style={{
+      position: 'fixed', bottom: 24, right: 24, zIndex: 9999,
+      background: '#FAFAFA', border: '1.5px solid #0A0A0A', borderRadius: 12,
+      boxShadow: '5px 5px 0 0 #0A0A0A', padding: '20px', width: 260,
+      fontFamily: "'DM Sans', sans-serif"
+    }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
+        <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 600, fontSize: 14, color: '#0A0A0A' }}>Tweaks</span>
+        <button onClick={() => {setVisible(false);window.parent.postMessage({ type: '__edit_mode_dismissed' }, '*');}}
+        style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 16, color: '#9A9A90', lineHeight: 1 }}>×</button>
+      </div>
+
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+        {/* Accent color */}
+        <div>
+          <label style={{ fontSize: 12, fontWeight: 500, color: '#6A6A60', display: 'block', marginBottom: 6 }}>Accent color</label>
+          <input type="color" value={tweaks.accentColor}
+          onChange={(e) => set('accentColor', e.target.value)}
+          style={{ width: '100%', height: 36, border: '1.5px solid #0A0A0A', borderRadius: 6, cursor: 'pointer' }} />
+        </div>
+
+        {/* Work style */}
+        <div>
+          <label style={{ fontSize: 12, fontWeight: 500, color: '#6A6A60', display: 'block', marginBottom: 6 }}>Work section style</label>
+          <div style={{ display: 'flex', gap: 8 }}>
+            {['rows', 'cards'].map((opt) =>
+            <button key={opt} onClick={() => set('workStyle', opt)} style={{
+              flex: 1, padding: '8px', borderRadius: 6, fontSize: 12, fontWeight: 500, cursor: 'pointer',
+              background: tweaks.workStyle === opt ? '#0A0A0A' : 'transparent',
+              color: tweaks.workStyle === opt ? '#F3FE52' : '#6A6A60',
+              border: '1.5px solid ' + (tweaks.workStyle === opt ? '#0A0A0A' : '#E8E8E0'),
+              transition: 'all 150ms'
+            }}>{opt}</button>
+            )}
+          </div>
+        </div>
+
+        {/* Scroll hint */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <label style={{ fontSize: 12, fontWeight: 500, color: '#6A6A60' }}>Show scroll indicator</label>
+          <div onClick={() => set('showScrollHint', !tweaks.showScrollHint)} style={{
+            width: 36, height: 20, borderRadius: 99, background: tweaks.showScrollHint ? '#F3FE52' : '#E8E8E0',
+            border: '1.5px solid #0A0A0A', cursor: 'pointer', position: 'relative', transition: 'background 200ms'
+          }}>
+            <div style={{
+              width: 14, height: 14, borderRadius: '50%', background: '#0A0A0A',
+              position: 'absolute', top: 1, left: tweaks.showScrollHint ? 18 : 2, transition: 'left 200ms'
+            }} />
+          </div>
+        </div>
+      </div>
+    </div>);
+
+};
+
+/* ─── APP ────────────────────────────────────────────────────────── */
+const App = () =>
+<>
+    <Header />
+    <Hero />
+    <PlaygroundSection />
+    <AboutSection />
+    <WorkSection />
+    <Footer />
+    <TweaksPanel />
+  </>;
+
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</Layout>
