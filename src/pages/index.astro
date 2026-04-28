@@ -189,7 +189,7 @@ const Hero = () => {
             color: '#C8C8C0', maxWidth: 460, marginBottom: 44,
             textWrap: 'pretty'
           }}>
-            Designer at the intersection of AI and design systems. My mascot — and AI agent — is a cat named Pocky. 🐱
+            Designer at the intersection of AI and design systems. My mascot — and AI agent — is a cat named Pocky.
           </p>
 
           {/* CTAs */}
@@ -249,23 +249,13 @@ const Hero = () => {
         </div>
 
         {/* RIGHT: Pocky in yellow circle */}
-        <div className="pocky-circle" style={{
-          width: 'min(360px, 32vw)', height: 'min(360px, 32vw)',
-          borderRadius: '50%', background: '#F3FE52',
-          position: 'relative', alignSelf: 'center', flexShrink: 0,
-          overflow: 'hidden',
-          transform: 'translateZ(0)',
-          clipPath: 'circle(50% at 50% 50%)',
-        }}>
-          <img src={ASSETS.pockyIdle} alt="Pocky"
-            style={{
-              position: 'absolute', top: '50%', left: '50%',
-              transform: 'translate(-50%, -50%)',
-              width: '65%', height: 'auto',
-              pointerEvents: 'none', userSelect: 'none',
-              animation: 'float-centered 5s ease-in-out infinite',
-            }} />
-        </div>
+        <div className="pocky-circle">
+		<img
+			src={ASSETS.pockyIdle}
+			alt="Pocky"
+			className="pocky-img"
+		/>
+		</div>
       </div>
 
       {/* Scroll indicator */}
