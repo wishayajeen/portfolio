@@ -3,13 +3,15 @@
 html { scroll-behavior: smooth; }
 
 body {
-  background: #FAFAFA;
-  font-family: 'DM Sans', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  color: #0A0A0A;
+    background: var(--bg-primary);
+    font-family: var(--font-body);
+    color: var(--fg-primary);
 }
 
-::selection { background: #F3FE52; color: #0A0A0A; }
+::selection {
+    background: var(--color-yellow);
+    color: var(--color-black);
+}
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: #0A0A0A; }
 ::-webkit-scrollbar-thumb { background: #3A3A35; border-radius: 3px; }
@@ -45,14 +47,14 @@ body {
 .fade-up-3 { animation-delay: 0.25s; }
 .fade-up-4 { animation-delay: 0.35s; }
 
-.nav-link:hover { color: #F3FE52 !important; }
+.nav-link:hover { color: var(--fg-nav-link-hover) !important; }
 
 .work-row:hover .work-arrow {
   opacity: 1 !important;
   transform: translateX(4px);
 }
 
-.work-row:hover { background: #F3FE52 !important; }
+.work-row:hover { background: var(--bg-accent) !important; }
 
 .play-card:hover,
 .diary-card:hover {
@@ -72,7 +74,7 @@ body {
   width: min(400px, 32vw);
   height: min(400px, 32vw);
   border-radius: 50%;
-  background: #F3FE52;
+  background: var(--bg-accent);
   position: absolute;
   top: 60%;
   right: 5%;
