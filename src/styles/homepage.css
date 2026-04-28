@@ -404,7 +404,7 @@ body {
   gap: 16px;
   margin-bottom: 20px;
   padding-bottom: 16px;
-  border-bottom: 1.5px solid var(--color-gray-200);
+  border-bottom: 1.5px solid var(--border-subtle);
 }
 
 .pg-diary-title {
@@ -438,7 +438,7 @@ body {
 }
 
 .diary-card {
-  background: var(--color-white);
+  background: var(--bg-primary);
   border: var(--border-primary);
   border-radius: var(--radius-md);
   padding: 20px 24px;
@@ -453,7 +453,7 @@ body {
 .diary-date-block {
   width: 48px;
   height: 48px;
-  background: var(--color-black);
+  background: var(--bg-dark);
   border-radius: var(--radius-xs);
   display: flex;
   flex-direction: column;
@@ -466,14 +466,14 @@ body {
   font-family: var(--font-mono);
   font-size: 16px;
   font-weight: 700;
-  color: var(--color-yellow);
+  color: var(--fg-on-dark-label);
   line-height: 1;
 }
 
 .diary-date-month {
   font-family: var(--font-mono);
   font-size: 9px;
-  color: var(--color-gray-500);
+  color: var(--fg-tertiary);
   letter-spacing: 0.05em;
 }
 
