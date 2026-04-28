@@ -53,7 +53,7 @@
   /* Dark-background text — WCAG AA compliant on #0A0A0A */
   --fg-on-dark-primary:    var(--color-white);          /* #FAFAFA — ~19:1 */
   --fg-on-dark-secondary:  var(--color-gray-300);       /* #C8C8C0 — ~9:1  */
-  --fg-on-dark-label:      var(--color-gray-400);       /* #9A9A90 — ~4.6:1, AA for 18px+ only */
+  --fg-on-dark-label:      var(--color-yellow);       /* yellow text ON dark bg — ~17.6:1 */
   /* ⚠️ NEVER use --color-gray-500 (#6A6A60), --color-gray-700 (#3A3A35), or --color-gray-900 (#1A1A15) as text on #0A0A0A — all fail WCAG AA */
   --fg-link-hover:     var(--color-yellow);
   --fg-nav-link:        var(--color-white);    /* nav links on dark header */

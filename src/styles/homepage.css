@@ -365,7 +365,7 @@ body {
 
 .play-card--accent .play-card-tag {
   background: var(--color-black);
-  color: var(--fg-accent);
+  color: var(--fg-on-dark-label);
 }
 
 .play-card-title {
