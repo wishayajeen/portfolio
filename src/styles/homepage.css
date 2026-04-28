@@ -1455,3 +1455,13 @@ body {
 .article-content li {
   margin-bottom: 8px;
 }
+
+.article-content img {
+  width: 100%;
+  max-width: 720px;
+  height: auto;
+  display: block;
+  margin: 32px auto;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+}
