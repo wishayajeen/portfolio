@@ -127,55 +127,30 @@ const Hero = () => {
   };
 
   return (
-    <section id="hero" style={{
-      background: '#0A0A0A', minHeight: '100vh', position: 'relative',
-      overflow: 'hidden', display: 'flex', flexDirection: 'column',
-    }}>
+    <section id="hero">
       {/* Subtle grid */}
-      <div style={{
-        position: 'absolute', inset: 0, opacity: 0.035,
-        backgroundImage: 'linear-gradient(#FAFAFA 1px, transparent 1px), linear-gradient(90deg, #FAFAFA 1px, transparent 1px)',
-        backgroundSize: '56px 56px', pointerEvents: 'none',
-      }} />
+      <div className="hero-bg-grid" />
 
       {/* Two-column layout: text left, Pocky right */}
-      <div className="hero-grid" style={{
-        flex: 1, display: 'grid', gridTemplateColumns: '1fr min(400px, 36vw)',
-        maxWidth: 1280, margin: '0 auto', width: '100%',
-        padding: '80px 48px 100px', gap: 48, alignItems: 'center',
-        position: 'relative', zIndex: 1,
-      }}>
+      <div className="hero-grid">
         {/* LEFT: text */}
         <div className="hero-text">
           {/* Badge */}
-          <div className="fade-up fade-up-1" style={{
-            display: 'inline-flex', alignItems: 'center', gap: 8,
-            background: 'rgba(243,254,82,0.12)', border: '1px solid rgba(243,254,82,0.3)',
-            borderRadius: 99, padding: '6px 16px', marginBottom: 36
-          }}>
-            <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#3DFE87', display: 'block', flexShrink: 0 }} />
-            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 12, color: '#F3FE52', letterSpacing: '0.05em' }}>
+          <div className="fade-up fade-up-1 hero-badge">
+            <span className="hero-badge-dot" />
+            <span className="hero-badge-label">
               Portfolio + living design system
             </span>
           </div>
 
           {/* Headline */}
-          <h1 className="fade-up fade-up-2" style={{
-            fontFamily: "'Space Grotesk', sans-serif",
-            fontWeight: 700,
-            fontSize: 'clamp(52px, 7.5vw, 100px)',
-            lineHeight: 1.04,
-            letterSpacing: '-0.03em',
-            color: '#FAFAFA',
-            textWrap: 'pretty',
-            marginBottom: 28
-          }}>
+          <h1 className="fade-up fade-up-2 hero-headline">
             Hi, I'm Jeen.<br />
             I design systems that{' '}
-            <span style={{ color: '#F3FE52', position: 'relative' }}>
+            <span className="hero-headline-accent">
               think.
               {/* underline squiggle */}
-              <svg style={{ position: 'absolute', bottom: 2, left: '-2%', width: '104%' }} viewBox="0 0 220 18" preserveAspectRatio="none" height="14">
+              <svg className="hero-headline-squiggle" viewBox="0 0 220 18" preserveAspectRatio="none" height="14">
                 {/* Paintbrush-style: thick tapered stroke with slight roughness */}
                 <path d="M4 12 Q30 5 70 10 Q110 15 150 9 Q180 5 216 11" stroke="#F3FE52" strokeWidth="8" fill="none" strokeLinecap="round" strokeLinejoin="round" opacity="0.5" />
                 <path d="M2 11 Q40 6 80 11 Q120 16 160 8 Q188 4 218 10" stroke="#F3FE52" strokeWidth="5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
@@ -184,64 +159,45 @@ const Hero = () => {
           </h1>
 
           {/* Sub */}
-          <p className="fade-up fade-up-3" style={{
-            fontFamily: "'DM Sans', sans-serif", fontSize: 18, lineHeight: 1.7,
-            color: '#C8C8C0', maxWidth: 460, marginBottom: 44,
-            textWrap: 'pretty'
-          }}>
+          <p className="fade-up fade-up-3 hero-sub">
             Designer at the intersection of AI and design systems. My mascot — and AI agent — is a cat named Pocky.
           </p>
 
           {/* CTAs */}
-          <div className="fade-up fade-up-4" style={{ display: 'flex', gap: 12, flexWrap: 'wrap', alignItems: 'center' }}>
+          <div className="fade-up fade-up-4 hero-ctas">
             <button
-              style={{
-                fontFamily: "'DM Sans', sans-serif", fontWeight: 600, fontSize: 15,
-                background: '#F3FE52', color: '#0A0A0A', padding: '14px 30px',
-                borderRadius: 99, border: '1.5px solid #F3FE52',
-                boxShadow: '3px 3px 0 0 rgba(243,254,82,0.35)', cursor: 'pointer',
-                transition: 'transform 200ms cubic-bezier(0.34,1.56,0.64,1), box-shadow 200ms'
-              }}
+              className="hero-cta-primary"
               onMouseEnter={(e) => {e.currentTarget.style.transform = 'translateY(-2px)';e.currentTarget.style.boxShadow = '5px 5px 0 0 rgba(243,254,82,0.4)';}}
-              onMouseLeave={(e) => {e.currentTarget.style.transform = '';e.currentTarget.style.boxShadow = '3px 3px 0 0 rgba(243,254,82,0.35)';}}
+              onMouseLeave={(e) => {e.currentTarget.style.transform = '';e.currentTarget.style.boxShadow = '';}}
               onMouseDown={(e) => {e.currentTarget.style.transform = 'translateY(2px)';e.currentTarget.style.boxShadow = 'none';}}
               onMouseUp={(e) => {e.currentTarget.style.transform = 'translateY(-2px)';e.currentTarget.style.boxShadow = '5px 5px 0 0 rgba(243,254,82,0.4)';}}
               onClick={() => scrollTo('work')}>
-              
+
               See my work
             </button>
             <button
-              style={{
-                fontFamily: "'DM Sans', sans-serif", fontWeight: 500, fontSize: 15,
-                background: 'transparent', color: '#FAFAFA', padding: '14px 30px',
-                borderRadius: 99, border: '1.5px solid rgba(250,250,250,0.2)',
-                cursor: 'pointer', transition: 'border-color 150ms, background 150ms'
-              }}
+              className="hero-cta-secondary"
               onMouseEnter={(e) => {e.currentTarget.style.borderColor = 'rgba(250,250,250,0.5)';e.currentTarget.style.background = 'rgba(250,250,250,0.05)';}}
-              onMouseLeave={(e) => {e.currentTarget.style.borderColor = 'rgba(250,250,250,0.2)';e.currentTarget.style.background = 'transparent';}}
+              onMouseLeave={(e) => {e.currentTarget.style.borderColor = '';e.currentTarget.style.background = '';}}
               onClick={() => scrollTo('playground')}>
-              
+
               Explore playground →
             </button>
           </div>
 
           {/* Quick links row */}
-          <div style={{ display: 'flex', gap: 20, marginTop: 56, alignItems: 'center' }}>
-            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, color: '#C8C8C0', letterSpacing: '0.08em', textTransform: 'uppercase' }}>Find me on</span>
+          <div className="hero-social-row">
+            <span className="hero-social-label">Find me on</span>
             {[
             { label: 'Twitter / X', href: '#' },
             { label: 'GitHub', href: '#' },
             { label: 'LinkedIn', href: '#' }].
             map(({ label, href }) =>
             <a key={label} href={href}
-            style={{
-              fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: '#9A9A90',
-              textDecoration: 'none', transition: 'color 150ms',
-              borderBottom: '1px solid transparent'
-            }}
+            className="hero-social-link"
             onMouseEnter={(e) => {e.currentTarget.style.color = '#F3FE52';e.currentTarget.style.borderBottomColor = '#F3FE52';}}
-            onMouseLeave={(e) => {e.currentTarget.style.color = '#9A9A90';e.currentTarget.style.borderBottomColor = 'transparent';}}>
-              
+            onMouseLeave={(e) => {e.currentTarget.style.color = '';e.currentTarget.style.borderBottomColor = '';}}>
+
                 {label}
               </a>
             )}
@@ -259,20 +215,10 @@ const Hero = () => {
       </div>
 
       {/* Scroll indicator */}
-      <div style={{
-        position: 'absolute', bottom: 32, left: '50%', transform: 'translateX(-50%)',
-        display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8,
-        color: '#9A9A90', cursor: 'pointer', zIndex: 1
-      }} onClick={() => scrollTo('playground')}>
-        <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: '0.1em', color: '#9A9A90' }}>SCROLL</span>
-        <div style={{
-          width: 24, height: 38, borderRadius: 12, border: '1.5px solid #6A6A60',
-          display: 'flex', alignItems: 'flex-start', justifyContent: 'center', padding: 5
-        }}>
-          <div style={{
-            width: 4, height: 8, borderRadius: 2, background: '#F3FE52',
-            animation: 'scroll-indicator 1.8s ease-in-out infinite'
-          }} />
+      <div className="hero-scroll-indicator" onClick={() => scrollTo('playground')}>
+        <span className="hero-scroll-label">SCROLL</span>
+        <div className="hero-scroll-mouse">
+          <div className="hero-scroll-dot" />
         </div>
       </div>
     </section>);
