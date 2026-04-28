@@ -315,85 +315,50 @@ const AboutSection = () => {
   const skills = ['Design systems', 'AI × design', 'Agentic UX', 'Design tokens', 'Building in public', 'Talks & content'];
 
   return (
-    <section id="about" className="about-section" style={{ background: '#F3FE52', padding: '100px 48px', position: 'relative', overflow: 'hidden' }}>
-
-
-      <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-        <div style={{
-          display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 80, alignItems: 'center'
-        }}>
+    <section id="about" className="about-section">
+      <div className="about-inner">
+        <div className="about-grid">
           {/* Left: text */}
           <div>
-            <div style={{
-              fontFamily: "'JetBrains Mono', monospace", fontSize: 11, color: '#6A6A60',
-              letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 16
-            }}>about me</div>
-            <h2 style={{
-              fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700,
-              fontSize: 'clamp(36px, 4.5vw, 60px)',
-              color: '#0A0A0A', lineHeight: 1.1, letterSpacing: '-0.025em', marginBottom: 24
-            }}>
+            <div className="about-eyebrow">about me</div>
+            <h2 className="about-headline">
               I learn by<br />building in public.
             </h2>
-            <p style={{
-              fontFamily: "'DM Sans', sans-serif", fontSize: 17, color: '#3A3A35',
-              lineHeight: 1.7, marginBottom: 16, textWrap: 'pretty'
-            }}>
-              I'm a designer obsessed with the intersection of AI and design systems. I think design decisions should be structured, queryable, and alive — not buried in Figma files no one opens.
-            </p>
-            <p style={{
-              fontFamily: "'DM Sans', sans-serif", fontSize: 17, color: '#3A3A35',
-              lineHeight: 1.7, marginBottom: 32, textWrap: 'pretty'
-            }}>
-              This portfolio is the system. Pocky — my cat-turned-AI-agent — is the interface. The work speaks for itself.
-            </p>
-            <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-              {skills.map((s) =>
-              <span key={s} style={{
-                fontFamily: "'DM Sans', sans-serif", fontSize: 12, fontWeight: 600,
-                padding: '6px 14px', borderRadius: 99,
-                background: '#0A0A0A', color: '#F3FE52',
-                border: '1.5px solid #0A0A0A'
-              }}>{s}</span>
-              )}
+            <div className="about-text-body">
+              <p className="about-body">
+                I'm a designer obsessed with the intersection of AI and design systems. I think design decisions should be structured, queryable, and alive — not buried in Figma files no one opens.
+              </p>
+              <p className="about-body">
+                This portfolio is the system. Pocky — my cat-turned-AI-agent — is the interface. The work speaks for itself.
+              </p>
+            </div>
+            <div className="about-skills">
+              {skills.map((s) => <span key={s} className="about-skill-tag">{s}</span>)}
             </div>
           </div>
 
-          {/* Right: Pocky card */}
+          {/* Right: profile card */}
           <div>
-            <div style={{
-              background: '#FAFAFA', border: '1.5px solid #0A0A0A', borderRadius: 16,
-              padding: '32px', boxShadow: '6px 6px 0 0 #0A0A0A'
-            }}>
-              {/* Pocky profile */}
-              <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 24, paddingBottom: 24, borderBottom: '1px solid #E8E8E0' }}>
-                <img src={ASSETS.logo} alt="Jeen"
-                style={{ width: 72, height: 72, borderRadius: '50%', border: '2px solid #0A0A0A', objectFit: 'cover', flexShrink: 0, background: '#FAFAFA', padding: 8 }} />
+            <div className="about-card">
+              <div className="about-card-profile">
+                <img src={ASSETS.logo} alt="Jeen" className="about-card-avatar" />
                 <div>
-                  <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: 22, color: '#0A0A0A' }}>Jeen</div>
-                  <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: '#9A9A90' }}>Agentic System Designer</div>
-
+                  <div className="about-card-name">Jeen</div>
+                  <div className="about-card-role">Agentic System Designer</div>
                 </div>
               </div>
-
-              {/* Quote */}
-              <p style={{
-                fontFamily: "'DM Sans', sans-serif", fontSize: 15, lineHeight: 1.7,
-                color: '#3A3A35', fontStyle: 'italic', marginBottom: 24
-              }}>
+              <p className="about-card-quote">
                 "My portfolio is a design system. The design system is the portfolio. Pocky knows everything."
               </p>
-
-              {/* Stats */}
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 12 }}>
+              <div className="about-card-stats">
                 {[
                 { num: '4+', label: 'Years designing' },
                 { num: '12+', label: 'Projects shipped' },
                 { num: '3', label: 'Talks given' }].
                 map(({ num, label }) =>
-                <div key={label} style={{ textAlign: 'center' }}>
-                    <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: 28, color: '#0A0A0A', lineHeight: 1 }}>{num}</div>
-                    <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 11, color: '#9A9A90', marginTop: 4 }}>{label}</div>
+                <div key={label} className="about-stat">
+                    <div className="about-stat-num">{num}</div>
+                    <div className="about-stat-label">{label}</div>
                   </div>
                 )}
               </div>
@@ -407,8 +372,6 @@ const AboutSection = () => {
 
 /* ─── WORK ───────────────────────────────────────────────────────── */
 const WorkSection = () => {
-  const [active, setActive] = React.useState(null);
-
   const projects = [
   {
     num: '01',
@@ -456,129 +419,60 @@ const WorkSection = () => {
     tools: ['Substack', 'Figma']
   }];
 
-
   return (
-    <section id="work" className="work-section" style={{ background: '#0A0A0A', padding: '100px 48px' }}>
-      <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+    <section id="work" className="work-section">
+      <div className="work-inner">
 
         {/* Header */}
-        <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: 48, flexWrap: 'wrap', gap: 16 }}>
+        <div className="work-header">
           <div>
-            <div style={{
-              fontFamily: "'JetBrains Mono', monospace", fontSize: 11, color: '#9A9A90',
-              letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 10
-            }}>work</div>
-            <h2 style={{
-              fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700,
-              fontSize: 'clamp(32px, 4vw, 52px)',
-              color: '#FAFAFA', letterSpacing: '-0.025em', lineHeight: 1.1, margin: 0
-            }}>Selected projects</h2>
+            <div className="work-eyebrow">work</div>
+            <h2 className="work-headline">Selected projects</h2>
           </div>
-          <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 12, color: '#9A9A90', paddingBottom: 4 }}>
-            {projects.length} projects
-          </span>
+          <span className="work-count">{projects.length} projects</span>
         </div>
 
         {/* Table header */}
-        <div style={{
-          display: 'grid', gridTemplateColumns: '48px 1fr auto',
-          gap: 16, padding: '0 20px 12px',
-          borderBottom: '1px solid #1A1A15'
-        }}>
+        <div className="work-table-header">
           {['#', 'Project', 'Year'].map((h) =>
-          <span key={h} style={{
-            fontFamily: "'JetBrains Mono', monospace", fontSize: 10,
-            color: '#9A9A90', letterSpacing: '0.1em', textTransform: 'uppercase'
-          }}>{h}</span>
+          <span key={h} className="work-col-label">{h}</span>
           )}
         </div>
 
         {/* Project rows */}
         <div>
-          {projects.map((p, i) => {
-            const isActive = active === i;
-            return (
-              <div key={i}
-              className="work-row"
-              style={{
-                background: isActive ? '#F3FE52' : 'transparent',
-                borderBottom: '1px solid #1A1A15',
-                transition: 'background 200ms cubic-bezier(0.22,1,0.36,1)',
-                cursor: 'pointer'
-              }}
-              onMouseEnter={() => setActive(i)}
-              onMouseLeave={() => setActive(null)}>
-                
-                {/* Main row */}
-                <div style={{
-                  display: 'grid', gridTemplateColumns: '48px 1fr auto',
-                  gap: 16, padding: '20px',
-                  alignItems: 'center'
-                }}>
-                  <span style={{
-                    fontFamily: "'JetBrains Mono', monospace", fontSize: 12,
-                    color: isActive ? '#0A0A0A' : '#9A9A90',
-                    transition: 'color 200ms'
-                  }}>{p.num}</span>
+          {projects.map((p, i) => (
+            <div key={i} className="work-row">
+              <div className="work-row-grid">
+                <span className="work-num">{p.num}</span>
 
-                  <div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 4 }}>
-                      <span style={{
-                        fontFamily: "'DM Sans', sans-serif", fontSize: 11, fontWeight: 600,
-                        background: isActive ? '#0A0A0A' : '#1A1A15', color: isActive ? '#F3FE52' : '#9A9A90',
-                        padding: '2px 8px', borderRadius: 4,
-                        transition: 'background 200ms, color 200ms'
-                      }}>{p.tag}</span>
-                    </div>
-                    <div style={{
-                      fontFamily: "'Space Grotesk', sans-serif", fontWeight: 600,
-                      fontSize: 20, color: isActive ? '#0A0A0A' : '#FAFAFA',
-                      lineHeight: 1.2, transition: 'color 200ms'
-                    }}>{p.title}</div>
+                <div>
+                  <div className="work-tag-row">
+                    <span className="work-tag">{p.tag}</span>
+                  </div>
+                  <div className="work-title">{p.title}</div>
 
-                    {/* Expanded detail */}
-                    <div style={{
-                      overflow: 'hidden',
-                      maxHeight: isActive ? 200 : 0,
-                      opacity: isActive ? 1 : 0,
-                      transition: 'max-height 300ms cubic-bezier(0.22,1,0.36,1), opacity 200ms'
-                    }}>
-                      <p style={{
-                        fontFamily: "'DM Sans', sans-serif", fontSize: 14,
-                        color: isActive ? '#3A3A35' : '#C8C8C0', lineHeight: 1.6, margin: '10px 0 0',
-                        maxWidth: 560
-                      }}>{p.desc}</p>
-                      <div className="work-detail-row" style={{ display: 'flex', gap: 12, marginTop: 12, alignItems: 'center' }}>
-                        <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, color: isActive ? '#6A6A60' : '#9A9A90' }}>{p.role}</span>
-                        <span style={{ color: isActive ? '#6A6A60' : '#9A9A90', fontSize: 11 }}>·</span>
-                        <div style={{ display: 'flex', gap: 6 }}>
-                          {p.tools.map((t) =>
-                          <span key={t} style={{
-                            fontFamily: "'JetBrains Mono', monospace", fontSize: 10,
-                            border: `1px solid ${isActive ? '#6A6A60' : '#9A9A90'}`, borderRadius: 4,
-                            padding: '2px 6px', color: isActive ? '#6A6A60' : '#9A9A90'
-                          }}>{t}</span>
-                          )}
-                        </div>
+                  <div className="work-expand">
+                    <p className="work-desc">{p.desc}</p>
+                    <div className="work-detail-row">
+                      <span className="work-meta-label">{p.role}</span>
+                      <span className="work-meta-dot">·</span>
+                      <div className="work-tools">
+                        {p.tools.map((t) =>
+                        <span key={t} className="work-tool">{t}</span>
+                        )}
                       </div>
                     </div>
                   </div>
-
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                    <span style={{
-                      fontFamily: "'JetBrains Mono', monospace", fontSize: 12,
-                      color: isActive ? '#0A0A0A' : '#9A9A90', transition: 'color 200ms'
-                    }}>{p.year}</span>
-                    <span className="work-arrow" style={{
-                      fontSize: 16, color: isActive ? '#0A0A0A' : '#9A9A90',
-                      opacity: isActive ? 1 : 0.3,
-                      transition: 'transform 200ms cubic-bezier(0.34,1.56,0.64,1), opacity 200ms, color 200ms'
-                    }}>→</span>
-                  </div>
                 </div>
-              </div>);
 
-          })}
+                <div className="work-year-col">
+                  <span className="work-year">{p.year}</span>
+                  <span className="work-arrow">→</span>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>);
@@ -591,7 +485,7 @@ const Footer = () => {
   const [sent, setSent] = React.useState(false);
 
   const handleSend = () => {
-    if (email.trim()) {setSent(true);}
+    if (email.trim()) { setSent(true); }
   };
 
   const scrollTo = (id) => {
@@ -600,93 +494,46 @@ const Footer = () => {
   };
 
   return (
-    <footer id="footer" style={{ background: '#0A0A0A', borderTop: '1px solid #1A1A15' }}>
+    <footer id="footer">
 
       {/* CTA band */}
-      <div style={{
-        background: '#F3FE52', padding: '64px 48px',
-        position: 'relative', overflow: 'hidden'
-      }}>
-
-
-        <div style={{ maxWidth: 1200, margin: '0 auto', position: 'relative', zIndex: 1 }}>
-          <div style={{ maxWidth: 600 }}>
-            <div style={{
-              fontFamily: "'JetBrains Mono', monospace", fontSize: 11, color: '#6A6A60',
-              letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 16
-            }}>let's talk</div>
-            <h2 style={{
-              fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700,
-              fontSize: 'clamp(32px, 4.5vw, 58px)',
-              color: '#0A0A0A', letterSpacing: '-0.025em', lineHeight: 1.1, marginBottom: 20
-            }}>
+      <div className="footer-cta">
+        <div className="footer-cta-inner">
+          <div className="footer-cta-content">
+            <div className="footer-eyebrow">let's talk</div>
+            <h2 className="footer-headline">
               Got a project, collab,<br />or just want to say hi?
             </h2>
-            <p style={{
-              fontFamily: "'DM Sans', sans-serif", fontSize: 17, color: '#3A3A35',
-              lineHeight: 1.6, marginBottom: 36, maxWidth: 420, textWrap: 'pretty'
-            }}>
+            <p className="footer-sub">
               I'm always up for interesting conversations about design, AI, and building things in public. Drop me a line.
             </p>
 
-            {/* Email input */}
             {!sent ?
-            <div style={{
-              display: 'flex', gap: 8, alignItems: 'center',
-              background: '#FAFAFA', border: '1.5px solid #0A0A0A', borderRadius: 99,
-              padding: '8px 8px 8px 24px',
-              boxShadow: '4px 4px 0 0 #0A0A0A',
-              maxWidth: 440
-            }}>
+            <div className="footer-email-row">
                 <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleSend()}
                 placeholder="your@email.com"
-                style={{
-                  flex: 1, background: 'transparent', border: 'none', outline: 'none',
-                  fontFamily: "'DM Sans', sans-serif", fontSize: 15, color: '#0A0A0A'
-                }} />
-              
-                <button onClick={handleSend} style={{
-                fontFamily: "'DM Sans', sans-serif", fontSize: 13, fontWeight: 600,
-                background: '#0A0A0A', color: '#F3FE52', padding: '11px 22px',
-                borderRadius: 99, border: 'none', cursor: 'pointer',
-                transition: 'transform 150ms'
-              }}
-              onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-1px)'}
-              onMouseLeave={(e) => e.currentTarget.style.transform = ''}>
-                
+                className="footer-email-input" />
+                <button onClick={handleSend} className="footer-email-btn"
+                onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-1px)'}
+                onMouseLeave={(e) => e.currentTarget.style.transform = ''}>
                   Send →
                 </button>
               </div> :
-
-            <div style={{
-              display: 'inline-flex', alignItems: 'center', gap: 10,
-              background: '#0A0A0A', color: '#3DFE87', padding: '14px 24px',
-              borderRadius: 99, fontFamily: "'DM Sans', sans-serif", fontSize: 15, fontWeight: 500
-            }}>
-                <span style={{ width: 8, height: 8, borderRadius: '50%', background: '#3DFE87', display: 'block' }} />
+            <div className="footer-success">
+                <span className="footer-success-dot" />
                 Got it! I'll be in touch soon.
               </div>
             }
 
-            <div style={{ display: 'flex', gap: 16, marginTop: 24, flexWrap: 'wrap' }}>
-              <a href="mailto:jeen@example.com" style={{
-                fontFamily: "'DM Sans', sans-serif", fontSize: 14, color: '#3A3A35',
-                textDecoration: 'none', borderBottom: '1.5px solid #0A0A0A', paddingBottom: 1
-              }}>jeen@example.com</a>
-              <span style={{ color: '#6A6A60' }}>or find me on</span>
+            <div className="footer-contact-row">
+              <a href="mailto:jeen@example.com" className="footer-contact-link">jeen@example.com</a>
+              <span className="footer-contact-divider">or find me on</span>
               {['Twitter / X', 'LinkedIn', 'GitHub'].map((s) =>
-              <a key={s} href="#" style={{
-                fontFamily: "'DM Sans', sans-serif", fontSize: 14, color: '#3A3A35',
-                textDecoration: 'none', borderBottom: '1.5px solid #0A0A0A', paddingBottom: 1,
-                transition: 'color 150ms'
-              }}
-              onMouseEnter={(e) => e.currentTarget.style.color = '#0A0A0A'}
-              onMouseLeave={(e) => e.currentTarget.style.color = '#3A3A35'}>
-                {s}</a>
+              <a key={s} href="#" className="footer-contact-link">{s}</a>
               )}
             </div>
           </div>
@@ -694,43 +541,35 @@ const Footer = () => {
       </div>
 
       {/* Footer bottom */}
-      <div className="footer-bottom" style={{ padding: '48px 48px 36px' }}>
-        <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-          <div className="footer-cols" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 32, marginBottom: 40 }}>
+      <div className="footer-bottom">
+        <div className="footer-inner">
+          <div className="footer-cols">
 
             {/* Left: brand */}
             <div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 10 }}>
-                <img src={ASSETS.logo} width="22" height="22" alt="Jeen" style={{ borderRadius: 3, filter: 'invert(1)' }} />
-                <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: 18, color: '#FAFAFA' }}>Jeen</span>
+              <div className="footer-brand-header">
+                <img src={ASSETS.logo} width="22" height="22" alt="Jeen" className="footer-brand-logo" />
+                <span className="footer-brand-name">Jeen</span>
               </div>
-              <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: '#9A9A90', maxWidth: 220, lineHeight: 1.6 }}>
+              <p className="footer-brand-desc">
                 Designer building at the intersection of AI and design systems.
               </p>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 12 }}>
-                <img src={ASSETS.pockyProfile} alt="Pocky" style={{ width: 24, height: 24, borderRadius: '50%', border: '1px solid #6A6A60' }} />
-                <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, color: '#9A9A90' }}>Powered by Pocky 🐱</span>
+              <div className="footer-powered">
+                <img src={ASSETS.pockyProfile} alt="Pocky" className="footer-powered-avatar" />
+                <span className="footer-powered-label">Powered by Pocky 🐱</span>
               </div>
             </div>
 
             {/* Nav columns */}
-            <div style={{ display: 'flex', gap: 48, flexWrap: 'wrap' }}>
+            <div className="footer-nav-cols">
               {[
               { title: 'Navigate', links: [['Playground', 'playground'], ['About', 'about'], ['Work', 'work']] },
               { title: 'Connect', links: [['Twitter / X', null], ['GitHub', null], ['LinkedIn', null], ['Email', null]] }].
               map((col) =>
-              <div key={col.title} style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-                  <div style={{
-                  fontFamily: "'DM Sans', sans-serif", fontSize: 11, fontWeight: 600,
-                  textTransform: 'uppercase', letterSpacing: '0.1em', color: '#9A9A90', marginBottom: 4
-                }}>{col.title}</div>
+              <div key={col.title} className="footer-nav-col">
+                  <div className="footer-nav-heading">{col.title}</div>
                   {col.links.map(([label, id]) =>
                 <button key={label} className="footer-link"
-                style={{
-                  fontFamily: "'DM Sans', sans-serif", fontSize: 14, color: '#9A9A90',
-                  background: 'none', border: 'none', cursor: 'pointer', padding: 0,
-                  textAlign: 'left', transition: 'color 150ms'
-                }}
                 onClick={() => id && scrollTo(id)}>
                   {label}</button>
                 )}
@@ -738,41 +577,25 @@ const Footer = () => {
               )}
 
               {/* Status */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-                <div style={{
-                  fontFamily: "'DM Sans', sans-serif", fontSize: 11, fontWeight: 600,
-                  textTransform: 'uppercase', letterSpacing: '0.1em', color: '#9A9A90', marginBottom: 4
-                }}>Status</div>
-                <div style={{
-                  display: 'inline-flex', alignItems: 'center', gap: 6,
-                  fontFamily: "'JetBrains Mono', monospace", fontSize: 10,
-                  background: '#1A1A15', color: '#F3FE52', padding: '5px 10px',
-                  borderRadius: 4, border: '1px solid #6A6A60'
-                }}>
-                  <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#3DFE87', display: 'block' }} />
+              <div className="footer-status-col">
+                <div className="footer-status-heading">Status</div>
+                <div className="footer-status-badge">
+                  <span className="footer-status-dot" />
                   System live
                 </div>
-                <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, color: '#9A9A90' }}>v1.0 · April 2026</span>
+                <span className="footer-version">v1.0 · April 2026</span>
               </div>
             </div>
           </div>
 
           {/* Bottom bar */}
-          <div style={{
-            borderTop: '1px solid #1A1A15', paddingTop: 24,
-            display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12
-          }}>
-            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, color: '#9A9A90' }}>
+          <div className="footer-bottom-bar">
+            <span className="footer-copyright">
               © 2026 Jeen. Built as a living system.
             </span>
-            <div style={{ display: 'flex', gap: 8 }}>
+            <div className="footer-social-links">
               {['Twitter', 'GitHub', 'LinkedIn'].map((s) =>
-              <a key={s} href="#" className="social-pill" style={{
-                fontFamily: "'DM Sans', sans-serif", fontSize: 12, color: '#9A9A90',
-                border: '1px solid #6A6A60', borderRadius: 99, padding: '5px 12px',
-                cursor: 'pointer', transition: 'border-color 150ms, color 150ms',
-                textDecoration: 'none'
-              }}>{s}</a>
+              <a key={s} href="#" className="social-pill">{s}</a>
               )}
             </div>
           </div>
