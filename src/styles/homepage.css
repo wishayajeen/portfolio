@@ -440,6 +440,8 @@ body {
 .diary-card {
   background: var(--bg-primary);
   border: var(--border-primary);
+  text-decoration: none;
+  color: inherit;
   border-radius: var(--radius-md);
   padding: 20px 24px;
   box-shadow: var(--shadow-md);
@@ -466,14 +468,14 @@ body {
   font-family: var(--font-mono);
   font-size: 16px;
   font-weight: 700;
-  color: var(--fg-on-dark-label);
+  color: var(--fg-on-dark-accent);
   line-height: 1;
 }
 
 .diary-date-month {
   font-family: var(--font-mono);
   font-size: 9px;
-  color: var(--fg-tertiary);
+  color: var(--fg-on-dark-secondary);
   letter-spacing: 0.05em;
 }
 

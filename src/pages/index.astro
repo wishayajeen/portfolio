@@ -3,16 +3,29 @@ import Layout from '../layouts/Layout.astro'
 import logoUrl from '../assets/logo.svg'
 import pockyIdleUrl from '../assets/pocky-idle.svg'
 import pockyWritingUrl from '../assets/pocky-writing.svg'
+import { getCollection } from 'astro:content'
 
 const logoSrc = typeof logoUrl === 'string' ? logoUrl : logoUrl.src;
 const pockyIdleSrc = typeof pockyIdleUrl === 'string' ? pockyIdleUrl : pockyIdleUrl.src;
 const pockyWritingSrc = typeof pockyWritingUrl === 'string' ? pockyWritingUrl : pockyWritingUrl.src;
+
+const MONTHS = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+const allDiary = await getCollection('diary');
+const sortedDiary = allDiary.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+const diaryEntries = sortedDiary.slice(0, 5).map(entry => ({
+  slug: entry.id,
+  title: entry.data.title,
+  tag: entry.data.tag,
+  readTime: entry.data.readTime,
+  date: `${entry.data.date.getDate()} ${MONTHS[entry.data.date.getMonth()]}`,
+}));
+const diaryTotal = allDiary.length;
 ---
 
 <Layout>
   <div id="root"></div>
 
-  <script is:inline define:vars={{ logoSrc, pockyIdleSrc, pockyWritingSrc }} type="text/babel">
+  <script is:inline define:vars={{ logoSrc, pockyIdleSrc, pockyWritingSrc, diaryEntries, diaryTotal }} type="text/babel">
 const ASSETS = {
   logo: logoSrc,
   pockyIdle: pockyIdleSrc,
@@ -239,8 +252,8 @@ const PlaygroundCard = ({ tag, title, desc, accent }) => (
   </div>
 );
 
-const DiaryCard = ({ date, title, tag, readTime }) => (
-  <div className="diary-card">
+const DiaryCard = ({ date, title, tag, readTime, slug }) => (
+  <a href={`/diary/${slug}/`} className="diary-card">
     <div className="diary-date-block">
       <span className="diary-date-day">{date.split(' ')[0]}</span>
       <span className="diary-date-month">{date.split(' ')[1]}</span>
@@ -255,7 +268,7 @@ const DiaryCard = ({ date, title, tag, readTime }) => (
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="diary-arrow">
       <path d="M3 8h10M9 4l4 4-4 4" stroke="#0A0A0A" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
-  </div>
+  </a>
 );
 
 const PlaygroundSection = () => {
@@ -265,12 +278,7 @@ const PlaygroundSection = () => {
   { tag: 'Experiment', title: 'Design dashboard', desc: 'A live public view of the system — components, colors, decisions, all in one place.', emoji: '📊', accent: false },
   { tag: 'Experiment', title: 'Component sandbox', desc: 'Interactive playground to test and compose components from the design system in real time.', emoji: '⚡', accent: false }];
 
-  const diary = [
-  { date: '22 APR', title: 'Why I made my portfolio a design system', tag: 'Essay', readTime: '5 min' },
-  { date: '14 APR', title: 'Designing with AI: what actually changed', tag: 'Reflection', readTime: '8 min' },
-  { date: '03 APR', title: 'Naming my AI agent after my cat (and why it matters)', tag: 'Process', readTime: '3 min' },
-  { date: '21 MAR', title: 'Building a living design system from scratch', tag: 'Tutorial', readTime: '12 min' },
-  { date: '09 MAR', title: "Design tokens are databases. Let's treat them that way.", tag: 'Opinion', readTime: '6 min' }];
+  const diary = diaryEntries;
 
   return (
     <section id="playground" className="playground-section">
@@ -297,7 +305,7 @@ const PlaygroundSection = () => {
         {/* Diary header */}
         <div className="pg-diary-header">
           <span className="pg-diary-title">Diary</span>
-          <span className="pg-diary-count">{diary.length} entries</span>
+          <span className="pg-diary-count">{diaryTotal} entries</span>
           <a href="#" className="pg-diary-link">Read all</a>
         </div>
 

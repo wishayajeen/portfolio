@@ -2,7 +2,7 @@
 title: "I Built My Portfolio in 2 Days"
 description: "A practical guide for designers who want to publish their own portfolio quickly."
 date: 2026-04-28
-tag: "Build in public"
+tag: "Tutorial"
 readTime: "3 min"
 ---
 
