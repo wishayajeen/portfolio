@@ -1,6 +1,7 @@
 ---
 import '/src/styles/tokens.css'
 import '/src/styles/homepage.css'
+import Analytics from '@vercel/analytics/astro'
 ---
 
 <html lang="en">
@@ -17,5 +18,6 @@ import '/src/styles/homepage.css'
   </head>
   <body>
     <slot />
+    <Analytics />
   </body>
 </html>
