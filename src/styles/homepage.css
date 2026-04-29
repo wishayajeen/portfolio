@@ -1237,6 +1237,13 @@ body {
 
   .hero-text { padding: 0 !important; }
 
+  .hero-scroll-indicator {
+    position: static;
+    transform: none;
+    align-self: center;
+    padding: 8px 0 40px;
+  }
+
   .pocky-circle {
     position: relative;
     top: auto;
