@@ -1536,6 +1536,18 @@ body {
   color: var(--fg-secondary);
 }
 
+.article-content a {
+  color: var(--fg-primary);
+  text-decoration: none;
+  box-shadow: inset 0 -0.12em 0 var(--fg-primary);
+  transition: box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+
+.article-content a:hover {
+  box-shadow: inset 0 -1.5em 0 var(--color-black);
+  color: var(--color-yellow);
+}
+
 .article-content h2 {
   margin-top: 48px;
   margin-bottom: 16px;
