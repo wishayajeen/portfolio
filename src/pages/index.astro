@@ -528,26 +528,29 @@ const Footer = () => {
               I'm always up for interesting conversations about design, AI, and building things in public. Drop me a line.
             </p>
 
-            {!sent ?
-            <div className="footer-email-row">
-                <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-                placeholder="your@email.com"
-                className="footer-email-input" />
-                <button onClick={handleSend} className="footer-email-btn"
-                onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-1px)'}
-                onMouseLeave={(e) => e.currentTarget.style.transform = ''}>
-                  Send →
-                </button>
-              </div> :
-            <div className="footer-success">
-                <span className="footer-success-dot" />
-                Got it! I'll be in touch soon.
-              </div>
-            }
+            {/* TODO: wire up to a form service (e.g. Formspree) before un-hiding */}
+            <div style={{ display: 'none' }}>
+              {!sent ?
+              <div className="footer-email-row">
+                  <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  onKeyDown={(e) => e.key === 'Enter' && handleSend()}
+                  placeholder="your@email.com"
+                  className="footer-email-input" />
+                  <button onClick={handleSend} className="footer-email-btn"
+                  onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-1px)'}
+                  onMouseLeave={(e) => e.currentTarget.style.transform = ''}>
+                    Send →
+                  </button>
+                </div> :
+              <div className="footer-success">
+                  <span className="footer-success-dot" />
+                  Got it! I'll be in touch soon.
+                </div>
+              }
+            </div>
 
             <div className="footer-contact-row">
               <div className="footer-email-copy-group">
