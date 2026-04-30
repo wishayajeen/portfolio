@@ -211,7 +211,7 @@ const Hero = () => {
             { label: 'GitHub', href: 'https://github.com/wishayajeen' },
             { label: 'LinkedIn', href: 'https://www.linkedin.com/in/wsjeen/' }].
             map(({ label, href }) =>
-            <a key={label} href={href}
+            <a key={label} href={href} target="_blank" rel="noopener noreferrer"
             className="hero-social-link"
             onMouseEnter={(e) => {e.currentTarget.style.color = '#F3FE52';e.currentTarget.style.borderBottomColor = '#F3FE52';}}
             onMouseLeave={(e) => {e.currentTarget.style.color = '';e.currentTarget.style.borderBottomColor = '';}}>
