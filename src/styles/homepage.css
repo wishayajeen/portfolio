@@ -1567,6 +1567,34 @@ body {
   margin-bottom: 8px;
 }
 
+/* Inline code */
+.article-content :not(pre) > code {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  background: var(--color-gray-200);
+  color: var(--color-gray-700);
+  padding: 2px 6px;
+  border-radius: var(--radius-xs);
+}
+
+/* Code blocks */
+.article-content pre {
+  background: var(--color-gray-100);
+  border-radius: var(--radius-xs);
+  padding: 20px 24px;
+  overflow-x: auto;
+  margin: 24px 0;
+}
+
+.article-content pre code {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--color-gray-700);
+  background: none;
+  padding: 0;
+  border-radius: 0;
+}
+
 .article-content img {
   width: 100%;
   max-width: 720px;
