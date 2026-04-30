@@ -17,28 +17,32 @@ const { Content } = await render(entry);
 
 <Layout>
   <main class="article-page">
-    <a href="/" class="article-back-link">← Back home</a>
+
+    <div class="article-header">
+      <div class="article-header-inner">
+        <a href="/" class="article-back-link">← Back home</a>
+        <p class="article-eyebrow">{entry.data.tag}</p>
+        <h1 class="article-title">{entry.data.title}</h1>
+        <p class="article-description">{entry.data.description}</p>
+        <div class="article-meta">
+          <time datetime={entry.data.date.toISOString()}>
+            {entry.data.date.toLocaleDateString('en-CA', {
+              month: 'short',
+              day: 'numeric',
+              year: 'numeric'
+            })}
+          </time>
+          <span>·</span>
+          <span>{entry.data.readTime} read</span>
+        </div>
+      </div>
+    </div>
 
     <article class="article">
-      <p class="article-eyebrow">{entry.data.tag}</p>
-      <h1 class="article-title">{entry.data.title}</h1>
-      <p class="article-description">{entry.data.description}</p>
-
-      <div class="article-meta">
-        <time datetime={entry.data.date.toISOString()}>
-          {entry.data.date.toLocaleDateString('en-CA', {
-            month: 'short',
-            day: 'numeric',
-            year: 'numeric'
-          })}
-        </time>
-        <span>·</span>
-        <span>{entry.data.readTime} read</span>
-      </div>
-
       <div class="article-content">
         <Content />
       </div>
     </article>
+
   </main>
 </Layout>
