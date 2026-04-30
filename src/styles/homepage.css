@@ -1567,6 +1567,15 @@ body {
   margin-bottom: 8px;
 }
 
+.article-content hr {
+  width: 192px;
+  height: 4px;
+  margin: 40px auto;
+  background: var(--color-gray-300);
+  border: 0;
+  border-radius: 2px;
+}
+
 /* Inline code */
 .article-content :not(pre) > code {
   font-family: var(--font-mono);
