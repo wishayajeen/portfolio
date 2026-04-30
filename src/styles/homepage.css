@@ -994,6 +994,12 @@ body {
   display: block;
 }
 
+.footer-success--inline {
+  padding: 2px 12px 2px 10px;
+  font-size: var(--text-sm);
+  gap: 5px;
+}
+
 .footer-contact-row {
   display: flex;
   gap: 16px;

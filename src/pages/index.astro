@@ -4,12 +4,14 @@ import logoUrl from '../assets/logo.svg'
 import pockyIdleUrl from '../assets/pocky-idle.svg'
 import pockyProfileUrl from '../assets/pocky-profile.svg'
 import copyIconUrl from '../assets/feather_copy.svg?url'
+import checkIconUrl from '../assets/feather_check.svg?url'
 import { getCollection } from 'astro:content'
 
 const logoSrc = typeof logoUrl === 'string' ? logoUrl : logoUrl.src;
 const pockyIdleSrc = typeof pockyIdleUrl === 'string' ? pockyIdleUrl : pockyIdleUrl.src;
 const pockyProfileSrc = typeof pockyProfileUrl === 'string' ? pockyProfileUrl : pockyProfileUrl.src;
 const copyIconSrc = typeof copyIconUrl === 'string' ? copyIconUrl : copyIconUrl.src;
+const checkIconSrc = typeof checkIconUrl === 'string' ? checkIconUrl : checkIconUrl.src;
 
 const MONTHS = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
 const allDiary = await getCollection('diary');
@@ -27,12 +29,13 @@ const diaryTotal = allDiary.length;
 <Layout>
   <div id="root"></div>
 
-  <script is:inline define:vars={{ logoSrc, pockyIdleSrc, pockyProfileSrc, copyIconSrc, diaryEntries, diaryTotal }} type="text/babel">
+  <script is:inline define:vars={{ logoSrc, pockyIdleSrc, pockyProfileSrc, copyIconSrc, checkIconSrc, diaryEntries, diaryTotal }} type="text/babel">
 const ASSETS = {
   logo: logoSrc,
   pockyIdle: pockyIdleSrc,
   pockyProfile: pockyProfileSrc,
   copyIcon: copyIconSrc,
+  checkIcon: checkIconSrc,
 };
 
 
@@ -498,11 +501,14 @@ const Footer = () => {
     if (email.trim()) { setSent(true); }
   };
 
+  const [copied, setCopied] = React.useState(false);
   const contactEmail = 'wpjeen@gmail.com';
 
   const copyEmail = async () => {
     try {
       await navigator.clipboard.writeText(contactEmail);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2500);
     } catch {
       // Ignore clipboard failures silently to avoid breaking footer interactions.
     }
@@ -553,12 +559,21 @@ const Footer = () => {
             </div>
 
             <div className="footer-contact-row">
-              <div className="footer-email-copy-group">
-                <a href={`mailto:${contactEmail}`} className="footer-contact-link">{contactEmail}</a>
-                <button type="button" className="footer-copy-btn" onClick={copyEmail} aria-label="Copy email address">
-                  <img src={ASSETS.copyIcon} alt="" className="footer-copy-icon" aria-hidden="true" />
-                </button>
-              </div>
+              {copied ? (
+                <div className="footer-success footer-success--inline">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                  Copied!
+                </div>
+              ) : (
+                <div className="footer-email-copy-group">
+                  <a href={`mailto:${contactEmail}`} className="footer-contact-link">{contactEmail}</a>
+                  <button type="button" className="footer-copy-btn" onClick={copyEmail} aria-label="Copy email address">
+                    <img src={ASSETS.copyIcon} alt="" className="footer-copy-icon" aria-hidden="true" />
+                  </button>
+                </div>
+              )}
               <span className="footer-contact-divider">or find me on</span>
               {[
                 { label: 'GitHub', href: 'https://github.com/wishayajeen' },
