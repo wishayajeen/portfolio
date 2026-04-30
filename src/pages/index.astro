@@ -2,12 +2,14 @@
 import Layout from '../layouts/Layout.astro'
 import logoUrl from '../assets/logo.svg'
 import pockyIdleUrl from '../assets/pocky-idle.svg'
-import pockyWritingUrl from '../assets/pocky-writing.svg'
+import pockyProfileUrl from '../assets/pocky-profile.svg'
+import copyIconUrl from '../assets/feather_copy.svg?url'
 import { getCollection } from 'astro:content'
 
 const logoSrc = typeof logoUrl === 'string' ? logoUrl : logoUrl.src;
 const pockyIdleSrc = typeof pockyIdleUrl === 'string' ? pockyIdleUrl : pockyIdleUrl.src;
-const pockyWritingSrc = typeof pockyWritingUrl === 'string' ? pockyWritingUrl : pockyWritingUrl.src;
+const pockyProfileSrc = typeof pockyProfileUrl === 'string' ? pockyProfileUrl : pockyProfileUrl.src;
+const copyIconSrc = typeof copyIconUrl === 'string' ? copyIconUrl : copyIconUrl.src;
 
 const MONTHS = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
 const allDiary = await getCollection('diary');
@@ -25,11 +27,12 @@ const diaryTotal = allDiary.length;
 <Layout>
   <div id="root"></div>
 
-  <script is:inline define:vars={{ logoSrc, pockyIdleSrc, pockyWritingSrc, diaryEntries, diaryTotal }} type="text/babel">
+  <script is:inline define:vars={{ logoSrc, pockyIdleSrc, pockyProfileSrc, copyIconSrc, diaryEntries, diaryTotal }} type="text/babel">
 const ASSETS = {
   logo: logoSrc,
   pockyIdle: pockyIdleSrc,
-  pockyProfile: pockyWritingSrc,
+  pockyProfile: pockyProfileSrc,
+  copyIcon: copyIconSrc,
 };
 
 
@@ -202,9 +205,8 @@ const Hero = () => {
           <div className="hero-social-row">
             <span className="hero-social-label">Find me on</span>
             {[
-            { label: 'Twitter / X', href: '#' },
-            { label: 'GitHub', href: '#' },
-            { label: 'LinkedIn', href: '#' }].
+            { label: 'GitHub', href: 'https://github.com/wishayajeen' },
+            { label: 'LinkedIn', href: 'https://www.linkedin.com/in/wsjeen/' }].
             map(({ label, href }) =>
             <a key={label} href={href}
             className="hero-social-link"
@@ -496,6 +498,16 @@ const Footer = () => {
     if (email.trim()) { setSent(true); }
   };
 
+  const contactEmail = 'wpjeen@gmail.com';
+
+  const copyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText(contactEmail);
+    } catch {
+      // Ignore clipboard failures silently to avoid breaking footer interactions.
+    }
+  };
+
   const scrollTo = (id) => {
     const el = document.getElementById(id);
     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -538,10 +550,18 @@ const Footer = () => {
             }
 
             <div className="footer-contact-row">
-              <a href="mailto:jeen@example.com" className="footer-contact-link">jeen@example.com</a>
+              <div className="footer-email-copy-group">
+                <a href={`mailto:${contactEmail}`} className="footer-contact-link">{contactEmail}</a>
+                <button type="button" className="footer-copy-btn" onClick={copyEmail} aria-label="Copy email address">
+                  <img src={ASSETS.copyIcon} alt="" className="footer-copy-icon" aria-hidden="true" />
+                </button>
+              </div>
               <span className="footer-contact-divider">or find me on</span>
-              {['Twitter / X', 'LinkedIn', 'GitHub'].map((s) =>
-              <a key={s} href="#" className="footer-contact-link">{s}</a>
+              {[
+                { label: 'GitHub', href: 'https://github.com/wishayajeen' },
+                { label: 'LinkedIn', href: 'https://www.linkedin.com/in/wsjeen/' },
+              ].map(({ label, href }) =>
+              <a key={label} href={href} className="footer-contact-link" target="_blank" rel="noopener noreferrer">{label}</a>
               )}
             </div>
           </div>
@@ -556,7 +576,6 @@ const Footer = () => {
             {/* Left: brand */}
             <div>
               <div className="footer-brand-header">
-                <img src={ASSETS.logo} width="22" height="22" alt="Jeen" className="footer-brand-logo" />
                 <span className="footer-brand-name">Jeen</span>
               </div>
               <p className="footer-brand-desc">
@@ -571,8 +590,7 @@ const Footer = () => {
             {/* Nav columns */}
             <div className="footer-nav-cols">
               {[
-              { title: 'Navigate', links: [['Playground', 'playground'], ['About', 'about'], ['Work', 'work']] },
-              { title: 'Connect', links: [['Twitter / X', null], ['GitHub', null], ['LinkedIn', null], ['Email', null]] }].
+              { title: 'Navigate', links: [['Playground', 'playground'], ['About', 'about'], ['Work', 'work']] }].
               map((col) =>
               <div key={col.title} className="footer-nav-col">
                   <div className="footer-nav-heading">{col.title}</div>
@@ -602,8 +620,11 @@ const Footer = () => {
               © 2026 Jeen. Built as a living system.
             </span>
             <div className="footer-social-links">
-              {['Twitter', 'GitHub', 'LinkedIn'].map((s) =>
-              <a key={s} href="#" className="social-pill">{s}</a>
+              {[
+                { label: 'GitHub', href: 'https://github.com/wishayajeen' },
+                { label: 'LinkedIn', href: 'https://www.linkedin.com/in/wsjeen/' },
+              ].map(({ label, href }) =>
+              <a key={label} href={href} className="social-pill" target="_blank" rel="noopener noreferrer">{label}</a>
               )}
             </div>
           </div>

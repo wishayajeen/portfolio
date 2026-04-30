@@ -365,7 +365,7 @@ body {
 
 .play-card--accent .play-card-tag {
   background: var(--color-black);
-  color: var(--fg-on-dark-label);
+  color: var(--fg-on-dark-accent);
 }
 
 .play-card-title {
@@ -1002,6 +1002,12 @@ body {
   align-items: center;
 }
 
+.footer-email-copy-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .footer-contact-link {
   font-family: var(--font-body);
   font-size: var(--text-sm);
@@ -1013,6 +1019,31 @@ body {
 }
 
 .footer-contact-link:hover { color: var(--fg-primary); }
+
+.footer-copy-btn {
+  width: 16px;
+  height: 16px;
+  border: none;
+  background: transparent;
+  color: var(--color-gray-500);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  transition: color var(--duration-fast), opacity var(--duration-fast);
+}
+
+.footer-copy-btn:hover {
+  color: var(--fg-primary);
+  opacity: 1;
+}
+
+.footer-copy-icon {
+  width: 14px;
+  height: 14px;
+  display: block;
+}
 
 .footer-contact-divider {
   color: var(--color-gray-500);
@@ -1108,12 +1139,15 @@ body {
 .footer-link {
   font-family: var(--font-body);
   font-size: var(--text-sm);
+  line-height: var(--leading-normal);
   color: var(--fg-on-dark-label);
   background: none;
   border: none;
   cursor: pointer;
   padding: 0;
+  display: block;
   text-align: left;
+  text-decoration: none;
   transition: color var(--duration-fast);
 }
 
