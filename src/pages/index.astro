@@ -244,18 +244,29 @@ const Hero = () => {
 };
 
 /* ─── PLAYGROUND ─────────────────────────────────────────────────── */
-const PlaygroundCard = ({ tag, title, desc, accent }) => (
-  <div className={`play-card${accent ? ' play-card--accent' : ''}`}>
-    <div className="play-card-header">
-      <span className="play-card-tag">{tag}</span>
-    </div>
-    <div>
-      <h3 className="play-card-title">{title}</h3>
-      <p className="play-card-desc">{desc}</p>
-    </div>
-    <span className="play-card-cta">Explore →</span>
-  </div>
-);
+const PlaygroundCard = ({ tag, title, desc, accent, href, comingSoon }) => {
+  const inner = (
+    <>
+      <div className="play-card-header">
+        <span className="play-card-tag">{tag}</span>
+        {comingSoon && (
+          <span className="work-coming-soon-badge" style={{ top: 0, marginLeft: 0 }}>
+            <span className="work-coming-soon-dot" />
+            Coming soon
+          </span>
+        )}
+      </div>
+      <div>
+        <h3 className="play-card-title">{title}</h3>
+        <p className="play-card-desc">{desc}</p>
+      </div>
+      <span className="play-card-cta">Explore →</span>
+    </>
+  );
+  return href
+    ? <a href={href} target="_blank" rel="noopener noreferrer" className={`play-card${accent ? ' play-card--accent' : ''}`}>{inner}</a>
+    : <div className={`play-card${accent ? ' play-card--accent' : ''}`}>{inner}</div>;
+};
 
 const DiaryCard = ({ date, title, tag, readTime, slug }) => (
   <a href={`/diary/${slug}/`} className="diary-card">
@@ -278,10 +289,10 @@ const DiaryCard = ({ date, title, tag, readTime, slug }) => (
 
 const PlaygroundSection = () => {
   const experiments = [
-  { tag: 'Experiment', title: 'Ask Pocky', desc: 'My AI design agent — query the design system, my process, and work history via chat.', emoji: '🐱', accent: true },
-  { tag: 'Experiment', title: 'Design dashboard', desc: 'A live public view of the system — components, colors, decisions, all in one place.', emoji: '📊', accent: false },
-  { tag: 'Experiment', title: 'Component sandbox', desc: 'Interactive playground to test and compose components from the design system in real time.', emoji: '⚡', accent: false },
-  { tag: 'AI Product', title: 'PersonaLens.app', desc: 'Get realistic AI-driven feedback on your designs from simulated user personas.', emoji: '⚡', accent: false },
+  { tag: 'Experiment', title: 'Ask Pocky', desc: 'My AI design agent — query the design system, my process, and work history via chat.', emoji: '🐱', accent: true, comingSoon: true },
+  { tag: 'Experiment', title: 'Design dashboard', desc: 'A live public view of the system — components, colors, decisions, all in one place.', emoji: '📊', accent: false, comingSoon: true },
+  { tag: 'Experiment', title: 'Component sandbox', desc: 'Interactive playground to test and compose components from the design system in real time.', emoji: '⚡', accent: false, comingSoon: true },
+  { tag: 'AI Product', title: 'PersonaLens.app', desc: 'Get realistic AI-driven feedback on your designs from simulated user personas.', emoji: '⚡', accent: false, href: 'https://www.personalens.app/' },
   ];
 
   const diary = diaryEntries;
