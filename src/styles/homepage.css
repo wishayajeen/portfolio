@@ -9,8 +9,16 @@ body {
 }
 
 ::selection {
-    background: var(--color-yellow);
-    color: var(--color-black);
+  background: var(--color-yellow);
+  color: var(--color-black);
+}
+
+/* Dark selection on yellow-background sections so highlighted text stays visible */
+.about-section ::selection,
+.play-card--accent ::selection,
+.footer-cta ::selection {
+  background: var(--color-black);
+  color: var(--color-white);
 }
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: #0A0A0A; }
