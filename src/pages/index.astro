@@ -367,7 +367,7 @@ const AboutSection = () => {
                 {[
                 { num: '10+', label: 'Years designing' },
                 { num: '22+', label: 'Projects shipped' },
-                { num: '2', label: 'Talks given' }].
+                { num: '3', label: 'Talks given' }].
                 map(({ num, label }) =>
                 <div key={label} className="about-stat">
                     <div className="about-stat-num">{num}</div>
@@ -388,48 +388,30 @@ const WorkSection = () => {
   const projects = [
   {
     num: '01',
-    tag: 'Design system',
-    title: 'Agentic design system',
-    desc: 'A living portfolio that exists as structured, queryable data. The system is the product — and this site is the demo.',
+    tag: 'Talk',
+    title: 'From Dead to Living: Building a Design System with AI',
+    desc: 'A 30-minute talk on how AI changes the way we build and evolve design systems, from static libraries to living systems.',
     year: '2026',
-    role: 'Solo — design + build',
-    tools: ['Figma', 'React', 'Claude API']
+    role: 'Speaker',
+    tools: ['Figma Slides', 'Figma MCP', 'Claude Code']
   },
   {
     num: '02',
-    tag: 'Product design',
-    title: 'Ask Pocky — AI design interface',
-    desc: 'Chat-based interface for querying design decisions, process notes, and past work. Built on Claude, styled with Jeen\'s design system.',
-    year: '2026',
+    tag: 'AI product design',
+    title: 'Agentic Network Submission (ANS)',
+    desc: 'Agentic AI workflow for automating compliance declarations. Built with AI-first delivery to reduce manual effort, improve data accuracy, and scale faster.',
+    year: '2025',
     role: 'Design lead',
-    tools: ['Figma', 'React', 'Anthropic API']
+    tools: ['Figma', 'UXPilot']
   },
   {
     num: '03',
-    tag: 'Talk',
-    title: 'Design × AI — a field guide',
-    desc: 'A 40-minute talk on what actually changes when you design with and for AI systems. Slides, notes, and video published publicly.',
-    year: '2025',
-    role: 'Speaker + deck design',
-    tools: ['Keynote', 'Figma']
-  },
-  {
-    num: '04',
-    tag: 'Dashboard',
-    title: 'Public design dashboard',
-    desc: 'The design system made visible — tokens, components, and decisions exposed as a shareable, browsable artifact.',
-    year: '2025',
-    role: 'Solo — design + code',
-    tools: ['Next.js', 'Figma', 'Vercel']
-  },
-  {
-    num: '05',
-    tag: 'Content',
-    title: 'Design tokens are databases',
-    desc: 'Article + video series on treating design tokens as structured data. 10k+ views. Turned into a talk at Config 2025.',
-    year: '2025',
-    role: 'Writer + designer',
-    tools: ['Substack', 'Figma']
+    tag: 'Design System',
+    title: 'Design System × Marketplace — from fragmented to unified',
+    desc: 'Design system-led rebuild of a complex marketplace. Established tokens, components, and governance to enable consistency, faster delivery, and scalable growth.',
+    year: '2023',
+    role: 'Solo — design + build',
+    tools: ['Figma']
   }];
 
   return (
