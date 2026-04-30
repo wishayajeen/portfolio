@@ -147,6 +147,37 @@ body {
   letter-spacing: 0.05em;
 }
 
+.work-coming-soon-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(255, 80, 80, 0.1);
+  border: 1px solid rgba(255, 80, 80, 0.25);
+  border-radius: var(--radius-full);
+  padding: 3px 10px;
+  margin-left: 12px;
+  vertical-align: middle;
+  position: relative;
+  top: 4px;
+}
+
+.work-coming-soon-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #FF5050;
+  display: block;
+  flex-shrink: 0;
+}
+
+.work-coming-soon-badge-label,
+.work-coming-soon-badge {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: #FF5050;
+  letter-spacing: 0.05em;
+}
+
 .hero-headline {
   font-family: var(--font-display);
   font-weight: 700;

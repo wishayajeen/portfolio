@@ -440,7 +440,13 @@ const WorkSection = () => {
         <div className="work-header">
           <div>
             <div className="work-eyebrow">work</div>
-            <h2 className="work-headline">Selected projects</h2>
+            <h2 className="work-headline">
+              Selected projects
+              <span className="work-coming-soon-badge">
+                <span className="work-coming-soon-dot" />
+                Coming soon
+              </span>
+            </h2>
           </div>
           <span className="work-count">{projects.length} projects</span>
         </div>
