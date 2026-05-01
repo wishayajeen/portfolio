@@ -303,24 +303,18 @@ const description = "A living design system. Tokens, principles, and components 
     .principle-title { font-family: var(--font-display); font-size: var(--text-base); font-weight: 600; margin: 0 0 var(--space-2); }
     .principle-body { font-size: var(--text-sm); color: var(--fg-secondary); line-height: var(--leading-relaxed); margin: 0; }
 
-    /* ── Discrepancy flag ── */
-    .flag-card {
-      background: #FFF9E6;
-      border: 2px solid var(--color-yellow);
+    /* ── Discrepancy cards ── */
+    .disc-card {
+      background: var(--bg-surface-raised);
+      border: var(--border-primary);
       border-radius: var(--radius-md);
       padding: var(--space-5);
+      box-shadow: var(--shadow-md);
       margin-bottom: var(--space-4);
     }
-    .flag-header { display: flex; align-items: center; gap: var(--space-2); margin-bottom: var(--space-2); }
-    .flag-icon { font-size: 1rem; }
-    .flag-title { font-family: var(--font-display); font-size: var(--text-base); font-weight: 600; color: #5A4200; }
-    .flag-body  { font-size: var(--text-sm); color: #5A4200; line-height: var(--leading-relaxed); margin: 0; }
-    .flag-resolved {
-      background: var(--color-gray-100);
-      border-color: var(--color-gray-300);
-    }
-    .flag-resolved .flag-title,
-    .flag-resolved .flag-body { color: var(--fg-secondary); }
+    .disc-card-header { display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-3); }
+    .disc-card-title  { font-family: var(--font-display); font-size: var(--text-base); font-weight: 600; color: var(--fg-primary); margin: 0; }
+    .disc-card-body   { font-size: var(--text-sm); color: var(--fg-secondary); line-height: var(--leading-relaxed); margin: 0; }
 
     /* ── Table ── */
     .ds-table { width: 100%; border-collapse: collapse; font-size: var(--text-sm); }
@@ -1116,68 +1110,75 @@ const description = "A living design system. Tokens, principles, and components 
       <h2 class="ds-section-title">Discrepancies & decisions</h2>
     </div>
     <p style="font-size:var(--text-sm);color:var(--fg-secondary);margin-bottom:var(--space-6);">
-      Differences found between the live project and the Jeen Design System spec. ✅ = resolved, ⚠️ = needs decision.
+      Differences found between the live project and the Jeen Design System spec.
     </p>
 
-    <!-- Resolved -->
-    <div class="flag-card flag-resolved">
-      <div class="flag-header">
-        <span class="flag-icon">✅</span>
-        <span class="flag-title">--fg-tertiary: gray-500 → gray-400 (WCAG fix)</span>
+    <div class="disc-card">
+      <div class="disc-card-header">
+        <span class="ds-badge ds-badge-success"><span class="dot"></span>Resolved</span>
+        <h3 class="disc-card-title">--fg-tertiary: gray-500 → gray-400 (WCAG fix)</h3>
       </div>
-      <p class="flag-body">Project had <code class="ds-code">--fg-tertiary: gray-500 (#6A6A60)</code> which fails WCAG AA on dark (#0A0A0A) backgrounds. DS spec uses gray-400 (#9A9A90, ~5:1). <strong>Decision: applied DS value to main.</strong></p>
+      <p class="disc-card-body">Project had <code class="ds-code">--fg-tertiary: gray-500 (#6A6A60)</code> which fails WCAG AA on dark (#0A0A0A) backgrounds. DS spec uses gray-400 (#9A9A90, ~5:1). <strong>Decision: applied DS value to main.</strong></p>
     </div>
 
-    <div class="flag-card flag-resolved">
-      <div class="flag-header">
-        <span class="flag-icon">✅</span>
-        <span class="flag-title">Nav CTA shadow: shadow-lg → shadow-sm</span>
+    <div class="disc-card">
+      <div class="disc-card-header">
+        <span class="ds-badge ds-badge-success"><span class="dot"></span>Resolved</span>
+        <h3 class="disc-card-title">Nav CTA shadow: shadow-lg → shadow-sm</h3>
       </div>
-      <p class="flag-body">DS preview showed smaller 2px 2px shadow on nav CTA vs the larger 5px used in project. <strong>Decision: use DS-preview (2px default, 3px hover) — feels more proportionate for a small nav element.</strong></p>
+      <p class="disc-card-body">DS preview showed smaller 2px 2px shadow on nav CTA vs the larger 5px used in project. <strong>Decision: use DS-preview (2px default, 3px hover) — feels more proportionate for a small nav element.</strong></p>
     </div>
 
-    <div class="flag-card flag-resolved">
-      <div class="flag-header">
-        <span class="flag-icon">✅</span>
-        <span class="flag-title">Card hover lift: translateY(-3px) → -2px</span>
+    <div class="disc-card">
+      <div class="disc-card-header">
+        <span class="ds-badge ds-badge-success"><span class="dot"></span>Resolved</span>
+        <h3 class="disc-card-title">Card hover lift: translateY(-3px) → -2px</h3>
       </div>
-      <p class="flag-body">DS spec defines 2px lift on card hover. Project had 3px. <strong>Decision: reduced to -2px to match DS spec.</strong></p>
+      <p class="disc-card-body">DS spec defines 2px lift on card hover. Project had 3px. <strong>Decision: reduced to -2px to match DS spec.</strong></p>
     </div>
 
-    <div class="flag-card flag-resolved">
-      <div class="flag-header">
-        <span class="flag-icon">✅</span>
-        <span class="flag-title">Hero badge style: ghost (current) vs solid yellow (DS)</span>
+    <div class="disc-card">
+      <div class="disc-card-header">
+        <span class="ds-badge ds-badge-success"><span class="dot"></span>Resolved</span>
+        <h3 class="disc-card-title">Hero badge style: ghost (current) vs solid yellow (DS)</h3>
       </div>
-      <p class="flag-body">DS spec shows hero role badge as solid yellow pill. Live project uses ghost style (transparent bg, gray border). <strong>Decision: keep current ghost style — it feels less heavy in the hero.</strong></p>
+      <p class="disc-card-body">DS spec shows hero role badge as solid yellow pill. Live project uses ghost style (transparent bg, gray border). <strong>Decision: keep current ghost style — it feels less heavy in the hero.</strong></p>
     </div>
 
-    <div class="flag-card">
-      <div class="flag-header">
-        <span class="flag-icon">⚠️</span>
-        <span class="flag-title">Project-only tokens: code block, HR, coming-soon color</span>
+    <div class="disc-card">
+      <div class="disc-card-header">
+        <span class="ds-badge ds-badge-yellow">Open</span>
+        <h3 class="disc-card-title">Project-only tokens: code block, HR, coming-soon color</h3>
       </div>
-      <p class="flag-body">The diary page introduces tokens not in the original DS: inverted code blocks (black bg, white text), styled HRs (gray-300 border), coming-soon badge color (#FF5050). These are project additions — consider adding them to the DS token set formally.</p>
+      <p class="disc-card-body">The diary page introduces tokens not in the original DS: inverted code blocks (black bg, white text), styled HRs (gray-300 border), coming-soon badge color (#FF5050). These are project additions — consider adding them to the DS token set formally.</p>
     </div>
 
-    <div class="flag-card">
-      <div class="flag-header">
-        <span class="flag-icon">⚠️</span>
-        <span class="flag-title">Ghost badges not in DS spec</span>
+    <div class="disc-card">
+      <div class="disc-card-header">
+        <span class="ds-badge ds-badge-yellow">Open</span>
+        <h3 class="disc-card-title">Ghost badges not in DS spec</h3>
       </div>
-      <p class="flag-body">The Playground section uses ghost-style category labels (transparent bg, gray-300 border) not defined in the DS badge set. The DS only specifies solid variants (yellow, dark, outline, gray, success, error). Consider adding Ghost and Coming-soon as official variants.</p>
+      <p class="disc-card-body">The Playground section uses ghost-style category labels (transparent bg, gray-300 border) not defined in the DS badge set. The DS only specifies solid variants (yellow, dark, outline, gray, success, error). Consider adding Ghost and Coming-soon as official variants.</p>
     </div>
 
-    <div class="flag-card">
-      <div class="flag-header">
-        <span class="flag-icon">⚠️</span>
-        <span class="flag-title">Doodle illustrations: placeholders only</span>
+    <div class="disc-card">
+      <div class="disc-card-header">
+        <span class="ds-badge ds-badge-yellow">Open</span>
+        <h3 class="disc-card-title">Doodle illustrations: placeholders only</h3>
       </div>
-      <p class="flag-body">DS spec calls for hand-drawn SVG doodles as decorative layer (1–3 per section, black line art). Currently only <code class="ds-code">feather_copy.svg</code> and <code class="ds-code">feather_check.svg</code> are in use. Full doodle illustration set to be provided by Jeen.</p>
+      <p class="disc-card-body">DS spec calls for hand-drawn SVG doodles as decorative layer (1–3 per section, black line art). Currently only <code class="ds-code">feather_copy.svg</code> and <code class="ds-code">feather_check.svg</code> are in use. Full doodle illustration set to be provided by Jeen.</p>
     </div>
   </section>
 
 </div><!-- end .ds-page -->
+
+<!-- Dark footer -->
+<div class="article-footer">
+  <div class="article-footer-inner">
+    <a href="/" class="article-footer-link">← Back home</a>
+    <a href="#" onclick="window.scrollTo({ top: 0, behavior: 'smooth' }); return false;" class="article-footer-link">↑ Top</a>
+  </div>
+</div>
 
 <!-- Floating TOC -->
 <nav class="toc" aria-label="Page sections">
