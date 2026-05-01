@@ -232,7 +232,7 @@ const lastUpdated = new Date().toLocaleDateString('en-US', { month: 'short', day
     .ds-badge-error   { background: #FF4444; color: var(--color-white); }
     /* Ghost — current project style */
     .ds-badge-ghost   { background: transparent; color: var(--color-gray-700); border: 1.5px solid var(--color-gray-300); }
-    .ds-badge-coming  { background: transparent; color: #FF5050; border: 1.5px solid #FF5050; }
+    .ds-badge-coming  { background: transparent; color: var(--color-error); border: 1.5px solid var(--color-error); }
     .dot { display: block; flex-shrink: 0; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
 
     /* Tags */
@@ -672,8 +672,7 @@ const lastUpdated = new Date().toLocaleDateString('en-US', { month: 'short', day
       <div class="swatch-grid">
         <div class="swatch-item"><div class="swatch-color" style="background:#3DFE87;"></div><div class="swatch-info"><span class="swatch-name">--color-success</span><span class="swatch-hex">#3DFE87</span><span class="swatch-use">Live indicator, success state</span></div></div>
         <div class="swatch-item"><div class="swatch-color" style="background:#F3FE52;"></div><div class="swatch-info"><span class="swatch-name">--color-warning</span><span class="swatch-hex">#F3FE52</span><span class="swatch-use">Warning (= yellow)</span></div></div>
-        <div class="swatch-item"><div class="swatch-color" style="background:#FF4444;"></div><div class="swatch-info"><span class="swatch-name">--color-error</span><span class="swatch-hex">#FF4444</span><span class="swatch-use">Error, "coming soon" pill dot</span></div></div>
-        <div class="swatch-item"><div class="swatch-color" style="background:#FF5050;"></div><div class="swatch-info"><span class="swatch-name">coming-soon</span><span class="swatch-hex">#FF5050</span><span class="swatch-use">Coming soon badge (project-only)</span></div></div>
+        <div class="swatch-item"><div class="swatch-color" style="background:#FF4444;"></div><div class="swatch-info"><span class="swatch-name">--color-error</span><span class="swatch-hex">#FF4444</span><span class="swatch-use">Error state, coming soon badge</span></div></div>
         <div class="swatch-item"><div class="swatch-color" style="background:#52B8FE;"></div><div class="swatch-info"><span class="swatch-name">--color-info</span><span class="swatch-hex">#52B8FE</span><span class="swatch-use">Informational</span></div></div>
       </div>
     </div>
@@ -1053,13 +1052,13 @@ const lastUpdated = new Date().toLocaleDateString('en-US', { month: 'short', day
           <span class="ds-badge ds-badge-ghost">Experiment</span>
           <span class="ds-badge ds-badge-ghost">Skill</span>
           <span class="ds-badge ds-badge-coming">
-            <span style="width:6px;height:6px;border-radius:50%;background:#FF5050;"></span>
+            <span style="width:6px;height:6px;border-radius:50%;background:var(--color-error);"></span>
             Coming soon
           </span>
         </div>
         <p style="margin:var(--space-3) 0 0;font-size:var(--text-xs);color:var(--fg-tertiary);">
           Ghost badges: transparent bg, gray-300 border, gray-700 text — used for Playground section category labels.<br/>
-          Coming soon: transparent bg, #FF5050 border + text — used in Work + Playground sections.
+          Coming soon: transparent bg, --color-error (#FF4444) border + text — used in Work + Playground sections.
         </p>
       </div>
 
@@ -1221,9 +1220,9 @@ const lastUpdated = new Date().toLocaleDateString('en-US', { month: 'short', day
     <div class="disc-card">
       <div class="disc-card-header">
         <span class="ds-badge ds-badge-yellow">Open</span>
-        <h3 class="disc-card-title">Project-only tokens: code block, HR, coming-soon color</h3>
+        <h3 class="disc-card-title">Project-only tokens: code block, HR</h3>
       </div>
-      <p class="disc-card-body">The diary page introduces tokens not in the original DS: inverted code blocks (black bg, white text), styled HRs (gray-300 border), coming-soon badge color (#FF5050). These are project additions — consider adding them to the DS token set formally.</p>
+      <p class="disc-card-body">The diary page introduces tokens not in the original DS: inverted code blocks (black bg, white text), styled HRs (gray-300 border). These are project additions — consider adding them to the DS token set formally.</p>
     </div>
 
     <div class="disc-card">

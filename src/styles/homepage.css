@@ -151,8 +151,8 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  background: rgba(255, 80, 80, 0.1);
-  border: 1px solid rgba(255, 80, 80, 0.25);
+  background: rgba(255, 68, 68, 0.1);
+  border: 1px solid rgba(255, 68, 68, 0.25);
   border-radius: var(--radius-full);
   padding: 3px 10px;
   margin-left: 12px;
@@ -165,7 +165,7 @@ body {
   width: 5px;
   height: 5px;
   border-radius: 50%;
-  background: #FF5050;
+  background: var(--color-error);
   display: block;
   flex-shrink: 0;
 }
@@ -174,7 +174,7 @@ body {
 .work-coming-soon-badge {
   font-family: var(--font-mono);
   font-size: 11px;
-  color: #FF5050;
+  color: var(--color-error);
   letter-spacing: 0.05em;
 }
 
