@@ -2,6 +2,7 @@
 import '/src/styles/tokens.css';
 const title = "Design System — Jeen";
 const description = "A living design system. Tokens, principles, and components that power Jeen's portfolio.";
+const lastUpdated = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -407,6 +408,7 @@ const description = "A living design system. Tokens, principles, and components 
       <span class="ds-hero-meta-item"><strong>Owner</strong> &nbsp;Jeen (wishayajeen)</span>
       <span class="ds-hero-meta-item"><strong>Co-owner</strong> &nbsp;Pocky</span>
       <span class="ds-hero-meta-item"><strong>Version</strong> &nbsp;1.0</span>
+      <span class="ds-hero-meta-item"><strong>Latest update</strong> &nbsp;{lastUpdated}</span>
     </div>
   </div>
 </div>
