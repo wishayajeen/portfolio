@@ -33,7 +33,7 @@ Cross-check against the unsafe combos from `CLAUDE.md`:
 | `--color-gray-500` / `#6A6A60` on dark bg | ❌ FAIL |
 | `--color-gray-700` / `#3A3A35` on dark bg | ❌ FAIL |
 | `--color-gray-900` / `#1A1A15` on dark bg | ❌ FAIL |
-| Any non-black on yellow bg | ❌ FAIL |
+| Non-`--fg-primary` / non-black on yellow bg | ⚠️ WARNING — prefer `--fg-primary` or `--color-black`; flag unless there is an intentional documented exception |
 
 Report format: `[file]:[line] — "[color]" on "[surface]": FAIL (reason)`
 
@@ -69,7 +69,14 @@ For every new CSS class found in the diff:
 Check if any changed `.astro` page file contains `<html`, `<head`, or `<body` tags.
 - If found and the file is NOT `design-system.astro` → flag as **violation**: must use `Layout.astro`.
 
-## Step 7: Report
+## Step 7: Build check
+
+Run `npm run build` and capture the output.
+
+- If the build passes → record as ✅ in the report.
+- If the build fails → record the error output as an ❌ violation. Do not mark work complete until the build is clean.
+
+## Step 8: Report
 
 Output a structured report:
 
@@ -86,9 +93,12 @@ Files audited: [list]
 ### ✅ Passed checks
 [list of checks with no issues]
 
+### Build
+[PASSED / FAILED — include error output if failed]
+
 ### Summary
-[X violations, Y warnings. Safe to ship / Needs fixes.]
+[X violations, Y warnings. Build: passed/failed. Safe to ship / Needs fixes.]
 ```
 
-If there are zero violations and zero warnings, output:
-`✅ All checks passed. Design system compliant.`
+If there are zero violations, zero warnings, and the build passes, output:
+`✅ All checks passed. Design system compliant. Build clean.`
