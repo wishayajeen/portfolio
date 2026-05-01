@@ -563,6 +563,30 @@ const lastUpdated = new Date().toLocaleDateString('en-US', { month: 'short', day
           </tbody>
         </table>
       </div>
+
+      <div class="ds-sub-label" style="margin-top:var(--space-6);">Safe tokens on dark (#0A0A0A)</div>
+      <div class="dark-text-demo">
+        <div class="dark-text-item">
+          <span class="dark-text-sample" style="color:#FAFAFA;">Primary text</span>
+          <span class="dark-text-token">--fg-on-dark-primary</span>
+          <span class="dark-text-ratio" style="color:#3DFE87;">~19:1 ✓</span>
+        </div>
+        <div class="dark-text-item">
+          <span class="dark-text-sample" style="color:#C8C8C0;">Secondary text</span>
+          <span class="dark-text-token">--fg-on-dark-secondary</span>
+          <span class="dark-text-ratio" style="color:#3DFE87;">~9:1 ✓</span>
+        </div>
+        <div class="dark-text-item">
+          <span class="dark-text-sample" style="color:#9A9A90;">Labels / captions</span>
+          <span class="dark-text-token">--fg-on-dark-label</span>
+          <span class="dark-text-ratio" style="color:#3DFE87;">~5:1 ✓</span>
+        </div>
+        <div class="dark-text-item">
+          <span class="dark-text-sample" style="color:#F3FE52;">Accent text</span>
+          <span class="dark-text-token">--fg-on-dark-accent</span>
+          <span class="dark-text-ratio" style="color:#3DFE87;">~17.6:1 ✓</span>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -675,33 +699,6 @@ const lastUpdated = new Date().toLocaleDateString('en-US', { month: 'short', day
       </div>
     </div>
 
-    <!-- Dark-bg text tokens -->
-    <div class="ds-subsection">
-      <div class="ds-sub-label">Text on dark backgrounds — WCAG AA tokens</div>
-      <div class="dark-text-demo">
-        <div class="dark-text-item">
-          <span class="dark-text-sample" style="color:#FAFAFA;">Primary text</span>
-          <span class="dark-text-token">--fg-on-dark-primary</span>
-          <span class="dark-text-ratio" style="color:#3DFE87;">~19:1 ✓</span>
-        </div>
-        <div class="dark-text-item">
-          <span class="dark-text-sample" style="color:#C8C8C0;">Secondary text</span>
-          <span class="dark-text-token">--fg-on-dark-secondary</span>
-          <span class="dark-text-ratio" style="color:#3DFE87;">~9:1 ✓</span>
-        </div>
-        <div class="dark-text-item">
-          <span class="dark-text-sample" style="color:#9A9A90;">Labels / captions</span>
-          <span class="dark-text-token">--fg-on-dark-label</span>
-          <span class="dark-text-ratio" style="color:#3DFE87;">~5:1 ✓</span>
-        </div>
-        <div class="dark-text-item">
-          <span class="dark-text-sample" style="color:#F3FE52;">Accent text</span>
-          <span class="dark-text-token">--fg-on-dark-accent</span>
-          <span class="dark-text-ratio" style="color:#3DFE87;">~17.6:1 ✓</span>
-        </div>
-      </div>
-      <p style="font-size:var(--text-xs);color:var(--fg-secondary);margin-top:var(--space-2);">⚠️ Never use gray-500 (#6A6A60), gray-700, or gray-900 as text on #0A0A0A — all fail WCAG AA.</p>
-    </div>
   </section>
 
   <!-- ────────────────────────────────────────
