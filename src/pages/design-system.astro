@@ -656,12 +656,8 @@ const lastUpdated = new Date().toLocaleDateString('en-US', { month: 'short', day
         <div class="swatch-item"><div class="swatch-color" style="background:#C8C8C0;"></div><div class="swatch-info"><span class="swatch-name">gray-300</span><span class="swatch-hex">#C8C8C0</span><span class="swatch-use">Text on dark (~9:1)</span></div></div>
         <div class="swatch-item"><div class="swatch-color" style="background:#9A9A90;"></div><div class="swatch-info"><span class="swatch-name">gray-400</span><span class="swatch-hex">#9A9A90</span><span class="swatch-use">Captions, labels (~5:1)</span></div></div>
         <div class="swatch-item">
-          <div class="swatch-color" style="background:#6A6A60;position:relative;">
-            <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
-              <span style="background:#FF4444;color:#fff;font-size:9px;font-weight:700;padding:2px 5px;border-radius:3px;">FAIL WCAG</span>
-            </div>
-          </div>
-          <div class="swatch-info"><span class="swatch-name">gray-500</span><span class="swatch-hex">#6A6A60</span><span class="swatch-use" style="color:#FF4444;">⚠️ Never on dark bg</span></div>
+          <div class="swatch-color" style="background:#6A6A60;"></div>
+          <div class="swatch-info"><span class="swatch-name">gray-500</span><span class="swatch-hex">#6A6A60</span><span class="swatch-use">Light bg only — fails on dark</span></div>
         </div>
         <div class="swatch-item"><div class="swatch-color" style="background:#3A3A35;"></div><div class="swatch-info"><span class="swatch-name">gray-700</span><span class="swatch-hex">#3A3A35</span><span class="swatch-use">Body text on light bg</span></div></div>
         <div class="swatch-item"><div class="swatch-color" style="background:#1A1A15;"></div><div class="swatch-info"><span class="swatch-name">gray-900</span><span class="swatch-hex">#1A1A15</span><span class="swatch-use">Deep dark surface</span></div></div>
