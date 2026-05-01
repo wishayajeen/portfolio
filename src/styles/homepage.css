@@ -229,7 +229,11 @@ body {
   border: 1.5px solid var(--color-yellow);
   box-shadow: 3px 3px 0 0 rgba(243, 254, 82, 0.35);
   cursor: pointer;
+  display: inline-block;
   transition: transform 200ms var(--ease-spring), box-shadow 200ms var(--ease-spring);
+}
+.hero-cta-primary:hover {
+  color: var(--color-black);
 }
 
 .hero-cta-secondary {
