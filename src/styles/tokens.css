@@ -45,7 +45,7 @@
   /* Foregrounds / Text */
   --fg-primary:        var(--color-black);
   --fg-secondary:      var(--color-gray-700);
-  --fg-tertiary:       var(--color-gray-500);
+  --fg-tertiary:       var(--color-gray-400);
   --fg-inverse:        var(--color-white);
   --fg-accent:         var(--color-black); /* text ON yellow bg */
   --fg-link:           var(--color-black);

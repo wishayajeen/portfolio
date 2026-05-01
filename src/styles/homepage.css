@@ -66,8 +66,8 @@ body {
 
 .play-card:hover,
 .diary-card:hover {
-  transform: translateY(-3px);
-  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
 }
 
 .play-card:hover .play-card-cta { opacity: 1; }

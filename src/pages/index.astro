@@ -100,12 +100,12 @@ const Header = () => {
           <button className="nav-cta" onClick={() => scrollTo('footer')} style={{
             fontFamily: "'DM Sans', sans-serif", fontSize: 13, fontWeight: 600,
             background: '#F3FE52', color: '#0A0A0A', padding: '9px 20px',
-            borderRadius: 99, border: '1.5px solid #F3FE52', cursor: 'pointer',
+            borderRadius: 99, border: '1.5px solid #0A0A0A', cursor: 'pointer',
             marginLeft: 8, transition: 'transform 150ms, box-shadow 150ms',
-            boxShadow: '2px 2px 0 0 rgba(243,254,82,0.4)',
+            boxShadow: '2px 2px 0 0 #0A0A0A',
           }}
-            onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-1px)'; }}
-            onMouseLeave={e => { e.currentTarget.style.transform = ''; }}
+            onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-1px)'; e.currentTarget.style.boxShadow = '3px 3px 0 0 #0A0A0A'; }}
+            onMouseLeave={e => { e.currentTarget.style.transform = ''; e.currentTarget.style.boxShadow = '2px 2px 0 0 #0A0A0A'; }}
           >Say hi →</button>
         </div>
 
