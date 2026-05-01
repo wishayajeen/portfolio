@@ -184,16 +184,17 @@ const Hero = () => {
 
           {/* CTAs */}
           <div className="fade-up fade-up-4 hero-ctas">
-            <button
+            <a
+              href="/design-system"
               className="hero-cta-primary"
               onMouseEnter={(e) => {e.currentTarget.style.transform = 'translateY(-2px)';e.currentTarget.style.boxShadow = '5px 5px 0 0 rgba(243,254,82,0.4)';}}
               onMouseLeave={(e) => {e.currentTarget.style.transform = '';e.currentTarget.style.boxShadow = '';}}
               onMouseDown={(e) => {e.currentTarget.style.transform = 'translateY(2px)';e.currentTarget.style.boxShadow = 'none';}}
               onMouseUp={(e) => {e.currentTarget.style.transform = 'translateY(-2px)';e.currentTarget.style.boxShadow = '5px 5px 0 0 rgba(243,254,82,0.4)';}}
-              onClick={() => scrollTo('work')}>
+              style={{textDecoration: 'none', display: 'inline-flex', alignItems: 'center'}}>
 
-              See my work
-            </button>
+              See the system
+            </a>
             <button
               className="hero-cta-secondary"
               onMouseEnter={(e) => {e.currentTarget.style.borderColor = 'rgba(250,250,250,0.5)';e.currentTarget.style.background = 'rgba(250,250,250,0.05)';}}
