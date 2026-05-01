@@ -1,6 +1,6 @@
 # Jeen Portfolio — Project Rules
 
-This project is a living portfolio and agentic design system built with Astro + inline React (Babel).
+This project is a living portfolio and agentic design system built with Astro + React 19 (`@astrojs/react` islands).
 
 ---
 
