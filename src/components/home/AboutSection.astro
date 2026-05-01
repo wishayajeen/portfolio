@@ -1,0 +1,65 @@
+---
+interface Props {
+  logoSrc: string;
+}
+const { logoSrc } = Astro.props;
+
+const skills = ['Agentic Design systems', 'AI × design', 'AI-native', 'Design tokens', 'Building in public', 'Talks & content'];
+
+const stats = [
+  { num: '10+', label: 'Years designing' },
+  { num: '22+', label: 'Projects shipped' },
+  { num: '3',   label: 'Talks given' },
+];
+---
+
+<section id="about" class="about-section">
+  <div class="about-inner">
+    <div class="about-grid">
+
+      <!-- Left: text -->
+      <div>
+        <div class="about-eyebrow">about me</div>
+        <h2 class="about-headline">
+          I learn by<br />building in public.
+        </h2>
+        <div class="about-text-body">
+          <p class="about-body">
+            I'm a designer obsessed with the intersection of AI and design systems. I think design decisions should be structured, queryable, and alive — not buried in Figma files no one opens.
+          </p>
+          <p class="about-body">
+            This portfolio is the system. Pocky — my cat-turned-AI-agent — is the interface. The work speaks for itself.
+          </p>
+        </div>
+        <div class="about-skills">
+          {skills.map((s) => <span class="about-skill-tag">{s}</span>)}
+        </div>
+      </div>
+
+      <!-- Right: profile card -->
+      <div>
+        <div class="about-card">
+          <div class="about-card-profile">
+            <img src={logoSrc} alt="Jeen" class="about-card-avatar" />
+            <div>
+              <div class="about-card-name">Jeen</div>
+              <div class="about-card-role">Agentic System Designer @Thoughtworks</div>
+            </div>
+          </div>
+          <p class="about-card-quote">
+            "My portfolio is a design system. The design system is the portfolio. Pocky knows everything."
+          </p>
+          <div class="about-card-stats">
+            {stats.map(({ num, label }) => (
+              <div class="about-stat">
+                <div class="about-stat-num">{num}</div>
+                <div class="about-stat-label">{label}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>

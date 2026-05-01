@@ -1,0 +1,102 @@
+---
+interface DiaryEntry {
+  slug: string;
+  title: string;
+  tag: string;
+  readTime: string;
+  date: string; // "DD MON" e.g. "1 MAY"
+}
+
+interface Props {
+  diaryEntries: DiaryEntry[];
+  diaryTotal: number;
+}
+
+const { diaryEntries, diaryTotal } = Astro.props;
+
+const experiments = [
+  { tag: 'Experiment', title: 'Ask Pocky', desc: 'My AI design agent — query the design system, my process, and work history via chat.', accent: true, comingSoon: true },
+  { tag: 'Experiment', title: 'Design dashboard', desc: 'A live public view of the system — components, colors, decisions, all in one place.', accent: false, comingSoon: true },
+  { tag: 'Experiment', title: 'Component sandbox', desc: 'Interactive playground to test and compose components from the design system in real time.', accent: false, comingSoon: true },
+  { tag: 'AI Product', title: 'PersonaLens.app', desc: 'Get realistic AI-driven feedback on your designs from simulated user personas.', accent: false, href: 'https://www.personalens.app/' },
+];
+---
+
+<section id="playground" class="playground-section">
+  <div class="playground-inner">
+
+    <!-- Section header -->
+    <div class="pg-section-header">
+      <div class="pg-eyebrow">playground</div>
+      <div class="pg-header-row">
+        <h2 class="pg-headline">
+          Things I'm<br />building and writing
+        </h2>
+        <p class="pg-subhead">
+          Experiments, tools, and ideas I'm exploring in the open. No gatekeeping — just building.
+        </p>
+      </div>
+    </div>
+
+    <!-- Experiment cards -->
+    <div class="pg-cards-grid">
+      {experiments.map((exp) => {
+        const cardClass = `play-card${exp.accent ? ' play-card--accent' : ''}`;
+        const inner = (
+          <>
+            <div class="play-card-header">
+              <span class="play-card-tag">{exp.tag}</span>
+              {exp.comingSoon && (
+                <span class="work-coming-soon-badge" style="top: 0; margin-left: 0;">
+                  <span class="work-coming-soon-dot"></span>
+                  Coming soon
+                </span>
+              )}
+            </div>
+            <div>
+              <h3 class="play-card-title">{exp.title}</h3>
+              <p class="play-card-desc">{exp.desc}</p>
+            </div>
+            <span class="play-card-cta">Explore →</span>
+          </>
+        );
+        return exp.href
+          ? <a href={exp.href} target="_blank" rel="noopener noreferrer" class={cardClass}>{inner}</a>
+          : <div class={cardClass}>{inner}</div>;
+      })}
+    </div>
+
+    <!-- Diary header -->
+    <div class="pg-diary-header">
+      <span class="pg-diary-title">Diary</span>
+      <span class="pg-diary-count">{diaryTotal} entries</span>
+      <a href="#" class="pg-diary-link">Read all</a>
+    </div>
+
+    <!-- Diary cards -->
+    <div class="pg-diary-list">
+      {diaryEntries.map((entry) => {
+        const [day, month] = entry.date.split(' ');
+        return (
+          <a href={`/diary/${entry.slug}/`} class="diary-card">
+            <div class="diary-date-block">
+              <span class="diary-date-day">{day}</span>
+              <span class="diary-date-month">{month}</span>
+            </div>
+            <div class="diary-content">
+              <p class="diary-title">{entry.title}</p>
+              <div class="diary-meta">
+                <span class="diary-tag">{entry.tag}</span>
+                <span class="diary-read-time">{entry.readTime} read</span>
+              </div>
+            </div>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" class="diary-arrow">
+              <path d="M3 8h10M9 4l4 4-4 4" stroke="#0A0A0A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </a>
+        );
+      })}
+    </div>
+
+  </div>
+</section>

@@ -4,6 +4,59 @@ This project is a living portfolio and agentic design system built with Astro + 
 
 ---
 
+## Target repo architecture
+
+The project should move toward this structure:
+
+```text
+src/
+├── layouts/
+│   └── Layout.astro
+├── pages/
+│   ├── index.astro
+│   ├── design-system.astro
+│   ├── diary.astro
+│   └── diary/
+│       └── [slug].astro
+├── components/
+│   ├── global/
+│   │   ├── Header.jsx
+│   │   └── Footer.jsx
+│   ├── home/
+│   │   ├── Hero.astro
+│   │   ├── PlaygroundSection.astro
+│   │   ├── AboutSection.astro
+│   │   └── WorkSection.jsx
+│   └── system/
+│       ├── Badge.astro
+│       ├── Button.astro
+│       └── Card.astro
+├── content/
+│   └── diary/
+├── system/
+│   ├── system.json
+│   ├── system-rules.md
+│   └── component-inventory.md
+├── styles/
+│   ├── tokens.css
+│   ├── homepage.css
+│   ├── article.css
+│   └── design-system.css
+└── assets/
+```
+
+### React in this project
+
+`@astrojs/react` is **not** installed. React (18) and ReactDOM are loaded as UMD globals via CDN scripts in `Layout.astro`. Babel Standalone processes JSX at runtime.
+
+Component files in `src/components/**/*.jsx` contain only component function definitions — **no import statements**. They are imported in page frontmatter with `?raw` (Vite raw import) and concatenated into a single `<script type="text/babel">` block via `set:html`. Astro does not process these files as component islands.
+
+Rule: **If a section needs React state → `.jsx` file (embedded via `?raw`). If a section is static → `.astro` component (server-rendered, no hydration cost).**
+
+Pages should assemble components. Components should reuse existing tokens and CSS classes. The `design-system.astro` page is documentation/dashboard — not the source of truth.
+
+---
+
 ## Source of truth
 
 - All design tokens live in `src/styles/tokens.css`. This is the only place token values are defined.
@@ -100,8 +153,19 @@ New component files go in `src/components/`. New shared styles go in the relevan
 - `Layout.astro` — global shell: `<html>`, `<head>`, nav, global styles. **All pages use this.**
 
 ### Pages
-- `src/pages/index.astro` — homepage (hero, work, playground, about, diary preview, footer)
+- `src/pages/index.astro` — assembler page: imports static Astro components + mounts React components via `?raw` + `set:html`
 - `src/pages/design-system.astro` — DS viewer; uses `Layout.astro` like all other pages
+
+### Global components (`src/components/global/`)
+- `Header.jsx` — fixed nav with scroll + mobile menu state; mounted to `#header-root` via React
+- `Footer.jsx` — CTA band + footer bottom with copy-email state; mounted to `#footer-root` via React
+
+### Home components (`src/components/home/`)
+- `Hero.astro` — static hero section; scroll-to handled via inline `<script>`; props: `pockyIdleSrc`
+- `PlaygroundSection.astro` — static experiments grid + diary list; props: `diaryEntries`, `diaryTotal`
+- `AboutSection.astro` — static about grid + profile card; props: `logoSrc`
+- `WorkSection.jsx` — static work rows (no state but target specifies .jsx); mounted to `#work-root` via React
+- `TweaksPanel.jsx` — edit-mode tweaks panel with postMessage; appended to `<body>` via React
 - `src/pages/diary/[slug].astro` — article pages
 
 ### Stylesheets

@@ -1,0 +1,90 @@
+---
+interface Props {
+  pockyIdleSrc: string;
+}
+const { pockyIdleSrc } = Astro.props;
+---
+
+<section id="hero">
+  <!-- Subtle grid -->
+  <div class="hero-bg-grid"></div>
+
+  <!-- Two-column layout: text left, Pocky right -->
+  <div class="hero-grid">
+    <!-- LEFT: text -->
+    <div class="hero-text">
+      <!-- Badge -->
+      <div class="fade-up fade-up-1 hero-badge">
+        <span class="hero-badge-dot"></span>
+        <span class="hero-badge-label">Portfolio + living design system</span>
+      </div>
+
+      <!-- Headline -->
+      <h1 class="fade-up fade-up-2 hero-headline">
+        Hi, I'm Jeen.<br />
+        I design systems that
+        <span class="hero-headline-accent">
+          think.
+          <!-- underline squiggle -->
+          <svg class="hero-headline-squiggle" viewBox="0 0 220 18" preserveAspectRatio="none" height="14">
+            <!-- Paintbrush-style: thick tapered stroke with slight roughness -->
+            <path d="M4 12 Q30 5 70 10 Q110 15 150 9 Q180 5 216 11" stroke="#F3FE52" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0.5" />
+            <path d="M2 11 Q40 6 80 11 Q120 16 160 8 Q188 4 218 10" stroke="#F3FE52" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </span>
+      </h1>
+
+      <!-- Sub -->
+      <p class="fade-up fade-up-3 hero-sub">
+        Designer at the intersection of AI and design systems. My mascot — and AI agent — is a cat named Pocky.
+      </p>
+
+      <!-- CTAs -->
+      <div class="fade-up fade-up-4 hero-ctas">
+        <a
+          href="/design-system"
+          class="hero-cta-primary"
+          style="text-decoration: none;">
+          See the system
+        </a>
+        <button
+          class="hero-cta-secondary js-scroll-to"
+          data-target="playground">
+          Explore playground →
+        </button>
+      </div>
+
+      <!-- Quick links row -->
+      <div class="hero-social-row">
+        <span class="hero-social-label">Find me on</span>
+        <a href="https://github.com/wishayajeen" target="_blank" rel="noopener noreferrer" class="hero-social-link">GitHub</a>
+        <a href="https://www.linkedin.com/in/wsjeen/" target="_blank" rel="noopener noreferrer" class="hero-social-link">LinkedIn</a>
+      </div>
+    </div>
+
+    <!-- RIGHT: Pocky in yellow circle -->
+    <div class="pocky-circle">
+      <img src={pockyIdleSrc} alt="Pocky" class="pocky-img" />
+    </div>
+  </div>
+
+  <!-- Scroll indicator -->
+  <div class="hero-scroll-indicator js-scroll-to" data-target="playground">
+    <span class="hero-scroll-label">SCROLL</span>
+    <div class="hero-scroll-mouse">
+      <div class="hero-scroll-dot"></div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Smooth-scroll to section on CTA / scroll-indicator click
+  document.querySelectorAll<HTMLElement>('.js-scroll-to').forEach((el) => {
+    el.addEventListener('click', () => {
+      const target = el.dataset.target;
+      if (!target) return;
+      const targetEl = document.getElementById(target);
+      if (targetEl) targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+</script>
