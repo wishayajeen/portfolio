@@ -130,6 +130,7 @@ const lastUpdated = new Date().toLocaleDateString('en-US', { month: 'short', day
     .semantic-dot { width: 20px; height: 20px; border-radius: var(--radius-xs); border: 1px solid rgba(10,10,10,0.12); flex-shrink: 0; }
     .semantic-info { min-width: 0; }
     .semantic-token { font-family: var(--font-mono); font-size: 10px; font-weight: 600; color: var(--fg-primary); display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .semantic-hex   { font-family: var(--font-mono); font-size: 10px; color: var(--fg-secondary); display: block; margin-bottom: 1px; }
     .semantic-desc  { font-size: 10px; color: var(--fg-secondary); line-height: 1.3; display: block; }
 
     /* ── Dark background text token demo ── */
@@ -659,18 +660,18 @@ const lastUpdated = new Date().toLocaleDateString('en-US', { month: 'short', day
     <div class="ds-subsection">
       <div class="ds-sub-label">Semantic tokens</div>
       <div class="semantic-grid">
-        <div class="semantic-chip"><div class="semantic-dot" style="background:#FAFAFA;"></div><div class="semantic-info"><span class="semantic-token">--bg-primary</span><span class="semantic-desc">Main page background (#FAFAFA)</span></div></div>
-        <div class="semantic-chip"><div class="semantic-dot" style="background:#0A0A0A;"></div><div class="semantic-info"><span class="semantic-token">--bg-dark</span><span class="semantic-desc">Hero, footer, dark sections</span></div></div>
-        <div class="semantic-chip"><div class="semantic-dot" style="background:#F3FE52;"></div><div class="semantic-info"><span class="semantic-token">--bg-accent</span><span class="semantic-desc">Yellow feature callout</span></div></div>
-        <div class="semantic-chip"><div class="semantic-dot" style="background:#F5F5F0;"></div><div class="semantic-info"><span class="semantic-token">--bg-surface</span><span class="semantic-desc">Card surface, section bg</span></div></div>
-        <div class="semantic-chip"><div class="semantic-dot" style="background:#FFFFFF;border:1px solid #E8E8E0;"></div><div class="semantic-info"><span class="semantic-token">--bg-surface-raised</span><span class="semantic-desc">Elevated cards</span></div></div>
-        <div class="semantic-chip"><div class="semantic-dot" style="background:#1A1A15;"></div><div class="semantic-info"><span class="semantic-token">--bg-inverse</span><span class="semantic-desc">Inverse / deep dark</span></div></div>
-        <div class="semantic-chip"><div class="semantic-dot" style="background:#0A0A0A;"></div><div class="semantic-info"><span class="semantic-token">--fg-primary</span><span class="semantic-desc">Primary text (#0A0A0A)</span></div></div>
-        <div class="semantic-chip"><div class="semantic-dot" style="background:#3A3A35;"></div><div class="semantic-info"><span class="semantic-token">--fg-secondary</span><span class="semantic-desc">Body text (gray-700)</span></div></div>
-        <div class="semantic-chip"><div class="semantic-dot" style="background:#9A9A90;"></div><div class="semantic-info"><span class="semantic-token">--fg-tertiary</span><span class="semantic-desc">Captions, labels (gray-400) ✓ WCAG fix applied</span></div></div>
-        <div class="semantic-chip"><div class="semantic-dot" style="background:#FAFAFA;border:1px solid #E8E8E0;"></div><div class="semantic-info"><span class="semantic-token">--fg-inverse</span><span class="semantic-desc">Text on dark bg</span></div></div>
-        <div class="semantic-chip"><div class="semantic-dot" style="background:#F3FE52;"></div><div class="semantic-info"><span class="semantic-token">--fg-on-dark-accent</span><span class="semantic-desc">Yellow on dark (~17.6:1)</span></div></div>
-        <div class="semantic-chip"><div class="semantic-dot" style="background:#F3FE52;"></div><div class="semantic-info"><span class="semantic-token">--fg-link-hover / --fg-nav-link-hover</span><span class="semantic-desc">Yellow on hover</span></div></div>
+        <div class="semantic-chip"><div class="semantic-dot" style="background:#FAFAFA;"></div><div class="semantic-info"><span class="semantic-token">--bg-primary</span><span class="semantic-hex">#FAFAFA</span><span class="semantic-desc">Main page background</span></div></div>
+        <div class="semantic-chip"><div class="semantic-dot" style="background:#0A0A0A;"></div><div class="semantic-info"><span class="semantic-token">--bg-dark</span><span class="semantic-hex">#0A0A0A</span><span class="semantic-desc">Hero, footer, dark sections</span></div></div>
+        <div class="semantic-chip"><div class="semantic-dot" style="background:#F3FE52;"></div><div class="semantic-info"><span class="semantic-token">--bg-accent</span><span class="semantic-hex">#F3FE52</span><span class="semantic-desc">Yellow feature callout</span></div></div>
+        <div class="semantic-chip"><div class="semantic-dot" style="background:#F5F5F0;"></div><div class="semantic-info"><span class="semantic-token">--bg-surface</span><span class="semantic-hex">#F5F5F0</span><span class="semantic-desc">Card surface, section bg</span></div></div>
+        <div class="semantic-chip"><div class="semantic-dot" style="background:#FFFFFF;border:1px solid #E8E8E0;"></div><div class="semantic-info"><span class="semantic-token">--bg-surface-raised</span><span class="semantic-hex">#FFFFFF</span><span class="semantic-desc">Elevated cards</span></div></div>
+        <div class="semantic-chip"><div class="semantic-dot" style="background:#1A1A15;"></div><div class="semantic-info"><span class="semantic-token">--bg-inverse</span><span class="semantic-hex">#1A1A15</span><span class="semantic-desc">Inverse / deep dark</span></div></div>
+        <div class="semantic-chip"><div class="semantic-dot" style="background:#0A0A0A;"></div><div class="semantic-info"><span class="semantic-token">--fg-primary</span><span class="semantic-hex">#0A0A0A</span><span class="semantic-desc">Primary text</span></div></div>
+        <div class="semantic-chip"><div class="semantic-dot" style="background:#3A3A35;"></div><div class="semantic-info"><span class="semantic-token">--fg-secondary</span><span class="semantic-hex">#3A3A35</span><span class="semantic-desc">Body text (gray-700)</span></div></div>
+        <div class="semantic-chip"><div class="semantic-dot" style="background:#9A9A90;"></div><div class="semantic-info"><span class="semantic-token">--fg-tertiary</span><span class="semantic-hex">#9A9A90</span><span class="semantic-desc">Captions, labels (gray-400) ✓ WCAG fix</span></div></div>
+        <div class="semantic-chip"><div class="semantic-dot" style="background:#FAFAFA;border:1px solid #E8E8E0;"></div><div class="semantic-info"><span class="semantic-token">--fg-inverse</span><span class="semantic-hex">#FAFAFA</span><span class="semantic-desc">Text on dark bg</span></div></div>
+        <div class="semantic-chip"><div class="semantic-dot" style="background:#F3FE52;"></div><div class="semantic-info"><span class="semantic-token">--fg-on-dark-accent</span><span class="semantic-hex">#F3FE52</span><span class="semantic-desc">Yellow on dark (~17.6:1)</span></div></div>
+        <div class="semantic-chip"><div class="semantic-dot" style="background:#F3FE52;"></div><div class="semantic-info"><span class="semantic-token">--fg-link-hover</span><span class="semantic-hex">#F3FE52</span><span class="semantic-desc">Link + nav hover state</span></div></div>
       </div>
     </div>
 
