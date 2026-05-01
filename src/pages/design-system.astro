@@ -255,6 +255,8 @@ const lastUpdated = new Date().toLocaleDateString('en-US', { month: 'short', day
       transition: transform var(--duration-base) var(--ease-spring),
                   box-shadow var(--duration-base) var(--ease-spring);
       width: 200px;
+      display: flex;
+      flex-direction: column;
     }
     .ds-project-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-hover); }
     .card-tag-inner {
@@ -262,9 +264,10 @@ const lastUpdated = new Date().toLocaleDateString('en-US', { month: 'short', day
       background: var(--color-yellow); color: var(--color-black);
       padding: 3px 10px; border-radius: var(--radius-full);
       border: 1.5px solid var(--color-black); margin-bottom: var(--space-2);
+      align-self: flex-start;
     }
     .card-title-inner { font-family: var(--font-display); font-size: 16px; font-weight: 600; color: var(--fg-primary); margin: 0 0 6px; }
-    .card-body-inner  { font-size: 13px; color: var(--fg-secondary); line-height: 1.5; margin: 0; }
+    .card-body-inner  { font-size: 13px; color: var(--fg-secondary); line-height: 1.5; margin: 0; flex: 1; }
     .ds-project-card-dark { background: var(--color-black); }
     .ds-project-card-dark .card-tag-inner { background: var(--color-yellow); }
     .ds-project-card-dark .card-title-inner { color: var(--color-white); }
@@ -1084,7 +1087,7 @@ const lastUpdated = new Date().toLocaleDateString('en-US', { month: 'short', day
 
     <div class="ds-subsection">
       <div class="ds-sub-label">Project / playground card variants (hover to test)</div>
-      <div class="ds-row">
+      <div class="ds-row" style="align-items: stretch;">
         <div class="ds-project-card">
           <span class="card-tag-inner">Project</span>
           <p class="card-title-inner">Agentic design system</p>
@@ -1244,8 +1247,7 @@ const lastUpdated = new Date().toLocaleDateString('en-US', { month: 'short', day
 
 <!-- Footer -->
 <div class="ds-footer">
-  <div class="ds-footer-inner">
-    <a href="/" class="ds-footer-link">← Back home</a>
+  <div class="ds-footer-inner" style="justify-content: center;">
     <a href="#" onclick="window.scrollTo({ top: 0, behavior: 'smooth' }); return false;" class="ds-footer-link">↑ Top</a>
   </div>
 </div>
