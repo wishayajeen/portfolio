@@ -8,9 +8,9 @@ This project is a living portfolio and agentic design system built with Astro + 
 
 - All design tokens live in `src/styles/tokens.css`. This is the only place token values are defined.
 - Existing CSS classes are the first option before writing new styles.
-- `Layout.astro` (`src/layouts/Layout.astro`) must be used for all pages.
-- **Never** create a standalone page shell (`<html>`, `<head>`, `<body>`) unless explicitly asked. Pages must go through `Layout.astro`.
-- The exception is `design-system.astro`, which is a standalone page shell by intentional design (it imports `tokens.css` directly and has its own `<head>`). Do not apply this exception elsewhere.
+- `Layout.astro` (`src/layouts/Layout.astro`) must be used for all pages. It accepts `title` and `description` props (both optional, with defaults) and a `<slot name="head">` for page-specific head content.
+- **Never** create a standalone page shell (`<html>`, `<head>`, `<body>`). All pages — including `design-system.astro` — go through `Layout.astro`.
+- Page-specific stylesheets (e.g. `design-system.css`) are imported in the page frontmatter as a global import: `import '/src/styles/design-system.css'`.
 
 ---
 
@@ -101,12 +101,13 @@ New component files go in `src/components/`. New shared styles go in the relevan
 
 ### Pages
 - `src/pages/index.astro` — homepage (hero, work, playground, about, diary preview, footer)
-- `src/pages/design-system.astro` — standalone DS viewer (standalone shell by exception)
+- `src/pages/design-system.astro` — DS viewer; uses `Layout.astro` like all other pages
 - `src/pages/diary/[slug].astro` — article pages
 
 ### Stylesheets
 - `src/styles/tokens.css` — all design tokens (colors, type, spacing, shadows, radii, animation)
 - `src/styles/homepage.css` — all homepage + shared component styles (loaded via `Layout.astro`)
+- `src/styles/design-system.css` — DS-page-scoped styles (imported in `design-system.astro` frontmatter only)
 
 ### Homepage component classes (`homepage.css`)
 
@@ -143,6 +144,8 @@ These are scoped to the DS page only. Do not reuse in other pages.
 **Layout:** `ds-page`, `ds-topbar`, `ds-topbar-sep`, `ds-topbar-title`, `ds-hero`, `ds-hero-inner`, `ds-hero-eyebrow`, `ds-hero-title`, `ds-hero-sub`, `ds-hero-meta`, `ds-hero-meta-item`, `ds-section`, `ds-section-header`, `ds-section-num`, `ds-section-title`, `ds-subsection`, `ds-sub-label`, `ds-row`, `ds-col`, `ds-divider`, `ds-card`, `ds-code`, `toc`, `toc-dot`, `ds-footer`, `ds-footer-inner`, `ds-footer-link`
 
 **Components:** `ds-btn`, `ds-btn-primary`, `ds-btn-dark`, `ds-btn-outline`, `ds-btn-ghost`, `ds-btn-sm`, `ds-badge`, `ds-badge-yellow`, `ds-badge-dark`, `ds-badge-outline`, `ds-badge-gray`, `ds-badge-success`, `ds-badge-error`, `ds-badge-ghost`, `ds-badge-coming`, `ds-tag`, `ds-tag-yellow`, `ds-tag-mono`, `ds-project-card`, `ds-project-card-dark`, `ds-project-card-accent`, `card-tag-inner`, `card-title-inner`, `card-body-inner`, `ds-input`, `ds-input-wrap`, `ds-field`, `ds-field-label`, `ds-helper`, `ds-ask-bar`, `ds-ask-input`, `ds-ask-btn`, `ds-table`, `principle-card`, `principles-grid`, `principle-icon`, `principle-title`, `principle-body`, `disc-card`, `disc-card-header`, `disc-card-title`, `disc-card-body`
+
+**State modifiers (DS demo only):** `state-hover`, `state-active`, `dot` — utility classes for simulating interactive states in documentation. Do not use in product pages.
 
 **Display helpers:** `swatch-grid`, `swatch-item`, `swatch-color`, `swatch-info`, `swatch-name`, `swatch-hex`, `swatch-use`, `semantic-grid`, `semantic-chip`, `semantic-dot`, `semantic-info`, `semantic-token`, `semantic-hex`, `semantic-desc`, `dark-text-demo`, `dark-text-item`, `dark-text-sample`, `dark-text-token`, `dark-text-ratio`, `type-specimen`, `type-meta`, `type-sample`, `space-row`, `space-bar`, `space-label`, `shadow-box`, `shadow-item`, `shadow-meta`, `radius-box`, `bg-swatch`, `bg-label`, `anim-row`, `anim-demo`, `anim-info`, `anim-name`, `anim-value`
 
