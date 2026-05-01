@@ -71,7 +71,7 @@ const description = "A living design system. Tokens, principles, and components 
     }
     .ds-section-num {
       font-family: var(--font-mono); font-size: var(--text-xs);
-      color: var(--fg-tertiary); letter-spacing: var(--tracking-wide); min-width: 2.5ch;
+      color: var(--fg-secondary); letter-spacing: var(--tracking-wide); min-width: 2.5ch;
     }
     .ds-section-title {
       font-family: var(--font-display); font-size: var(--text-2xl);
@@ -81,7 +81,7 @@ const description = "A living design system. Tokens, principles, and components 
     .ds-subsection { margin-bottom: var(--space-8); }
     .ds-sub-label {
       font-size: var(--text-xs); font-weight: 600; text-transform: uppercase;
-      letter-spacing: var(--tracking-wider); color: var(--fg-tertiary);
+      letter-spacing: var(--tracking-wider); color: var(--fg-secondary);
       margin-bottom: var(--space-4);
     }
 
@@ -103,8 +103,8 @@ const description = "A living design system. Tokens, principles, and components 
     .swatch-color { height: 56px; width: 100%; }
     .swatch-info { padding: var(--space-2) var(--space-3); background: var(--bg-surface-raised); }
     .swatch-name { font-family: var(--font-mono); font-size: 10px; font-weight: 600; color: var(--fg-primary); display: block; margin-bottom: 2px; }
-    .swatch-hex  { font-family: var(--font-mono); font-size: 10px; color: var(--fg-tertiary); display: block; margin-bottom: 2px; }
-    .swatch-use  { font-size: 10px; color: var(--fg-tertiary); line-height: 1.3; display: block; }
+    .swatch-hex  { font-family: var(--font-mono); font-size: 10px; color: var(--fg-secondary); display: block; margin-bottom: 2px; }
+    .swatch-use  { font-size: 10px; color: var(--fg-secondary); line-height: 1.3; display: block; }
 
     /* ── Semantic color chips ── */
     .semantic-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: var(--space-2); }
@@ -118,7 +118,7 @@ const description = "A living design system. Tokens, principles, and components 
     .semantic-dot { width: 20px; height: 20px; border-radius: var(--radius-xs); border: 1px solid rgba(10,10,10,0.12); flex-shrink: 0; }
     .semantic-info { min-width: 0; }
     .semantic-token { font-family: var(--font-mono); font-size: 10px; font-weight: 600; color: var(--fg-primary); display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .semantic-desc  { font-size: 10px; color: var(--fg-tertiary); line-height: 1.3; display: block; }
+    .semantic-desc  { font-size: 10px; color: var(--fg-secondary); line-height: 1.3; display: block; }
 
     /* ── Dark background text token demo ── */
     .dark-text-demo {
@@ -132,7 +132,7 @@ const description = "A living design system. Tokens, principles, and components 
     }
     .dark-text-item { display: flex; flex-direction: column; gap: var(--space-1); }
     .dark-text-sample { font-size: var(--text-lg); font-weight: 600; line-height: 1; }
-    .dark-text-token  { font-family: var(--font-mono); font-size: 10px; color: var(--color-gray-500); margin-top: var(--space-1); }
+    .dark-text-token  { font-family: var(--font-mono); font-size: 10px; color: var(--color-gray-400); margin-top: var(--space-1); }
     .dark-text-ratio  { font-family: var(--font-mono); font-size: 10px; }
 
     /* ── Type scale ── */
@@ -143,7 +143,7 @@ const description = "A living design system. Tokens, principles, and components 
     }
     .type-specimen:last-child { border-bottom: none; }
     .type-meta {
-      font-family: var(--font-mono); font-size: 10px; color: var(--fg-tertiary);
+      font-family: var(--font-mono); font-size: 10px; color: var(--fg-secondary);
       line-height: 1.5; min-width: 140px; flex-shrink: 0;
     }
     .type-sample { line-height: var(--leading-tight); overflow: hidden; }
@@ -151,7 +151,7 @@ const description = "A living design system. Tokens, principles, and components 
     /* ── Spacing bars ── */
     .space-row { display: flex; align-items: center; gap: var(--space-4); margin-bottom: var(--space-2); }
     .space-bar { background: var(--color-yellow); border: 1.5px solid var(--color-black); height: 20px; flex-shrink: 0; }
-    .space-label { font-family: var(--font-mono); font-size: 10px; color: var(--fg-tertiary); white-space: nowrap; }
+    .space-label { font-family: var(--font-mono); font-size: 10px; color: var(--fg-secondary); white-space: nowrap; }
 
     /* ── Shadow demos ── */
     .shadow-box {
@@ -161,7 +161,7 @@ const description = "A living design system. Tokens, principles, and components 
       border-radius: var(--radius-md);
     }
     .shadow-item { display: flex; flex-direction: column; align-items: center; gap: var(--space-2); }
-    .shadow-meta { font-family: var(--font-mono); font-size: 10px; color: var(--fg-tertiary); text-align: center; }
+    .shadow-meta { font-family: var(--font-mono); font-size: 10px; color: var(--fg-secondary); text-align: center; }
 
     /* Radius demos */
     .radius-box {
@@ -370,7 +370,7 @@ const description = "A living design system. Tokens, principles, and components 
   <a href="/">← Jeen.work</a>
   <span class="ds-topbar-sep">/</span>
   <span class="ds-topbar-title">Design System</span>
-  <span class="ds-topbar-sep" style="margin-left:auto;">v1.0 · April 2026</span>
+  <span class="ds-topbar-sep" style="margin-left:auto;color:var(--color-gray-400);">v1.0 · April 2026</span>
 </div>
 
 <!-- Hero -->
@@ -482,6 +482,47 @@ const description = "A living design system. Tokens, principles, and components 
               <td><strong>Emoji</strong></td>
               <td>Sparingly — never as UI icon replacement; occasional in body copy for personality</td>
               <td>✓ A 🎉 at a milestone &nbsp;&nbsp; ✗ 🐱 as card decoration</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="ds-subsection">
+      <div class="ds-sub-label">Accessibility rules</div>
+      <div class="ds-card">
+        <table class="ds-table">
+          <thead><tr><th>Rule</th><th>Requirement</th><th>How to check</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>Normal text contrast</strong></td>
+              <td>Minimum <strong>4.5:1</strong> contrast ratio against its surface background (WCAG AA)</td>
+              <td>Use <a href="https://webaim.org/resources/contrastchecker/" target="_blank" rel="noopener noreferrer">WebAIM Contrast Checker</a> — input text color + surface color</td>
+            </tr>
+            <tr>
+              <td><strong>Large text contrast</strong></td>
+              <td>Minimum <strong>3:1</strong> for text ≥ 18pt (24px) regular or ≥ 14pt (18.67px) bold</td>
+              <td>Same tool — check both text color and background</td>
+            </tr>
+            <tr>
+              <td><strong>Text on dark (#0A0A0A)</strong></td>
+              <td>Use only: <span class="ds-code">gray-300</span> (~9:1) · <span class="ds-code">gray-400</span> (~5:1) · <span class="ds-code">white</span> (~19:1) · <span class="ds-code">yellow</span> (~17.6:1)</td>
+              <td>Never use gray-500, gray-700, gray-900 — all fail AA on black</td>
+            </tr>
+            <tr>
+              <td><strong>Text on white (#FFFFFF / #FAFAFA)</strong></td>
+              <td>Use <span class="ds-code">gray-700</span> (~9:1) or darker. Avoid gray-400 (~2.6:1) and gray-500 (~5.1:1 — borderline, avoid for small text)</td>
+              <td>Check before using any gray lighter than gray-700 on light surfaces</td>
+            </tr>
+            <tr>
+              <td><strong>Text on yellow (#F3FE52)</strong></td>
+              <td>Use only <span class="ds-code">black (#0A0A0A)</span> — yellow is very light (L≈0.93), only black achieves &gt;4.5:1</td>
+              <td>Never use white or any gray on yellow — all fail</td>
+            </tr>
+            <tr>
+              <td><strong>Focus rings</strong></td>
+              <td>Yellow focus ring <span class="ds-code">2px solid #F3FE52</span> must appear on a dark or mid-tone background to be visible</td>
+              <td>Test keyboard navigation — focus outline must be clearly visible against adjacent colours</td>
             </tr>
           </tbody>
         </table>
@@ -623,7 +664,7 @@ const description = "A living design system. Tokens, principles, and components 
           <span class="dark-text-ratio" style="color:#3DFE87;">~17.6:1 ✓</span>
         </div>
       </div>
-      <p style="font-size:var(--text-xs);color:var(--fg-tertiary);margin-top:var(--space-2);">⚠️ Never use gray-500 (#6A6A60), gray-700, or gray-900 as text on #0A0A0A — all fail WCAG AA.</p>
+      <p style="font-size:var(--text-xs);color:var(--fg-secondary);margin-top:var(--space-2);">⚠️ Never use gray-500 (#6A6A60), gray-700, or gray-900 as text on #0A0A0A — all fail WCAG AA.</p>
     </div>
   </section>
 
