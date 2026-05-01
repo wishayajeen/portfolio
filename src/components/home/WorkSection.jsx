@@ -1,11 +1,7 @@
-// WorkSection.jsx
-// React + ReactDOM are loaded as UMD globals via CDN in Layout.astro.
-// This file is imported with ?raw in index.astro and injected into a
-// <script type="text/babel"> block for Babel Standalone to process.
-// Do NOT add import statements here.
+// No hooks needed — WorkSection is static JSX.
+// With @astrojs/react automatic JSX runtime, no React import is required.
 
-const WorkSection = () => {
-  const projects = [
+const projects = [
   {
     num: '01',
     tag: 'Talk',
@@ -13,7 +9,7 @@ const WorkSection = () => {
     desc: 'A 30-minute talk on how AI changes the way we build and evolve design systems, from static libraries to living systems.',
     year: '2026',
     role: 'Speaker',
-    tools: ['Figma Slides', 'Figma MCP', 'Claude Code']
+    tools: ['Figma Slides', 'Figma MCP', 'Claude Code'],
   },
   {
     num: '02',
@@ -22,7 +18,7 @@ const WorkSection = () => {
     desc: 'Agentic AI workflow for automating compliance declarations. Built with AI-first delivery to reduce manual effort, improve data accuracy, and scale faster.',
     year: '2025',
     role: 'Design lead',
-    tools: ['Figma', 'UXPilot']
+    tools: ['Figma', 'UXPilot'],
   },
   {
     num: '03',
@@ -31,9 +27,11 @@ const WorkSection = () => {
     desc: 'Design system-led rebuild of a complex marketplace. Established tokens, components, and governance to enable consistency, faster delivery, and scalable growth.',
     year: '2023',
     role: 'Solo — design + build',
-    tools: ['Figma']
-  }];
+    tools: ['Figma'],
+  },
+];
 
+export default function WorkSection() {
   return (
     <section id="work" className="work-section">
       <div className="work-inner">
@@ -55,9 +53,9 @@ const WorkSection = () => {
 
         {/* Table header */}
         <div className="work-table-header">
-          {['#', 'Project', 'Year'].map((h) =>
-          <span key={h} className="work-col-label">{h}</span>
-          )}
+          {['#', 'Project', 'Year'].map((h) => (
+            <span key={h} className="work-col-label">{h}</span>
+          ))}
         </div>
 
         {/* Project rows */}
@@ -79,9 +77,9 @@ const WorkSection = () => {
                       <span className="work-meta-label">{p.role}</span>
                       <span className="work-meta-dot">·</span>
                       <div className="work-tools">
-                        {p.tools.map((t) =>
-                        <span key={t} className="work-tool">{t}</span>
-                        )}
+                        {p.tools.map((t) => (
+                          <span key={t} className="work-tool">{t}</span>
+                        ))}
                       </div>
                     </div>
                   </div>
@@ -98,4 +96,4 @@ const WorkSection = () => {
       </div>
     </section>
   );
-};
+}

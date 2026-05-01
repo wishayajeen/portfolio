@@ -1,17 +1,16 @@
 ---
 import Layout from '../layouts/Layout.astro'
+
+// React islands — hydrated client-side via @astrojs/react
+import Header from '../components/global/Header.jsx'
+import Footer from '../components/global/Footer.jsx'
+import WorkSection from '../components/home/WorkSection.jsx'
+import TweaksPanel from '../components/home/TweaksPanel.jsx'
+
+// Static Astro components — server-rendered, zero hydration cost
 import Hero from '../components/home/Hero.astro'
 import PlaygroundSection from '../components/home/PlaygroundSection.astro'
 import AboutSection from '../components/home/AboutSection.astro'
-
-// React component source — imported as raw strings for Babel Standalone injection.
-// @astrojs/react is not installed; React/ReactDOM are loaded as UMD globals via CDN
-// in Layout.astro. Each .jsx file contains only a component function definition
-// (no import statements) and is concatenated into a single <script type="text/babel">.
-import headerRaw from '../components/global/Header.jsx?raw'
-import footerRaw from '../components/global/Footer.jsx?raw'
-import workRaw from '../components/home/WorkSection.jsx?raw'
-import tweaksPanelRaw from '../components/home/TweaksPanel.jsx?raw'
 
 import logoUrl from '../assets/logo.svg'
 import pockyIdleUrl from '../assets/pocky-idle.svg'
@@ -20,14 +19,14 @@ import copyIconUrl from '../assets/feather_copy.svg?url'
 
 import { getCollection } from 'astro:content'
 
-const logoSrc        = typeof logoUrl        === 'string' ? logoUrl        : logoUrl.src;
-const pockyIdleSrc   = typeof pockyIdleUrl   === 'string' ? pockyIdleUrl   : pockyIdleUrl.src;
-const pockyProfileSrc= typeof pockyProfileUrl=== 'string' ? pockyProfileUrl: pockyProfileUrl.src;
-const copyIconSrc    = typeof copyIconUrl    === 'string' ? copyIconUrl    : copyIconUrl.src;
+const logoSrc         = typeof logoUrl         === 'string' ? logoUrl         : logoUrl.src;
+const pockyIdleSrc    = typeof pockyIdleUrl    === 'string' ? pockyIdleUrl    : pockyIdleUrl.src;
+const pockyProfileSrc = typeof pockyProfileUrl === 'string' ? pockyProfileUrl : pockyProfileUrl.src;
+const copyIconSrc     = typeof copyIconUrl     === 'string' ? copyIconUrl     : copyIconUrl.src;
 
 const MONTHS = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
-const allDiary   = await getCollection('diary');
-const sortedDiary= allDiary.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+const allDiary    = await getCollection('diary');
+const sortedDiary = allDiary.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 const diaryEntries = sortedDiary.slice(0, 5).map(entry => ({
   slug:     entry.id,
   title:    entry.data.title,
@@ -36,54 +35,21 @@ const diaryEntries = sortedDiary.slice(0, 5).map(entry => ({
   date:     `${entry.data.date.getDate()} ${MONTHS[entry.data.date.getMonth()]}`,
 }));
 const diaryTotal = allDiary.length;
-
-// Build the combined Babel script.
-// Variables are serialised with JSON.stringify so they are safe string literals.
-// The component raw sources are concatenated first; mount calls come last.
-const reactScript = `
-const _logoSrc         = ${JSON.stringify(logoSrc)};
-const _pockyProfileSrc = ${JSON.stringify(pockyProfileSrc)};
-const _copyIconSrc     = ${JSON.stringify(copyIconSrc)};
-
-${headerRaw}
-
-${footerRaw}
-
-${workRaw}
-
-${tweaksPanelRaw}
-
-// Mount each React component into its dedicated root element
-ReactDOM.createRoot(document.getElementById('header-root')).render(
-  <Header logoSrc={_logoSrc} />
-);
-ReactDOM.createRoot(document.getElementById('work-root')).render(
-  <WorkSection />
-);
-ReactDOM.createRoot(document.getElementById('footer-root')).render(
-  <Footer pockyProfileSrc={_pockyProfileSrc} copyIconSrc={_copyIconSrc} />
-);
-
-// TweaksPanel lives outside the page flow — append its root to body
-const _tweaksRoot = document.createElement('div');
-document.body.appendChild(_tweaksRoot);
-ReactDOM.createRoot(_tweaksRoot).render(<TweaksPanel />);
-`;
 ---
 
 <Layout>
-  <!-- React: fixed navigation -->
-  <div id="header-root"></div>
+  <!-- Fixed navigation: load immediately so nav is interactive on first paint -->
+  <Header client:load logoSrc={logoSrc} />
 
-  <!-- Static Astro sections (server-rendered, no hydration cost) -->
+  <!-- Server-rendered static sections -->
   <Hero pockyIdleSrc={pockyIdleSrc} />
   <PlaygroundSection diaryEntries={diaryEntries} diaryTotal={diaryTotal} />
   <AboutSection logoSrc={logoSrc} />
 
-  <!-- React: interactive sections that need client state -->
-  <div id="work-root"></div>
-  <div id="footer-root"></div>
+  <!-- Deferred interactive sections: hydrate when they enter the viewport -->
+  <WorkSection client:visible />
+  <Footer client:visible pockyProfileSrc={pockyProfileSrc} copyIconSrc={copyIconSrc} />
 
-  <!-- Single Babel Standalone script containing all React components -->
-  <script is:inline type="text/babel" set:html={reactScript}></script>
+  <!-- Edit-mode tweaks panel: client-only, uses window APIs -->
+  <TweaksPanel client:only="react" />
 </Layout>

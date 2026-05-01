@@ -1,13 +1,9 @@
-// Footer.jsx
-// React + ReactDOM are loaded as UMD globals via CDN in Layout.astro.
-// This file is imported with ?raw in index.astro and injected into a
-// <script type="text/babel"> block for Babel Standalone to process.
-// Do NOT add import statements here.
+import { useState } from 'react';
 
-const Footer = ({ pockyProfileSrc, copyIconSrc }) => {
-  const [email, setEmail] = React.useState('');
-  const [sent, setSent] = React.useState(false);
-  const [copied, setCopied] = React.useState(false);
+export default function Footer({ pockyProfileSrc, copyIconSrc }) {
+  const [email, setEmail] = useState('');
+  const [sent, setSent] = useState(false);
+  const [copied, setCopied] = useState(false);
 
   const contactEmail = 'wpjeen@gmail.com';
 
@@ -21,7 +17,7 @@ const Footer = ({ pockyProfileSrc, copyIconSrc }) => {
       setCopied(true);
       setTimeout(() => setCopied(false), 2500);
     } catch {
-      // Ignore clipboard failures silently to avoid breaking footer interactions.
+      // Ignore clipboard failures silently.
     }
   };
 
@@ -47,26 +43,27 @@ const Footer = ({ pockyProfileSrc, copyIconSrc }) => {
 
             {/* TODO: wire up to a form service (e.g. Formspree) before un-hiding */}
             <div style={{ display: 'none' }}>
-              {!sent ?
-              <div className="footer-email-row">
+              {!sent ? (
+                <div className="footer-email-row">
                   <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-                  placeholder="your@email.com"
-                  className="footer-email-input" />
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    onKeyDown={(e) => e.key === 'Enter' && handleSend()}
+                    placeholder="your@email.com"
+                    className="footer-email-input" />
                   <button onClick={handleSend} className="footer-email-btn"
-                  onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-1px)'}
-                  onMouseLeave={(e) => e.currentTarget.style.transform = ''}>
+                    onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-1px)'}
+                    onMouseLeave={(e) => e.currentTarget.style.transform = ''}>
                     Send →
                   </button>
-                </div> :
-              <div className="footer-success">
+                </div>
+              ) : (
+                <div className="footer-success">
                   <span className="footer-success-dot" />
                   Got it! I'll be in touch soon.
                 </div>
-              }
+              )}
             </div>
 
             <div className="footer-contact-row">
@@ -89,9 +86,9 @@ const Footer = ({ pockyProfileSrc, copyIconSrc }) => {
               {[
                 { label: 'GitHub', href: 'https://github.com/wishayajeen' },
                 { label: 'LinkedIn', href: 'https://www.linkedin.com/in/wsjeen/' },
-              ].map(({ label, href }) =>
-              <a key={label} href={href} className="footer-contact-link" target="_blank" rel="noopener noreferrer">{label}</a>
-              )}
+              ].map(({ label, href }) => (
+                <a key={label} href={href} className="footer-contact-link" target="_blank" rel="noopener noreferrer">{label}</a>
+              ))}
             </div>
           </div>
         </div>
@@ -118,18 +115,16 @@ const Footer = ({ pockyProfileSrc, copyIconSrc }) => {
 
             {/* Nav columns */}
             <div className="footer-nav-cols">
-              {[
-              { title: 'Navigate', links: [['Playground', 'playground'], ['About', 'about'], ['Work', 'work']] }].
-              map((col) =>
-              <div key={col.title} className="footer-nav-col">
+              {[{ title: 'Navigate', links: [['Playground', 'playground'], ['About', 'about'], ['Work', 'work']] }].map((col) => (
+                <div key={col.title} className="footer-nav-col">
                   <div className="footer-nav-heading">{col.title}</div>
-                  {col.links.map(([label, id]) =>
-                <button key={label} className="footer-link"
-                onClick={() => id && scrollTo(id)}>
-                  {label}</button>
-                )}
+                  {col.links.map(([label, id]) => (
+                    <button key={label} className="footer-link" onClick={() => id && scrollTo(id)}>
+                      {label}
+                    </button>
+                  ))}
                 </div>
-              )}
+              ))}
 
               {/* Status */}
               <div className="footer-status-col">
@@ -152,13 +147,13 @@ const Footer = ({ pockyProfileSrc, copyIconSrc }) => {
               {[
                 { label: 'GitHub', href: 'https://github.com/wishayajeen' },
                 { label: 'LinkedIn', href: 'https://www.linkedin.com/in/wsjeen/' },
-              ].map(({ label, href }) =>
-              <a key={label} href={href} className="social-pill" target="_blank" rel="noopener noreferrer">{label}</a>
-              )}
+              ].map(({ label, href }) => (
+                <a key={label} href={href} className="social-pill" target="_blank" rel="noopener noreferrer">{label}</a>
+              ))}
             </div>
           </div>
         </div>
       </div>
     </footer>
   );
-};
+}

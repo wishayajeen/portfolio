@@ -1,14 +1,10 @@
-// Header.jsx
-// React + ReactDOM are loaded as UMD globals via CDN in Layout.astro.
-// This file is imported with ?raw in index.astro and injected into a
-// <script type="text/babel"> block for Babel Standalone to process.
-// Do NOT add import statements here.
+import { useState, useEffect } from 'react';
 
-const Header = ({ logoSrc }) => {
-  const [scrolled, setScrolled] = React.useState(false);
-  const [menuOpen, setMenuOpen] = React.useState(false);
+export default function Header({ logoSrc }) {
+  const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 40);
     window.addEventListener('scroll', fn);
     return () => window.removeEventListener('scroll', fn);
@@ -42,7 +38,7 @@ const Header = ({ logoSrc }) => {
         {/* Logo */}
         <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
           style={{ display: 'flex', alignItems: 'center', gap: 8, background: 'none', border: 'none', cursor: 'pointer' }}>
-          <img src={logoSrc} width="26" height="26" alt="Jeen" style={{ borderRadius: '50%', padding: 2, background: '#FFFFFF', width: 32, height: 32, objectFit: 'cover' }} />
+          <img src={logoSrc} width="32" height="32" alt="Jeen" style={{ borderRadius: '50%', padding: 2, background: '#FFFFFF', objectFit: 'cover' }} />
           <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: 18, color: '#FAFAFA' }}>Jeen</span>
         </button>
 
@@ -89,4 +85,4 @@ const Header = ({ logoSrc }) => {
       )}
     </nav>
   );
-};
+}
