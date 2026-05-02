@@ -1,4 +1,7 @@
 ---
+import Badge from '../system/Badge.astro';
+import Card from '../system/Card.astro';
+
 interface DiaryEntry {
   slug: string;
   title: string;
@@ -40,30 +43,25 @@ const experiments = [
 
     <!-- Experiment cards -->
     <div class="pg-cards-grid">
-      {experiments.map((exp) => {
-        const cardClass = `play-card${exp.accent ? ' play-card--accent' : ''}`;
-        const inner = (
-          <>
-            <div class="play-card-header">
-              <span class="play-card-tag">{exp.tag}</span>
-              {exp.comingSoon && (
-                <span class="work-coming-soon-badge" style="top: 0; margin-left: 0;">
-                  <span class="work-coming-soon-dot"></span>
-                  Coming soon
-                </span>
-              )}
-            </div>
-            <div>
-              <h3 class="play-card-title">{exp.title}</h3>
-              <p class="play-card-desc">{exp.desc}</p>
-            </div>
-            <span class="play-card-cta">Explore →</span>
-          </>
-        );
-        return exp.href
-          ? <a href={exp.href} target="_blank" rel="noopener noreferrer" class={cardClass}>{inner}</a>
-          : <div class={cardClass}>{inner}</div>;
-      })}
+      {experiments.map((exp) => (
+        <Card
+          variant={exp.accent ? 'accent' : 'default'}
+          href={exp.href}
+          {...(exp.href ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+        >
+          <div class="play-card-header">
+            <Badge variant="tag" label={exp.tag} />
+            {exp.comingSoon && (
+              <Badge variant="coming-soon" label="Coming soon" style="top:0;margin-left:0;" />
+            )}
+          </div>
+          <div>
+            <h3 class="play-card-title">{exp.title}</h3>
+            <p class="play-card-desc">{exp.desc}</p>
+          </div>
+          <span class="play-card-cta">Explore →</span>
+        </Card>
+      ))}
     </div>
 
     <!-- Diary header -->
@@ -78,7 +76,7 @@ const experiments = [
       {diaryEntries.map((entry) => {
         const [day, month] = entry.date.split(' ');
         return (
-          <a href={`/diary/${entry.slug}/`} class="diary-card">
+          <Card variant="diary" href={`/diary/${entry.slug}/`}>
             <div class="diary-date-block">
               <span class="diary-date-day">{day}</span>
               <span class="diary-date-month">{month}</span>
@@ -86,14 +84,14 @@ const experiments = [
             <div class="diary-content">
               <p class="diary-title">{entry.title}</p>
               <div class="diary-meta">
-                <span class="diary-tag">{entry.tag}</span>
+                <Badge variant="diary-tag" label={entry.tag} />
                 <span class="diary-read-time">{entry.readTime} read</span>
               </div>
             </div>
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" class="diary-arrow">
               <path d="M3 8h10M9 4l4 4-4 4" stroke="#0A0A0A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
-          </a>
+          </Card>
         );
       })}
     </div>

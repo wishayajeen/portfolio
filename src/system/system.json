@@ -1,8 +1,8 @@
 {
   "name": "Jeen Design System",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "lastUpdated": "2026-05-01",
-  "commit": "f1b8ce6",
+  "commit": "05b7bcf",
   "owner": "Jeen (wishayajeen)",
   "coOwner": "Pocky",
   "description": "A living, AI-queryable design system that is also the portfolio. Design decisions exist as structured data — visible through a dashboard, queryable through an agent.",
@@ -195,6 +195,59 @@
       "props": ["title", "description"],
       "slots": ["default", "head"],
       "description": "Global page shell — all pages must use this. Injects tokens.css, homepage.css, and Vercel Analytics."
+    },
+    {
+      "id": "badge",
+      "label": "Badge",
+      "category": "ui",
+      "status": "stable",
+      "file": "src/components/system/Badge.astro",
+      "type": "astro",
+      "hydration": null,
+      "props": ["label", "variant"],
+      "variants": ["tag", "diary-tag", "work-tag", "skill", "coming-soon"],
+      "cssClasses": {
+        "tag": "play-card-tag",
+        "diary-tag": "diary-tag",
+        "work-tag": "work-tag",
+        "skill": "about-skill-tag",
+        "coming-soon": "work-coming-soon-badge"
+      },
+      "description": "Label/tag pill component. Maps variant prop to existing homepage.css badge classes — no new CSS."
+    },
+    {
+      "id": "button",
+      "label": "Button",
+      "category": "ui",
+      "status": "stable",
+      "file": "src/components/system/Button.astro",
+      "type": "astro",
+      "hydration": null,
+      "props": ["label", "variant", "href"],
+      "variants": ["primary", "secondary"],
+      "cssClasses": {
+        "primary": "hero-cta-primary",
+        "secondary": "hero-cta-secondary"
+      },
+      "description": "CTA button component. Renders as <a> when href is provided, <button> otherwise. Maps to existing hero CTA classes."
+    },
+    {
+      "id": "card",
+      "label": "Card",
+      "category": "ui",
+      "status": "stable",
+      "file": "src/components/system/Card.astro",
+      "type": "astro",
+      "hydration": null,
+      "props": ["variant", "href"],
+      "slots": ["default"],
+      "variants": ["default", "accent", "diary"],
+      "cssClasses": {
+        "default": "play-card",
+        "accent": "play-card play-card--accent",
+        "diary": "diary-card"
+      },
+      "description": "Outer card container. Renders as <a> when href is provided, <div> otherwise. Inner content via slot — no internal template imposed."
     }
   ],
 
@@ -211,9 +264,12 @@
     },
     "componentUsesTokens": {
       "header": ["bg-dark", "fg-on-dark-primary", "fg-on-dark-secondary", "fg-on-dark-accent", "fg-on-dark-label", "bg-accent", "border-subtle", "duration-fast", "ease-out"],
-      "footer": ["bg-dark", "fg-on-dark-primary", "fg-on-dark-secondary", "fg-on-dark-accent", "bg-accent", "border-on-dark", "radius-md", "shadow-lg", "duration-fast"],
+      "footer": ["bg-dark", "fg-on-dark-primary", "fg-on-dark-secondary", "fg-on-dark-accent", "fg-on-dark-label", "bg-accent", "border-on-dark", "radius-md", "shadow-lg", "duration-fast"],
       "tweaks-panel": ["bg-primary", "fg-primary", "bg-accent", "border-primary", "shadow-lg", "radius-md", "font-display", "font-body"],
-      "layout": ["bg-primary", "fg-primary", "font-body", "text-base", "leading-relaxed"]
+      "layout": ["bg-primary", "fg-primary", "font-body", "text-base", "leading-relaxed"],
+      "badge": ["color-yellow", "color-black", "fg-on-dark-label", "fg-on-dark-accent", "color-error", "radius-full", "radius-xs", "border-primary"],
+      "button": ["color-yellow", "color-black", "fg-on-dark-primary", "radius-full", "duration-fast", "ease-spring"],
+      "card": ["bg-primary", "bg-accent", "border-primary", "radius-md", "shadow-md", "ease-spring", "duration-fast"]
     },
     "sectionUsesTokens": {
       "hero": ["bg-dark", "fg-on-dark-primary", "fg-on-dark-secondary", "fg-on-dark-accent", "bg-accent", "border-accent", "radius-full", "shadow-lg", "ease-spring", "duration-fast"],

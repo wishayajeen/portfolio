@@ -448,7 +448,7 @@ body {
 }
 
 .play-card--accent .play-card-desc {
-  color: var(--color-gray-700);
+  color: var(--fg-primary); /* on --bg-accent (yellow): only --color-black passes; --color-gray-700 violates CLAUDE.md yellow surface rule */
 }
 
 .play-card-cta {
@@ -640,7 +640,7 @@ body {
 .about-eyebrow {
   font-family: var(--font-mono);
   font-size: 11px;
-  color: var(--color-gray-500);
+  color: var(--fg-primary); /* on --bg-accent (yellow): only --color-black passes; gray-500 violates CLAUDE.md yellow surface rule */
   letter-spacing: var(--tracking-wider);
   text-transform: uppercase;
   margin-bottom: 16px;
@@ -943,8 +943,8 @@ body {
 .work-row:hover .work-expand { max-height: 200px; opacity: 1; }
 .work-row:hover .work-desc { color: var(--fg-secondary); }
 .work-row:hover .work-meta-label,
-.work-row:hover .work-meta-dot { color: var(--color-gray-500); }
-.work-row:hover .work-tool { color: var(--color-gray-500); border-color: var(--color-gray-500); }
+.work-row:hover .work-meta-dot { color: var(--fg-primary); } /* on --bg-accent (yellow) hover: only --color-black passes */
+.work-row:hover .work-tool { color: var(--fg-primary); border-color: var(--fg-primary); } /* same: yellow surface — only --fg-primary (#0A0A0A) */
 .work-row:hover .work-year { color: var(--fg-primary); }
 
 /* ─── FOOTER ─────────────────────────────────────────────────────── */
@@ -975,7 +975,7 @@ body {
 .footer-eyebrow {
   font-family: var(--font-mono);
   font-size: 11px;
-  color: var(--color-gray-500);
+  color: var(--fg-on-dark-label); /* on --bg-dark: --color-gray-500 is 3.9:1 — fails AA for 11px text; --fg-on-dark-label is ~5:1 */
   letter-spacing: var(--tracking-wider);
   text-transform: uppercase;
   margin-bottom: 16px;
@@ -1115,7 +1115,7 @@ body {
 }
 
 .footer-contact-divider {
-  color: var(--color-gray-500);
+  color: var(--fg-on-dark-label); /* on --bg-dark: gray-500 fails AA for text; fg-on-dark-label is ~5:1 */
 }
 
 .footer-bottom {

@@ -1,0 +1,32 @@
+---
+/**
+ * Card — outer container shell for card-pattern UI.
+ * No new CSS introduced. Inner content always goes through <slot />.
+ * Renders as <a> when href is provided, <div> otherwise.
+ *
+ * Variants:
+ *   default → .play-card             (light surface, column layout — playground cards)
+ *   accent  → .play-card.play-card--accent (yellow surface — featured play card)
+ *   diary   → .diary-card            (light surface, row layout — diary list entries)
+ */
+
+interface Props {
+  variant?: 'default' | 'accent' | 'diary';
+  href?: string;
+  class?: string;
+  [key: string]: any; // allow target, rel, etc.
+}
+
+const { variant = 'default', href, class: className, ...rest } = Astro.props;
+
+const cls = [
+  variant === 'diary' ? 'diary-card' : 'play-card',
+  variant === 'accent' ? 'play-card--accent' : '',
+  className,
+].filter(Boolean).join(' ');
+---
+
+{href
+  ? <a href={href} class={cls} {...rest}><slot /></a>
+  : <div class={cls} {...rest}><slot /></div>
+}

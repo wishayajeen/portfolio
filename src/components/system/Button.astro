@@ -1,0 +1,30 @@
+---
+/**
+ * Button — maps a variant prop to existing homepage.css CTA button classes.
+ * No new CSS introduced. Renders as <a> when href is provided, <button> otherwise.
+ *
+ * Variants:
+ *   primary   → .hero-cta-primary   (yellow pill CTA)
+ *   secondary → .hero-cta-secondary (ghost/transparent, dark surface)
+ */
+
+interface Props {
+  label: string;
+  variant?: 'primary' | 'secondary';
+  href?: string;
+  class?: string;
+  [key: string]: any; // allow data-target, onClick, etc.
+}
+
+const { label, variant = 'primary', href, class: className, ...rest } = Astro.props;
+
+const cls = [
+  variant === 'primary' ? 'hero-cta-primary' : 'hero-cta-secondary',
+  className,
+].filter(Boolean).join(' ');
+---
+
+{href
+  ? <a href={href} class={cls} {...rest}>{label}</a>
+  : <button class={cls} {...rest}>{label}</button>
+}

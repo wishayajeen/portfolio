@@ -1,0 +1,33 @@
+---
+/**
+ * Badge — maps a variant prop to existing homepage.css badge/tag classes.
+ * No new CSS introduced. All visuals come from the existing class definitions.
+ *
+ * Variants:
+ *   tag         → .play-card-tag     (yellow pill, black text — play card labels)
+ *   diary-tag   → .diary-tag         (yellow box xs-radius, black text — diary card labels)
+ *   work-tag    → .work-tag          (dark bg, label color — work section on dark surface)
+ *   skill       → .about-skill-tag   (dark pill, yellow text — about section skills)
+ *   coming-soon → .work-coming-soon-badge with inner dot span
+ */
+
+interface Props {
+  label: string;
+  variant?: 'tag' | 'diary-tag' | 'work-tag' | 'skill' | 'coming-soon';
+  [key: string]: any; // allow style, data-*, etc.
+}
+
+const { label, variant = 'tag', ...rest } = Astro.props;
+---
+
+{variant === 'coming-soon' && (
+  <span class="work-coming-soon-badge" {...rest}>
+    <span class="work-coming-soon-dot"></span>
+    {label}
+  </span>
+)}
+
+{variant === 'tag'       && <span class="play-card-tag"   {...rest}>{label}</span>}
+{variant === 'diary-tag' && <span class="diary-tag"       {...rest}>{label}</span>}
+{variant === 'work-tag'  && <span class="work-tag"        {...rest}>{label}</span>}
+{variant === 'skill'     && <span class="about-skill-tag" {...rest}>{label}</span>}
