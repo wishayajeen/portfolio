@@ -55,7 +55,8 @@ body {
 .fade-up-3 { animation-delay: 0.25s; }
 .fade-up-4 { animation-delay: 0.35s; }
 
-/* Subtle link — secondary text, traditional underline, no box-shadow flood */
+/* Subtle link — DEPRECATED (2026-05-02): not used in any product page.
+   Kept functional for backwards safety; do not add new usages. */
 .link-subtle {
   color: var(--fg-secondary);
   box-shadow: none;

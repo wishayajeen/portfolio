@@ -842,9 +842,9 @@ const statusLabel: Record<string, string> = {
             <Link href="#">Default link</Link>
             <span style="font-size:10px;color:var(--fg-secondary);font-family:var(--font-mono);">variant="default" · global &lt;a&gt; · box-shadow floods dark on hover, yellow text</span>
           </div>
-          <div style="display:flex;align-items:baseline;gap:var(--space-4);flex-wrap:wrap;">
+          <div style="display:flex;align-items:baseline;gap:var(--space-4);flex-wrap:wrap;opacity:0.5;">
             <Link href="#" variant="subtle">Subtle link</Link>
-            <span style="font-size:10px;color:var(--fg-secondary);font-family:var(--font-mono);">variant="subtle" · .link-subtle · --fg-secondary, plain underline</span>
+            <span style="font-size:10px;color:var(--fg-secondary);font-family:var(--font-mono);">variant="subtle" · .link-subtle · <strong>DEPRECATED</strong> — not used in any product page</span>
           </div>
         </div>
       </div>
@@ -891,7 +891,7 @@ const statusLabel: Record<string, string> = {
           <thead><tr><th>Variant</th><th>Class</th><th>Surface</th><th>Rest token</th><th>Hover behaviour</th></tr></thead>
           <tbody>
             <tr><td><code class="ds-code">default</code></td><td>(global a)</td><td>light</td><td>--fg-primary</td><td>box-shadow floods dark · yellow text</td></tr>
-            <tr><td><code class="ds-code">subtle</code></td><td>.link-subtle</td><td>light</td><td>--fg-secondary</td><td>plain underline · darkens to --fg-primary</td></tr>
+            <tr style="opacity:0.5;"><td><code class="ds-code">subtle</code> <Badge variant="coming-soon">deprecated</Badge></td><td>.link-subtle</td><td>light</td><td>--fg-secondary</td><td>plain underline · not used in product · do not add new usages</td></tr>
             <tr><td><code class="ds-code">on-dark</code></td><td>.hero-social-link</td><td>dark</td><td>--fg-on-dark-primary</td><td>box-shadow floods light · dark text</td></tr>
             <tr><td><code class="ds-code">nav</code></td><td>.nav-link</td><td>dark</td><td>--fg-on-dark-primary</td><td>color → --fg-on-dark-accent (yellow)</td></tr>
             <tr><td><code class="ds-code">back</code></td><td>.back-link</td><td>dark</td><td>--fg-on-dark-label</td><td>color → --fg-on-dark-primary</td></tr>

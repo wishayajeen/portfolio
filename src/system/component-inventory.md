@@ -344,11 +344,11 @@ src/components/system/Link.astro
 | Variant | CSS class | Surface | Rest state | Hover behaviour |
 |---|---|---|---|---|
 | `default` | *(none — global `<a>`)* | light | `--fg-primary`, box-shadow underline | box-shadow floods dark, text → `--fg-on-dark-accent` (yellow) |
-| `subtle` | `.link-subtle` | light | `--fg-secondary`, plain underline | text → `--fg-primary` |
 | `on-dark` | `.hero-social-link` | dark | `--fg-on-dark-primary`, box-shadow underline | box-shadow floods light, text → `--fg-primary` |
 | `nav` | `.nav-link` | dark | `--fg-on-dark-primary`, pill shape, no underline | text → `--fg-on-dark-accent` (yellow) |
 | `back` | `.back-link` | dark | `--fg-on-dark-label` (muted), no underline | text → `--fg-on-dark-primary` |
 | `footer-nav` | `.footer-nav-link` | dark | `--fg-on-dark-label` (muted), no underline | text → `--fg-on-dark-primary` |
+| ~~`subtle`~~ | `.link-subtle` | light | **DEPRECATED (0.5.1)** — not used in any product page | — |
 
 **`default` gets no CSS class.** It relies entirely on the global `a { }` rule in `tokens.css`.
 
@@ -357,9 +357,6 @@ src/components/system/Link.astro
 ```astro
 <!-- Default inline link on a light surface -->
 <Link href="/diary">Read the diary</Link>
-
-<!-- Subtle secondary link — lower visual weight on light surface -->
-<Link href="/about" variant="subtle">Learn more about this</Link>
 
 <!-- Inline link on a dark background (e.g. hero, work section) -->
 <Link href="https://github.com" variant="on-dark" external>GitHub</Link>
@@ -384,7 +381,6 @@ src/components/system/Link.astro
 | Variant | Use when… |
 |---|---|
 | `default` | Inline links in body copy, article content, or any light surface where a prominent underlined link is appropriate |
-| `subtle` | Secondary or supporting links where the full `default` box-shadow treatment is too heavy (e.g. "see also", footnotes) |
 | `on-dark` | Inline links within dark sections (hero social row, dark callout blocks) |
 | `nav` | Navigation items that look like buttons but navigate (header nav, in-page scroll links) |
 | `back` | "Back" or "return" navigation from a detail page to a parent (article back link, DS topbar link) |
@@ -393,14 +389,15 @@ src/components/system/Link.astro
 ### When NOT to use
 - Do not use `default` on dark surfaces — `--fg-primary` (black) text with a dark box-shadow on a dark background is invisible
 - Do not use `on-dark`, `nav`, `back`, or `footer-nav` on light surfaces — all four use white or muted white text, which will be unreadable on light backgrounds
-- Do not use `nav` when you need a true anchor with a visible URL — `nav` is styled as a button; use `default` or `subtle` for visible inline links
+- Do not use `nav` when you need a true anchor with a visible URL — `nav` is styled as a button; use `default` for visible inline links
+- **Do not use `subtle`** — it is deprecated (0.5.1). Use `default` instead.
 - Do not use `back` for any link that is not a backwards navigation — the `margin-bottom: 40px` it carries assumes it sits above article header content
 - Do not use Link inside React files — it is an Astro component and cannot be imported into `.jsx`
 
 ### Rules Claude must follow
 1. **`href` is required.** Unlike Button, Link has no buttonless fallback. Always provide a destination.
 2. **`default` applies no class.** The element will have `class={undefined}`, which Astro renders as no class attribute at all. This is correct. Do not add a `class="default"` workaround.
-3. **Surface matching is mandatory.** Light-surface variants (`default`, `subtle`) on dark backgrounds and dark-surface variants (`on-dark`, `nav`, `back`, `footer-nav`) on light backgrounds will both produce unreadable text. Always match variant to surface.
+3. **Surface matching is mandatory.** The light-surface variant (`default`) on dark backgrounds and dark-surface variants (`on-dark`, `nav`, `back`, `footer-nav`) on light backgrounds will both produce unreadable text. Always match variant to surface.
 4. **`external` is not automatic.** Any link to an external URL (starting with `http://` or `https://`) that opens in a new tab must use `external={true}`. Do not manually add `target="_blank"` and omit `external` — the `rel="noopener noreferrer"` will be missing.
 5. **Content goes in the slot.** Unlike Badge and Button, Link uses `<slot />` — the visible text goes between the tags, not in a `label` prop.
 6. **`back` variant carries `margin-bottom: 40px`.** This is intentional for the article page context. If using `back` outside an article header, override with `class` or a wrapping element.
@@ -437,7 +434,7 @@ import Badge from '../system/Badge.astro';
 All four components are `.astro` files. They **cannot be imported into `.jsx` React files** (Header.jsx, Footer.jsx, WorkSection.jsx, TweaksPanel.jsx). In React files, use the raw CSS class names directly.
 
 ### No new CSS
-These components introduce no CSS of their own (except `.link-subtle`, added in Link). All visual output comes from pre-existing classes in `src/styles/homepage.css`. If a visual change is needed, update the CSS class — not the component.
+These components introduce no net CSS of their own (`.link-subtle` was added for Link but is now deprecated). All visual output comes from pre-existing classes in `src/styles/homepage.css`. If a visual change is needed, update the CSS class — not the component.
 
 ### No hardcoded values
 Components never contain hardcoded hex colours, spacing, or font values. All visual behaviour is driven by CSS tokens. If a component appears wrong, check `homepage.css` and `tokens.css`, not the component file.

@@ -1,22 +1,23 @@
 ---
 /**
  * Link — semantic anchor component mapping variants to existing link classes.
- * No new CSS introduced beyond .link-subtle (homepage.css).
  *
  * Variants:
  *   default     → global <a> (light surface, box-shadow underline floods dark on hover)
- *   subtle      → .link-subtle (light surface, --fg-secondary, traditional underline)
  *   on-dark     → .hero-social-link (dark surface, box-shadow underline floods light on hover)
  *   nav         → .nav-link (dark surface, pill button shape, no underline)
  *   back        → .back-link (dark surface, muted color, no underline)
  *   footer-nav  → .footer-nav-link (dark surface, plain nav item, no underline)
+ *
+ * DEPRECATED variants (kept functional, do not use in new code):
+ *   subtle      → .link-subtle — deprecated; not used in any product page (2025-05-02)
  *
  * external: adds target="_blank" rel="noopener noreferrer" automatically.
  */
 
 interface Props {
   href: string;
-  variant?: 'default' | 'subtle' | 'on-dark' | 'nav' | 'back' | 'footer-nav';
+  variant?: 'default' | 'on-dark' | 'nav' | 'back' | 'footer-nav' | 'subtle';
   external?: boolean;
   class?: string;
   [key: string]: any;
