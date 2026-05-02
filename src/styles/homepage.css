@@ -350,7 +350,7 @@ body {
 .pg-eyebrow {
   font-family: var(--font-mono);
   font-size: 11px;
-  color: var(--fg-tertiary);
+  color: var(--fg-secondary); /* --fg-tertiary fails AA at 11px on --bg-surface */
   letter-spacing: var(--tracking-wider);
   text-transform: uppercase;
   margin-bottom: 10px;
@@ -443,7 +443,7 @@ body {
 .play-card-desc {
   font-family: var(--font-body);
   font-size: var(--text-sm);
-  color: var(--fg-tertiary);
+  color: var(--fg-secondary); /* --fg-tertiary fails AA (2.6:1) at 14px on light surface */
   line-height: var(--leading-relaxed);
 }
 
@@ -579,7 +579,7 @@ body {
 .diary-read-time {
   font-family: var(--font-mono);
   font-size: 11px;
-  color: var(--fg-tertiary);
+  color: var(--fg-secondary); /* --fg-tertiary fails AA (2.6:1) at 11px on light surface */
 }
 
 .diary-arrow {
@@ -726,7 +726,7 @@ body {
 .about-card-role {
   font-family: var(--font-body);
   font-size: var(--text-sm);
-  color: var(--fg-tertiary);
+  color: var(--fg-secondary); /* --fg-tertiary fails AA (2.6:1) at 14px on light surface */
 }
 
 .about-card-quote {
@@ -759,7 +759,7 @@ body {
 .about-stat-label {
   font-family: var(--font-body);
   font-size: 11px;
-  color: var(--fg-tertiary);
+  color: var(--fg-secondary); /* --fg-tertiary fails AA (2.6:1) at 11px on light surface */
   margin-top: 4px;
 }
 
