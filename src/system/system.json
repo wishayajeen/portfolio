@@ -1,8 +1,8 @@
 {
   "name": "Jeen Design System",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "lastUpdated": "2026-05-02",
-  "commit": "9c10d7f",
+  "commit": "e122f19",
   "owner": "Jeen (wishayajeen)",
   "coOwner": "Pocky",
   "description": "A living, AI-queryable design system that is also the portfolio. Design decisions exist as structured data — visible through a dashboard, queryable through an agent.",
@@ -460,5 +460,68 @@
     "species": "Cat",
     "role": "AI agent and co-owner of the design system",
     "description": "Pocky is Jeen's cat-turned-AI-agent. The interface for querying the design system. Knows everything."
-  }
+  },
+
+  "discrepancies": [
+    {
+      "id": "fg-tertiary-contrast",
+      "status": "resolved",
+      "title": "--fg-tertiary used on light bg — 5 WCAG AA violations",
+      "body": "Several classes used --fg-tertiary (#9A9A90, ~2.6:1) for readable text on light surfaces, which fails WCAG AA. Fixed: .play-card-desc, .diary-read-time, .about-card-role, .about-stat-label, .pg-eyebrow → --fg-secondary (#3A3A35, ~9:1).",
+      "date": "2026-05-01",
+      "resolvedIn": "e291ed0"
+    },
+    {
+      "id": "nav-cta-shadow",
+      "status": "resolved",
+      "title": "Nav CTA shadow: shadow-lg → shadow-sm",
+      "body": "DS preview showed smaller 2px offset shadow on nav CTA. Project had 5px (shadow-lg). Decision: use shadow-sm (2px default, 3px hover) — proportionate for a small nav element.",
+      "date": "2026-05-01",
+      "resolvedIn": "e291ed0"
+    },
+    {
+      "id": "card-hover-lift",
+      "status": "resolved",
+      "title": "Card hover lift: translateY(-3px) → -2px",
+      "body": "DS spec defines 2px lift on card hover. Project had 3px. Decision: reduced to -2px to match DS spec.",
+      "date": "2026-05-01",
+      "resolvedIn": "e291ed0"
+    },
+    {
+      "id": "hero-badge-style",
+      "status": "decision",
+      "title": "Hero badge: keep ghost style over solid yellow (DS spec)",
+      "body": "DS spec shows hero role badge as solid yellow pill. Live project uses ghost style (transparent bg, gray border). Decision: keep ghost — it feels less heavy in the hero context.",
+      "date": "2026-05-01"
+    },
+    {
+      "id": "link-token-system",
+      "status": "resolved",
+      "title": "Ad-hoc link styles unified into Link component + global pattern",
+      "body": "6 ad-hoc link styles (nav-link, hero-social-link, footer-link, footer-contact-link, social-pill, article-back-link) were inconsistent and undocumented. Replaced with global <a> box-shadow underline pattern and Link component with 6 semantic variants. Deprecated --fg-link, --fg-link-hover, --fg-nav-link, --fg-nav-link-hover tokens.",
+      "date": "2026-05-02",
+      "resolvedIn": "96e7954"
+    },
+    {
+      "id": "diary-code-hr-tokens",
+      "status": "open",
+      "title": "Diary page styles not formally in DS: code blocks, HR",
+      "body": "The diary page uses inverted code blocks (--bg-dark bg, --fg-on-dark-primary text) and styled HRs (gray-300 border) not defined in the DS token set. Consider formalising these as article-specific token aliases.",
+      "date": "2026-05-01"
+    },
+    {
+      "id": "ghost-badges-not-in-spec",
+      "status": "open",
+      "title": "Ghost + coming-soon Badge variants not in DS spec",
+      "body": "Playground section uses ghost-style category labels and coming-soon badges not defined in the DS badge spec. Currently implemented as one-off CSS in homepage.css. Consider adding ghost and coming-soon as official Badge variants with tokens.",
+      "date": "2026-05-01"
+    },
+    {
+      "id": "doodle-illustrations",
+      "status": "open",
+      "title": "Doodle illustration set incomplete",
+      "body": "DS spec calls for hand-drawn SVG doodles as a decorative layer (1–3 per section, black line art). Currently only feather_copy.svg and feather_check.svg are in use. Full doodle set to be provided by Jeen.",
+      "date": "2026-05-01"
+    }
+  ]
 }

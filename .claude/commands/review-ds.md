@@ -139,3 +139,31 @@ If there are zero violations, zero warnings, and the build passes:
 1. Output: `✅ All checks passed. Design system compliant. Build clean.`
 2. Create/update `.claude/review-ds-clean.txt` with: `Audited: [date] | Commit: [git rev-parse --short HEAD]`
    This marks the codebase as fully audited — future runs may use diff-scoped mode.
+
+---
+
+## Step 9: Sync discrepancies to system.json
+
+After every audit — whether violations were found, fixed, or decisions made — update the `discrepancies` array in `src/system/system.json`.
+
+**Schema for each entry:**
+```json
+{
+  "id": "kebab-case-slug",
+  "status": "resolved" | "open" | "decision",
+  "title": "Short description of the issue or decision",
+  "body": "What was wrong (or decided), and why. Plain text — no HTML.",
+  "date": "YYYY-MM-DD",
+  "resolvedIn": "abc1234"
+}
+```
+`resolvedIn` is only present for `"resolved"` entries (omit for `open` and `decision`).
+
+**Rules:**
+- **Skip** any entry whose `id` already exists in the array — never duplicate.
+- **Fixed in this session** → add with `"status": "resolved"`, `"resolvedIn": $(git rev-parse --short HEAD)`.
+- **Found but not fixable** (needs design decision or content) → add with `"status": "open"`, no `resolvedIn`.
+- **Intentional deviation** logged during audit → add with `"status": "decision"`, no `resolvedIn`.
+- After adding entries, bump `"version"` (patch increment: 0.4.0 → 0.4.1) and update `"lastUpdated"` and `"commit"`.
+
+**Do not** run a full rebuild just for this step — the build from Step 7 already covers it.
