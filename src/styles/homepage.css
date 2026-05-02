@@ -55,6 +55,20 @@ body {
 .fade-up-3 { animation-delay: 0.25s; }
 .fade-up-4 { animation-delay: 0.35s; }
 
+/* Subtle link — secondary text, traditional underline, no box-shadow flood */
+.link-subtle {
+  color: var(--fg-secondary);
+  box-shadow: none;
+  text-decoration: underline;
+  text-decoration-color: currentColor;
+  text-underline-offset: 3px;
+  transition: color var(--duration-fast);
+}
+
+.link-subtle:hover {
+  color: var(--fg-primary);
+}
+
 .nav-link {
   font-family: var(--font-body);
   font-size: 14px;

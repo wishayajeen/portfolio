@@ -1,0 +1,49 @@
+---
+/**
+ * Link — semantic anchor component mapping variants to existing link classes.
+ * No new CSS introduced beyond .link-subtle (homepage.css).
+ *
+ * Variants:
+ *   default     → global <a> (light surface, box-shadow underline floods dark on hover)
+ *   subtle      → .link-subtle (light surface, --fg-secondary, traditional underline)
+ *   on-dark     → .hero-social-link (dark surface, box-shadow underline floods light on hover)
+ *   nav         → .nav-link (dark surface, pill button shape, no underline)
+ *   back        → .back-link (dark surface, muted color, no underline)
+ *   footer-nav  → .footer-nav-link (dark surface, plain nav item, no underline)
+ *
+ * external: adds target="_blank" rel="noopener noreferrer" automatically.
+ */
+
+interface Props {
+  href: string;
+  variant?: 'default' | 'subtle' | 'on-dark' | 'nav' | 'back' | 'footer-nav';
+  external?: boolean;
+  class?: string;
+  [key: string]: any;
+}
+
+const {
+  href,
+  variant = 'default',
+  external = false,
+  class: className,
+  ...rest
+} = Astro.props;
+
+const variantClass: Record<string, string> = {
+  default:       '',
+  subtle:        'link-subtle',
+  'on-dark':     'hero-social-link',
+  nav:           'nav-link',
+  back:          'back-link',
+  'footer-nav':  'footer-nav-link',
+};
+
+const cls = [variantClass[variant], className].filter(Boolean).join(' ') || undefined;
+
+const externalProps = external
+  ? { target: '_blank', rel: 'noopener noreferrer' }
+  : {};
+---
+
+<a href={href} class={cls} {...externalProps} {...rest}><slot /></a>
