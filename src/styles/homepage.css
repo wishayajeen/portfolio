@@ -480,7 +480,7 @@ body {
 .pg-diary-count {
   font-family: var(--font-mono);
   font-size: 11px;
-  color: var(--fg-tertiary);
+  color: var(--fg-secondary); /* --fg-tertiary (#9A9A90, 2.6:1) fails AA at 11px — use fg-secondary (#3A3A35, ~9:1) */
 }
 
 .pg-diary-link {
