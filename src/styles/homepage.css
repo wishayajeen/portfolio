@@ -975,7 +975,7 @@ body {
 .footer-eyebrow {
   font-family: var(--font-mono);
   font-size: 11px;
-  color: var(--fg-on-dark-label); /* on --bg-dark: --color-gray-500 is 3.9:1 — fails AA for 11px text; --fg-on-dark-label is ~5:1 */
+  color: var(--fg-primary); /* on --bg-accent (yellow): only --color-black passes */
   letter-spacing: var(--tracking-wider);
   text-transform: uppercase;
   margin-bottom: 16px;
@@ -1115,7 +1115,7 @@ body {
 }
 
 .footer-contact-divider {
-  color: var(--fg-on-dark-label); /* on --bg-dark: gray-500 fails AA for text; fg-on-dark-label is ~5:1 */
+  color: var(--fg-primary); /* on --bg-accent (yellow): only --color-black passes */
 }
 
 .footer-bottom {
