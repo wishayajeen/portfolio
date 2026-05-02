@@ -76,7 +76,7 @@ export default function Footer({ pockyProfileSrc, copyIconSrc }) {
                 </div>
               ) : (
                 <div className="footer-email-copy-group">
-                  <a href={`mailto:${contactEmail}`} className="footer-contact-link">{contactEmail}</a>
+                  <a href={`mailto:${contactEmail}`}>{contactEmail}</a>
                   <button type="button" className="footer-copy-btn" onClick={copyEmail} aria-label="Copy email address">
                     <img src={copyIconSrc} alt="" className="footer-copy-icon" aria-hidden="true" />
                   </button>
@@ -87,7 +87,7 @@ export default function Footer({ pockyProfileSrc, copyIconSrc }) {
                 { label: 'GitHub', href: 'https://github.com/wishayajeen' },
                 { label: 'LinkedIn', href: 'https://www.linkedin.com/in/wsjeen/' },
               ].map(({ label, href }) => (
-                <a key={label} href={href} className="footer-contact-link" target="_blank" rel="noopener noreferrer">{label}</a>
+                <a key={label} href={href} target="_blank" rel="noopener noreferrer">{label}</a>
               ))}
             </div>
           </div>
@@ -119,7 +119,7 @@ export default function Footer({ pockyProfileSrc, copyIconSrc }) {
                 <div key={col.title} className="footer-nav-col">
                   <div className="footer-nav-heading">{col.title}</div>
                   {col.links.map(([label, id]) => (
-                    <button key={label} className="footer-link" onClick={() => id && scrollTo(id)}>
+                    <button key={label} className="footer-nav-link" onClick={() => id && scrollTo(id)}>
                       {label}
                     </button>
                   ))}
@@ -148,7 +148,7 @@ export default function Footer({ pockyProfileSrc, copyIconSrc }) {
                 { label: 'GitHub', href: 'https://github.com/wishayajeen' },
                 { label: 'LinkedIn', href: 'https://www.linkedin.com/in/wsjeen/' },
               ].map(({ label, href }) => (
-                <a key={label} href={href} className="social-pill" target="_blank" rel="noopener noreferrer">{label}</a>
+                <a key={label} href={href} className="footer-nav-link" target="_blank" rel="noopener noreferrer">{label}</a>
               ))}
             </div>
           </div>

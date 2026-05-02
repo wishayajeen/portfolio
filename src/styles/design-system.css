@@ -27,13 +27,10 @@ body {
   top: 0;
   z-index: 100;
 }
-.ds-topbar a {
-  color: var(--fg-on-dark-label);
+.ds-topbar .back-link {
+  margin-bottom: 0; /* override article-page margin — topbar context */
   font-size: var(--text-sm);
-  text-decoration: none;
-  transition: color var(--duration-fast) var(--ease-out);
 }
-.ds-topbar a:hover { color: var(--fg-on-dark-accent); }
 .ds-topbar-sep    { color: var(--fg-on-dark-label); font-size: var(--text-sm); }
 .ds-topbar-title  { color: var(--fg-on-dark-primary); font-size: var(--text-sm); font-weight: 600; }
 

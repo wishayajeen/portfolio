@@ -48,17 +48,18 @@
   --fg-tertiary:       var(--color-gray-400);
   --fg-inverse:        var(--color-white);
   --fg-accent:         var(--color-black); /* text ON yellow bg */
-  --fg-link:           var(--color-black);
-
   /* Dark-background text — WCAG AA compliant on #0A0A0A */
   --fg-on-dark-primary:    var(--color-white);          /* #FAFAFA — ~19:1 */
   --fg-on-dark-secondary:  var(--color-gray-300);       /* #C8C8C0 — ~9:1  */
   --fg-on-dark-label:      var(--color-gray-400);       /* #9A9A90; — ~5:1 */
   --fg-on-dark-accent:     var(--color-yellow);       /* yellow text ON dark bg — ~17.6:1 */
   /* ⚠️ NEVER use --color-gray-500 (#6A6A60), --color-gray-700 (#3A3A35), or --color-gray-900 (#1A1A15) as text on #0A0A0A — all fail WCAG AA */
-  --fg-link-hover:     var(--color-yellow);
-  --fg-nav-link:        var(--color-white);    /* nav links on dark header */
-  --fg-nav-link-hover:  var(--color-yellow);   /* nav link hover */
+
+  /* Deprecated link tokens — replaced by global <a> box-shadow underline pattern */
+  /* --fg-link:          var(--color-black);   */
+  /* --fg-link-hover:    var(--color-yellow);  */
+  /* --fg-nav-link:      var(--color-white);   */
+  /* --fg-nav-link-hover: var(--color-yellow); */
 
   /* Borders */
   --border-primary:    1.5px solid var(--color-black);
@@ -283,14 +284,15 @@ body {
 }
 
 a {
-  color: var(--fg-link);
-  text-decoration-color: var(--color-yellow);
-  text-underline-offset: 3px;
-  transition: color var(--duration-fast) var(--ease-out);
+  color: var(--fg-primary);
+  text-decoration: none;
+  box-shadow: inset 0 -.1em 0 var(--fg-primary);
+  transition: color var(--duration-fast) var(--ease-out), box-shadow var(--duration-fast) var(--ease-out);
 }
 
 a:hover {
-  color: var(--fg-link-hover);
+  color: var(--fg-on-dark-accent);
+  box-shadow: inset 0 -1.5em 0 var(--fg-primary);
 }
 
 ::selection {

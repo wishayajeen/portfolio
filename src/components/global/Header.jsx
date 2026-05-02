@@ -25,13 +25,6 @@ export default function Header({ logoSrc }) {
     borderBottom: scrolled || menuOpen ? '1px solid rgba(255,255,255,0.08)' : '1px solid transparent',
   };
 
-  const linkStyle = {
-    fontFamily: "'DM Sans', sans-serif", fontSize: 14, fontWeight: 500,
-    color: '#FAFAFA', background: 'none', border: 'none', cursor: 'pointer',
-    padding: '6px 12px', borderRadius: 99, transition: 'color 150ms',
-    letterSpacing: '0.01em',
-  };
-
   return (
     <nav style={navStyle}>
       <div style={{ maxWidth: 1200, margin: '0 auto', height: 64, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -45,7 +38,7 @@ export default function Header({ logoSrc }) {
         {/* Desktop nav */}
         <div className="nav-links-desktop" style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
           {[['Playground', 'playground'], ['About', 'about'], ['Work', 'work']].map(([label, id]) => (
-            <button key={id} className="nav-link" style={linkStyle} onClick={() => scrollTo(id)}>{label}</button>
+            <button key={id} className="nav-link" onClick={() => scrollTo(id)}>{label}</button>
           ))}
           <button className="nav-cta" onClick={() => scrollTo('footer')} style={{
             fontFamily: "'DM Sans', sans-serif", fontSize: 13, fontWeight: 600,
