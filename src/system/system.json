@@ -1,0 +1,313 @@
+{
+  "name": "Jeen Design System",
+  "version": "1.0",
+  "lastUpdated": "2026-05-01",
+  "commit": "e31dd37",
+  "owner": "Jeen (wishayajeen)",
+  "coOwner": "Pocky",
+  "description": "A living, AI-queryable design system that is also the portfolio. Design decisions exist as structured data — visible through a dashboard, queryable through an agent.",
+  "stack": {
+    "framework": "Astro 6",
+    "react": "React 19 via @astrojs/react islands",
+    "bundler": "Vite",
+    "styling": "CSS custom properties (tokens.css + homepage.css)",
+    "deployment": "Vercel",
+    "analytics": "@vercel/analytics"
+  },
+
+  "pages": [
+    {
+      "id": "home",
+      "path": "/",
+      "file": "src/pages/index.astro",
+      "description": "Main portfolio landing page — assembles all homepage sections"
+    },
+    {
+      "id": "design-system",
+      "path": "/design-system",
+      "file": "src/pages/design-system.astro",
+      "description": "Public dashboard — visual documentation of all design tokens, components, and principles"
+    },
+    {
+      "id": "diary-slug",
+      "path": "/diary/[slug]",
+      "file": "src/pages/diary/[slug].astro",
+      "description": "Individual diary / article pages rendered from markdown content"
+    }
+  ],
+
+  "sections": [
+    {
+      "id": "hero",
+      "label": "Hero",
+      "component": "src/components/home/Hero.astro",
+      "type": "static",
+      "hydration": null,
+      "description": "Full-viewport opening section with headline, CTAs, social links, scroll indicator, and Pocky mascot",
+      "props": ["pockyIdleSrc"],
+      "features": ["smooth-scroll via .js-scroll-to", "fade-up entrance animations", "SVG squiggle accent"]
+    },
+    {
+      "id": "playground",
+      "label": "Playground",
+      "component": "src/components/home/PlaygroundSection.astro",
+      "type": "static",
+      "hydration": null,
+      "description": "Experiment cards grid and diary entry list",
+      "props": ["diaryEntries", "diaryTotal"],
+      "content": {
+        "experiments": [
+          { "title": "Ask Pocky", "tag": "Experiment", "status": "coming-soon" },
+          { "title": "Design dashboard", "tag": "Experiment", "status": "coming-soon" },
+          { "title": "Component sandbox", "tag": "Experiment", "status": "coming-soon" },
+          { "title": "PersonaLens.app", "tag": "AI Product", "status": "live", "href": "https://www.personalens.app/" }
+        ],
+        "diary": "dynamic — loaded from src/content/diary/ via getCollection"
+      }
+    },
+    {
+      "id": "about",
+      "label": "About",
+      "component": "src/components/home/AboutSection.astro",
+      "type": "static",
+      "hydration": null,
+      "description": "About section with bio, skills, and profile card with stats",
+      "props": ["logoSrc"],
+      "content": {
+        "role": "Agentic System Designer @Thoughtworks",
+        "stats": [
+          { "num": "10+", "label": "Years designing" },
+          { "num": "22+", "label": "Projects shipped" },
+          { "num": "3",   "label": "Talks given" }
+        ],
+        "skills": [
+          "Agentic Design systems",
+          "AI × design",
+          "AI-native",
+          "Design tokens",
+          "Building in public",
+          "Talks & content"
+        ]
+      }
+    },
+    {
+      "id": "work",
+      "label": "Work",
+      "component": "src/components/home/WorkSection.jsx",
+      "type": "react-island",
+      "hydration": "client:visible",
+      "description": "Selected projects table — expandable rows showing role, tools, and year",
+      "props": [],
+      "content": {
+        "projects": [
+          {
+            "num": "01",
+            "tag": "Talk",
+            "title": "From Dead to Living: Building a Design System with AI",
+            "year": "2026",
+            "role": "Speaker",
+            "tools": ["Figma Slides", "Figma MCP", "Claude Code"]
+          },
+          {
+            "num": "02",
+            "tag": "AI product design",
+            "title": "Agentic Network Submission (ANS)",
+            "year": "2025",
+            "role": "Design lead",
+            "tools": ["Figma", "UXPilot"]
+          },
+          {
+            "num": "03",
+            "tag": "Design System",
+            "title": "Design System × Marketplace — from fragmented to unified",
+            "year": "2023",
+            "role": "Solo — design + build",
+            "tools": ["Figma"]
+          }
+        ]
+      }
+    }
+  ],
+
+  "components": [
+    {
+      "id": "header",
+      "label": "Header",
+      "file": "src/components/global/Header.jsx",
+      "type": "react-island",
+      "hydration": "client:load",
+      "props": ["logoSrc"],
+      "state": ["scrolled", "menuOpen"],
+      "description": "Fixed navigation bar with scroll-aware style change and mobile menu toggle"
+    },
+    {
+      "id": "footer",
+      "label": "Footer",
+      "file": "src/components/global/Footer.jsx",
+      "type": "react-island",
+      "hydration": "client:visible",
+      "props": ["pockyProfileSrc", "copyIconSrc"],
+      "state": ["email", "sent", "copied"],
+      "description": "CTA band with email capture, copy-to-clipboard, social links, and site credits"
+    },
+    {
+      "id": "tweaks-panel",
+      "label": "TweaksPanel",
+      "file": "src/components/home/TweaksPanel.jsx",
+      "type": "react-island",
+      "hydration": "client:only=\"react\"",
+      "props": [],
+      "state": ["visible", "tweaks"],
+      "description": "Edit-mode overlay panel activated by postMessage from parent frame; exposes accent color, work style, and scroll indicator toggles",
+      "editableKeys": ["heroHeadline", "accentColor", "showScrollHint", "workStyle"]
+    },
+    {
+      "id": "layout",
+      "label": "Layout",
+      "file": "src/layouts/Layout.astro",
+      "type": "astro",
+      "hydration": null,
+      "props": ["title", "description"],
+      "slots": ["default", "head"],
+      "description": "Global page shell — all pages must use this. Injects tokens.css, homepage.css, and Vercel Analytics."
+    }
+  ],
+
+  "content": {
+    "collections": [
+      {
+        "id": "diary",
+        "path": "src/content/diary/",
+        "format": "markdown",
+        "frontmatterSchema": ["title", "date", "tag", "readTime", "description"],
+        "entries": [
+          {
+            "slug": "creating-this-website-in-2-days",
+            "title": "I Built My Portfolio in 2 Days (and You Can Too)",
+            "date": "2026-04-28",
+            "tag": "Tutorial",
+            "readTime": "4 min"
+          }
+        ]
+      }
+    ]
+  },
+
+  "tokens": {
+    "sourceFile": "src/styles/tokens.css",
+    "categories": {
+      "color": {
+        "primitives": ["color-black", "color-white", "color-pure-white", "color-yellow", "color-yellow-dim", "color-yellow-pale", "color-gray-50", "color-gray-100", "color-gray-200", "color-gray-300", "color-gray-400", "color-gray-500", "color-gray-700", "color-gray-900"],
+        "status": ["color-success", "color-warning", "color-error", "color-info"],
+        "semantic-backgrounds": ["bg-primary", "bg-dark", "bg-accent", "bg-surface", "bg-surface-raised", "bg-inverse"],
+        "semantic-foregrounds": ["fg-primary", "fg-secondary", "fg-tertiary", "fg-inverse", "fg-accent", "fg-link", "fg-link-hover", "fg-nav-link", "fg-nav-link-hover"],
+        "on-dark-text": ["fg-on-dark-primary", "fg-on-dark-secondary", "fg-on-dark-label", "fg-on-dark-accent"],
+        "interactive": ["color-focus", "color-cta", "color-cta-hover"]
+      },
+      "border": {
+        "tokens": ["border-primary", "border-subtle", "border-on-dark", "border-accent"],
+        "note": "Pick by surface: border-primary/subtle on light, border-on-dark on --bg-dark, border-accent for highlights"
+      },
+      "shadow": {
+        "hard-offset": ["shadow-xs", "shadow-sm", "shadow-md", "shadow-lg", "shadow-xl", "shadow-hover"],
+        "soft": ["shadow-soft-sm", "shadow-soft-md"],
+        "note": "Hard offset shadows define the doodle/comic aesthetic. Soft shadows for elevated modals."
+      },
+      "radius": {
+        "scale": ["radius-none", "radius-xs", "radius-sm", "radius-md", "radius-lg", "radius-xl", "radius-full"]
+      },
+      "spacing": {
+        "scale": ["space-1", "space-2", "space-3", "space-4", "space-5", "space-6", "space-8", "space-10", "space-12", "space-16", "space-20", "space-24", "space-32"],
+        "layout": ["content-max-width", "content-padding", "section-padding-y", "grid-gap"],
+        "base": "8px"
+      },
+      "typography": {
+        "families": ["font-display", "font-body", "font-mono"],
+        "scale": ["text-xs", "text-sm", "text-base", "text-lg", "text-xl", "text-2xl", "text-3xl", "text-4xl", "text-5xl", "text-6xl", "text-7xl", "text-8xl"],
+        "leading": ["leading-tight", "leading-snug", "leading-normal", "leading-relaxed"],
+        "tracking": ["tracking-tight", "tracking-normal", "tracking-wide", "tracking-wider"]
+      },
+      "animation": {
+        "easing": ["ease-spring", "ease-out", "ease-in-out"],
+        "duration": ["duration-fast", "duration-base", "duration-slow"]
+      }
+    },
+    "rules": {
+      "useSemanticFirst": "Always prefer semantic tokens (--fg-primary) over primitives (--color-black) in product code",
+      "noHardcodedValues": "Never hardcode hex colors, font names, spacing, shadows, or border radii if a token exists",
+      "noNewTokens": "Do not add CSS variables outside of tokens.css",
+      "a11yLightSurface": "--fg-tertiary fails WCAG AA at small sizes on light bg — use --fg-secondary minimum",
+      "a11yDarkSurface": "Only --fg-on-dark-* tokens on --bg-dark. Never gray-500/700/900 on dark.",
+      "a11yYellowSurface": "Only --color-black on yellow — all other values fail contrast"
+    }
+  },
+
+  "stylesheets": [
+    {
+      "file": "src/styles/tokens.css",
+      "scope": "global",
+      "loadedBy": "Layout.astro",
+      "purpose": "All design tokens — single source of truth"
+    },
+    {
+      "file": "src/styles/homepage.css",
+      "scope": "global",
+      "loadedBy": "Layout.astro",
+      "purpose": "All homepage and shared component styles"
+    },
+    {
+      "file": "src/styles/design-system.css",
+      "scope": "design-system page only",
+      "loadedBy": "src/pages/design-system.astro frontmatter import",
+      "purpose": "DS dashboard page styles — not for use in product pages"
+    }
+  ],
+
+  "capabilities": [
+    {
+      "id": "design-system-dashboard",
+      "label": "Public design system dashboard",
+      "status": "live",
+      "description": "Visual documentation of all tokens, components, and principles at /design-system",
+      "path": "/design-system"
+    },
+    {
+      "id": "diary",
+      "label": "Diary / writing",
+      "status": "live",
+      "description": "Markdown-driven articles at /diary/[slug] — thoughts on design, AI, and building in public"
+    },
+    {
+      "id": "ask-pocky",
+      "label": "Ask Pocky — AI design agent",
+      "status": "coming-soon",
+      "description": "Chat interface to query the design system, work history, and design process via Pocky (AI agent)"
+    },
+    {
+      "id": "component-sandbox",
+      "label": "Component sandbox",
+      "status": "coming-soon",
+      "description": "Interactive playground for composing and testing design system components in real time"
+    },
+    {
+      "id": "tweaks-panel",
+      "label": "Edit-mode tweaks panel",
+      "status": "live",
+      "description": "Postmessage-activated overlay for live customisation of accent color, work section style, and scroll indicator — used in iframe edit contexts",
+      "activation": "window.postMessage({ type: '__activate_edit_mode' })"
+    },
+    {
+      "id": "system-json",
+      "label": "Machine-readable system.json",
+      "status": "live",
+      "description": "This file — structured representation of the design system for AI querying, tooling, and automation"
+    }
+  ],
+
+  "mascot": {
+    "name": "Pocky",
+    "species": "Cat",
+    "role": "AI agent and co-owner of the design system",
+    "description": "Pocky is Jeen's cat-turned-AI-agent. The interface for querying the design system. Knows everything."
+  }
+}
