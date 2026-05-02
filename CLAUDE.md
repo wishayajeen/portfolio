@@ -30,7 +30,8 @@ src/
 │   └── system/
 │       ├── Badge.astro
 │       ├── Button.astro
-│       └── Card.astro
+│       ├── Card.astro
+│       └── Link.astro
 ├── content/
 │   └── diary/
 ├── system/
@@ -174,6 +175,12 @@ New component files go in `src/components/`. New shared styles go in the relevan
 - `TweaksPanel.jsx` — edit-mode tweaks panel with postMessage; `client:only="react"`
 - `src/pages/diary/[slug].astro` — article pages
 
+### System components (`src/components/system/`)
+- `Badge.astro` — label/tag pill; variants: `tag`, `diary-tag`, `work-tag`, `skill`, `coming-soon`
+- `Button.astro` — CTA button; variants: `primary`, `secondary`; renders `<a>` if `href` provided
+- `Card.astro` — card container; variants: `default`, `accent`, `diary`; renders `<a>` if `href` provided
+- `Link.astro` — anchor component; variants: `default`, `subtle`, `on-dark`, `nav`, `back`, `footer-nav`; `external` prop adds `target="_blank" rel="noopener noreferrer"`
+
 ### Stylesheets
 - `src/styles/tokens.css` — all design tokens (colors, type, spacing, shadows, radii, animation)
 - `src/styles/homepage.css` — all homepage + shared component styles (loaded via `Layout.astro`)
@@ -200,10 +207,13 @@ New component files go in `src/components/`. New shared styles go in the relevan
 `diary-card`, `diary-content`, `diary-date-block`, `diary-date-day`, `diary-date-month`, `diary-tag`, `diary-title`, `diary-meta`, `diary-read-time`, `diary-arrow`
 
 **Footer**
-`footer-inner`, `footer-cols`, `footer-brand-header`, `footer-brand-logo`, `footer-brand-name`, `footer-brand-desc`, `footer-nav-cols`, `footer-nav-col`, `footer-nav-heading`, `footer-link`, `footer-status-col`, `footer-status-badge`, `footer-status-dot`, `footer-status-heading`, `footer-cta`, `footer-cta-inner`, `footer-cta-content`, `footer-eyebrow`, `footer-headline`, `footer-sub`, `footer-email-row`, `footer-email-input`, `footer-email-btn`, `footer-email-copy-group`, `footer-copy-btn`, `footer-copy-icon`, `footer-contact-row`, `footer-contact-link`, `footer-contact-divider`, `footer-social-links`, `social-pill`, `footer-success`, `footer-success--inline`, `footer-success-dot`, `footer-bottom`, `footer-bottom-bar`, `footer-copyright`, `footer-version`, `footer-powered`, `footer-powered-avatar`, `footer-powered-label`
+`footer-inner`, `footer-cols`, `footer-brand-header`, `footer-brand-logo`, `footer-brand-name`, `footer-brand-desc`, `footer-nav-cols`, `footer-nav-col`, `footer-nav-heading`, `footer-nav-link`, `footer-status-col`, `footer-status-badge`, `footer-status-dot`, `footer-status-heading`, `footer-cta`, `footer-cta-inner`, `footer-cta-content`, `footer-eyebrow`, `footer-headline`, `footer-sub`, `footer-email-row`, `footer-email-input`, `footer-email-btn`, `footer-email-copy-group`, `footer-copy-btn`, `footer-copy-icon`, `footer-contact-row`, `footer-contact-divider`, `footer-social-links`, `footer-success`, `footer-success--inline`, `footer-success-dot`, `footer-bottom`, `footer-bottom-bar`, `footer-copyright`, `footer-version`, `footer-powered`, `footer-powered-avatar`, `footer-powered-label`
 
 **Article / Diary page**
-`article-page`, `article-header`, `article-header-inner`, `article-eyebrow`, `article-title`, `article-description`, `article-meta`, `article-content`, `article-footer`, `article-footer-inner`, `article-footer-link`, `article-back-link`
+`article-page`, `article-header`, `article-header-inner`, `article-eyebrow`, `article-title`, `article-description`, `article-meta`, `article-content`, `article-footer`, `article-footer-inner`
+
+**Link utilities** *(also serve as Link component variant targets)*
+`back-link` (dark surface, muted→white), `link-subtle` (light surface, secondary underline), `nav-link` (dark surface, pill), `hero-social-link` (dark surface, box-shadow), `footer-nav-link` (dark surface, plain)
 
 **Animation utilities**
 `fade-up`, `fade-up-1`, `fade-up-2`, `fade-up-3`, `fade-up-4`

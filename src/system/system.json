@@ -1,8 +1,8 @@
 {
   "name": "Jeen Design System",
-  "version": "0.3.0",
-  "lastUpdated": "2026-05-01",
-  "commit": "05b7bcf",
+  "version": "0.4.0",
+  "lastUpdated": "2026-05-02",
+  "commit": "9c10d7f",
   "owner": "Jeen (wishayajeen)",
   "coOwner": "Pocky",
   "description": "A living, AI-queryable design system that is also the portfolio. Design decisions exist as structured data — visible through a dashboard, queryable through an agent.",
@@ -248,6 +248,36 @@
         "diary": "diary-card"
       },
       "description": "Outer card container. Renders as <a> when href is provided, <div> otherwise. Inner content via slot — no internal template imposed."
+    },
+    {
+      "id": "link",
+      "label": "Link",
+      "category": "ui",
+      "status": "stable",
+      "file": "src/components/system/Link.astro",
+      "type": "astro",
+      "hydration": null,
+      "props": ["href", "variant", "external"],
+      "slots": ["default"],
+      "variants": ["default", "subtle", "on-dark", "nav", "back", "footer-nav"],
+      "cssClasses": {
+        "default": "(global a)",
+        "subtle": "link-subtle",
+        "on-dark": "hero-social-link",
+        "nav": "nav-link",
+        "back": "back-link",
+        "footer-nav": "footer-nav-link"
+      },
+      "surfaces": {
+        "default":    "light — box-shadow underline, floods dark on hover, yellow text",
+        "subtle":     "light — --fg-secondary, plain underline, darkens on hover",
+        "on-dark":    "dark — box-shadow underline, floods light on hover, dark text",
+        "nav":        "dark — pill button shape, yellow on hover",
+        "back":       "dark — muted color, white on hover, no underline",
+        "footer-nav": "dark — plain nav item, white on hover, no underline"
+      },
+      "externalProp": "Adds target='_blank' rel='noopener noreferrer' automatically",
+      "description": "Unified link component mapping 6 semantic variants to existing link classes. One new class added: .link-subtle (homepage.css)."
     }
   ],
 
@@ -269,7 +299,8 @@
       "layout": ["bg-primary", "fg-primary", "font-body", "text-base", "leading-relaxed"],
       "badge": ["color-yellow", "color-black", "fg-on-dark-label", "fg-on-dark-accent", "color-error", "radius-full", "radius-xs", "border-primary"],
       "button": ["color-yellow", "color-black", "fg-on-dark-primary", "radius-full", "duration-fast", "ease-spring"],
-      "card": ["bg-primary", "bg-accent", "border-primary", "radius-md", "shadow-md", "ease-spring", "duration-fast"]
+      "card": ["bg-primary", "bg-accent", "border-primary", "radius-md", "shadow-md", "ease-spring", "duration-fast"],
+      "link": ["fg-primary", "fg-secondary", "fg-on-dark-primary", "fg-on-dark-label", "fg-on-dark-accent", "duration-fast"]
     },
     "sectionUsesTokens": {
       "hero": ["bg-dark", "fg-on-dark-primary", "fg-on-dark-secondary", "fg-on-dark-accent", "bg-accent", "border-accent", "radius-full", "shadow-lg", "ease-spring", "duration-fast"],
@@ -306,7 +337,21 @@
         "primitives": ["color-black", "color-white", "color-pure-white", "color-yellow", "color-yellow-dim", "color-yellow-pale", "color-gray-50", "color-gray-100", "color-gray-200", "color-gray-300", "color-gray-400", "color-gray-500", "color-gray-700", "color-gray-900"],
         "status": ["color-success", "color-warning", "color-error", "color-info"],
         "semantic-backgrounds": ["bg-primary", "bg-dark", "bg-accent", "bg-surface", "bg-surface-raised", "bg-inverse"],
-        "semantic-foregrounds": ["fg-primary", "fg-secondary", "fg-tertiary", "fg-inverse", "fg-accent", "fg-link", "fg-link-hover", "fg-nav-link", "fg-nav-link-hover"],
+        "semantic-foregrounds": ["fg-primary", "fg-secondary", "fg-tertiary", "fg-inverse", "fg-accent"],
+        "link-tokens": {
+          "note": "No isolated link tokens — links use existing surface tokens. Deprecated fg-link/fg-nav-link replaced by Link component variants.",
+          "default":    { "rest": "fg-primary",      "hover-text": "fg-on-dark-accent", "hover-bg-flood": "fg-primary" },
+          "subtle":     { "rest": "fg-secondary",    "hover-text": "fg-primary" },
+          "on-dark":    { "rest": "fg-on-dark-primary", "hover-text": "fg-primary", "hover-bg-flood": "fg-on-dark-primary" },
+          "nav":        { "rest": "fg-on-dark-primary", "hover-text": "fg-on-dark-accent" },
+          "back":       { "rest": "fg-on-dark-label",  "hover-text": "fg-on-dark-primary" },
+          "footer-nav": { "rest": "fg-on-dark-label",  "hover-text": "fg-on-dark-primary" }
+        },
+        "deprecated-foregrounds": {
+          "tokens": ["fg-link", "fg-link-hover", "fg-nav-link", "fg-nav-link-hover"],
+          "reason": "Replaced by global <a> box-shadow underline pattern and the Link component variant system",
+          "since": "0.4.0"
+        },
         "on-dark-text": ["fg-on-dark-primary", "fg-on-dark-secondary", "fg-on-dark-label", "fg-on-dark-accent"],
         "interactive": ["color-focus", "color-cta", "color-cta-hover"]
       },
