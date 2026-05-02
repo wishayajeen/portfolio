@@ -90,6 +90,7 @@ Prefer semantic tokens over primitive ones in all product code:
 | Accent text on dark | `--fg-on-dark-accent` |
 | Default border | `--border-primary` |
 | Subtle border | `--border-subtle` |
+| Divider on dark surface | `--border-on-dark` |
 | Accent border | `--border-accent` |
 | Focus ring | `--color-focus` |
 | CTA color | `--color-cta` |
@@ -216,7 +217,7 @@ These are scoped to the DS page only. Do not reuse in other pages.
 
 **State modifiers (DS demo only):** `state-hover`, `state-active`, `dot` — utility classes for simulating interactive states in documentation. Do not use in product pages.
 
-**Display helpers:** `swatch-grid`, `swatch-item`, `swatch-color`, `swatch-info`, `swatch-name`, `swatch-hex`, `swatch-use`, `semantic-grid`, `semantic-chip`, `semantic-dot`, `semantic-info`, `semantic-token`, `semantic-hex`, `semantic-desc`, `dark-text-demo`, `dark-text-item`, `dark-text-sample`, `dark-text-token`, `dark-text-ratio`, `type-specimen`, `type-meta`, `type-sample`, `space-row`, `space-bar`, `space-label`, `shadow-box`, `shadow-item`, `shadow-meta`, `radius-box`, `bg-swatch`, `bg-label`, `anim-row`, `anim-demo`, `anim-info`, `anim-name`, `anim-value`
+**Display helpers:** `swatch-grid`, `swatch-item`, `swatch-color`, `swatch-info`, `swatch-name`, `swatch-hex`, `swatch-use`, `semantic-grid`, `semantic-chip`, `semantic-dot`, `semantic-info`, `semantic-token`, `semantic-hex`, `semantic-desc`, `dark-text-demo`, `dark-text-item`, `dark-text-sample`, `dark-text-token`, `dark-text-ratio`, `type-specimen`, `type-meta`, `type-sample`, `space-row`, `space-bar`, `space-label`, `shadow-box`, `shadow-item`, `shadow-meta`, `radius-box`, `bg-swatch`, `bg-label`, `anim-row`, `anim-demo`, `anim-info`, `anim-name`, `anim-value`, `border-token-row`, `border-token-preview`, `border-token-demo`, `border-token-info`, `border-token-name`, `border-token-value`, `border-token-use`
 
 ---
 

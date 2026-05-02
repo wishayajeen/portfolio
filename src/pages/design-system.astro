@@ -573,11 +573,108 @@ const lastUpdated = new Date().toLocaleDateString('en-US', { month: 'short', day
   </section>
 
   <!-- ────────────────────────────────────────
-       08 · BUTTONS
+       08 · BORDERS
+  ──────────────────────────────────────── -->
+  <section class="ds-section" id="borders">
+    <div class="ds-section-header">
+      <span class="ds-section-num">08</span>
+      <h2 class="ds-section-title">Borders</h2>
+    </div>
+
+    <div class="ds-subsection">
+      <div class="ds-sub-label">Border tokens</div>
+      <div class="ds-card">
+        <p style="margin:0 0 var(--space-5);font-size:var(--text-sm);color:var(--fg-secondary);">Four semantic border tokens cover all surfaces. Pick by surface context — never use raw color values for borders.</p>
+
+        <!-- --border-primary -->
+        <div class="border-token-row">
+          <div class="border-token-preview" style="background:var(--bg-surface-raised);">
+            <div class="border-token-demo" style="border:var(--border-primary);"></div>
+          </div>
+          <div class="border-token-info">
+            <span class="border-token-name">--border-primary</span>
+            <span class="border-token-value">1.5px solid #0A0A0A</span>
+            <span class="border-token-use">Default border — cards, inputs, buttons on light bg</span>
+          </div>
+        </div>
+
+        <div class="ds-divider"></div>
+
+        <!-- --border-subtle -->
+        <div class="border-token-row">
+          <div class="border-token-preview" style="background:var(--bg-surface-raised);">
+            <div class="border-token-demo" style="border:var(--border-subtle);"></div>
+          </div>
+          <div class="border-token-info">
+            <span class="border-token-name">--border-subtle</span>
+            <span class="border-token-value">1px solid #E8E8E0</span>
+            <span class="border-token-use">Dividers on light surfaces — table rows, section separators</span>
+          </div>
+        </div>
+
+        <div class="ds-divider"></div>
+
+        <!-- --border-on-dark -->
+        <div class="border-token-row">
+          <div class="border-token-preview" style="background:var(--bg-dark);">
+            <div class="border-token-demo" style="border:var(--border-on-dark);border-color:var(--color-gray-700);"></div>
+          </div>
+          <div class="border-token-info">
+            <span class="border-token-name">--border-on-dark</span>
+            <span class="border-token-value">1px solid #3A3A35</span>
+            <span class="border-token-use">Dividers on dark surfaces (--bg-dark) — work rows, dark cards</span>
+          </div>
+        </div>
+
+        <div class="ds-divider"></div>
+
+        <!-- --border-accent -->
+        <div class="border-token-row">
+          <div class="border-token-preview" style="background:var(--bg-surface-raised);">
+            <div class="border-token-demo" style="border:var(--border-accent);"></div>
+          </div>
+          <div class="border-token-info">
+            <span class="border-token-name">--border-accent</span>
+            <span class="border-token-value">2px solid #F3FE52</span>
+            <span class="border-token-use">Accent highlights — featured badges, active states, callouts</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ds-subsection">
+      <div class="ds-sub-label">Usage rules</div>
+      <div class="ds-card">
+        <table class="ds-table">
+          <thead><tr><th>Surface</th><th>Token to use</th><th>Never use</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>Light bg (<span class="ds-code">--bg-primary</span>, <span class="ds-code">--bg-surface</span>)</td>
+              <td><span class="ds-code">--border-primary</span> or <span class="ds-code">--border-subtle</span></td>
+              <td>Raw hex · <span class="ds-code">--color-gray-*</span></td>
+            </tr>
+            <tr>
+              <td>Dark bg (<span class="ds-code">--bg-dark</span>)</td>
+              <td><span class="ds-code">--border-on-dark</span> or <span class="ds-code">--border-accent</span></td>
+              <td><span class="ds-code">--border-primary</span> · <span class="ds-code">--border-subtle</span> · <span class="ds-code">--color-gray-900</span> (invisible)</td>
+            </tr>
+            <tr>
+              <td>Accent / CTA element</td>
+              <td><span class="ds-code">--border-accent</span></td>
+              <td>Any other border on yellow — primary is fine too</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ────────────────────────────────────────
+       09 · BUTTONS
   ──────────────────────────────────────── -->
   <section class="ds-section" id="buttons">
     <div class="ds-section-header">
-      <span class="ds-section-num">08</span>
+      <span class="ds-section-num">09</span>
       <h2 class="ds-section-title">Buttons</h2>
     </div>
 
@@ -632,11 +729,11 @@ const lastUpdated = new Date().toLocaleDateString('en-US', { month: 'short', day
   </section>
 
   <!-- ────────────────────────────────────────
-       09 · BADGES
+       10 · BADGES
   ──────────────────────────────────────── -->
   <section class="ds-section" id="badges">
     <div class="ds-section-header">
-      <span class="ds-section-num">09</span>
+      <span class="ds-section-num">10</span>
       <h2 class="ds-section-title">Badges & tags</h2>
     </div>
 
@@ -683,11 +780,11 @@ const lastUpdated = new Date().toLocaleDateString('en-US', { month: 'short', day
   </section>
 
   <!-- ────────────────────────────────────────
-       10 · CARDS
+       11 · CARDS
   ──────────────────────────────────────── -->
   <section class="ds-section" id="cards">
     <div class="ds-section-header">
-      <span class="ds-section-num">10</span>
+      <span class="ds-section-num">11</span>
       <h2 class="ds-section-title">Cards</h2>
     </div>
 
@@ -717,11 +814,11 @@ const lastUpdated = new Date().toLocaleDateString('en-US', { month: 'short', day
   </section>
 
   <!-- ────────────────────────────────────────
-       11 · INPUTS
+       12 · INPUTS
   ──────────────────────────────────────── -->
   <section class="ds-section" id="inputs">
     <div class="ds-section-header">
-      <span class="ds-section-num">11</span>
+      <span class="ds-section-num">12</span>
       <h2 class="ds-section-title">Inputs</h2>
     </div>
 
@@ -757,11 +854,11 @@ const lastUpdated = new Date().toLocaleDateString('en-US', { month: 'short', day
   </section>
 
   <!-- ────────────────────────────────────────
-       12 · ICONOGRAPHY
+       13 · ICONOGRAPHY
   ──────────────────────────────────────── -->
   <section class="ds-section" id="icons">
     <div class="ds-section-header">
-      <span class="ds-section-num">12</span>
+      <span class="ds-section-num">13</span>
       <h2 class="ds-section-title">Iconography</h2>
     </div>
     <div class="ds-card">
@@ -781,11 +878,11 @@ const lastUpdated = new Date().toLocaleDateString('en-US', { month: 'short', day
   </section>
 
   <!-- ────────────────────────────────────────
-       13 · DISCREPANCIES & DECISIONS
+       14 · DISCREPANCIES & DECISIONS
   ──────────────────────────────────────── -->
   <section class="ds-section" id="discrepancies">
     <div class="ds-section-header">
-      <span class="ds-section-num">13</span>
+      <span class="ds-section-num">14</span>
       <h2 class="ds-section-title">Discrepancies & decisions</h2>
     </div>
     <p style="font-size:var(--text-sm);color:var(--fg-secondary);margin-bottom:var(--space-6);">
