@@ -1,11 +1,20 @@
 {
   "name": "Jeen Design System",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "lastUpdated": "2026-05-01",
-  "commit": "e31dd37",
+  "commit": "f1b8ce6",
   "owner": "Jeen (wishayajeen)",
   "coOwner": "Pocky",
   "description": "A living, AI-queryable design system that is also the portfolio. Design decisions exist as structured data — visible through a dashboard, queryable through an agent.",
+
+  "sourceOfTruth": {
+    "tokens": "src/styles/tokens.css",
+    "styles": "src/styles/homepage.css",
+    "components": "src/components/",
+    "content": "src/content/",
+    "system": "src/system/system.json"
+  },
+
   "stack": {
     "framework": "Astro 6",
     "react": "React 19 via @astrojs/react islands",
@@ -15,7 +24,7 @@
     "analytics": "@vercel/analytics"
   },
 
-  "pages": [
+  "routes": [
     {
       "id": "home",
       "path": "/",
@@ -40,6 +49,8 @@
     {
       "id": "hero",
       "label": "Hero",
+      "category": "section",
+      "status": "stable",
       "component": "src/components/home/Hero.astro",
       "type": "static",
       "hydration": null,
@@ -50,6 +61,8 @@
     {
       "id": "playground",
       "label": "Playground",
+      "category": "section",
+      "status": "stable",
       "component": "src/components/home/PlaygroundSection.astro",
       "type": "static",
       "hydration": null,
@@ -68,6 +81,8 @@
     {
       "id": "about",
       "label": "About",
+      "category": "section",
+      "status": "stable",
       "component": "src/components/home/AboutSection.astro",
       "type": "static",
       "hydration": null,
@@ -93,6 +108,8 @@
     {
       "id": "work",
       "label": "Work",
+      "category": "section",
+      "status": "stable",
       "component": "src/components/home/WorkSection.jsx",
       "type": "react-island",
       "hydration": "client:visible",
@@ -133,6 +150,8 @@
     {
       "id": "header",
       "label": "Header",
+      "category": "layout",
+      "status": "stable",
       "file": "src/components/global/Header.jsx",
       "type": "react-island",
       "hydration": "client:load",
@@ -143,6 +162,8 @@
     {
       "id": "footer",
       "label": "Footer",
+      "category": "layout",
+      "status": "stable",
       "file": "src/components/global/Footer.jsx",
       "type": "react-island",
       "hydration": "client:visible",
@@ -153,6 +174,8 @@
     {
       "id": "tweaks-panel",
       "label": "TweaksPanel",
+      "category": "system",
+      "status": "experimental",
       "file": "src/components/home/TweaksPanel.jsx",
       "type": "react-island",
       "hydration": "client:only=\"react\"",
@@ -164,6 +187,8 @@
     {
       "id": "layout",
       "label": "Layout",
+      "category": "layout",
+      "status": "stable",
       "file": "src/layouts/Layout.astro",
       "type": "astro",
       "hydration": null,
@@ -172,6 +197,31 @@
       "description": "Global page shell — all pages must use this. Injects tokens.css, homepage.css, and Vercel Analytics."
     }
   ],
+
+  "relationships": {
+    "routeUsesComponents": {
+      "home": ["layout", "header", "footer", "tweaks-panel"],
+      "design-system": ["layout"],
+      "diary-slug": ["layout"]
+    },
+    "routeUsesSections": {
+      "home": ["hero", "playground", "about", "work"],
+      "design-system": [],
+      "diary-slug": []
+    },
+    "componentUsesTokens": {
+      "header": ["bg-dark", "fg-on-dark-primary", "fg-on-dark-secondary", "fg-on-dark-accent", "fg-on-dark-label", "bg-accent", "border-subtle", "duration-fast", "ease-out"],
+      "footer": ["bg-dark", "fg-on-dark-primary", "fg-on-dark-secondary", "fg-on-dark-accent", "bg-accent", "border-on-dark", "radius-md", "shadow-lg", "duration-fast"],
+      "tweaks-panel": ["bg-primary", "fg-primary", "bg-accent", "border-primary", "shadow-lg", "radius-md", "font-display", "font-body"],
+      "layout": ["bg-primary", "fg-primary", "font-body", "text-base", "leading-relaxed"]
+    },
+    "sectionUsesTokens": {
+      "hero": ["bg-dark", "fg-on-dark-primary", "fg-on-dark-secondary", "fg-on-dark-accent", "bg-accent", "border-accent", "radius-full", "shadow-lg", "ease-spring", "duration-fast"],
+      "playground": ["bg-primary", "fg-primary", "fg-secondary", "bg-accent", "border-primary", "shadow-md", "radius-md", "ease-spring"],
+      "about": ["bg-surface", "bg-surface-raised", "fg-primary", "fg-secondary", "border-subtle", "shadow-md", "radius-md"],
+      "work": ["bg-dark", "fg-on-dark-primary", "fg-on-dark-secondary", "fg-on-dark-accent", "fg-on-dark-label", "bg-accent", "border-on-dark", "ease-out", "duration-fast"]
+    }
+  },
 
   "content": {
     "collections": [
@@ -300,7 +350,7 @@
       "id": "system-json",
       "label": "Machine-readable system.json",
       "status": "live",
-      "description": "This file — structured representation of the design system for AI querying, tooling, and automation"
+      "description": "This file — structured, relational representation of the design system for AI querying, tooling, and automation"
     }
   ],
 
