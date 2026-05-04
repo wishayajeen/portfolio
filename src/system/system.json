@@ -1,11 +1,11 @@
 {
   "name": "Jeen Design System",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "lastUpdated": "2026-05-04",
   "release": {
-    "version": "0.5.2",
+    "version": "0.5.3",
     "lastUpdated": "2026-05-04",
-    "notes": "Data-driven hero stats + lastUpdated fix. Deprecated Link variant='subtle'. Added component-inventory.md."
+    "notes": "Added sectionsUseComponents relationship map. Added /review-ds Step 5b component sync rule."
   },
   "owner": "Jeen (wishayajeen)",
   "coOwner": "Pocky",
@@ -312,6 +312,13 @@
       "playground": ["bg-primary", "fg-primary", "fg-secondary", "bg-accent", "border-primary", "shadow-md", "radius-md", "ease-spring"],
       "about": ["bg-surface", "bg-surface-raised", "fg-primary", "fg-secondary", "border-subtle", "shadow-md", "radius-md"],
       "work": ["bg-dark", "fg-on-dark-primary", "fg-on-dark-secondary", "fg-on-dark-accent", "fg-on-dark-label", "bg-accent", "border-on-dark", "ease-out", "duration-fast"]
+    },
+    "sectionsUseComponents": {
+      "note": "Only lists src/components/system/* imports — raw CSS class usage in a section does not count.",
+      "hero":       [],
+      "playground": ["card", "badge"],
+      "about":      [],
+      "work":       []
     }
   },
 
