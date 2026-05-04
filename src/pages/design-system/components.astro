@@ -538,8 +538,19 @@ const description = "Live demos of all system components. Every variant, on the 
 
 <!-- Floating TOC -->
 <nav class="toc" aria-label="Page sections">
-  {['showcase-button','showcase-badge','showcase-card','showcase-link','showcase-input'].map((id) => (
-    <button class="toc-dot" onclick={`document.getElementById('${id}').scrollIntoView({behavior:'smooth'})`} title={id.replace('showcase-','')}>{id.replace('showcase-','')}</button>
+  {[
+    { id: 'showcase-button', label: 'Button' },
+    { id: 'showcase-badge',  label: 'Badge'  },
+    { id: 'showcase-card',   label: 'Card'   },
+    { id: 'showcase-link',   label: 'Link'   },
+    { id: 'showcase-input',  label: 'Input'  },
+  ].map(({ id, label }) => (
+    <button
+      class="toc-dot"
+      data-label={label}
+      onclick={`document.getElementById('${id}').scrollIntoView({behavior:'smooth'})`}
+      aria-label={label}
+    >{label}</button>
   ))}
 </nav>
 
