@@ -889,6 +889,10 @@ body {
   color: var(--fg-on-dark-primary);
   line-height: var(--leading-snug);
   transition: color 200ms;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-3);
 }
 
 .work-expand {
