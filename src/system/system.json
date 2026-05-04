@@ -1,7 +1,7 @@
 {
   "name": "Jeen Design System",
-  "version": "0.5.1",
-  "lastUpdated": "2026-05-02",
+  "version": "0.5.2",
+  "lastUpdated": "2026-05-04",
   "commit": "fb9b6c3",
   "owner": "Jeen (wishayajeen)",
   "coOwner": "Pocky",
@@ -523,6 +523,20 @@
       "title": "Link variant='subtle' deprecated — not used in any product page",
       "body": "variant='subtle' (.link-subtle) was added during the Link component refactor but was never used in any product page (index.astro, diary, [slug].astro). Deprecated in 0.5.1: class retained in homepage.css for backwards safety, variant kept functional but marked as do-not-use. Re-evaluate if a genuine prose-link use case arises.",
       "date": "2026-05-02"
+    },
+    {
+      "id": "footer-copy-btn-contrast",
+      "status": "open",
+      "title": ".footer-copy-btn uses --color-gray-500 on dark surface — WCAG AA fail",
+      "body": "homepage.css line ~1105: .footer-copy-btn has color:var(--color-gray-500) (#6A6A60). Footer background is --bg-dark (#0A0A0A). Contrast ratio ~1.6:1 — fails WCAG AA. Should use --fg-on-dark-label (~5:1) or --fg-on-dark-secondary (~9:1).",
+      "date": "2026-05-04"
+    },
+    {
+      "id": "article-meta-contrast",
+      "status": "open",
+      "title": ".article-meta uses --color-gray-500 on dark article header — WCAG AA fail",
+      "body": "homepage.css line ~1551: .article-meta has color:var(--color-gray-500) (#6A6A60). Article header background is --color-black (#0A0A0A). Contrast ratio ~1.6:1 — fails WCAG AA. Should use --fg-on-dark-label (~5:1) or --fg-on-dark-secondary (~9:1).",
+      "date": "2026-05-04"
     },
     {
       "id": "doodle-illustrations",

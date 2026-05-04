@@ -9,7 +9,15 @@ import systemData from '../system/system.json';
 
 const title = "Design System — Jeen";
 const description = "A living design system. Tokens, principles, and components that power Jeen's portfolio.";
-const lastUpdated = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+
+// Format lastUpdated from system.json — avoids drift from showing today's date
+const [luY, luM, luD] = (systemData.lastUpdated as string).split('-').map(Number);
+const lastUpdated = new Date(luY, luM - 1, luD).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+
+// Discrepancy breakdown counts — derived, not hardcoded
+const resolvedCount  = systemData.discrepancies.filter((d: any) => d.status === 'resolved').length;
+const openCount      = systemData.discrepancies.filter((d: any) => d.status === 'open').length;
+const decisionCount  = systemData.discrepancies.filter((d: any) => d.status === 'decision').length;
 
 const statusBadgeClass: Record<string, string> = {
   resolved: 'ds-badge ds-badge-success',
@@ -44,7 +52,11 @@ const statusLabel: Record<string, string> = {
       <span class="ds-hero-meta-item"><strong>Owner</strong> &nbsp;{systemData.owner}</span>
       <span class="ds-hero-meta-item"><strong>Co-owner</strong> &nbsp;{systemData.coOwner}</span>
       <span class="ds-hero-meta-item"><strong>Version</strong> &nbsp;{systemData.version}</span>
-      <span class="ds-hero-meta-item"><strong>Latest update</strong> &nbsp;{lastUpdated}</span>
+      <span class="ds-hero-meta-item"><strong>Updated</strong> &nbsp;{lastUpdated}</span>
+      <span class="ds-hero-meta-item"><strong>Pages</strong> &nbsp;{systemData.routes.length}</span>
+      <span class="ds-hero-meta-item"><strong>Sections</strong> &nbsp;{systemData.sections.length}</span>
+      <span class="ds-hero-meta-item"><strong>Components</strong> &nbsp;{systemData.components.length}</span>
+      <span class="ds-hero-meta-item"><strong>Discrepancies</strong> &nbsp;{systemData.discrepancies.length} ({resolvedCount} resolved · {openCount} open · {decisionCount} decision)</span>
     </div>
   </div>
 </div>
