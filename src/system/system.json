@@ -1,11 +1,11 @@
 {
   "name": "Jeen Design System",
-  "version": "0.5.5",
+  "version": "0.5.6",
   "lastUpdated": "2026-05-04",
   "release": {
-    "version": "0.5.5",
+    "version": "0.5.6",
     "lastUpdated": "2026-05-04",
-    "notes": "/design-system refactored into 4 routes: index (hub), /foundations (01–14), /components (showcase), /dashboard (discrepancies + stats)."
+    "notes": "IA fix: removed component sections (Buttons, Badges, Cards, Links, Inputs) from /foundations; /components upgraded with Purpose, Props, Usage rules, When not to use for all 4 components; Input planned section added; TOC trimmed to 9 sections."
   },
   "owner": "Jeen (wishayajeen)",
   "coOwner": "Pocky",

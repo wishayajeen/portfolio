@@ -30,6 +30,7 @@ const description = "Live demos of all system components. Every variant, on the 
   <div class="ds-hero-inner">
     <p class="ds-hero-eyebrow">jeen design system — v{systemData.version}</p>
     <h1 class="ds-hero-title">Components</h1>
+    <p class="ds-hero-sub">Live demos, props, usage rules, and when-not-to for every system component.</p>
   </div>
 </div>
 
@@ -38,13 +39,37 @@ const description = "Live demos of all system components. Every variant, on the 
   <!-- ── BUTTON ── -->
   <section class="ds-section" id="showcase-button">
     <div class="ds-section-header">
+      <span class="ds-section-num">01</span>
       <h2 class="ds-section-title">Button</h2>
     </div>
-    <p style="font-size:var(--text-sm);color:var(--fg-secondary);margin-bottom:var(--space-6);">
-      CTA button. Renders as <code class="ds-code">&lt;a&gt;</code> when <code class="ds-code">href</code> is provided, <code class="ds-code">&lt;button&gt;</code> otherwise.
-      <strong>secondary</strong> is dark surface only — it uses white text on a transparent background.
-    </p>
 
+    <!-- Purpose -->
+    <div class="ds-subsection">
+      <div class="ds-sub-label">Purpose</div>
+      <div class="ds-card">
+        <p style="margin:0;font-size:var(--text-sm);color:var(--fg-secondary);line-height:var(--leading-relaxed);">
+          Calls to action — page CTAs, form submits, navigation triggers. Two variants cover the two surface contexts: <strong>primary</strong> for light surfaces, <strong>secondary</strong> for dark surfaces only. Renders as <code class="ds-code">&lt;a&gt;</code> when <code class="ds-code">href</code> is provided, <code class="ds-code">&lt;button&gt;</code> otherwise.
+        </p>
+      </div>
+    </div>
+
+    <!-- Props -->
+    <div class="ds-subsection">
+      <div class="ds-sub-label">Props</div>
+      <div class="ds-card">
+        <table class="ds-table">
+          <thead><tr><th>Prop</th><th>Type</th><th>Default</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td><code class="ds-code">variant</code></td><td><code class="ds-code">"primary" | "secondary"</code></td><td><code class="ds-code">"primary"</code></td><td>Controls appearance and surface context</td></tr>
+            <tr><td><code class="ds-code">label</code></td><td><code class="ds-code">string</code></td><td>—</td><td>Button text content</td></tr>
+            <tr><td><code class="ds-code">href</code></td><td><code class="ds-code">string</code></td><td><code class="ds-code">undefined</code></td><td>If set, renders as <code class="ds-code">&lt;a&gt;</code></td></tr>
+            <tr><td><code class="ds-code">class</code></td><td><code class="ds-code">string</code></td><td>—</td><td>Forwarded to the root element</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Live demos -->
     <div class="ds-subsection">
       <div class="ds-sub-label">Light surface</div>
       <div class="ds-card" style="display:flex;gap:var(--space-8);flex-wrap:wrap;align-items:flex-end;">
@@ -82,16 +107,61 @@ const description = "Live demos of all system components. Every variant, on the 
             <span style="font-size:10px;color:var(--fg-secondary);">active</span>
           </div>
         </div>
+        <p style="margin:var(--space-4) 0 0;font-size:var(--text-xs);color:var(--fg-secondary);">
+          default → hover (translateY(-2px) + shadow-lg) → active (translateY(1px) + shadow-none)
+        </p>
       </div>
     </div>
 
     <div class="ds-subsection">
-      <div class="ds-sub-label">As anchor (href provided)</div>
+      <div class="ds-sub-label">As anchor</div>
       <div class="ds-card">
         <div class="ds-row" style="align-items:center;gap:var(--space-4);">
           <Button variant="primary" label="View diary →" href="/diary" />
         </div>
-        <p style="margin:var(--space-3) 0 0;font-size:var(--text-xs);color:var(--fg-secondary);">Renders as <code class="ds-code">&lt;a&gt;</code> when <code class="ds-code">href</code> is provided, <code class="ds-code">&lt;button&gt;</code> otherwise.</p>
+        <p style="margin:var(--space-3) 0 0;font-size:var(--text-xs);color:var(--fg-secondary);">Renders as <code class="ds-code">&lt;a&gt;</code> when <code class="ds-code">href</code> is provided.</p>
+      </div>
+    </div>
+
+    <!-- Variant → class map -->
+    <div class="ds-subsection">
+      <div class="ds-sub-label">Variant → class map</div>
+      <div class="ds-card">
+        <table class="ds-table">
+          <thead><tr><th>Variant</th><th>Class</th><th>Surface</th><th>Behaviour</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><code class="ds-code">primary</code></td>
+              <td><code class="ds-code">.hero-cta-primary</code></td>
+              <td>Light</td>
+              <td>Yellow bg · hard shadow · lifts on hover</td>
+            </tr>
+            <tr>
+              <td><code class="ds-code">secondary</code></td>
+              <td><code class="ds-code">.hero-cta-secondary</code></td>
+              <td>Dark only</td>
+              <td>Glass outline · white text · dark surface only</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Usage rules -->
+    <div class="ds-subsection">
+      <div class="ds-sub-label">Usage rules</div>
+      <div class="ds-card">
+        <table class="ds-table">
+          <thead><tr><th></th><th>Rule</th></tr></thead>
+          <tbody>
+            <tr><td>✅</td><td>Use <code class="ds-code">primary</code> for the main CTA on light backgrounds (hero, playground, about)</td></tr>
+            <tr><td>✅</td><td>Use <code class="ds-code">secondary</code> on <code class="ds-code">--bg-dark</code> surfaces only — hero, footer dark zones</td></tr>
+            <tr><td>✅</td><td>Provide <code class="ds-code">href</code> when the action navigates; omit for form submits and JS-triggered actions</td></tr>
+            <tr><td>❌</td><td>Never use <code class="ds-code">primary</code> on dark surfaces — yellow on black fails the visual hierarchy</td></tr>
+            <tr><td>❌</td><td>Never use <code class="ds-code">secondary</code> on light surfaces — transparent outline with white text is invisible</td></tr>
+            <tr><td>❌</td><td>Never stack two primary buttons side-by-side — one CTA per focal area</td></tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </section>
@@ -99,13 +169,35 @@ const description = "Live demos of all system components. Every variant, on the 
   <!-- ── BADGE ── -->
   <section class="ds-section" id="showcase-badge">
     <div class="ds-section-header">
+      <span class="ds-section-num">02</span>
       <h2 class="ds-section-title">Badge</h2>
     </div>
-    <p style="font-size:var(--text-sm);color:var(--fg-secondary);margin-bottom:var(--space-6);">
-      Label/tag pill. Maps <code class="ds-code">variant</code> to existing homepage.css classes — no new CSS.
-      Surface context matters: check inventory before placing a badge variant on a new surface.
-    </p>
 
+    <!-- Purpose -->
+    <div class="ds-subsection">
+      <div class="ds-sub-label">Purpose</div>
+      <div class="ds-card">
+        <p style="margin:0;font-size:var(--text-sm);color:var(--fg-secondary);line-height:var(--leading-relaxed);">
+          Decorative label/tag pill for categorising and annotating content. Maps a <code class="ds-code">variant</code> prop to an existing <code class="ds-code">homepage.css</code> class — no new CSS is introduced. Surface context matters: verify contrast before placing a badge variant on a new surface.
+        </p>
+      </div>
+    </div>
+
+    <!-- Props -->
+    <div class="ds-subsection">
+      <div class="ds-sub-label">Props</div>
+      <div class="ds-card">
+        <table class="ds-table">
+          <thead><tr><th>Prop</th><th>Type</th><th>Default</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td><code class="ds-code">variant</code></td><td><code class="ds-code">"tag" | "diary-tag" | "work-tag" | "skill" | "coming-soon"</code></td><td><code class="ds-code">"tag"</code></td><td>Maps to a homepage.css class</td></tr>
+            <tr><td><code class="ds-code">label</code></td><td><code class="ds-code">string</code></td><td><code class="ds-code">undefined</code></td><td>Text content; <code class="ds-code">coming-soon</code> renders its own label + dot if omitted</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Live demos -->
     <div class="ds-subsection">
       <div class="ds-sub-label">Light surface</div>
       <div class="ds-card" style="display:flex;gap:var(--space-8);flex-wrap:wrap;align-items:flex-end;">
@@ -138,17 +230,35 @@ const description = "Live demos of all system components. Every variant, on the 
       </div>
     </div>
 
+    <!-- Variant map -->
     <div class="ds-subsection">
       <div class="ds-sub-label">Variant map</div>
       <div class="ds-card">
         <table class="ds-table">
-          <thead><tr><th>Variant</th><th>Class</th><th>Used in</th></tr></thead>
+          <thead><tr><th>Variant</th><th>Class</th><th>Surface</th><th>Used in</th></tr></thead>
           <tbody>
-            <tr><td><code class="ds-code">tag</code></td><td><code class="ds-code">.play-card-tag</code></td><td>Playground experiment cards</td></tr>
-            <tr><td><code class="ds-code">diary-tag</code></td><td><code class="ds-code">.diary-tag</code></td><td>Diary card category labels</td></tr>
-            <tr><td><code class="ds-code">work-tag</code></td><td><code class="ds-code">.work-tag</code></td><td>Work section row tags</td></tr>
-            <tr><td><code class="ds-code">skill</code></td><td><code class="ds-code">.about-skill-tag</code></td><td>About section skills list</td></tr>
-            <tr><td><code class="ds-code">coming-soon</code></td><td><code class="ds-code">.work-coming-soon-badge</code></td><td>Work + Playground coming-soon items</td></tr>
+            <tr><td><code class="ds-code">tag</code></td><td><code class="ds-code">.play-card-tag</code></td><td>Light</td><td>Playground experiment cards</td></tr>
+            <tr><td><code class="ds-code">diary-tag</code></td><td><code class="ds-code">.diary-tag</code></td><td>Light</td><td>Diary card category labels</td></tr>
+            <tr><td><code class="ds-code">work-tag</code></td><td><code class="ds-code">.work-tag</code></td><td>Dark</td><td>Work section row tags</td></tr>
+            <tr><td><code class="ds-code">skill</code></td><td><code class="ds-code">.about-skill-tag</code></td><td>Dark</td><td>About section skills list</td></tr>
+            <tr><td><code class="ds-code">coming-soon</code></td><td><code class="ds-code">.work-coming-soon-badge</code></td><td>Dark</td><td>Work + Playground coming-soon items</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Usage rules -->
+    <div class="ds-subsection">
+      <div class="ds-sub-label">Usage rules</div>
+      <div class="ds-card">
+        <table class="ds-table">
+          <thead><tr><th></th><th>Rule</th></tr></thead>
+          <tbody>
+            <tr><td>✅</td><td>Pick variant by where the badge appears — dark-surface variants (<code class="ds-code">work-tag</code>, <code class="ds-code">skill</code>) are designed for <code class="ds-code">--bg-dark</code> contexts only</td></tr>
+            <tr><td>✅</td><td>Use <code class="ds-code">coming-soon</code> inline in titles — it renders its own dot + label</td></tr>
+            <tr><td>❌</td><td>Never use a badge as an interactive element — it has no hover or focus state</td></tr>
+            <tr><td>❌</td><td>Never invent new badge variants — extend the token set in <code class="ds-code">homepage.css</code> only if a genuine new context arises</td></tr>
+            <tr><td>❌</td><td>Never use <code class="ds-code">work-tag</code> or <code class="ds-code">skill</code> on light backgrounds — contrast will fail</td></tr>
           </tbody>
         </table>
       </div>
@@ -158,13 +268,37 @@ const description = "Live demos of all system components. Every variant, on the 
   <!-- ── CARD ── -->
   <section class="ds-section" id="showcase-card">
     <div class="ds-section-header">
+      <span class="ds-section-num">03</span>
       <h2 class="ds-section-title">Card</h2>
     </div>
-    <p style="font-size:var(--text-sm);color:var(--fg-secondary);margin-bottom:var(--space-6);">
-      Outer card container with slot — no internal template imposed. Renders as <code class="ds-code">&lt;a&gt;</code> when <code class="ds-code">href</code> is provided.
-      Inner content uses existing homepage.css classes.
-    </p>
 
+    <!-- Purpose -->
+    <div class="ds-subsection">
+      <div class="ds-sub-label">Purpose</div>
+      <div class="ds-card">
+        <p style="margin:0;font-size:var(--text-sm);color:var(--fg-secondary);line-height:var(--leading-relaxed);">
+          Outer container for experiment and diary content blocks. Uses a slot — no internal template is imposed. Renders as <code class="ds-code">&lt;a&gt;</code> when <code class="ds-code">href</code> is provided. Inner content uses existing <code class="ds-code">homepage.css</code> classes.
+        </p>
+      </div>
+    </div>
+
+    <!-- Props -->
+    <div class="ds-subsection">
+      <div class="ds-sub-label">Props</div>
+      <div class="ds-card">
+        <table class="ds-table">
+          <thead><tr><th>Prop</th><th>Type</th><th>Default</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td><code class="ds-code">variant</code></td><td><code class="ds-code">"default" | "accent" | "diary"</code></td><td><code class="ds-code">"default"</code></td><td>Controls layout and surface treatment</td></tr>
+            <tr><td><code class="ds-code">href</code></td><td><code class="ds-code">string</code></td><td><code class="ds-code">undefined</code></td><td>If set, renders as <code class="ds-code">&lt;a&gt;</code> with hover lift</td></tr>
+            <tr><td><code class="ds-code">class</code></td><td><code class="ds-code">string</code></td><td>—</td><td>Forwarded to root element</td></tr>
+            <tr><td><code class="ds-code">slot</code></td><td>HTML</td><td>—</td><td>All card content goes in the default slot</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Live demos -->
     <div class="ds-subsection">
       <div class="ds-sub-label">variant="default" and variant="accent" — play card layout</div>
       <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:var(--space-4);">
@@ -216,7 +350,56 @@ const description = "Live demos of all system components. Every variant, on the 
             <path d="M3 8h10M9 4l4 4-4 4" stroke="#0A0A0A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </Card>
-        <span style="font-size:10px;font-family:var(--font-mono);color:var(--fg-secondary);">variant="diary" · horizontal layout · date block + content + arrow</span>
+        <span style="font-size:10px;font-family:var(--font-mono);color:var(--fg-secondary);">variant="diary" · horizontal · date block + content + arrow</span>
+      </div>
+    </div>
+
+    <!-- Variant map -->
+    <div class="ds-subsection">
+      <div class="ds-sub-label">Variant map</div>
+      <div class="ds-card">
+        <table class="ds-table">
+          <thead><tr><th>Variant</th><th>Class</th><th>Layout</th><th>Behaviour</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><code class="ds-code">default</code></td>
+              <td><code class="ds-code">.play-card</code></td>
+              <td>Vertical · play card</td>
+              <td>Light bg · border · hard shadow · lifts on hover</td>
+            </tr>
+            <tr>
+              <td><code class="ds-code">accent</code></td>
+              <td><code class="ds-code">.play-card.play-card--accent</code></td>
+              <td>Vertical · play card</td>
+              <td>Yellow bg · same shape as default · featured experiments</td>
+            </tr>
+            <tr>
+              <td><code class="ds-code">diary</code></td>
+              <td><code class="ds-code">.diary-card</code></td>
+              <td>Horizontal · date + content + arrow</td>
+              <td>Light bg · border · diary list rows</td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="font-size:var(--text-xs);color:var(--fg-secondary);margin:var(--space-4) 0 0;">All variants render as <code class="ds-code">&lt;a&gt;</code> when <code class="ds-code">href</code> is provided. Hover: translateY(-2px) + shadow-hover.</p>
+      </div>
+    </div>
+
+    <!-- Usage rules -->
+    <div class="ds-subsection">
+      <div class="ds-sub-label">Usage rules</div>
+      <div class="ds-card">
+        <table class="ds-table">
+          <thead><tr><th></th><th>Rule</th></tr></thead>
+          <tbody>
+            <tr><td>✅</td><td>Use <code class="ds-code">default</code> for experiment/playground cards in the grid</td></tr>
+            <tr><td>✅</td><td>Use <code class="ds-code">accent</code> sparingly — one featured card per grid at most</td></tr>
+            <tr><td>✅</td><td>Use <code class="ds-code">diary</code> for diary list rows only — it has a fixed horizontal layout</td></tr>
+            <tr><td>✅</td><td>Provide <code class="ds-code">href</code> whenever the card is clickable — it semantically becomes an <code class="ds-code">&lt;a&gt;</code></td></tr>
+            <tr><td>❌</td><td>Never nest a card inside another card</td></tr>
+            <tr><td>❌</td><td>Never use the <code class="ds-code">diary</code> variant in the experiment grid — layouts are incompatible</td></tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </section>
@@ -224,14 +407,36 @@ const description = "Live demos of all system components. Every variant, on the 
   <!-- ── LINK ── -->
   <section class="ds-section" id="showcase-link">
     <div class="ds-section-header">
+      <span class="ds-section-num">04</span>
       <h2 class="ds-section-title">Link</h2>
     </div>
-    <p style="font-size:var(--text-sm);color:var(--fg-secondary);margin-bottom:var(--space-6);">
-      Semantic anchor mapping variants to existing link classes. Always renders as <code class="ds-code">&lt;a&gt;</code>.
-      Add <code class="ds-code">external</code> prop for <code class="ds-code">target="_blank" rel="noopener noreferrer"</code>.
-      Hover each to test.
-    </p>
 
+    <!-- Purpose -->
+    <div class="ds-subsection">
+      <div class="ds-sub-label">Purpose</div>
+      <div class="ds-card">
+        <p style="margin:0;font-size:var(--text-sm);color:var(--fg-secondary);line-height:var(--leading-relaxed);">
+          Semantic anchor (<code class="ds-code">&lt;a&gt;</code>) with surface-appropriate styling. Always renders as a link. Pick variant by surface context — each variant is designed for a specific background. Hover each demo to test the interaction.
+        </p>
+      </div>
+    </div>
+
+    <!-- Props -->
+    <div class="ds-subsection">
+      <div class="ds-sub-label">Props</div>
+      <div class="ds-card">
+        <table class="ds-table">
+          <thead><tr><th>Prop</th><th>Type</th><th>Default</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td><code class="ds-code">href</code></td><td><code class="ds-code">string</code></td><td>—</td><td>Required — destination URL or anchor</td></tr>
+            <tr><td><code class="ds-code">variant</code></td><td><code class="ds-code">"default" | "on-dark" | "nav" | "back" | "footer-nav"</code></td><td><code class="ds-code">"default"</code></td><td>Pick by surface context</td></tr>
+            <tr><td><code class="ds-code">external</code></td><td><code class="ds-code">boolean</code></td><td><code class="ds-code">false</code></td><td>Adds <code class="ds-code">target="_blank" rel="noopener noreferrer"</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Live demos -->
     <div class="ds-subsection">
       <div class="ds-sub-label">Light surface</div>
       <div class="ds-card" style="display:flex;flex-direction:column;gap:var(--space-5);">
@@ -251,7 +456,7 @@ const description = "Live demos of all system components. Every variant, on the 
         </div>
         <div style="display:flex;align-items:baseline;gap:var(--space-4);flex-wrap:wrap;">
           <Link href="#" variant="nav">Nav link</Link>
-          <span style="font-size:10px;font-family:var(--font-mono);color:var(--fg-on-dark-label);">variant="nav" · .nav-link · pill shape, yellow on hover</span>
+          <span style="font-size:10px;font-family:var(--font-mono);color:var(--fg-on-dark-label);">variant="nav" · .nav-link · pill shape · yellow on hover</span>
         </div>
         <div style="display:flex;align-items:baseline;gap:var(--space-4);flex-wrap:wrap;">
           <Link href="#" variant="back">← Back link</Link>
@@ -264,21 +469,61 @@ const description = "Live demos of all system components. Every variant, on the 
       </div>
     </div>
 
+    <!-- Variant map -->
     <div class="ds-subsection">
       <div class="ds-sub-label">Variant map</div>
       <div class="ds-card">
         <table class="ds-table">
-          <thead><tr><th>Variant</th><th>Class</th><th>Surface</th><th>Rest token</th><th>Hover behaviour</th></tr></thead>
+          <thead><tr><th>Variant</th><th>Class</th><th>Surface</th><th>Rest token</th><th>Hover</th></tr></thead>
           <tbody>
-            <tr><td><code class="ds-code">default</code></td><td>(global a)</td><td>light</td><td>--fg-primary</td><td>box-shadow floods dark · yellow text</td></tr>
-            <tr style="opacity:0.5;"><td><code class="ds-code">subtle</code> <Badge variant="coming-soon">deprecated</Badge></td><td>.link-subtle</td><td>light</td><td>--fg-secondary</td><td>plain underline · not used in product · do not add new usages</td></tr>
-            <tr><td><code class="ds-code">on-dark</code></td><td>.hero-social-link</td><td>dark</td><td>--fg-on-dark-primary</td><td>box-shadow floods light · dark text</td></tr>
-            <tr><td><code class="ds-code">nav</code></td><td>.nav-link</td><td>dark</td><td>--fg-on-dark-primary</td><td>color → --fg-on-dark-accent (yellow)</td></tr>
-            <tr><td><code class="ds-code">back</code></td><td>.back-link</td><td>dark</td><td>--fg-on-dark-label</td><td>color → --fg-on-dark-primary</td></tr>
-            <tr><td><code class="ds-code">footer-nav</code></td><td>.footer-nav-link</td><td>dark</td><td>--fg-on-dark-label</td><td>color → --fg-on-dark-primary</td></tr>
+            <tr><td><code class="ds-code">default</code></td><td>(global a)</td><td>Light</td><td>--fg-primary</td><td>box-shadow floods dark · yellow text</td></tr>
+            <tr><td><code class="ds-code">on-dark</code></td><td>.hero-social-link</td><td>Dark</td><td>--fg-on-dark-primary</td><td>box-shadow floods light · dark text</td></tr>
+            <tr><td><code class="ds-code">nav</code></td><td>.nav-link</td><td>Dark</td><td>--fg-on-dark-primary</td><td>color → --fg-on-dark-accent (yellow)</td></tr>
+            <tr><td><code class="ds-code">back</code></td><td>.back-link</td><td>Dark</td><td>--fg-on-dark-label</td><td>color → --fg-on-dark-primary</td></tr>
+            <tr><td><code class="ds-code">footer-nav</code></td><td>.footer-nav-link</td><td>Dark</td><td>--fg-on-dark-label</td><td>color → --fg-on-dark-primary</td></tr>
+            <tr style="opacity:0.5;"><td><code class="ds-code">subtle</code> <span class="ds-badge ds-badge-error" style="font-size:9px;padding:1px 6px;">deprecated</span></td><td>.link-subtle</td><td>Light</td><td>--fg-secondary</td><td>plain underline · do not add new usages</td></tr>
           </tbody>
         </table>
       </div>
+    </div>
+
+    <!-- Usage rules -->
+    <div class="ds-subsection">
+      <div class="ds-sub-label">Usage rules</div>
+      <div class="ds-card">
+        <table class="ds-table">
+          <thead><tr><th></th><th>Rule</th></tr></thead>
+          <tbody>
+            <tr><td>✅</td><td>Always pick variant by surface — dark-surface variants will be invisible on light backgrounds</td></tr>
+            <tr><td>✅</td><td>Add <code class="ds-code">external</code> prop for any link opening a new tab — it handles <code class="ds-code">rel="noopener noreferrer"</code></td></tr>
+            <tr><td>✅</td><td>Use <code class="ds-code">nav</code> only in the global header nav — it has pill shape specific to that context</td></tr>
+            <tr><td>✅</td><td>Use <code class="ds-code">back</code> for breadcrumb-style back links on dark surfaces (topbar, article header)</td></tr>
+            <tr><td>❌</td><td>Never use <code class="ds-code">default</code> on dark surfaces — the box-shadow underline floods dark, making it invisible</td></tr>
+            <tr><td>❌</td><td>Never add new usages of <code class="ds-code">subtle</code> — it is deprecated and should be replaced with <code class="ds-code">default</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── INPUT (PLANNED) ── -->
+  <section class="ds-section" id="showcase-input">
+    <div class="ds-section-header">
+      <span class="ds-section-num">05</span>
+      <h2 class="ds-section-title">Input</h2>
+    </div>
+
+    <div class="ds-card" style="max-width:520px;">
+      <div style="display:flex;align-items:center;gap:var(--space-3);margin-bottom:var(--space-4);">
+        <span class="ds-badge ds-badge-yellow" style="font-size:var(--text-xs);">Planned</span>
+        <span style="font-size:var(--text-sm);color:var(--fg-secondary);">Input is not yet a system component</span>
+      </div>
+      <p style="margin:0 0 var(--space-4);font-size:var(--text-sm);color:var(--fg-secondary);line-height:var(--leading-relaxed);">
+        There is no <code class="ds-code">src/components/system/Input.astro</code> yet. Input styles exist in <code class="ds-code">design-system.css</code> as demo-only classes (<code class="ds-code">.ds-input</code>, <code class="ds-code">.ds-ask-bar</code>, <code class="ds-code">.ds-ask-input</code>) but these are scoped to the DS documentation page and are not a shipped component.
+      </p>
+      <p style="margin:0;font-size:var(--text-sm);color:var(--fg-secondary);line-height:var(--leading-relaxed);">
+        When Input is promoted to a system component, it will live at <code class="ds-code">src/components/system/Input.astro</code> with props for <code class="ds-code">type</code>, <code class="ds-code">label</code>, <code class="ds-code">placeholder</code>, <code class="ds-code">error</code>, <code class="ds-code">disabled</code>, and <code class="ds-code">variant</code> (default | ask-bar). Tokens and states are already defined — see <a href="/design-system/foundations#borders">Foundations → Borders</a> and <a href="/design-system/foundations#colors">Colors</a> for relevant values.
+      </p>
     </div>
   </section>
 
@@ -290,5 +535,27 @@ const description = "Live demos of all system components. Every variant, on the 
     <a href="#" onclick="window.scrollTo({ top: 0, behavior: 'smooth' }); return false;" class="ds-footer-link">↑ Top</a>
   </div>
 </div>
+
+<!-- Floating TOC -->
+<nav class="toc" aria-label="Page sections">
+  {['showcase-button','showcase-badge','showcase-card','showcase-link','showcase-input'].map((id) => (
+    <button class="toc-dot" onclick={`document.getElementById('${id}').scrollIntoView({behavior:'smooth'})`} title={id.replace('showcase-','')}>{id.replace('showcase-','')}</button>
+  ))}
+</nav>
+
+<script>
+  // ── Highlight active TOC dot on scroll ──
+  const sections = document.querySelectorAll('.ds-section');
+  const dots = document.querySelectorAll('.toc-dot');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const idx = [...sections].indexOf(e.target);
+        dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+      }
+    });
+  }, { rootMargin: '-30% 0px -60% 0px' });
+  sections.forEach(s => obs.observe(s));
+</script>
 
 </Layout>

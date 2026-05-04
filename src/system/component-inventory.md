@@ -1,7 +1,7 @@
 # System Component Inventory
 
-**Last updated:** 2026-05-02  
-**System version:** 0.5.0  
+**Last updated:** 2026-05-04  
+**System version:** 0.5.6  
 **Source of truth:** `src/components/system/`
 
 > This document reflects the **actual current implementation** of each system component.
@@ -16,6 +16,7 @@
 - [Button](#button)
 - [Card](#card)
 - [Link](#link)
+- [Input (planned)](#input-planned)
 - [Global rules (all components)](#global-rules)
 
 ---
@@ -445,4 +446,19 @@ These components are system primitives. Changing a component affects every usage
 2. `src/system/system.json` (components array + componentUsesTokens)
 3. `src/system/component-inventory.md` (this file)
 4. `CLAUDE.md` (system components section + class inventory)
-5. `src/pages/design-system.astro` (the relevant component section)
+5. `src/pages/design-system/components.astro` and `src/pages/design-system/foundations.astro` (the relevant sections)
+
+---
+
+## Input (planned)
+
+**Status:** Not yet a system component.
+
+There is no `src/components/system/Input.astro`. Input styles exist in `design-system.css` as DS-documentation-only classes (`.ds-input`, `.ds-ask-bar`, `.ds-ask-input`, `.ds-field`, `.ds-field-label`, `.ds-helper`) but are scoped to the design system page and are **not shipped** to product pages.
+
+When Input is promoted, it will be created at `src/components/system/Input.astro` with:
+- Props: `type`, `label`, `placeholder`, `error`, `disabled`, `variant` (default | ask-bar)
+- Classes: will reuse/promote relevant `homepage.css` or `design-system.css` rules to the main token layer
+- This inventory, `system.json`, `CLAUDE.md`, and `components.astro` must all be updated at that time
+
+Do not import or reference Input as a system component until this entry is updated with a file path and props table.

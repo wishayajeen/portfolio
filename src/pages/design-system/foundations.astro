@@ -1,7 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import '/src/styles/design-system.css';
-import Badge from '../../components/system/Badge.astro';
 import systemData from '../../system/system.json';
 
 const title = "Foundations — Design System — Jeen";
@@ -384,7 +383,7 @@ const description = "Design tokens, color system, typography, spacing, shadows, 
           </div>
           <div>
             <p style="margin:0 0 4px;font-size:var(--text-xs);color:var(--fg-secondary);text-transform:uppercase;letter-spacing:var(--tracking-wide);">Prose links</p>
-            <p style="margin:0;font-size:var(--text-sm);color:var(--fg-secondary);">Prose links use the global <code class="ds-code">&lt;a&gt;</code> box-shadow underline pattern — see <a href="/design-system/foundations#links" style="color:var(--fg-primary);">section 12 · Links</a> for all variants.</p>
+            <p style="margin:0;font-size:var(--text-sm);color:var(--fg-secondary);">Prose links use the global <code class="ds-code">&lt;a&gt;</code> box-shadow underline pattern — see <a href="/design-system/components#showcase-link" style="color:var(--fg-primary);">Components → Link</a> for all variants.</p>
           </div>
         </div>
       </div>
@@ -660,183 +659,11 @@ const description = "Design tokens, color system, typography, spacing, shadows, 
   </section>
 
   <!-- ────────────────────────────────────────
-       09 · BUTTONS
-  ──────────────────────────────────────── -->
-  <section class="ds-section" id="buttons">
-    <div class="ds-section-header">
-      <span class="ds-section-num">09</span>
-      <h2 class="ds-section-title">Buttons</h2>
-    </div>
-
-    <div class="ds-subsection">
-      <div class="ds-sub-label">Variant → class map</div>
-      <div class="ds-card">
-        <table class="ds-table">
-          <thead><tr><th>Variant</th><th>Class</th><th>Surface</th><th>Behaviour</th></tr></thead>
-          <tbody>
-            <tr>
-              <td><code class="ds-code">primary</code></td>
-              <td><code class="ds-code">.hero-cta-primary</code></td>
-              <td>Light</td>
-              <td>Yellow bg · hard shadow · lifts on hover · renders <code class="ds-code">&lt;button&gt;</code> or <code class="ds-code">&lt;a&gt;</code></td>
-            </tr>
-            <tr>
-              <td><code class="ds-code">secondary</code></td>
-              <td><code class="ds-code">.hero-cta-secondary</code></td>
-              <td>Dark only</td>
-              <td>Glass outline · white text · designed for <code class="ds-code">--bg-dark</code> surfaces</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <p style="font-size:var(--text-xs);color:var(--fg-secondary);margin-top:var(--space-3);">
-        States: default → hover (translateY(-2px) + shadow-lg) → active (translateY(1px) + shadow-none). See <a href="/design-system/components#showcase-button">Components → Button</a> for live demos.
-      </p>
-    </div>
-  </section>
-
-  <!-- ────────────────────────────────────────
-       10 · BADGES
-  ──────────────────────────────────────── -->
-  <section class="ds-section" id="badges">
-    <div class="ds-section-header">
-      <span class="ds-section-num">10</span>
-      <h2 class="ds-section-title">Badges & tags</h2>
-    </div>
-
-    <div class="ds-subsection">
-      <div class="ds-sub-label">Variant → class map</div>
-      <div class="ds-card">
-        <table class="ds-table">
-          <thead><tr><th>Variant</th><th>Class</th><th>Used in</th></tr></thead>
-          <tbody>
-            <tr><td><code class="ds-code">tag</code></td><td><code class="ds-code">.play-card-tag</code></td><td>Playground experiment cards</td></tr>
-            <tr><td><code class="ds-code">diary-tag</code></td><td><code class="ds-code">.diary-tag</code></td><td>Diary card category labels</td></tr>
-            <tr><td><code class="ds-code">work-tag</code></td><td><code class="ds-code">.work-tag</code></td><td>Work section row tags</td></tr>
-            <tr><td><code class="ds-code">skill</code></td><td><code class="ds-code">.about-skill-tag</code></td><td>About section skills list</td></tr>
-            <tr><td><code class="ds-code">coming-soon</code></td><td><code class="ds-code">.work-coming-soon-badge</code></td><td>Work + Playground coming-soon items</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <p style="font-size:var(--text-xs);color:var(--fg-secondary);margin-top:var(--space-3);">See <a href="/design-system/components#showcase-badge">Components → Badge</a> for live demos of every variant.</p>
-    </div>
-  </section>
-
-  <!-- ────────────────────────────────────────
-       11 · CARDS
-  ──────────────────────────────────────── -->
-  <section class="ds-section" id="cards">
-    <div class="ds-section-header">
-      <span class="ds-section-num">11</span>
-      <h2 class="ds-section-title">Cards</h2>
-    </div>
-
-    <div class="ds-subsection">
-      <div class="ds-sub-label">Variant → class map</div>
-      <div class="ds-card">
-        <table class="ds-table">
-          <thead><tr><th>Variant</th><th>Class</th><th>Layout</th><th>Behaviour</th></tr></thead>
-          <tbody>
-            <tr>
-              <td><code class="ds-code">default</code></td>
-              <td><code class="ds-code">.play-card</code></td>
-              <td>Vertical · play card</td>
-              <td>Light bg · border · hard shadow · lifts on hover</td>
-            </tr>
-            <tr>
-              <td><code class="ds-code">accent</code></td>
-              <td><code class="ds-code">.play-card.play-card--accent</code></td>
-              <td>Vertical · play card</td>
-              <td>Yellow bg · same shape as default · featured experiments</td>
-            </tr>
-            <tr>
-              <td><code class="ds-code">diary</code></td>
-              <td><code class="ds-code">.diary-card</code></td>
-              <td>Horizontal · date + content + arrow</td>
-              <td>Light bg · border · diary list rows</td>
-            </tr>
-          </tbody>
-        </table>
-        <p style="font-size:var(--text-xs);color:var(--fg-secondary);margin:var(--space-4) 0 0;">All variants render as <code class="ds-code">&lt;a&gt;</code> when <code class="ds-code">href</code> is provided. Hover: translateY(-2px) + shadow-hover.</p>
-      </div>
-      <p style="font-size:var(--text-xs);color:var(--fg-secondary);margin-top:var(--space-3);">See <a href="/design-system/components#showcase-card">Components → Card</a> for live demos of every variant.</p>
-    </div>
-  </section>
-
-  <!-- ────────────────────────────────────────
-       12 · LINKS
-  ──────────────────────────────────────── -->
-  <section class="ds-section" id="links">
-    <div class="ds-section-header">
-      <span class="ds-section-num">12</span>
-      <h2 class="ds-section-title">Links</h2>
-    </div>
-
-    <div class="ds-subsection">
-      <div class="ds-sub-label">Variant map</div>
-      <div class="ds-card">
-        <table class="ds-table">
-          <thead><tr><th>Variant</th><th>Class</th><th>Surface</th><th>Rest token</th><th>Hover behaviour</th></tr></thead>
-          <tbody>
-            <tr><td><code class="ds-code">default</code></td><td>(global a)</td><td>light</td><td>--fg-primary</td><td>box-shadow floods dark · yellow text</td></tr>
-            <tr style="opacity:0.5;"><td><code class="ds-code">subtle</code> <Badge variant="coming-soon">deprecated</Badge></td><td>.link-subtle</td><td>light</td><td>--fg-secondary</td><td>plain underline · not used in product · do not add new usages</td></tr>
-            <tr><td><code class="ds-code">on-dark</code></td><td>.hero-social-link</td><td>dark</td><td>--fg-on-dark-primary</td><td>box-shadow floods light · dark text</td></tr>
-            <tr><td><code class="ds-code">nav</code></td><td>.nav-link</td><td>dark</td><td>--fg-on-dark-primary</td><td>color → --fg-on-dark-accent (yellow)</td></tr>
-            <tr><td><code class="ds-code">back</code></td><td>.back-link</td><td>dark</td><td>--fg-on-dark-label</td><td>color → --fg-on-dark-primary</td></tr>
-            <tr><td><code class="ds-code">footer-nav</code></td><td>.footer-nav-link</td><td>dark</td><td>--fg-on-dark-label</td><td>color → --fg-on-dark-primary</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <p style="font-size:var(--text-xs);color:var(--fg-secondary);margin-top:var(--space-3);">See <a href="/design-system/components#showcase-link">Components → Link</a> for live hover demos of every variant. Add <code class="ds-code">external</code> prop for <code class="ds-code">target="_blank" rel="noopener noreferrer"</code>.</p>
-    </div>
-  </section>
-
-  <!-- ────────────────────────────────────────
-       13 · INPUTS
-  ──────────────────────────────────────── -->
-  <section class="ds-section" id="inputs">
-    <div class="ds-section-header">
-      <span class="ds-section-num">13</span>
-      <h2 class="ds-section-title">Inputs</h2>
-    </div>
-
-    <div class="ds-card ds-input-wrap" style="max-width:480px;">
-      <div class="ds-field">
-        <div class="ds-sub-label">Default</div>
-        <label class="ds-field-label">Your name</label>
-        <input class="ds-input" type="text" placeholder="e.g. Jeen" />
-      </div>
-      <div class="ds-field">
-        <div class="ds-sub-label">Focused (simulated)</div>
-        <input class="ds-input focused" type="text" value="wishayajeen" readonly />
-        <span class="ds-helper">Yellow ring: 0 0 0 3px #F3FE52</span>
-      </div>
-      <div class="ds-field">
-        <div class="ds-sub-label">Error</div>
-        <input class="ds-input error" type="text" value="invalid@" readonly />
-        <span class="ds-helper err">Please enter a valid email address.</span>
-      </div>
-      <div class="ds-field">
-        <div class="ds-sub-label">Disabled</div>
-        <input class="ds-input disabled" type="text" value="Read-only" disabled />
-      </div>
-      <div class="ds-field">
-        <div class="ds-sub-label">Ask my system — special input</div>
-        <div class="ds-ask-bar">
-          <input class="ds-ask-input" type="text" placeholder="Ask my system anything…" />
-          <button class="ds-ask-btn">Ask →</button>
-        </div>
-        <span class="ds-helper">Full-pill bar with yellow CTA button inside</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- ────────────────────────────────────────
-       14 · ICONOGRAPHY
+       09 · ICONOGRAPHY
   ──────────────────────────────────────── -->
   <section class="ds-section" id="icons">
     <div class="ds-section-header">
-      <span class="ds-section-num">14</span>
+      <span class="ds-section-num">09</span>
       <h2 class="ds-section-title">Iconography</h2>
     </div>
     <div class="ds-card">
@@ -866,7 +693,7 @@ const description = "Design tokens, color system, typography, spacing, shadows, 
 
 <!-- Floating TOC -->
 <nav class="toc" aria-label="Page sections">
-  {['context','principles','colors','typography','spacing','shadows','backgrounds','borders','buttons','badges','cards','links','inputs','icons'].map((id) => (
+  {['context','principles','colors','typography','spacing','shadows','backgrounds','borders','icons'].map((id) => (
     <button class="toc-dot" onclick={`document.getElementById('${id}').scrollIntoView({behavior:'smooth'})`} title={id}>{id}</button>
   ))}
 </nav>
