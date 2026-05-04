@@ -2,15 +2,10 @@
 import Layout from '../../layouts/Layout.astro';
 import '/src/styles/design-system.css';
 import Badge from '../../components/system/Badge.astro';
-import Button from '../../components/system/Button.astro';
-import Card from '../../components/system/Card.astro';
-import Link from '../../components/system/Link.astro';
 import systemData from '../../system/system.json';
 
 const title = "Foundations — Design System — Jeen";
 const description = "Design tokens, color system, typography, spacing, shadows, borders, and principles.";
-
-const path = Astro.url.pathname;
 ---
 
 <Layout title={title} description={description}>
@@ -674,45 +669,29 @@ const path = Astro.url.pathname;
     </div>
 
     <div class="ds-subsection">
-      <div class="ds-sub-label">Variants — system component (hover to test)</div>
-      <div class="ds-card" style="margin-bottom:var(--space-4);">
-        <div class="ds-row" style="align-items:center;flex-wrap:wrap;gap:var(--space-4);margin-bottom:var(--space-3);">
-          <Button variant="primary" label="See the system →" />
-          <div style="background:var(--bg-dark);padding:var(--space-4);border-radius:var(--radius-md);display:inline-flex;align-items:center;">
-            <Button variant="secondary" label="Learn more" />
-          </div>
-        </div>
-        <p style="margin:0;font-size:var(--text-xs);color:var(--fg-secondary);">
-          <code class="ds-code">primary</code> → <code class="ds-code">.hero-cta-primary</code> · yellow bg, hard shadow, lifts on hover<br/>
-          <code class="ds-code">secondary</code> → <code class="ds-code">.hero-cta-secondary</code> · glass outline, designed for dark surfaces
-        </p>
-      </div>
-
-      <div class="ds-sub-label">As anchor (<code>href</code> provided)</div>
-      <div class="ds-card" style="margin-bottom:var(--space-4);">
-        <div class="ds-row" style="align-items:center;gap:var(--space-4);">
-          <Button variant="primary" label="View diary →" href="/diary" />
-        </div>
-        <p style="margin:var(--space-3) 0 0;font-size:var(--text-xs);color:var(--fg-secondary);">Renders as <code class="ds-code">&lt;a&gt;</code> when <code class="ds-code">href</code> is provided, <code class="ds-code">&lt;button&gt;</code> otherwise.</p>
-      </div>
-
-      <div class="ds-sub-label">States — primary</div>
+      <div class="ds-sub-label">Variant → class map</div>
       <div class="ds-card">
-        <div class="ds-row" style="flex-wrap:wrap;gap:var(--space-6);">
-          <div style="display:flex;flex-direction:column;align-items:center;gap:var(--space-2);">
-            <Button variant="primary" label="Default" />
-            <span style="font-size:10px;color:var(--fg-secondary);">default</span>
-          </div>
-          <div style="display:flex;flex-direction:column;align-items:center;gap:var(--space-2);">
-            <Button variant="primary" label="Hover" class="state-hover" />
-            <span style="font-size:10px;color:var(--fg-secondary);">hover</span>
-          </div>
-          <div style="display:flex;flex-direction:column;align-items:center;gap:var(--space-2);">
-            <Button variant="primary" label="Active" class="state-active" />
-            <span style="font-size:10px;color:var(--fg-secondary);">active</span>
-          </div>
-        </div>
+        <table class="ds-table">
+          <thead><tr><th>Variant</th><th>Class</th><th>Surface</th><th>Behaviour</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><code class="ds-code">primary</code></td>
+              <td><code class="ds-code">.hero-cta-primary</code></td>
+              <td>Light</td>
+              <td>Yellow bg · hard shadow · lifts on hover · renders <code class="ds-code">&lt;button&gt;</code> or <code class="ds-code">&lt;a&gt;</code></td>
+            </tr>
+            <tr>
+              <td><code class="ds-code">secondary</code></td>
+              <td><code class="ds-code">.hero-cta-secondary</code></td>
+              <td>Dark only</td>
+              <td>Glass outline · white text · designed for <code class="ds-code">--bg-dark</code> surfaces</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
+      <p style="font-size:var(--text-xs);color:var(--fg-secondary);margin-top:var(--space-3);">
+        States: default → hover (translateY(-2px) + shadow-lg) → active (translateY(1px) + shadow-none). See <a href="/design-system/components#showcase-button">Components → Button</a> for live demos.
+      </p>
     </div>
   </section>
 
@@ -726,17 +705,9 @@ const path = Astro.url.pathname;
     </div>
 
     <div class="ds-subsection">
-      <div class="ds-sub-label">Variants — system component</div>
-      <div class="ds-card" style="margin-bottom:var(--space-4);">
-        <div class="ds-row" style="flex-wrap:wrap;gap:var(--space-3);margin-bottom:var(--space-4);">
-          <Badge variant="tag" label="Experiment" />
-          <Badge variant="diary-tag" label="Tutorial" />
-          <Badge variant="work-tag" label="AI Product" />
-          <Badge variant="skill" label="Design Systems" />
-          <Badge variant="coming-soon" label="Coming soon" />
-        </div>
-        <div class="ds-divider"></div>
-        <table class="ds-table" style="margin-top:var(--space-4);">
+      <div class="ds-sub-label">Variant → class map</div>
+      <div class="ds-card">
+        <table class="ds-table">
           <thead><tr><th>Variant</th><th>Class</th><th>Used in</th></tr></thead>
           <tbody>
             <tr><td><code class="ds-code">tag</code></td><td><code class="ds-code">.play-card-tag</code></td><td>Playground experiment cards</td></tr>
@@ -747,6 +718,7 @@ const path = Astro.url.pathname;
           </tbody>
         </table>
       </div>
+      <p style="font-size:var(--text-xs);color:var(--fg-secondary);margin-top:var(--space-3);">See <a href="/design-system/components#showcase-badge">Components → Badge</a> for live demos of every variant.</p>
     </div>
   </section>
 
@@ -760,49 +732,34 @@ const path = Astro.url.pathname;
     </div>
 
     <div class="ds-subsection">
-      <div class="ds-sub-label">Variants — system component (hover to test)</div>
-      <div class="ds-row" style="align-items:stretch;flex-wrap:wrap;margin-bottom:var(--space-3);">
-        <Card>
-          <div class="play-card-header">
-            <Badge variant="tag" label="Experiment" />
-          </div>
-          <div>
-            <h3 class="play-card-title">Ask Pocky</h3>
-            <p class="play-card-desc">Query the design system via chat.</p>
-          </div>
-          <span class="play-card-cta">Explore →</span>
-        </Card>
-        <Card variant="accent">
-          <div class="play-card-header">
-            <Badge variant="tag" label="AI Product" />
-          </div>
-          <div>
-            <h3 class="play-card-title">PersonaLens</h3>
-            <p class="play-card-desc">AI-driven design feedback from simulated personas.</p>
-          </div>
-          <span class="play-card-cta">Explore →</span>
-        </Card>
-        <Card variant="diary">
-          <div class="diary-date-block">
-            <span class="diary-date-day">28</span>
-            <span class="diary-date-month">APR</span>
-          </div>
-          <div class="diary-content">
-            <p class="diary-title">I built my portfolio in 2 days</p>
-            <div class="diary-meta">
-              <Badge variant="diary-tag" label="Tutorial" />
-              <span class="diary-read-time">4 min read</span>
-            </div>
-          </div>
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" class="diary-arrow">
-            <path d="M3 8h10M9 4l4 4-4 4" stroke="#0A0A0A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-          </svg>
-        </Card>
+      <div class="ds-sub-label">Variant → class map</div>
+      <div class="ds-card">
+        <table class="ds-table">
+          <thead><tr><th>Variant</th><th>Class</th><th>Layout</th><th>Behaviour</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><code class="ds-code">default</code></td>
+              <td><code class="ds-code">.play-card</code></td>
+              <td>Vertical · play card</td>
+              <td>Light bg · border · hard shadow · lifts on hover</td>
+            </tr>
+            <tr>
+              <td><code class="ds-code">accent</code></td>
+              <td><code class="ds-code">.play-card.play-card--accent</code></td>
+              <td>Vertical · play card</td>
+              <td>Yellow bg · same shape as default · featured experiments</td>
+            </tr>
+            <tr>
+              <td><code class="ds-code">diary</code></td>
+              <td><code class="ds-code">.diary-card</code></td>
+              <td>Horizontal · date + content + arrow</td>
+              <td>Light bg · border · diary list rows</td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="font-size:var(--text-xs);color:var(--fg-secondary);margin:var(--space-4) 0 0;">All variants render as <code class="ds-code">&lt;a&gt;</code> when <code class="ds-code">href</code> is provided. Hover: translateY(-2px) + shadow-hover.</p>
       </div>
-      <p style="font-size:var(--text-xs);color:var(--fg-secondary);">
-        <code class="ds-code">default</code> → <code class="ds-code">.play-card</code> · <code class="ds-code">accent</code> → <code class="ds-code">.play-card.play-card--accent</code> · <code class="ds-code">diary</code> → <code class="ds-code">.diary-card</code><br/>
-        All render as <code class="ds-code">&lt;a&gt;</code> when <code class="ds-code">href</code> is provided. Hover: translateY(-2px) + shadow-hover.
-      </p>
+      <p style="font-size:var(--text-xs);color:var(--fg-secondary);margin-top:var(--space-3);">See <a href="/design-system/components#showcase-card">Components → Card</a> for live demos of every variant.</p>
     </div>
   </section>
 
@@ -813,56 +770,6 @@ const path = Astro.url.pathname;
     <div class="ds-section-header">
       <span class="ds-section-num">12</span>
       <h2 class="ds-section-title">Links</h2>
-    </div>
-
-    <div class="ds-subsection">
-      <div class="ds-sub-label">Light surface variants (hover to test)</div>
-      <div class="ds-card" style="margin-bottom:var(--space-4);">
-        <div style="display:flex;flex-direction:column;gap:var(--space-5);">
-          <div style="display:flex;align-items:baseline;gap:var(--space-4);flex-wrap:wrap;">
-            <Link href="#">Default link</Link>
-            <span style="font-size:10px;color:var(--fg-secondary);font-family:var(--font-mono);">variant="default" · global &lt;a&gt; · box-shadow floods dark on hover, yellow text</span>
-          </div>
-          <div style="display:flex;align-items:baseline;gap:var(--space-4);flex-wrap:wrap;opacity:0.5;">
-            <Link href="#" variant="subtle">Subtle link</Link>
-            <span style="font-size:10px;color:var(--fg-secondary);font-family:var(--font-mono);">variant="subtle" · .link-subtle · <strong>DEPRECATED</strong> — not used in any product page</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="ds-subsection">
-      <div class="ds-sub-label">Dark surface variants (hover to test)</div>
-      <div class="ds-card" style="background:var(--bg-dark);margin-bottom:var(--space-4);">
-        <div style="display:flex;flex-direction:column;gap:var(--space-5);">
-          <div style="display:flex;align-items:baseline;gap:var(--space-4);flex-wrap:wrap;">
-            <Link href="#" variant="on-dark">On-dark link</Link>
-            <span style="font-size:10px;color:var(--fg-on-dark-label);font-family:var(--font-mono);">variant="on-dark" · .hero-social-link · box-shadow floods light on hover</span>
-          </div>
-          <div style="display:flex;align-items:baseline;gap:var(--space-4);flex-wrap:wrap;">
-            <Link href="#" variant="nav">Nav link</Link>
-            <span style="font-size:10px;color:var(--fg-on-dark-label);font-family:var(--font-mono);">variant="nav" · .nav-link · pill shape, --fg-on-dark-accent on hover</span>
-          </div>
-          <div style="display:flex;align-items:baseline;gap:var(--space-4);flex-wrap:wrap;">
-            <Link href="#" variant="back">← Back link</Link>
-            <span style="font-size:10px;color:var(--fg-on-dark-label);font-family:var(--font-mono);">variant="back" · .back-link · --fg-on-dark-label → --fg-on-dark-primary on hover</span>
-          </div>
-          <div style="display:flex;align-items:baseline;gap:var(--space-4);flex-wrap:wrap;">
-            <Link href="#" variant="footer-nav">Footer nav</Link>
-            <span style="font-size:10px;color:var(--fg-on-dark-label);font-family:var(--font-mono);">variant="footer-nav" · .footer-nav-link · plain nav item, no underline</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="ds-subsection">
-      <div class="ds-sub-label">External prop</div>
-      <div class="ds-card" style="margin-bottom:var(--space-4);">
-        <div style="display:flex;align-items:baseline;gap:var(--space-4);flex-wrap:wrap;">
-          <Link href="https://github.com/wishayajeen" external>GitHub ↗</Link>
-          <span style="font-size:10px;color:var(--fg-secondary);font-family:var(--font-mono);">external=true → target="_blank" rel="noopener noreferrer"</span>
-        </div>
-      </div>
     </div>
 
     <div class="ds-subsection">
@@ -880,6 +787,7 @@ const path = Astro.url.pathname;
           </tbody>
         </table>
       </div>
+      <p style="font-size:var(--text-xs);color:var(--fg-secondary);margin-top:var(--space-3);">See <a href="/design-system/components#showcase-link">Components → Link</a> for live hover demos of every variant. Add <code class="ds-code">external</code> prop for <code class="ds-code">target="_blank" rel="noopener noreferrer"</code>.</p>
     </div>
   </section>
 
