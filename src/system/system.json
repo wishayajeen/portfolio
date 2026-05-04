@@ -2,7 +2,11 @@
   "name": "Jeen Design System",
   "version": "0.5.2",
   "lastUpdated": "2026-05-04",
-  "commit": "0091319",
+  "release": {
+    "version": "0.5.2",
+    "lastUpdated": "2026-05-04",
+    "notes": "Data-driven hero stats + lastUpdated fix. Deprecated Link variant='subtle'. Added component-inventory.md."
+  },
   "owner": "Jeen (wishayajeen)",
   "coOwner": "Pocky",
   "description": "A living, AI-queryable design system that is also the portfolio. Design decisions exist as structured data — visible through a dashboard, queryable through an agent.",

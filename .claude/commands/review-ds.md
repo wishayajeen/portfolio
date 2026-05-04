@@ -164,6 +164,14 @@ After every audit — whether violations were found, fixed, or decisions made �
 - **Fixed in this session** → add with `"status": "resolved"`, `"resolvedIn": $(git rev-parse --short HEAD)`.
 - **Found but not fixable** (needs design decision or content) → add with `"status": "open"`, no `resolvedIn`.
 - **Intentional deviation** logged during audit → add with `"status": "decision"`, no `resolvedIn`.
-- After adding entries, bump `"version"` (patch increment: 0.4.0 → 0.4.1) and update `"lastUpdated"` and `"commit"`.
+- After adding entries, patch-bump `"version"` (0.5.2 → 0.5.3), set `"lastUpdated"` to today's date (YYYY-MM-DD), and update `"release"` to match:
+  ```json
+  "release": {
+    "version": "<new version>",
+    "lastUpdated": "<YYYY-MM-DD>",
+    "notes": "<one-line summary of what changed in this audit>"
+  }
+  ```
+  Keep the top-level `"version"` and `"lastUpdated"` fields in sync with `"release"` — they are the canonical values the DS page reads.
 
 **Do not** run a full rebuild just for this step — the build from Step 7 already covers it.

@@ -245,3 +245,9 @@ Before declaring any task complete, check all of the following:
 - [ ] **A11y: yellow surface text** — only `--color-black` used
 - [ ] **Layout.astro used** — new pages go through `Layout.astro`, not a custom shell
 - [ ] **`npm run build` passes** — no build errors before pushing
+- [ ] **`system.json` kept current** — if any of the following changed, update `version` (patch bump), `lastUpdated` (today's date YYYY-MM-DD), and `release.notes` before committing:
+  - a component was added, changed, or deprecated
+  - a token was added, changed, or deprecated
+  - a discrepancy was resolved or newly logged
+  - a page or section was added or removed
+  - any structural change to `system.json` itself
