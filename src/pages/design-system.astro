@@ -38,6 +38,10 @@ const statusLabel: Record<string, string> = {
   <a href="/" class="back-link">← Jeen.work</a>
   <span class="ds-topbar-sep">/</span>
   <span class="ds-topbar-title">Design System</span>
+  <div class="ds-topbar-tabs">
+    <button class="ds-tab ds-tab--active" data-panel="ds-panel-tokens">Tokens &amp; components</button>
+    <button class="ds-tab" data-panel="ds-panel-decisions">Discrepancies &amp; decisions</button>
+  </div>
 </div>
 
 <!-- Hero -->
@@ -61,7 +65,8 @@ const statusLabel: Record<string, string> = {
   </div>
 </div>
 
-<!-- Main content -->
+<!-- Tab panel 1: Tokens & components (default) -->
+<div id="ds-panel-tokens" class="ds-tab-panel">
 <div class="ds-page">
 
   <!-- ────────────────────────────────────────
@@ -978,8 +983,15 @@ const statusLabel: Record<string, string> = {
     </div>
   </section>
 
+</div><!-- end .ds-page (tokens) -->
+</div><!-- end #ds-panel-tokens -->
+
+<!-- Tab panel 2: Discrepancies & decisions -->
+<div id="ds-panel-decisions" class="ds-tab-panel" hidden>
+<div class="ds-page">
+
   <!-- ────────────────────────────────────────
-       15 · DISCREPANCIES & DECISIONS
+       DISCREPANCIES & DECISIONS
   ──────────────────────────────────────── -->
   <section class="ds-section" id="discrepancies">
     <div class="ds-section-header">
@@ -1016,7 +1028,8 @@ const statusLabel: Record<string, string> = {
     ))}
   </section>
 
-</div><!-- end .ds-page -->
+</div><!-- end .ds-page (decisions) -->
+</div><!-- end #ds-panel-decisions -->
 
 <!-- Footer -->
 <div class="ds-footer">
@@ -1027,14 +1040,29 @@ const statusLabel: Record<string, string> = {
 
 <!-- Floating TOC -->
 <nav class="toc" aria-label="Page sections">
-  {['context','principles','colors','typography','spacing','shadows','backgrounds','borders','buttons','badges','cards','links','inputs','icons','discrepancies'].map((id) => (
+  {['context','principles','colors','typography','spacing','shadows','backgrounds','borders','buttons','badges','cards','links','inputs','icons'].map((id) => (
     <button class="toc-dot" onclick={`document.getElementById('${id}').scrollIntoView({behavior:'smooth'})`} title={id}>{id}</button>
   ))}
 </nav>
 
 <script>
-  // Highlight active TOC dot on scroll
-  const sections = document.querySelectorAll('.ds-section');
+  // ── Tab switching ──
+  const tabs   = document.querySelectorAll('.ds-tab');
+  const panels = document.querySelectorAll('.ds-tab-panel');
+  const toc    = document.querySelector('.toc');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const target = (tab as HTMLElement).dataset.panel as string;
+      tabs.forEach(t => t.classList.toggle('ds-tab--active', t === tab));
+      panels.forEach(p => { (p as HTMLElement).hidden = p.id !== target; });
+      if (toc) (toc as HTMLElement).hidden = target !== 'ds-panel-tokens';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  });
+
+  // ── Highlight active TOC dot on scroll (tokens panel only) ──
+  const sections = document.querySelectorAll('#ds-panel-tokens .ds-section');
   const dots = document.querySelectorAll('.toc-dot');
   const obs = new IntersectionObserver((entries) => {
     entries.forEach(e => {
