@@ -1,11 +1,11 @@
 {
   "name": "Jeen Design System",
-  "version": "0.5.3",
+  "version": "0.5.4",
   "lastUpdated": "2026-05-04",
   "release": {
-    "version": "0.5.3",
+    "version": "0.5.4",
     "lastUpdated": "2026-05-04",
-    "notes": "Added sectionsUseComponents relationship map. Added /review-ds Step 5b component sync rule."
+    "notes": "Component showcase tab added to /design-system. All 4 system components (Button, Badge, Card, Link) rendered live with variant labels."
   },
   "owner": "Jeen (wishayajeen)",
   "coOwner": "Pocky",
