@@ -36,11 +36,19 @@ body {
 
 /* ── Topbar nav ── */
 .ds-topbar-tabs { margin-left: auto; display: flex; gap: var(--space-4); }
-/* Active state: same color as footer-nav-link hover, held permanently */
-.ds-topbar-tabs .footer-nav-link[aria-pressed="true"] { color: var(--fg-on-dark-primary); }
+/* Active state: aria-current="page" on nav <a> links */
+.ds-topbar-tabs .footer-nav-link[aria-current="page"] { color: var(--fg-on-dark-primary); }
+/* Topbar title as anchor — suppress global <a> box-shadow underline on dark bg */
+a.ds-topbar-title { box-shadow: none; text-decoration: none; }
 
-/* ── Tab panels ── */
-.ds-tab-panel[hidden] { display: none; }
+/* ── Index page nav cards ── */
+.ds-nav-card {
+  display: block;
+  box-shadow: var(--shadow-md);
+  transition: transform var(--duration-base) var(--ease-spring),
+              box-shadow var(--duration-base) var(--ease-spring);
+}
+.ds-nav-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
 
 /* ── Hero ── */
 .ds-hero {

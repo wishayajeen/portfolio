@@ -1,0 +1,82 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import '/src/styles/design-system.css';
+import systemData from '../../system/system.json';
+
+const title = "Design System — Jeen";
+const description = "A living design system. Tokens, principles, and components that power Jeen's portfolio.";
+
+const [luY, luM, luD] = (systemData.lastUpdated as string).split('-').map(Number);
+const lastUpdated = new Date(luY, luM - 1, luD).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+
+const resolvedCount  = systemData.discrepancies.filter((d: any) => d.status === 'resolved').length;
+const openCount      = systemData.discrepancies.filter((d: any) => d.status === 'open').length;
+const decisionCount  = systemData.discrepancies.filter((d: any) => d.status === 'decision').length;
+---
+
+<Layout title={title} description={description}>
+
+<!-- Sticky topbar -->
+<div class="ds-topbar">
+  <a href="/" class="back-link">← Jeen.work</a>
+  <span class="ds-topbar-sep">/</span>
+  <span class="ds-topbar-title">Design System</span>
+</div>
+
+<!-- Hero -->
+<div class="ds-hero">
+  <div class="ds-hero-inner">
+    <p class="ds-hero-eyebrow">jeen design system — v{systemData.version}</p>
+    <h1 class="ds-hero-title">A living <span>design system</span></h1>
+    <p class="ds-hero-sub">
+      Not a traditional portfolio. A structured, AI-queryable system that exists as data — visible through a dashboard and queryable through an "Ask my system" interface.
+    </p>
+    <div class="ds-hero-meta">
+      <span class="ds-hero-meta-item"><strong>Owner</strong> &nbsp;{systemData.owner}</span>
+      <span class="ds-hero-meta-item"><strong>Co-owner</strong> &nbsp;{systemData.coOwner}</span>
+      <span class="ds-hero-meta-item"><strong>Version</strong> &nbsp;{systemData.version}</span>
+      <span class="ds-hero-meta-item"><strong>Updated</strong> &nbsp;{lastUpdated}</span>
+      <span class="ds-hero-meta-item"><strong>Pages</strong> &nbsp;{systemData.routes.length}</span>
+      <span class="ds-hero-meta-item"><strong>Sections</strong> &nbsp;{systemData.sections.length}</span>
+      <span class="ds-hero-meta-item"><strong>Components</strong> &nbsp;{systemData.components.length}</span>
+      <span class="ds-hero-meta-item"><strong>Discrepancies</strong> &nbsp;{systemData.discrepancies.length} ({resolvedCount} resolved · {openCount} open · {decisionCount} decision)</span>
+    </div>
+  </div>
+</div>
+
+<!-- Navigation hub -->
+<div class="ds-page">
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:var(--space-6);margin-top:var(--space-4);">
+
+    <a href="/design-system/foundations" class="ds-card ds-nav-card">
+      <p style="font-family:var(--font-mono);font-size:var(--text-xs);color:var(--fg-secondary);margin:0 0 var(--space-2);text-transform:uppercase;letter-spacing:var(--tracking-wider);">Sections 01 → 14</p>
+      <h2 style="font-family:var(--font-display);font-size:var(--text-xl);font-weight:700;color:var(--fg-primary);margin:0 0 var(--space-2);">Foundations</h2>
+      <p style="font-size:var(--text-sm);color:var(--fg-secondary);margin:0 0 var(--space-4);line-height:var(--leading-relaxed);">Design tokens, color system, typography, spacing, shadows, borders, principles, and component token documentation.</p>
+      <span style="font-size:var(--text-sm);font-weight:600;color:var(--fg-primary);">View foundations →</span>
+    </a>
+
+    <a href="/design-system/components" class="ds-card ds-nav-card">
+      <p style="font-family:var(--font-mono);font-size:var(--text-xs);color:var(--fg-secondary);margin:0 0 var(--space-2);text-transform:uppercase;letter-spacing:var(--tracking-wider);">Button · Badge · Card · Link</p>
+      <h2 style="font-family:var(--font-display);font-size:var(--text-xl);font-weight:700;color:var(--fg-primary);margin:0 0 var(--space-2);">Components</h2>
+      <p style="font-size:var(--text-sm);color:var(--fg-secondary);margin:0 0 var(--space-4);line-height:var(--leading-relaxed);">Live demos of all system components. Every variant, on the correct surface. Hover to test.</p>
+      <span style="font-size:var(--text-sm);font-weight:600;color:var(--fg-primary);">View components →</span>
+    </a>
+
+    <a href="/design-system/dashboard" class="ds-card ds-nav-card">
+      <p style="font-family:var(--font-mono);font-size:var(--text-xs);color:var(--fg-secondary);margin:0 0 var(--space-2);text-transform:uppercase;letter-spacing:var(--tracking-wider);">{systemData.discrepancies.length} entries</p>
+      <h2 style="font-family:var(--font-display);font-size:var(--text-xl);font-weight:700;color:var(--fg-primary);margin:0 0 var(--space-2);">Dashboard</h2>
+      <p style="font-size:var(--text-sm);color:var(--fg-secondary);margin:0 0 var(--space-4);line-height:var(--leading-relaxed);">Discrepancies, decisions, and audit history. Sourced from <code class="ds-code">system.json</code> — updated by <code class="ds-code">/review-ds</code>.</p>
+      <span style="font-size:var(--text-sm);font-weight:600;color:var(--fg-primary);">View dashboard →</span>
+    </a>
+
+  </div>
+</div>
+
+<!-- Footer -->
+<div class="ds-footer">
+  <div class="ds-footer-inner" style="justify-content: center;">
+    <a href="#" onclick="window.scrollTo({ top: 0, behavior: 'smooth' }); return false;" class="ds-footer-link">↑ Top</a>
+  </div>
+</div>
+
+</Layout>

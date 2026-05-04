@@ -1,34 +1,16 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import Layout from '../../layouts/Layout.astro';
 import '/src/styles/design-system.css';
-import Badge from '../components/system/Badge.astro';
-import Button from '../components/system/Button.astro';
-import Card from '../components/system/Card.astro';
-import Link from '../components/system/Link.astro';
-import systemData from '../system/system.json';
+import Badge from '../../components/system/Badge.astro';
+import Button from '../../components/system/Button.astro';
+import Card from '../../components/system/Card.astro';
+import Link from '../../components/system/Link.astro';
+import systemData from '../../system/system.json';
 
-const title = "Design System — Jeen";
-const description = "A living design system. Tokens, principles, and components that power Jeen's portfolio.";
+const title = "Foundations — Design System — Jeen";
+const description = "Design tokens, color system, typography, spacing, shadows, borders, and principles.";
 
-// Format lastUpdated from system.json — avoids drift from showing today's date
-const [luY, luM, luD] = (systemData.lastUpdated as string).split('-').map(Number);
-const lastUpdated = new Date(luY, luM - 1, luD).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-
-// Discrepancy breakdown counts — derived, not hardcoded
-const resolvedCount  = systemData.discrepancies.filter((d: any) => d.status === 'resolved').length;
-const openCount      = systemData.discrepancies.filter((d: any) => d.status === 'open').length;
-const decisionCount  = systemData.discrepancies.filter((d: any) => d.status === 'decision').length;
-
-const statusBadgeClass: Record<string, string> = {
-  resolved: 'ds-badge ds-badge-success',
-  open:     'ds-badge ds-badge-yellow',
-  decision: 'ds-badge ds-badge-outline',
-};
-const statusLabel: Record<string, string> = {
-  resolved: 'Resolved',
-  open:     'Open',
-  decision: 'Decision',
-};
+const path = Astro.url.pathname;
 ---
 
 <Layout title={title} description={description}>
@@ -37,11 +19,11 @@ const statusLabel: Record<string, string> = {
 <div class="ds-topbar">
   <a href="/" class="back-link">← Jeen.work</a>
   <span class="ds-topbar-sep">/</span>
-  <span class="ds-topbar-title">Design System</span>
+  <a href="/design-system" class="ds-topbar-title">Design System</a>
   <div class="ds-topbar-tabs">
-    <button class="footer-nav-link" data-panel="ds-panel-tokens" aria-pressed="true">Tokens &amp; components</button>
-    <button class="footer-nav-link" data-panel="ds-panel-showcase" aria-pressed="false">Component showcase</button>
-    <button class="footer-nav-link" data-panel="ds-panel-decisions" aria-pressed="false">Discrepancies &amp; decisions</button>
+    <a href="/design-system/foundations" class="footer-nav-link" aria-current="page">Foundations</a>
+    <a href="/design-system/components" class="footer-nav-link">Components</a>
+    <a href="/design-system/dashboard" class="footer-nav-link">Dashboard</a>
   </div>
 </div>
 
@@ -49,25 +31,10 @@ const statusLabel: Record<string, string> = {
 <div class="ds-hero">
   <div class="ds-hero-inner">
     <p class="ds-hero-eyebrow">jeen design system — v{systemData.version}</p>
-    <h1 class="ds-hero-title">A living <span>design system</span></h1>
-    <p class="ds-hero-sub">
-      Not a traditional portfolio. A structured, AI-queryable system that exists as data — visible through a dashboard and queryable through an "Ask my system" interface.
-    </p>
-    <div class="ds-hero-meta">
-      <span class="ds-hero-meta-item"><strong>Owner</strong> &nbsp;{systemData.owner}</span>
-      <span class="ds-hero-meta-item"><strong>Co-owner</strong> &nbsp;{systemData.coOwner}</span>
-      <span class="ds-hero-meta-item"><strong>Version</strong> &nbsp;{systemData.version}</span>
-      <span class="ds-hero-meta-item"><strong>Updated</strong> &nbsp;{lastUpdated}</span>
-      <span class="ds-hero-meta-item"><strong>Pages</strong> &nbsp;{systemData.routes.length}</span>
-      <span class="ds-hero-meta-item"><strong>Sections</strong> &nbsp;{systemData.sections.length}</span>
-      <span class="ds-hero-meta-item"><strong>Components</strong> &nbsp;{systemData.components.length}</span>
-      <span class="ds-hero-meta-item"><strong>Discrepancies</strong> &nbsp;{systemData.discrepancies.length} ({resolvedCount} resolved · {openCount} open · {decisionCount} decision)</span>
-    </div>
+    <h1 class="ds-hero-title">Foundations</h1>
   </div>
 </div>
 
-<!-- Tab panel 1: Tokens & components (default) -->
-<div id="ds-panel-tokens" class="ds-tab-panel">
 <div class="ds-page">
 
   <!-- ────────────────────────────────────────
@@ -422,7 +389,7 @@ const statusLabel: Record<string, string> = {
           </div>
           <div>
             <p style="margin:0 0 4px;font-size:var(--text-xs);color:var(--fg-secondary);text-transform:uppercase;letter-spacing:var(--tracking-wide);">Prose links</p>
-            <p style="margin:0;font-size:var(--text-sm);color:var(--fg-secondary);">Prose links use the global <code class="ds-code">&lt;a&gt;</code> box-shadow underline pattern — see <button onclick="document.getElementById('links').scrollIntoView({behavior:'smooth'})" style="background:none;border:none;cursor:pointer;padding:0;font-size:inherit;font-family:inherit;color:var(--fg-primary);box-shadow:inset 0 -.1em 0 var(--fg-primary);transition:color 150ms,box-shadow 150ms;" onmouseover="this.style.color='var(--fg-on-dark-accent)';this.style.boxShadow='inset 0 -1.5em 0 var(--fg-primary)'" onmouseout="this.style.color='var(--fg-primary)';this.style.boxShadow='inset 0 -.1em 0 var(--fg-primary)'">section 12 · Links</button> for all variants.</p>
+            <p style="margin:0;font-size:var(--text-sm);color:var(--fg-secondary);">Prose links use the global <code class="ds-code">&lt;a&gt;</code> box-shadow underline pattern — see <a href="/design-system/foundations#links" style="color:var(--fg-primary);">section 12 · Links</a> for all variants.</p>
           </div>
         </div>
       </div>
@@ -618,7 +585,6 @@ const statusLabel: Record<string, string> = {
       <div class="ds-card">
         <p style="margin:0 0 var(--space-5);font-size:var(--text-sm);color:var(--fg-secondary);">Four semantic border tokens cover all surfaces. Pick by surface context — never use raw color values for borders.</p>
 
-        <!-- --border-primary -->
         <div class="border-token-row">
           <div class="border-token-preview" style="background:var(--bg-surface-raised);">
             <div class="border-token-demo" style="border:var(--border-primary);"></div>
@@ -632,7 +598,6 @@ const statusLabel: Record<string, string> = {
 
         <div class="ds-divider"></div>
 
-        <!-- --border-subtle -->
         <div class="border-token-row">
           <div class="border-token-preview" style="background:var(--bg-surface-raised);">
             <div class="border-token-demo" style="border:var(--border-subtle);"></div>
@@ -646,7 +611,6 @@ const statusLabel: Record<string, string> = {
 
         <div class="ds-divider"></div>
 
-        <!-- --border-on-dark -->
         <div class="border-token-row">
           <div class="border-token-preview" style="background:var(--bg-dark);">
             <div class="border-token-demo" style="border:var(--border-on-dark);border-color:var(--color-gray-700);"></div>
@@ -660,7 +624,6 @@ const statusLabel: Record<string, string> = {
 
         <div class="ds-divider"></div>
 
-        <!-- --border-accent -->
         <div class="border-token-row">
           <div class="border-token-preview" style="background:var(--bg-surface-raised);">
             <div class="border-token-demo" style="border:var(--border-accent);"></div>
@@ -984,244 +947,7 @@ const statusLabel: Record<string, string> = {
     </div>
   </section>
 
-</div><!-- end .ds-page (tokens) -->
-</div><!-- end #ds-panel-tokens -->
-
-<!-- Tab panel 2: Component showcase -->
-<div id="ds-panel-showcase" class="ds-tab-panel" hidden>
-<div class="ds-page">
-
-  <!-- ── BUTTON ── -->
-  <section class="ds-section" id="showcase-button">
-    <div class="ds-section-header">
-      <h2 class="ds-section-title">Button</h2>
-    </div>
-    <p style="font-size:var(--text-sm);color:var(--fg-secondary);margin-bottom:var(--space-6);">
-      CTA button. Renders as <code class="ds-code">&lt;a&gt;</code> when <code class="ds-code">href</code> is provided, <code class="ds-code">&lt;button&gt;</code> otherwise.
-      <strong>secondary</strong> is dark surface only — it uses white text on a transparent background.
-    </p>
-
-    <div class="ds-subsection">
-      <div class="ds-sub-label">Light surface</div>
-      <div class="ds-card" style="display:flex;gap:var(--space-8);flex-wrap:wrap;align-items:flex-end;">
-        <div style="display:flex;flex-direction:column;align-items:flex-start;gap:var(--space-2);">
-          <Button variant="primary" label="Primary button" />
-          <span style="font-size:10px;font-family:var(--font-mono);color:var(--fg-secondary);">variant="primary"</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="ds-subsection">
-      <div class="ds-sub-label">Dark surface</div>
-      <div class="ds-card" style="background:var(--bg-dark);display:flex;gap:var(--space-8);flex-wrap:wrap;align-items:flex-end;">
-        <div style="display:flex;flex-direction:column;align-items:flex-start;gap:var(--space-2);">
-          <Button variant="secondary" label="Secondary button" />
-          <span style="font-size:10px;font-family:var(--font-mono);color:var(--fg-on-dark-label);">variant="secondary" · dark surface only</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── BADGE ── -->
-  <section class="ds-section" id="showcase-badge">
-    <div class="ds-section-header">
-      <h2 class="ds-section-title">Badge</h2>
-    </div>
-    <p style="font-size:var(--text-sm);color:var(--fg-secondary);margin-bottom:var(--space-6);">
-      Label/tag pill. Maps <code class="ds-code">variant</code> to existing homepage.css classes — no new CSS.
-      Surface context matters: check inventory before placing a badge variant on a new surface.
-    </p>
-
-    <div class="ds-subsection">
-      <div class="ds-sub-label">Light surface</div>
-      <div class="ds-card" style="display:flex;gap:var(--space-8);flex-wrap:wrap;align-items:flex-end;">
-        <div style="display:flex;flex-direction:column;align-items:flex-start;gap:var(--space-2);">
-          <Badge variant="tag" label="AI Product" />
-          <span style="font-size:10px;font-family:var(--font-mono);color:var(--fg-secondary);">variant="tag"</span>
-        </div>
-        <div style="display:flex;flex-direction:column;align-items:flex-start;gap:var(--space-2);">
-          <Badge variant="diary-tag" label="Design" />
-          <span style="font-size:10px;font-family:var(--font-mono);color:var(--fg-secondary);">variant="diary-tag"</span>
-        </div>
-        <div style="display:flex;flex-direction:column;align-items:flex-start;gap:var(--space-2);">
-          <Badge variant="coming-soon" />
-          <span style="font-size:10px;font-family:var(--font-mono);color:var(--fg-secondary);">variant="coming-soon"</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="ds-subsection">
-      <div class="ds-sub-label">Dark surface</div>
-      <div class="ds-card" style="background:var(--bg-dark);display:flex;gap:var(--space-8);flex-wrap:wrap;align-items:flex-end;">
-        <div style="display:flex;flex-direction:column;align-items:flex-start;gap:var(--space-2);">
-          <Badge variant="work-tag" label="Talk" />
-          <span style="font-size:10px;font-family:var(--font-mono);color:var(--fg-on-dark-label);">variant="work-tag"</span>
-        </div>
-        <div style="display:flex;flex-direction:column;align-items:flex-start;gap:var(--space-2);">
-          <Badge variant="skill" label="Agentic Design" />
-          <span style="font-size:10px;font-family:var(--font-mono);color:var(--fg-on-dark-label);">variant="skill"</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── CARD ── -->
-  <section class="ds-section" id="showcase-card">
-    <div class="ds-section-header">
-      <h2 class="ds-section-title">Card</h2>
-    </div>
-    <p style="font-size:var(--text-sm);color:var(--fg-secondary);margin-bottom:var(--space-6);">
-      Outer card container with slot — no internal template imposed. Renders as <code class="ds-code">&lt;a&gt;</code> when <code class="ds-code">href</code> is provided.
-      Inner content uses existing homepage.css classes.
-    </p>
-
-    <div class="ds-subsection">
-      <div class="ds-sub-label">variant="default" and variant="accent" — play card layout</div>
-      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:var(--space-4);">
-        <div>
-          <Card variant="default">
-            <div class="play-card-header">
-              <Badge variant="tag" label="AI Product" />
-            </div>
-            <div>
-              <h3 class="play-card-title">Default card</h3>
-              <p class="play-card-desc">Light background, border, hard offset shadow. The standard experiment card.</p>
-            </div>
-            <span class="play-card-cta">Explore →</span>
-          </Card>
-          <span style="font-size:10px;font-family:var(--font-mono);color:var(--fg-secondary);display:block;margin-top:var(--space-2);">variant="default"</span>
-        </div>
-        <div>
-          <Card variant="accent">
-            <div class="play-card-header">
-              <Badge variant="tag" label="Experiment" />
-            </div>
-            <div>
-              <h3 class="play-card-title">Accent card</h3>
-              <p class="play-card-desc">Yellow accent background. Used for highlighted or featured experiments.</p>
-            </div>
-            <span class="play-card-cta">Explore →</span>
-          </Card>
-          <span style="font-size:10px;font-family:var(--font-mono);color:var(--fg-secondary);display:block;margin-top:var(--space-2);">variant="accent"</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="ds-subsection">
-      <div class="ds-sub-label">variant="diary" — horizontal diary layout</div>
-      <div style="display:flex;flex-direction:column;gap:var(--space-3);">
-        <Card variant="diary">
-          <div class="diary-date-block">
-            <span class="diary-date-day">04</span>
-            <span class="diary-date-month">MAY</span>
-          </div>
-          <div class="diary-content">
-            <p class="diary-title">Example diary entry title</p>
-            <div class="diary-meta">
-              <Badge variant="diary-tag" label="Design" />
-              <span class="diary-read-time">3 min read</span>
-            </div>
-          </div>
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" class="diary-arrow">
-            <path d="M3 8h10M9 4l4 4-4 4" stroke="#0A0A0A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </Card>
-        <span style="font-size:10px;font-family:var(--font-mono);color:var(--fg-secondary);">variant="diary" · horizontal layout · date block + content + arrow</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── LINK ── -->
-  <section class="ds-section" id="showcase-link">
-    <div class="ds-section-header">
-      <h2 class="ds-section-title">Link</h2>
-    </div>
-    <p style="font-size:var(--text-sm);color:var(--fg-secondary);margin-bottom:var(--space-6);">
-      Semantic anchor mapping variants to existing link classes. Always renders as <code class="ds-code">&lt;a&gt;</code>.
-      Add <code class="ds-code">external</code> prop for <code class="ds-code">target="_blank" rel="noopener noreferrer"</code>.
-      Hover each to test.
-    </p>
-
-    <div class="ds-subsection">
-      <div class="ds-sub-label">Light surface</div>
-      <div class="ds-card" style="display:flex;flex-direction:column;gap:var(--space-5);">
-        <div style="display:flex;align-items:baseline;gap:var(--space-4);flex-wrap:wrap;">
-          <Link href="#">Default link</Link>
-          <span style="font-size:10px;font-family:var(--font-mono);color:var(--fg-secondary);">variant="default" · global &lt;a&gt; · box-shadow floods dark on hover</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="ds-subsection">
-      <div class="ds-sub-label">Dark surface</div>
-      <div class="ds-card" style="background:var(--bg-dark);display:flex;flex-direction:column;gap:var(--space-5);">
-        <div style="display:flex;align-items:baseline;gap:var(--space-4);flex-wrap:wrap;">
-          <Link href="#" variant="on-dark">On-dark link</Link>
-          <span style="font-size:10px;font-family:var(--font-mono);color:var(--fg-on-dark-label);">variant="on-dark" · .hero-social-link · box-shadow floods light on hover</span>
-        </div>
-        <div style="display:flex;align-items:baseline;gap:var(--space-4);flex-wrap:wrap;">
-          <Link href="#" variant="nav">Nav link</Link>
-          <span style="font-size:10px;font-family:var(--font-mono);color:var(--fg-on-dark-label);">variant="nav" · .nav-link · pill shape, yellow on hover</span>
-        </div>
-        <div style="display:flex;align-items:baseline;gap:var(--space-4);flex-wrap:wrap;">
-          <Link href="#" variant="back">← Back link</Link>
-          <span style="font-size:10px;font-family:var(--font-mono);color:var(--fg-on-dark-label);">variant="back" · .back-link · muted → white on hover</span>
-        </div>
-        <div style="display:flex;align-items:baseline;gap:var(--space-4);flex-wrap:wrap;">
-          <Link href="#" variant="footer-nav">Footer nav</Link>
-          <span style="font-size:10px;font-family:var(--font-mono);color:var(--fg-on-dark-label);">variant="footer-nav" · .footer-nav-link · plain nav item</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-</div><!-- end .ds-page (showcase) -->
-</div><!-- end #ds-panel-showcase -->
-
-<!-- Tab panel 3: Discrepancies & decisions -->
-<div id="ds-panel-decisions" class="ds-tab-panel" hidden>
-<div class="ds-page">
-
-  <!-- ────────────────────────────────────────
-       DISCREPANCIES & DECISIONS
-  ──────────────────────────────────────── -->
-  <section class="ds-section" id="discrepancies">
-    <div class="ds-section-header">
-      <span class="ds-section-num">15</span>
-      <h2 class="ds-section-title">Discrepancies & decisions</h2>
-    </div>
-    <p style="font-size:var(--text-sm);color:var(--fg-secondary);margin-bottom:var(--space-2);">
-      Sourced from <code class="ds-code">system.json → discrepancies</code>. Updated automatically by <code class="ds-code">/review-ds</code> when issues are found or fixed.
-    </p>
-    <div style="display:flex;gap:var(--space-3);margin-bottom:var(--space-6);font-size:var(--text-xs);font-family:var(--font-mono);">
-      <span><span class="ds-badge ds-badge-success" style="font-size:10px;">Resolved</span> — fixed and shipped</span>
-      <span><span class="ds-badge ds-badge-yellow" style="font-size:10px;">Open</span> — known, needs action</span>
-      <span><span class="ds-badge ds-badge-outline" style="font-size:10px;">Decision</span> — intentional deviation</span>
-    </div>
-
-    {systemData.discrepancies.map((disc) => (
-      <div class="disc-card">
-        <div class="disc-card-header">
-          <span class={statusBadgeClass[disc.status]}>{statusLabel[disc.status]}</span>
-          <h3 class="disc-card-title">{disc.title}</h3>
-        </div>
-        <p class="disc-card-body">{disc.body}</p>
-        {disc.resolvedIn && (
-          <p style="margin:var(--space-2) 0 0;font-size:10px;font-family:var(--font-mono);color:var(--fg-secondary);">
-            resolved in commit {disc.resolvedIn} · {disc.date}
-          </p>
-        )}
-        {!disc.resolvedIn && (
-          <p style="margin:var(--space-2) 0 0;font-size:10px;font-family:var(--font-mono);color:var(--fg-secondary);">
-            logged {disc.date}
-          </p>
-        )}
-      </div>
-    ))}
-  </section>
-
-</div><!-- end .ds-page (decisions) -->
-</div><!-- end #ds-panel-decisions -->
+</div><!-- end .ds-page -->
 
 <!-- Footer -->
 <div class="ds-footer">
@@ -1238,23 +964,8 @@ const statusLabel: Record<string, string> = {
 </nav>
 
 <script>
-  // ── Tab switching ──
-  const tabs   = document.querySelectorAll('.ds-topbar-tabs .footer-nav-link');
-  const panels = document.querySelectorAll('.ds-tab-panel');
-  const toc    = document.querySelector('.toc');
-
-  tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      const target = (tab as HTMLElement).dataset.panel as string;
-      tabs.forEach(t => t.setAttribute('aria-pressed', String(t === tab)));
-      panels.forEach(p => { (p as HTMLElement).hidden = p.id !== target; });
-      if (toc) (toc as HTMLElement).hidden = target !== 'ds-panel-tokens';
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-  });
-
-  // ── Highlight active TOC dot on scroll (tokens panel only) ──
-  const sections = document.querySelectorAll('#ds-panel-tokens .ds-section');
+  // ── Highlight active TOC dot on scroll ──
+  const sections = document.querySelectorAll('.ds-section');
   const dots = document.querySelectorAll('.toc-dot');
   const obs = new IntersectionObserver((entries) => {
     entries.forEach(e => {

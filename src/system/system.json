@@ -1,11 +1,11 @@
 {
   "name": "Jeen Design System",
-  "version": "0.5.4",
+  "version": "0.5.5",
   "lastUpdated": "2026-05-04",
   "release": {
-    "version": "0.5.4",
+    "version": "0.5.5",
     "lastUpdated": "2026-05-04",
-    "notes": "Component showcase tab added to /design-system. All 4 system components (Button, Badge, Card, Link) rendered live with variant labels."
+    "notes": "/design-system refactored into 4 routes: index (hub), /foundations (01–14), /components (showcase), /dashboard (discrepancies + stats)."
   },
   "owner": "Jeen (wishayajeen)",
   "coOwner": "Pocky",
@@ -38,8 +38,26 @@
     {
       "id": "design-system",
       "path": "/design-system",
-      "file": "src/pages/design-system.astro",
-      "description": "Public dashboard — visual documentation of all design tokens, components, and principles"
+      "file": "src/pages/design-system/index.astro",
+      "description": "Design system hub — overview, stats, and navigation to sub-sections"
+    },
+    {
+      "id": "design-system-foundations",
+      "path": "/design-system/foundations",
+      "file": "src/pages/design-system/foundations.astro",
+      "description": "Foundations — sections 01–14: tokens, color, typography, spacing, shadows, borders, principles, component token docs"
+    },
+    {
+      "id": "design-system-components",
+      "path": "/design-system/components",
+      "file": "src/pages/design-system/components.astro",
+      "description": "Component showcase — live demos of Button, Badge, Card, Link with all variants"
+    },
+    {
+      "id": "design-system-dashboard",
+      "path": "/design-system/dashboard",
+      "file": "src/pages/design-system/dashboard.astro",
+      "description": "Dashboard — discrepancies, decisions, and system stats sourced from system.json"
     },
     {
       "id": "diary-slug",
@@ -555,6 +573,13 @@
       "title": "Doodle illustration set incomplete",
       "body": "DS spec calls for hand-drawn SVG doodles as a decorative layer (1–3 per section, black line art). Currently only feather_copy.svg and feather_check.svg are in use. Full doodle set to be provided by Jeen.",
       "date": "2026-05-01"
+    },
+    {
+      "id": "design-system-multi-route",
+      "status": "decision",
+      "title": "/design-system split into 4 routes instead of tab-based single page",
+      "body": "The single design-system.astro monolith (1270 lines, JS tab switching) was refactored into /design-system (hub), /design-system/foundations (01–14), /design-system/components (showcase), /design-system/dashboard (discrepancies + stats). Each route uses Layout.astro and proper <a aria-current=\"page\"> nav — no client JS required for navigation. The old tab-panel pattern with aria-pressed on buttons is fully removed.",
+      "date": "2026-05-04"
     }
   ]
 }
