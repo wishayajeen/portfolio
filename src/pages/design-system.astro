@@ -39,8 +39,8 @@ const statusLabel: Record<string, string> = {
   <span class="ds-topbar-sep">/</span>
   <span class="ds-topbar-title">Design System</span>
   <div class="ds-topbar-tabs">
-    <button class="ds-tab ds-tab--active" data-panel="ds-panel-tokens">Tokens &amp; components</button>
-    <button class="ds-tab" data-panel="ds-panel-decisions">Discrepancies &amp; decisions</button>
+    <button class="footer-nav-link" data-panel="ds-panel-tokens" aria-pressed="true">Tokens &amp; components</button>
+    <button class="footer-nav-link" data-panel="ds-panel-decisions" aria-pressed="false">Discrepancies &amp; decisions</button>
   </div>
 </div>
 
@@ -1054,7 +1054,7 @@ const statusLabel: Record<string, string> = {
   tabs.forEach(tab => {
     tab.addEventListener('click', () => {
       const target = (tab as HTMLElement).dataset.panel as string;
-      tabs.forEach(t => t.classList.toggle('ds-tab--active', t === tab));
+      tabs.forEach(t => t.setAttribute('aria-pressed', String(t === tab)));
       panels.forEach(p => { (p as HTMLElement).hidden = p.id !== target; });
       if (toc) (toc as HTMLElement).hidden = target !== 'ds-panel-tokens';
       window.scrollTo({ top: 0, behavior: 'smooth' });
