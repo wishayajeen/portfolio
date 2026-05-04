@@ -15,6 +15,7 @@ const projects = [
   {
     num: '02',
     tag: 'AI product design',
+    comingSoon: true,
     title: 'Agentic Network Submission (ANS)',
     desc: 'Agentic AI workflow for automating compliance declarations. Built with AI-first delivery to reduce manual effort, improve data accuracy, and scale faster.',
     year: '2025',
@@ -24,6 +25,7 @@ const projects = [
   {
     num: '03',
     tag: 'Design System',
+    comingSoon: true,
     title: 'Design System × Marketplace — from fragmented to unified',
     desc: 'Design system-led rebuild of a complex marketplace. Established tokens, components, and governance to enable consistency, faster delivery, and scalable growth.',
     year: '2023',
@@ -43,10 +45,6 @@ export default function WorkSection() {
             <div className="work-eyebrow">work</div>
             <h2 className="work-headline">
               Selected projects
-              <span className="work-coming-soon-badge">
-                <span className="work-coming-soon-dot" />
-                Coming soon
-              </span>
             </h2>
           </div>
           <span className="work-count">{projects.length} projects</span>
@@ -75,7 +73,15 @@ export default function WorkSection() {
                   <div className="work-tag-row">
                     <span className="work-tag">{p.tag}</span>
                   </div>
-                  <div className="work-title">{p.title}</div>
+                  <div className="work-title">
+                    {p.title}
+                    {p.comingSoon && (
+                      <span className="work-coming-soon-badge">
+                        <span className="work-coming-soon-dot" />
+                        Coming soon
+                      </span>
+                    )}
+                  </div>
 
                   <div className="work-expand">
                     <p className="work-desc">{p.desc}</p>
