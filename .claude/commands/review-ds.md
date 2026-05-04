@@ -94,6 +94,24 @@ For every new CSS class found in the diff (diff-scoped) or new file (file-scoped
 
 ---
 
+## Step 5b: Component sync check
+
+For every `.astro` or `.jsx` file under `src/components/system/` that appears in the diff (diff-scoped) or is a new file (file-scoped):
+
+**Check `system.json`** — open `src/system/system.json` and find the matching entry in `components[]` by `id`.
+- If the file is **new** and no entry exists → flag as **violation**: add an entry to `components[]` before merging.
+- If the file was **modified** and props, variants, or description are stale → flag as **violation**: update the entry.
+
+**Check `src/system/component-inventory.md`** — find the matching component section.
+- If the file is **new** and no section exists → flag as **violation**: add a full section (purpose, file path, props table, variants table, usage examples, when to use, when not to use, rules).
+- If the file was **modified** and the inventory is stale → flag as **violation**: update the affected section.
+
+**After fixing either violation**, bump `version` (patch), update `lastUpdated`, and update `release.notes` in `system.json` (per CLAUDE.md checklist).
+
+Report format: `[component file] — system.json entry: OK | MISSING | STALE · inventory: OK | MISSING | STALE`
+
+---
+
 ## Step 6: Standalone page shells
 
 Check audited `.astro` page files for `<html`, `<head`, or `<body` tags.
