@@ -10,6 +10,7 @@ const projects = [
     year: '2026',
     role: 'Speaker',
     tools: ['Figma Slides', 'Figma MCP', 'Claude Code'],
+    href: 'https://youtu.be/v6-77V0hZZo?si=Lxy-qAV6TwpbaX9U',
   },
   {
     num: '02',
@@ -60,8 +61,13 @@ export default function WorkSection() {
 
         {/* Project rows */}
         <div>
-          {projects.map((p, i) => (
-            <div key={i} className="work-row">
+          {projects.map((p, i) => {
+            const Tag = p.href ? 'a' : 'div';
+            const linkProps = p.href
+              ? { href: p.href, target: '_blank', rel: 'noopener noreferrer', style: { boxShadow: 'none', textDecoration: 'none', color: 'inherit', display: 'block' } }
+              : {};
+            return (
+            <Tag key={i} className="work-row" {...linkProps}>
               <div className="work-row-grid">
                 <span className="work-num">{p.num}</span>
 
@@ -90,8 +96,9 @@ export default function WorkSection() {
                   <span className="work-arrow">→</span>
                 </div>
               </div>
-            </div>
-          ))}
+            </Tag>
+            );
+          })}
         </div>
       </div>
     </section>
