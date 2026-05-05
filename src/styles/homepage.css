@@ -71,7 +71,7 @@ body {
 }
 
 /* ─── NAV ──────────────────────────────────────── */
-nav {
+nav.site-nav {
   position: fixed;
   top: 0; left: 0; right: 0;
   z-index: 100;
@@ -83,7 +83,7 @@ nav {
               border-color 250ms cubic-bezier(0.22,1,0.36,1),
               backdrop-filter 250ms cubic-bezier(0.22,1,0.36,1);
 }
-nav.nav--active {
+nav.site-nav.nav--active {
   background: rgba(10,10,10,0.96); /* intentional rgba — no opaque token covers frosted-glass nav */
   backdrop-filter: blur(16px);
   border-bottom: var(--border-on-dark);
@@ -141,9 +141,9 @@ nav.nav--active {
   box-shadow: var(--shadow-md);
 }
 /* Hamburger → × when mobile menu is open */
-nav.menu-open .mobile-menu-btn span:nth-child(1) { transform: rotate(45deg) translate(4px, 4px); }
-nav.menu-open .mobile-menu-btn span:nth-child(2) { opacity: 0; }
-nav.menu-open .mobile-menu-btn span:nth-child(3) { transform: rotate(-45deg) translate(4px, -4px); }
+nav.site-nav.menu-open .mobile-menu-btn span:nth-child(1) { transform: rotate(45deg) translate(4px, 4px); }
+nav.site-nav.menu-open .mobile-menu-btn span:nth-child(2) { opacity: 0; }
+nav.site-nav.menu-open .mobile-menu-btn span:nth-child(3) { transform: rotate(-45deg) translate(4px, -4px); }
 /* Mobile dropdown panel */
 .nav-mobile-dropdown {
   background: rgba(10,10,10,0.98); /* intentional rgba — frosted mobile panel */
@@ -1377,9 +1377,9 @@ nav.menu-open .mobile-menu-btn span:nth-child(3) { transform: rotate(-45deg) tra
 
 /* Tablet */
 @media (max-width: 768px) {
-  nav { padding: 0 24px !important; }
-  nav .nav-links-desktop { display: none !important; }
-  nav .nav-cta { display: none !important; }
+  nav.site-nav { padding: 0 24px !important; }
+  nav.site-nav .nav-links-desktop { display: none !important; }
+  nav.site-nav .nav-cta { display: none !important; }
 
   .mobile-menu-btn {
     display: flex !important;
@@ -1495,7 +1495,7 @@ nav.menu-open .mobile-menu-btn span:nth-child(3) { transform: rotate(-45deg) tra
 
 /* Mobile */
 @media (max-width: 480px) {
-  nav { padding: 0 20px !important; }
+  nav.site-nav { padding: 0 20px !important; }
 
   #hero h1 { font-size: clamp(36px, 10vw, 52px) !important; }
   #hero p { font-size: 16px !important; }

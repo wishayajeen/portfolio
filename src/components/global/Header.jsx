@@ -17,6 +17,7 @@ export default function Header({ logoSrc }) {
   };
 
   const navClass = [
+    'site-nav',
     scrolled || menuOpen ? 'nav--active' : '',
     menuOpen ? 'menu-open' : '',
   ].filter(Boolean).join(' ');
