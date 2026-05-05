@@ -41,44 +41,16 @@ body {
 /* Topbar title as anchor — suppress global <a> box-shadow underline on dark bg */
 a.ds-topbar-title { box-shadow: none; text-decoration: none; }
 
-/* ── Topbar hamburger (hidden on desktop) ── */
-.ds-topbar-ham {
-  display: none;
-  margin-left: auto;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  width: 32px;
-  height: 32px;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  flex-shrink: 0;
-}
-.ds-topbar-ham span {
-  display: block;
-  width: 16px;
-  height: 1.5px;
-  background: var(--fg-on-dark-primary);
-  border-radius: 2px;
-  transition: transform var(--duration-fast), opacity var(--duration-fast);
-}
-/* Animate to × when menu is open */
-.ds-topbar.menu-open .ds-topbar-ham span:nth-child(1) { transform: translateY(5.5px) rotate(45deg); }
-.ds-topbar.menu-open .ds-topbar-ham span:nth-child(2) { opacity: 0; }
-.ds-topbar.menu-open .ds-topbar-ham span:nth-child(3) { transform: translateY(-5.5px) rotate(-45deg); }
-
-/* ── Mobile: collapse tabs into dropdown ── */
-@media (max-width: 640px) {
+/* ── Mobile: collapse tabs into dropdown (matches homepage.css 768px breakpoint) ── */
+@media (max-width: 768px) {
   .ds-topbar {
     padding: var(--space-3) var(--space-4);
-    position: relative; /* dropdown anchors to topbar */
-    flex-wrap: nowrap;
+    position: relative; /* dropdown anchors to topbar bottom edge */
   }
-  .ds-topbar-sep { display: none; } /* remove breadcrumb slash to save space */
-  .ds-topbar-ham { display: flex; }
+  .ds-topbar-sep { display: none; } /* hide breadcrumb slash to save space */
+  /* Push the reused .mobile-menu-btn to the right edge */
+  .ds-topbar .mobile-menu-btn { margin-left: auto; }
+  /* Tabs become a full-width dropdown */
   .ds-topbar-tabs {
     display: none;
     position: absolute;
@@ -99,6 +71,10 @@ a.ds-topbar-title { box-shadow: none; text-decoration: none; }
     border-radius: var(--radius-xs);
     font-size: var(--text-sm);
   }
+  /* Animate .mobile-menu-btn to × when menu is open (mirrors Header.jsx inline logic) */
+  .ds-topbar.menu-open .mobile-menu-btn span:nth-child(1) { transform: rotate(45deg) translate(4px, 4px); }
+  .ds-topbar.menu-open .mobile-menu-btn span:nth-child(2) { opacity: 0; }
+  .ds-topbar.menu-open .mobile-menu-btn span:nth-child(3) { transform: rotate(-45deg) translate(4px, -4px); }
 }
 
 /* ── Index page nav cards ── */

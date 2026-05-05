@@ -19,13 +19,13 @@ const description = "Design tokens, color system, typography, spacing, shadows, 
     <a href="/design-system/components" class="footer-nav-link">Components</a>
     <a href="/design-system/dashboard" class="footer-nav-link">Dashboard</a>
   </div>
-  <button class="ds-topbar-ham" aria-label="Toggle navigation" aria-expanded="false">
+  <button class="mobile-menu-btn" aria-label="Toggle navigation" aria-expanded="false">
     <span></span><span></span><span></span>
   </button>
 </div>
 <script>
   const bar = document.getElementById('ds-topbar');
-  const btn = bar.querySelector('.ds-topbar-ham');
+  const btn = bar.querySelector('.mobile-menu-btn');
   btn.addEventListener('click', () => {
     const open = bar.classList.toggle('menu-open');
     btn.setAttribute('aria-expanded', String(open));
