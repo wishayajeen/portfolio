@@ -693,8 +693,23 @@ const description = "Design tokens, color system, typography, spacing, shadows, 
 
 <!-- Floating TOC -->
 <nav class="toc" aria-label="Page sections">
-  {['context','principles','colors','typography','spacing','shadows','backgrounds','borders','icons'].map((id) => (
-    <button class="toc-dot" onclick={`document.getElementById('${id}').scrollIntoView({behavior:'smooth'})`} title={id}>{id}</button>
+  {[
+    { id: 'context',     label: 'Context'     },
+    { id: 'principles',  label: 'Principles'  },
+    { id: 'colors',      label: 'Colors'      },
+    { id: 'typography',  label: 'Typography'  },
+    { id: 'spacing',     label: 'Spacing'     },
+    { id: 'shadows',     label: 'Shadows'     },
+    { id: 'backgrounds', label: 'Backgrounds' },
+    { id: 'borders',     label: 'Borders'     },
+    { id: 'icons',       label: 'Icons'       },
+  ].map(({ id, label }) => (
+    <button
+      class="toc-dot"
+      data-label={label}
+      onclick={`document.getElementById('${id}').scrollIntoView({behavior:'smooth'})`}
+      aria-label={label}
+    >{label}</button>
   ))}
 </nav>
 
