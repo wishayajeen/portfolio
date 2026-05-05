@@ -93,29 +93,6 @@ const description = "Live demos of all system components. Every variant, on the 
     </div>
 
     <div class="ds-subsection">
-      <div class="ds-sub-label">States — primary</div>
-      <div class="ds-card">
-        <div class="ds-row" style="flex-wrap:wrap;gap:var(--space-6);">
-          <div style="display:flex;flex-direction:column;align-items:center;gap:var(--space-2);">
-            <Button variant="primary" label="Default" />
-            <span style="font-size:10px;color:var(--fg-secondary);">default</span>
-          </div>
-          <div style="display:flex;flex-direction:column;align-items:center;gap:var(--space-2);">
-            <Button variant="primary" label="Hover" class="state-hover" />
-            <span style="font-size:10px;color:var(--fg-secondary);">hover</span>
-          </div>
-          <div style="display:flex;flex-direction:column;align-items:center;gap:var(--space-2);">
-            <Button variant="primary" label="Active" class="state-active" />
-            <span style="font-size:10px;color:var(--fg-secondary);">active</span>
-          </div>
-        </div>
-        <p style="margin:var(--space-4) 0 0;font-size:var(--text-xs);color:var(--fg-secondary);">
-          default → hover (translateY(-2px) + shadow-lg) → active (translateY(1px) + shadow-none)
-        </p>
-      </div>
-    </div>
-
-    <div class="ds-subsection">
       <div class="ds-sub-label">As anchor</div>
       <div class="ds-card">
         <div class="ds-row" style="align-items:center;gap:var(--space-4);">
@@ -565,33 +542,6 @@ const description = "Live demos of all system components. Every variant, on the 
           <IconButton label="More options"><MoreHorizontal size={20} /></IconButton>
           <span style="font-size:10px;font-family:var(--font-mono);color:var(--fg-secondary);">MoreHorizontal</span>
         </div>
-      </div>
-    </div>
-
-    <div class="ds-subsection">
-      <div class="ds-sub-label">States</div>
-      <div class="ds-card">
-        <div class="ds-row" style="flex-wrap:wrap;gap:var(--space-6);">
-          <div style="display:flex;flex-direction:column;align-items:center;gap:var(--space-2);">
-            <IconButton label="Copy"><Copy size={20} /></IconButton>
-            <span style="font-size:10px;color:var(--fg-secondary);">default</span>
-          </div>
-          <div style="display:flex;flex-direction:column;align-items:center;gap:var(--space-2);">
-            <IconButton label="Copy" class="state-hover"><Copy size={20} /></IconButton>
-            <span style="font-size:10px;color:var(--fg-secondary);">hover</span>
-          </div>
-          <div style="display:flex;flex-direction:column;align-items:center;gap:var(--space-2);">
-            <IconButton label="Copy" class="state-active"><Copy size={20} /></IconButton>
-            <span style="font-size:10px;color:var(--fg-secondary);">active</span>
-          </div>
-          <div style="display:flex;flex-direction:column;align-items:center;gap:var(--space-2);">
-            <IconButton label="Copy" disabled><Copy size={20} /></IconButton>
-            <span style="font-size:10px;color:var(--fg-secondary);">disabled</span>
-          </div>
-        </div>
-        <p style="margin:var(--space-4) 0 0;font-size:var(--text-xs);color:var(--fg-secondary);">
-          Hover/active background: <code class="ds-code">--bg-accent-dim</code> (<code class="ds-code">--color-yellow-dim</code> #E8F23D). Disabled: <code class="ds-code">opacity:0.4</code> via browser default.
-        </p>
       </div>
     </div>
 
