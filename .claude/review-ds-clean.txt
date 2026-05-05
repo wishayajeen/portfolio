@@ -1,3 +1,4 @@
-Audited: 2026-05-01 | Commit: 05b7bcf
-Full file-scoped audit passed. 5 pre-existing contrast violations fixed in this session.
+Audited: 2026-05-05 | Commit: 3d7dd5a
+Diff-scoped audit (18 files changed since 05b7bcf).
+2 violations fixed, 2 open warnings logged. Build clean.
 Future runs may use diff-scoped mode.
