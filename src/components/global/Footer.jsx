@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Copy } from 'lucide-react';
+import { Copy, Check } from 'lucide-react';
 
 export default function Footer({ pockyProfileSrc }) {
   const [email, setEmail] = useState('');
@@ -68,21 +68,14 @@ export default function Footer({ pockyProfileSrc }) {
             </div>
 
             <div className="footer-contact-row">
-              {copied ? (
-                <div className="footer-success footer-success--inline">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                    <polyline points="20 6 9 17 4 12" />
-                  </svg>
-                  Copied!
-                </div>
-              ) : (
-                <div className="footer-email-copy-group">
-                  <a href={`mailto:${contactEmail}`}>{contactEmail}</a>
-                  <button type="button" className="icon-btn" onClick={copyEmail} aria-label="Copy email address">
-                    <Copy size={20} aria-hidden="true" />
-                  </button>
-                </div>
-              )}
+              <div className="footer-email-copy-group">
+                <a href={`mailto:${contactEmail}`}>{contactEmail}</a>
+                <button type="button" className="icon-btn" onClick={copyEmail} aria-label="Copy email address">
+                  {copied
+                    ? <Check size={20} aria-hidden="true" />
+                    : <Copy size={20} aria-hidden="true" />}
+                </button>
+              </div>
               <span className="footer-contact-divider">or find me on</span>
               {[
                 { label: 'GitHub', href: 'https://github.com/wishayajeen' },
