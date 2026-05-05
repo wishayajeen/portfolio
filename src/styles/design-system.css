@@ -113,6 +113,7 @@ a.ds-topbar-title { box-shadow: none; text-decoration: none; }
 
 .ds-subsection { margin-bottom: var(--space-8); }
 .ds-sub-label {
+  font-family: var(--font-body);
   font-size: var(--text-xs);
   font-weight: 600;
   text-transform: uppercase;
