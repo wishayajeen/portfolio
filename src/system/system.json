@@ -1,11 +1,11 @@
 {
   "name": "Jeen Design System",
-  "version": "0.5.8",
-  "lastUpdated": "2026-05-04",
+  "version": "0.5.9",
+  "lastUpdated": "2026-05-05",
   "release": {
-    "version": "0.5.8",
-    "lastUpdated": "2026-05-04",
-    "notes": "Foundations page: added --bg-accent-dim and --fg-accent to semantic chips grid and backgrounds section. Design system index: foundations card now shows dynamic token count (102 tokens) sourced live from tokens.css."
+    "version": "0.5.9",
+    "lastUpdated": "2026-05-05",
+    "notes": "Audit fixes: replace 2× hardcoded border-radius: 12px with var(--radius-md) in homepage.css; add IconButton to component-inventory.md. Warnings logged for raw values in Header.jsx (no-token hex, font-family strings, boxShadow) and minor decorative radii."
   },
   "owner": "Jeen (wishayajeen)",
   "coOwner": "Pocky",
@@ -595,6 +595,36 @@
       "title": "/design-system split into 4 routes instead of tab-based single page",
       "body": "The single design-system.astro monolith (1270 lines, JS tab switching) was refactored into /design-system (hub), /design-system/foundations (01–14), /design-system/components (showcase), /design-system/dashboard (discrepancies + stats). Each route uses Layout.astro and proper <a aria-current=\"page\"> nav — no client JS required for navigation. The old tab-panel pattern with aria-pressed on buttons is fully removed.",
       "date": "2026-05-04"
+    },
+    {
+      "id": "audit-border-radius-tokens",
+      "status": "resolved",
+      "title": "2× hardcoded border-radius: 12px in homepage.css",
+      "body": "Audit found .hero-scroll-mouse (line 343) and .footer-email-row responsive override (line 1457) using border-radius: 12px without the --radius-md token. Both replaced with var(--radius-md). Remaining raw radius values (2px, 3px, 8px) are decorative micro-chrome with no token equivalent — logged as warnings below.",
+      "date": "2026-05-05",
+      "resolvedIn": "c71fe7a"
+    },
+    {
+      "id": "audit-iconbutton-inventory-missing",
+      "status": "resolved",
+      "title": "IconButton missing from component-inventory.md",
+      "body": "IconButton was created and added to system.json in v0.5.7 but omitted from component-inventory.md. Full section added: purpose, file, props table, variants, DOM output, usage examples (.astro and .jsx), when to use / not to use, and rules.",
+      "date": "2026-05-05",
+      "resolvedIn": "c71fe7a"
+    },
+    {
+      "id": "header-jsx-raw-values",
+      "status": "open",
+      "title": "Header.jsx uses hardcoded hex, font-family strings, and raw box-shadow values",
+      "body": "Header.jsx was written as a React island and uses inline style objects which cannot reference CSS custom properties directly. Violations: #FFFFFF background on logo img, #FAFAFA and #F3FE52 and #0A0A0A colour literals, 'Space Grotesk' and 'DM Sans' font-family strings, borderRadius: 99 (should be var(--radius-full) via class), boxShadow: '2px 2px 0 0 #0A0A0A' and '3px 3px 0 0 #0A0A0A' (should be --shadow-sm / --shadow-md via class). Resolution requires either refactoring Header.jsx to use CSS classes (preferred) or accepting these as a React island limitation. Decision deferred.",
+      "date": "2026-05-05"
+    },
+    {
+      "id": "audit-decorative-radius-no-token",
+      "status": "open",
+      "title": "Several decorative border-radius values have no exact token (2px, 3px, 8px)",
+      "body": "Audit found border-radius: 2px (.hero-scroll-dot, .mobile-menu-btn span, article hr divider), 3px (scrollbar thumb, .footer-brand-logo), and 8px (.mobile-menu-btn, hidden .footer-email-row button) in homepage.css with no corresponding token. The token scale goes --radius-xs (4px), --radius-sm (6px), --radius-md (12px). These are all decorative micro-chrome elements. Decision: either add --radius-2xs: 2px and --radius-2sm: 3px / 8px tokens, or accept raw values for sub-4px decorative radii. Currently left as-is pending token scale decision.",
+      "date": "2026-05-05"
     }
   ]
 }

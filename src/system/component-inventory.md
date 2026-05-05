@@ -1,7 +1,7 @@
 # System Component Inventory
 
-**Last updated:** 2026-05-04  
-**System version:** 0.5.6  
+**Last updated:** 2026-05-05  
+**System version:** 0.5.9  
 **Source of truth:** `src/components/system/`
 
 > This document reflects the **actual current implementation** of each system component.
@@ -16,6 +16,7 @@
 - [Button](#button)
 - [Card](#card)
 - [Link](#link)
+- [IconButton](#iconbutton)
 - [Input (planned)](#input-planned)
 - [Global rules (all components)](#global-rules)
 
@@ -402,6 +403,84 @@ src/components/system/Link.astro
 4. **`external` is not automatic.** Any link to an external URL (starting with `http://` or `https://`) that opens in a new tab must use `external={true}`. Do not manually add `target="_blank"` and omit `external` — the `rel="noopener noreferrer"` will be missing.
 5. **Content goes in the slot.** Unlike Badge and Button, Link uses `<slot />` — the visible text goes between the tags, not in a `label` prop.
 6. **`back` variant carries `margin-bottom: 40px`.** This is intentional for the article page context. If using `back` outside an article header, override with `class` or a wrapping element.
+
+---
+
+## IconButton
+
+### Purpose
+Circular icon-only action button. Wraps any Lucide icon (or inline SVG) in a 32×32 px circle.
+Transparent by default; shows a dim yellow background (`--bg-accent-dim`) on hover and press.
+Accessible: `label` prop is required and becomes `aria-label`.
+Renders as a `<button>` only — never an `<a>`.
+
+### File
+```
+src/components/system/IconButton.astro
+```
+
+### Props
+
+| Prop | Type | Default | Required | Notes |
+|---|---|---|---|---|
+| `label` | `string` | — | ✅ | Becomes `aria-label` — required for screen-reader accessibility |
+| `class` | `string` | `undefined` | ❌ | Appended to `.icon-btn`; use for one-off overrides |
+| `slot` | Lucide icon or inline SVG | — | ✅ | Pass at `size=20`; do not nest in a wrapper element |
+| `...rest` | any | — | ❌ | Spread onto `<button>` (e.g. `onClick`, `disabled`, `type`) |
+
+### Variants
+There are no named `variant` values. Visual states are CSS-driven:
+
+| State | Visual |
+|---|---|
+| Default | Transparent background, `--fg-primary` icon |
+| Hover / Active | `--bg-accent-dim` (#E8F23D) background, icon colour unchanged |
+| Focus-visible | 2px `--color-focus` outline, 2px offset |
+
+### DOM output
+```html
+<button class="icon-btn" aria-label="[label]">
+  <!-- slotted icon -->
+</button>
+```
+
+### Usage examples
+
+**Basic (in an `.astro` file):**
+```astro
+---
+import IconButton from '../components/system/IconButton.astro';
+import { Copy } from '@lucide/astro';
+---
+<IconButton label="Copy email address">
+  <Copy size=20 />
+</IconButton>
+```
+
+**In a React `.jsx` file (class-based, no Astro import):**
+```jsx
+import { Copy } from 'lucide-react';
+
+<button type="button" className="icon-btn" aria-label="Copy email address">
+  <Copy size={20} aria-hidden="true" />
+</button>
+```
+
+### When to use
+- Icon-only actions where the tap target must be clear (copy, share, dismiss, etc.)
+- Toolbar-style rows of actions with no visible label
+
+### When NOT to use
+- When a visible text label is available — use `Button` instead
+- As a navigation link — use `Link`
+- At a size other than 32×32 (the CSS hard-codes dimensions; do not resize inline)
+
+### Rules Claude must follow
+1. **`label` is never optional.** An `<IconButton>` without `aria-label` fails WCAG SC 4.1.2.
+2. **Icon size must be 20.** The 32 px button with a 20 px icon is the only defined size. In `.astro` files write `size=20`; in `.jsx` write `size={20}`.
+3. **Cannot be imported in React files (.jsx).** Use the `.icon-btn` CSS class directly on a `<button>` element and import the icon from `lucide-react`.
+4. **Do not add `background`, `width`, `height`, or `border-radius` inline.** All sizing and colour is controlled by `.icon-btn` in `homepage.css`.
+5. **Slot only — no children outside the slot.** Do not add text, labels, or wrapper `<span>` elements alongside the icon.
 
 ---
 
