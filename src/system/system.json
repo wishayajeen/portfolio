@@ -586,7 +586,7 @@
       "id": "doodle-illustrations",
       "status": "open",
       "title": "Doodle illustration set incomplete",
-      "body": "DS spec calls for hand-drawn SVG doodles as a decorative layer (1–3 per section, black line art). Currently only feather_copy.svg and feather_check.svg are in use. Full doodle set to be provided by Jeen.",
+      "body": "DS spec calls for hand-drawn SVG doodles as a decorative layer (1–3 per section, black line art). Both feather_copy.svg and feather_check.svg have been removed (replaced by Lucide icons). Full doodle set to be provided by Jeen.",
       "date": "2026-05-01"
     },
     {
