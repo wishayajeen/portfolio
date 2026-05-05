@@ -1,11 +1,11 @@
 {
   "name": "Jeen Design System",
-  "version": "0.5.7",
+  "version": "0.5.8",
   "lastUpdated": "2026-05-04",
   "release": {
-    "version": "0.5.7",
+    "version": "0.5.8",
     "lastUpdated": "2026-05-04",
-    "notes": "New component: IconButton (circular, 32×32px, icon 20×20px). New token: --bg-accent-dim aliased to --color-yellow-dim. Showcased in /components section 05."
+    "notes": "Foundations page: added --bg-accent-dim and --fg-accent to semantic chips grid and backgrounds section. Design system index: foundations card now shows dynamic token count (102 tokens) sourced live from tokens.css."
   },
   "owner": "Jeen (wishayajeen)",
   "coOwner": "Pocky",
