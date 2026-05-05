@@ -1,24 +1,28 @@
 {
   "name": "Jeen Design System",
-  "version": "0.6.2",
+  "version": "0.6.3",
   "lastUpdated": "2026-05-05",
   "release": {
-    "version": "0.6.2",
+    "version": "0.6.3",
     "lastUpdated": "2026-05-05",
-    "notes": "Dashboard-readiness pass: fix 3 data errors, normalize icon-button schema, add top-level stats block, enrich all discrepancies with area/severity/resolvedInVersion/resolvedDate, fill DS sub-route relationships, add icon-button token usage, add tokenUsedByComponents."
+    "notes": "Final dashboard-readiness cleanup: variants:[] on all components, complete routeUsesSections, fix stale stylesheet path, add capability paths, remove deprecated-foregrounds from token categories, move link-tokens to relationships.linkTokenBehavior, stats._meta, content autoSync signal, addedInVersion on all components, componentUsedInSections, openCriticalDiscrepancies + diaryEntryCount in stats, componentCategories registry."
   },
   "owner": "Jeen (wishayajeen)",
   "coOwner": "Pocky",
   "description": "A living, AI-queryable design system that is also the portfolio. Design decisions exist as structured data — visible through a dashboard, queryable through an agent.",
 
   "stats": {
-    "_note": "Manually maintained — update alongside version bumps",
+    "_meta": {
+      "maintenance": "Manually maintained — update alongside version bumps",
+      "totalInstancesNote": "Not yet tracked — would require scanning all .astro/.jsx files for component import counts"
+    },
     "tokenCount": 102,
     "componentCount": 9,
     "variantTotal": 15,
     "totalInstances": null,
-    "_totalInstancesNote": "Not yet tracked — would require scanning all .astro/.jsx files for component import counts",
+    "diaryEntryCount": 1,
     "openDiscrepancies": 6,
+    "openCriticalDiscrepancies": 2,
     "resolvedDiscrepancies": 8,
     "decisionDiscrepancies": 2
   },
@@ -180,16 +184,24 @@
     }
   ],
 
+  "componentCategories": {
+    "layout":  "Global page infrastructure — shell, header, footer. Required on every page. Not subject to variant expansion.",
+    "ui":      "Reusable design system primitives — Badge, Button, Card, Link, IconButton. These carry variants and are the building blocks of product pages.",
+    "system":  "Internal tooling — TweaksPanel and future edit-mode overlays. Not for product use; may use window APIs."
+  },
+
   "components": [
     {
       "id": "header",
       "label": "Header",
       "category": "layout",
       "status": "stable",
+      "addedInVersion": "0.3.0",
       "file": "src/components/global/Header.jsx",
       "type": "react-island",
       "hydration": "client:load",
       "props": ["logoSrc"],
+      "variants": [],
       "state": ["scrolled", "menuOpen"],
       "description": "Fixed navigation bar with scroll-aware style change and mobile menu toggle"
     },
@@ -198,10 +210,12 @@
       "label": "Footer",
       "category": "layout",
       "status": "stable",
+      "addedInVersion": "0.3.0",
       "file": "src/components/global/Footer.jsx",
       "type": "react-island",
       "hydration": "client:visible",
       "props": ["pockyProfileSrc", "copyIconSrc"],
+      "variants": [],
       "state": ["email", "sent", "copied"],
       "description": "CTA band with email capture, copy-to-clipboard, social links, and site credits"
     },
@@ -210,10 +224,12 @@
       "label": "TweaksPanel",
       "category": "system",
       "status": "experimental",
+      "addedInVersion": "0.3.0",
       "file": "src/components/home/TweaksPanel.jsx",
       "type": "react-island",
       "hydration": "client:only=\"react\"",
       "props": [],
+      "variants": [],
       "state": ["visible", "tweaks"],
       "description": "Edit-mode overlay panel activated by postMessage from parent frame; exposes accent color, work style, and scroll indicator toggles",
       "editableKeys": ["heroHeadline", "accentColor", "showScrollHint", "workStyle"]
@@ -223,10 +239,12 @@
       "label": "Layout",
       "category": "layout",
       "status": "stable",
+      "addedInVersion": "0.3.0",
       "file": "src/layouts/Layout.astro",
       "type": "astro",
       "hydration": null,
       "props": ["title", "description"],
+      "variants": [],
       "slots": ["default", "head"],
       "description": "Global page shell — all pages must use this. Injects tokens.css, homepage.css, and Vercel Analytics."
     },
@@ -235,6 +253,7 @@
       "label": "Badge",
       "category": "ui",
       "status": "stable",
+      "addedInVersion": "0.3.0",
       "file": "src/components/system/Badge.astro",
       "type": "astro",
       "hydration": null,
@@ -254,6 +273,7 @@
       "label": "Button",
       "category": "ui",
       "status": "stable",
+      "addedInVersion": "0.3.0",
       "file": "src/components/system/Button.astro",
       "type": "astro",
       "hydration": null,
@@ -270,6 +290,7 @@
       "label": "Card",
       "category": "ui",
       "status": "stable",
+      "addedInVersion": "0.3.0",
       "file": "src/components/system/Card.astro",
       "type": "astro",
       "hydration": null,
@@ -288,6 +309,7 @@
       "label": "Link",
       "category": "ui",
       "status": "stable",
+      "addedInVersion": "0.3.0",
       "file": "src/components/system/Link.astro",
       "type": "astro",
       "hydration": null,
@@ -316,6 +338,7 @@
       "label": "Icon Button",
       "category": "ui",
       "status": "stable",
+      "addedInVersion": "0.5.7",
       "file": "src/components/system/IconButton.astro",
       "type": "astro",
       "hydration": null,
@@ -341,6 +364,9 @@
     "routeUsesSections": {
       "home": ["hero", "playground", "about", "work"],
       "design-system": [],
+      "design-system-foundations": [],
+      "design-system-components": [],
+      "design-system-dashboard": [],
       "diary-slug": []
     },
     "componentUsesTokens": {
@@ -366,6 +392,26 @@
       "playground": ["card", "badge"],
       "about":      [],
       "work":       []
+    },
+    "componentUsedInSections": {
+      "_note": "Inverse of sectionsUseComponents. Only populated for components with at least one direct import.",
+      "badge":       ["playground"],
+      "card":        ["playground"],
+      "button":      [],
+      "link":        [],
+      "icon-button": [],
+      "header":      [],
+      "footer":      [],
+      "layout":      [],
+      "tweaks-panel":[]
+    },
+    "linkTokenBehavior": {
+      "_note": "Documents which existing surface tokens each Link variant uses. No isolated link tokens exist — links reuse fg/bg tokens by surface context.",
+      "default":    { "rest": "fg-primary",          "hover-text": "fg-on-dark-accent", "hover-bg-flood": "fg-primary" },
+      "on-dark":    { "rest": "fg-on-dark-primary",   "hover-text": "fg-primary",        "hover-bg-flood": "fg-on-dark-primary" },
+      "nav":        { "rest": "fg-on-dark-primary",   "hover-text": "fg-on-dark-accent" },
+      "back":       { "rest": "fg-on-dark-label",     "hover-text": "fg-on-dark-primary" },
+      "footer-nav": { "rest": "fg-on-dark-label",     "hover-text": "fg-on-dark-primary" }
     },
     "tokenUsedByComponents": {
       "_note": "Lists system components (components[]) only. First version — covers highest-impact tokens.",
@@ -394,6 +440,8 @@
         "id": "diary",
         "path": "src/content/diary/",
         "format": "markdown",
+        "autoSync": false,
+        "lastSynced": "2026-05-05",
         "frontmatterSchema": ["title", "date", "tag", "readTime", "description"],
         "entries": [
           {
@@ -416,19 +464,6 @@
         "status": ["color-success", "color-warning", "color-error", "color-info"],
         "semantic-backgrounds": ["bg-primary", "bg-dark", "bg-accent", "bg-accent-dim", "bg-surface", "bg-surface-raised", "bg-inverse"],
         "semantic-foregrounds": ["fg-primary", "fg-secondary", "fg-tertiary", "fg-inverse", "fg-accent"],
-        "link-tokens": {
-          "note": "No isolated link tokens — links use existing surface tokens. Deprecated fg-link/fg-nav-link replaced by Link component variants.",
-          "default":    { "rest": "fg-primary",         "hover-text": "fg-on-dark-accent", "hover-bg-flood": "fg-primary" },
-          "on-dark":    { "rest": "fg-on-dark-primary",  "hover-text": "fg-primary", "hover-bg-flood": "fg-on-dark-primary" },
-          "nav":        { "rest": "fg-on-dark-primary",  "hover-text": "fg-on-dark-accent" },
-          "back":       { "rest": "fg-on-dark-label",    "hover-text": "fg-on-dark-primary" },
-          "footer-nav": { "rest": "fg-on-dark-label",    "hover-text": "fg-on-dark-primary" }
-        },
-        "deprecated-foregrounds": {
-          "tokens": ["fg-link", "fg-link-hover", "fg-nav-link", "fg-nav-link-hover"],
-          "reason": "Replaced by global <a> box-shadow underline pattern and the Link component variant system",
-          "since": "0.4.0"
-        },
         "on-dark-text": ["fg-on-dark-primary", "fg-on-dark-secondary", "fg-on-dark-label", "fg-on-dark-accent"],
         "interactive": ["color-focus", "color-cta", "color-cta-hover"]
       },
@@ -486,7 +521,7 @@
     {
       "file": "src/styles/design-system.css",
       "scope": "design-system page only",
-      "loadedBy": "src/pages/design-system.astro frontmatter import",
+      "loadedBy": "src/pages/design-system/index.astro frontmatter import",
       "purpose": "DS dashboard page styles — not for use in product pages"
     }
   ],
@@ -496,31 +531,35 @@
       "id": "design-system-dashboard",
       "label": "Public design system dashboard",
       "status": "live",
-      "description": "Visual documentation of all tokens, components, and principles at /design-system",
-      "path": "/design-system"
+      "path": "/design-system",
+      "description": "Visual documentation of all tokens, components, and principles at /design-system"
     },
     {
       "id": "diary",
       "label": "Diary / writing",
       "status": "live",
+      "path": "/diary/[slug]",
       "description": "Markdown-driven articles at /diary/[slug] — thoughts on design, AI, and building in public"
     },
     {
       "id": "ask-pocky",
       "label": "Ask Pocky — AI design agent",
       "status": "coming-soon",
+      "path": null,
       "description": "Chat interface to query the design system, work history, and design process via Pocky (AI agent)"
     },
     {
       "id": "component-sandbox",
       "label": "Component sandbox",
       "status": "coming-soon",
+      "path": null,
       "description": "Interactive playground for composing and testing design system components in real time"
     },
     {
       "id": "tweaks-panel",
       "label": "Edit-mode tweaks panel",
       "status": "live",
+      "path": "/",
       "description": "Postmessage-activated overlay for live customisation of accent color, work section style, and scroll indicator — used in iframe edit contexts",
       "activation": "window.postMessage({ type: '__activate_edit_mode' })"
     },
@@ -528,6 +567,7 @@
       "id": "system-json",
       "label": "Machine-readable system.json",
       "status": "live",
+      "path": null,
       "description": "This file — structured, relational representation of the design system for AI querying, tooling, and automation"
     }
   ],
