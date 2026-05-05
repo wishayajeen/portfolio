@@ -1,15 +1,27 @@
 {
   "name": "Jeen Design System",
-  "version": "0.6.1",
+  "version": "0.6.2",
   "lastUpdated": "2026-05-05",
   "release": {
-    "version": "0.6.1",
+    "version": "0.6.2",
     "lastUpdated": "2026-05-05",
-    "notes": "Remove Link variant subtle — CSS class (.link-subtle), component prop/map, and all DS documentation and inventory entries removed."
+    "notes": "Dashboard-readiness pass: fix 3 data errors, normalize icon-button schema, add top-level stats block, enrich all discrepancies with area/severity/resolvedInVersion/resolvedDate, fill DS sub-route relationships, add icon-button token usage, add tokenUsedByComponents."
   },
   "owner": "Jeen (wishayajeen)",
   "coOwner": "Pocky",
   "description": "A living, AI-queryable design system that is also the portfolio. Design decisions exist as structured data — visible through a dashboard, queryable through an agent.",
+
+  "stats": {
+    "_note": "Manually maintained — update alongside version bumps",
+    "tokenCount": 102,
+    "componentCount": 9,
+    "variantTotal": 15,
+    "totalInstances": null,
+    "_totalInstancesNote": "Not yet tracked — would require scanning all .astro/.jsx files for component import counts",
+    "openDiscrepancies": 6,
+    "resolvedDiscrepancies": 8,
+    "decisionDiscrepancies": 2
+  },
 
   "sourceOfTruth": {
     "tokens": "src/styles/tokens.css",
@@ -309,7 +321,8 @@
       "hydration": null,
       "props": ["label", "class"],
       "slots": ["default"],
-      "cssClass": "icon-btn",
+      "variants": [],
+      "cssClasses": { "default": "icon-btn" },
       "size": "32×32px",
       "iconSize": "20×20px",
       "description": "Circular icon-only button. Transparent by default; hover/active shows --bg-accent-dim. label prop is required for accessibility."
@@ -320,6 +333,9 @@
     "routeUsesComponents": {
       "home": ["layout", "header", "footer", "tweaks-panel"],
       "design-system": ["layout"],
+      "design-system-foundations": ["layout"],
+      "design-system-components": ["layout"],
+      "design-system-dashboard": ["layout"],
       "diary-slug": ["layout"]
     },
     "routeUsesSections": {
@@ -328,14 +344,15 @@
       "diary-slug": []
     },
     "componentUsesTokens": {
-      "header": ["bg-dark", "fg-on-dark-primary", "fg-on-dark-secondary", "fg-on-dark-accent", "fg-on-dark-label", "bg-accent", "border-subtle", "duration-fast", "ease-out"],
+      "header": ["bg-dark", "fg-on-dark-primary", "fg-on-dark-secondary", "fg-on-dark-accent", "fg-on-dark-label", "bg-accent", "border-on-dark", "text-sm", "radius-full", "shadow-sm", "duration-fast", "ease-out"],
       "footer": ["bg-dark", "fg-on-dark-primary", "fg-on-dark-secondary", "fg-on-dark-accent", "fg-on-dark-label", "bg-accent", "border-on-dark", "radius-md", "shadow-lg", "duration-fast"],
       "tweaks-panel": ["bg-primary", "fg-primary", "bg-accent", "border-primary", "shadow-lg", "radius-md", "font-display", "font-body"],
       "layout": ["bg-primary", "fg-primary", "font-body", "text-base", "leading-relaxed"],
       "badge": ["color-yellow", "color-black", "fg-on-dark-label", "fg-on-dark-accent", "color-error", "radius-full", "radius-xs", "border-primary"],
       "button": ["color-yellow", "color-black", "fg-on-dark-primary", "radius-full", "duration-fast", "ease-spring"],
       "card": ["bg-primary", "bg-accent", "border-primary", "radius-md", "shadow-md", "ease-spring", "duration-fast"],
-      "link": ["fg-primary", "fg-secondary", "fg-on-dark-primary", "fg-on-dark-label", "fg-on-dark-accent", "duration-fast"]
+      "link": ["fg-primary", "fg-secondary", "fg-on-dark-primary", "fg-on-dark-label", "fg-on-dark-accent", "duration-fast", "ease-out"],
+      "icon-button": ["fg-primary", "bg-accent-dim", "color-focus", "radius-full", "duration-fast"]
     },
     "sectionUsesTokens": {
       "hero": ["bg-dark", "fg-on-dark-primary", "fg-on-dark-secondary", "fg-on-dark-accent", "bg-accent", "border-accent", "radius-full", "shadow-lg", "ease-spring", "duration-fast"],
@@ -349,6 +366,25 @@
       "playground": ["card", "badge"],
       "about":      [],
       "work":       []
+    },
+    "tokenUsedByComponents": {
+      "_note": "Lists system components (components[]) only. First version — covers highest-impact tokens.",
+      "bg-dark":            ["header", "footer"],
+      "bg-accent":          ["header", "footer", "tweaks-panel", "button", "card"],
+      "bg-accent-dim":      ["icon-button"],
+      "bg-primary":         ["layout", "tweaks-panel"],
+      "fg-primary":         ["layout", "icon-button"],
+      "fg-on-dark-primary": ["header", "footer", "link"],
+      "fg-on-dark-accent":  ["header", "footer", "link"],
+      "fg-on-dark-label":   ["header", "footer", "link"],
+      "color-focus":        ["icon-button"],
+      "radius-full":        ["button", "icon-button"],
+      "radius-md":          ["footer", "card", "tweaks-panel"],
+      "shadow-lg":          ["footer", "tweaks-panel"],
+      "shadow-sm":          ["header"],
+      "duration-fast":      ["header", "footer", "button", "card", "link", "icon-button"],
+      "ease-spring":        ["button", "card"],
+      "ease-out":           ["header", "link"]
     }
   },
 
@@ -378,7 +414,7 @@
       "color": {
         "primitives": ["color-black", "color-white", "color-pure-white", "color-yellow", "color-yellow-dim", "color-yellow-pale", "color-gray-50", "color-gray-100", "color-gray-200", "color-gray-300", "color-gray-400", "color-gray-500", "color-gray-700", "color-gray-900"],
         "status": ["color-success", "color-warning", "color-error", "color-info"],
-        "semantic-backgrounds": ["bg-primary", "bg-dark", "bg-accent", "bg-surface", "bg-surface-raised", "bg-inverse"],
+        "semantic-backgrounds": ["bg-primary", "bg-dark", "bg-accent", "bg-accent-dim", "bg-surface", "bg-surface-raised", "bg-inverse"],
         "semantic-foregrounds": ["fg-primary", "fg-secondary", "fg-tertiary", "fg-inverse", "fg-accent"],
         "link-tokens": {
           "note": "No isolated link tokens — links use existing surface tokens. Deprecated fg-link/fg-nav-link replaced by Link component variants.",
@@ -386,8 +422,7 @@
           "on-dark":    { "rest": "fg-on-dark-primary",  "hover-text": "fg-primary", "hover-bg-flood": "fg-on-dark-primary" },
           "nav":        { "rest": "fg-on-dark-primary",  "hover-text": "fg-on-dark-accent" },
           "back":       { "rest": "fg-on-dark-label",    "hover-text": "fg-on-dark-primary" },
-          "footer-nav": { "rest": "fg-on-dark-label",    "hover-text": "fg-on-dark-primary" },
-          "_deprecated_subtle": { "rest": "fg-secondary", "hover-text": "fg-primary", "deprecatedSince": "0.5.1" }
+          "footer-nav": { "rest": "fg-on-dark-label",    "hover-text": "fg-on-dark-primary" }
         },
         "deprecated-foregrounds": {
           "tokens": ["fg-link", "fg-link-hover", "fg-nav-link", "fg-nav-link-hover"],
@@ -508,30 +543,40 @@
     {
       "id": "fg-tertiary-contrast",
       "status": "resolved",
+      "area": "a11y",
       "title": "--fg-tertiary used on light bg — 5 WCAG AA violations",
       "body": "Several classes used --fg-tertiary (#9A9A90, ~2.6:1) for readable text on light surfaces, which fails WCAG AA. Fixed: .play-card-desc, .diary-read-time, .about-card-role, .about-stat-label, .pg-eyebrow → --fg-secondary (#3A3A35, ~9:1).",
       "date": "2026-05-01",
-      "resolvedIn": "e291ed0"
+      "resolvedDate": "2026-05-01",
+      "resolvedIn": "e291ed0",
+      "resolvedInVersion": "0.3.0"
     },
     {
       "id": "nav-cta-shadow",
       "status": "resolved",
+      "area": "tokens",
       "title": "Nav CTA shadow: shadow-lg → shadow-sm",
       "body": "DS preview showed smaller 2px offset shadow on nav CTA. Project had 5px (shadow-lg). Decision: use shadow-sm (2px default, 3px hover) — proportionate for a small nav element.",
       "date": "2026-05-01",
-      "resolvedIn": "e291ed0"
+      "resolvedDate": "2026-05-01",
+      "resolvedIn": "e291ed0",
+      "resolvedInVersion": "0.3.0"
     },
     {
       "id": "card-hover-lift",
       "status": "resolved",
+      "area": "component",
       "title": "Card hover lift: translateY(-3px) → -2px",
       "body": "DS spec defines 2px lift on card hover. Project had 3px. Decision: reduced to -2px to match DS spec.",
       "date": "2026-05-01",
-      "resolvedIn": "e291ed0"
+      "resolvedDate": "2026-05-01",
+      "resolvedIn": "e291ed0",
+      "resolvedInVersion": "0.3.0"
     },
     {
       "id": "hero-badge-style",
       "status": "decision",
+      "area": "component",
       "title": "Hero badge: keep ghost style over solid yellow (DS spec)",
       "body": "DS spec shows hero role badge as solid yellow pill. Live project uses ghost style (transparent bg, gray border). Decision: keep ghost — it feels less heavy in the hero context.",
       "date": "2026-05-01"
@@ -539,14 +584,19 @@
     {
       "id": "link-token-system",
       "status": "resolved",
+      "area": "component",
       "title": "Ad-hoc link styles unified into Link component + global pattern",
       "body": "6 ad-hoc link styles (nav-link, hero-social-link, footer-link, footer-contact-link, social-pill, article-back-link) were inconsistent and undocumented. Replaced with global <a> box-shadow underline pattern and Link component with 6 semantic variants. Deprecated --fg-link, --fg-link-hover, --fg-nav-link, --fg-nav-link-hover tokens.",
       "date": "2026-05-02",
-      "resolvedIn": "96e7954"
+      "resolvedDate": "2026-05-02",
+      "resolvedIn": "96e7954",
+      "resolvedInVersion": "0.3.0"
     },
     {
       "id": "diary-code-hr-tokens",
       "status": "open",
+      "area": "tokens",
+      "severity": "low",
       "title": "Diary page styles not formally in DS: code blocks, HR",
       "body": "The diary page uses inverted code blocks (--bg-dark bg, --fg-on-dark-primary text) and styled HRs (gray-300 border) not defined in the DS token set. Consider formalising these as article-specific token aliases.",
       "date": "2026-05-01"
@@ -554,6 +604,8 @@
     {
       "id": "ghost-badges-not-in-spec",
       "status": "open",
+      "area": "component",
+      "severity": "low",
       "title": "Ghost + coming-soon Badge variants not in DS spec",
       "body": "Playground section uses ghost-style category labels and coming-soon badges not defined in the DS badge spec. Currently implemented as one-off CSS in homepage.css. Consider adding ghost and coming-soon as official Badge variants with tokens.",
       "date": "2026-05-01"
@@ -561,14 +613,19 @@
     {
       "id": "link-subtle-deprecated",
       "status": "resolved",
+      "area": "component",
       "title": "Link variant='subtle' removed from system",
       "body": "variant='subtle' (.link-subtle) was deprecated in 0.5.1 and never used in any product page. Fully removed in 0.6.1: CSS class deleted from homepage.css, variant removed from Link.astro type and variantClass map, all DS documentation and inventory entries cleaned up.",
       "date": "2026-05-05",
-      "resolvedIn": "829c4e2"
+      "resolvedDate": "2026-05-05",
+      "resolvedIn": "f21e28c",
+      "resolvedInVersion": "0.6.1"
     },
     {
       "id": "footer-copy-btn-contrast",
       "status": "open",
+      "area": "a11y",
+      "severity": "critical",
       "title": ".footer-copy-btn uses --color-gray-500 on dark surface — WCAG AA fail",
       "body": "homepage.css line ~1105: .footer-copy-btn has color:var(--color-gray-500) (#6A6A60). Footer background is --bg-dark (#0A0A0A). Contrast ratio ~1.6:1 — fails WCAG AA. Should use --fg-on-dark-label (~5:1) or --fg-on-dark-secondary (~9:1).",
       "date": "2026-05-04"
@@ -576,6 +633,8 @@
     {
       "id": "article-meta-contrast",
       "status": "open",
+      "area": "a11y",
+      "severity": "critical",
       "title": ".article-meta uses --color-gray-500 on dark article header — WCAG AA fail",
       "body": "homepage.css line ~1551: .article-meta has color:var(--color-gray-500) (#6A6A60). Article header background is --color-black (#0A0A0A). Contrast ratio ~1.6:1 — fails WCAG AA. Should use --fg-on-dark-label (~5:1) or --fg-on-dark-secondary (~9:1).",
       "date": "2026-05-04"
@@ -583,6 +642,8 @@
     {
       "id": "doodle-illustrations",
       "status": "open",
+      "area": "content",
+      "severity": "low",
       "title": "Doodle illustration set incomplete",
       "body": "DS spec calls for hand-drawn SVG doodles as a decorative layer (1–3 per section, black line art). Both feather_copy.svg and feather_check.svg have been removed (replaced by Lucide icons). Full doodle set to be provided by Jeen.",
       "date": "2026-05-01"
@@ -590,6 +651,7 @@
     {
       "id": "design-system-multi-route",
       "status": "decision",
+      "area": "architecture",
       "title": "/design-system split into 4 routes instead of tab-based single page",
       "body": "The single design-system.astro monolith (1270 lines, JS tab switching) was refactored into /design-system (hub), /design-system/foundations (01–14), /design-system/components (showcase), /design-system/dashboard (discrepancies + stats). Each route uses Layout.astro and proper <a aria-current=\"page\"> nav — no client JS required for navigation. The old tab-panel pattern with aria-pressed on buttons is fully removed.",
       "date": "2026-05-04"
@@ -597,30 +659,41 @@
     {
       "id": "audit-border-radius-tokens",
       "status": "resolved",
+      "area": "tokens",
       "title": "2× hardcoded border-radius: 12px in homepage.css",
       "body": "Audit found .hero-scroll-mouse (line 343) and .footer-email-row responsive override (line 1457) using border-radius: 12px without the --radius-md token. Both replaced with var(--radius-md). Remaining raw radius values (2px, 3px, 8px) are decorative micro-chrome with no token equivalent — logged as warnings below.",
       "date": "2026-05-05",
-      "resolvedIn": "c71fe7a"
+      "resolvedDate": "2026-05-05",
+      "resolvedIn": "c71fe7a",
+      "resolvedInVersion": "0.5.8"
     },
     {
       "id": "audit-iconbutton-inventory-missing",
       "status": "resolved",
+      "area": "component",
       "title": "IconButton missing from component-inventory.md",
       "body": "IconButton was created and added to system.json in v0.5.7 but omitted from component-inventory.md. Full section added: purpose, file, props table, variants, DOM output, usage examples (.astro and .jsx), when to use / not to use, and rules.",
       "date": "2026-05-05",
-      "resolvedIn": "c71fe7a"
+      "resolvedDate": "2026-05-05",
+      "resolvedIn": "c71fe7a",
+      "resolvedInVersion": "0.5.8"
     },
     {
       "id": "header-jsx-raw-values",
       "status": "resolved",
+      "area": "tokens",
       "title": "Header.jsx uses hardcoded hex, font-family strings, and raw box-shadow values",
       "body": "Refactored Header.jsx to remove all inline style objects. Added CSS classes nav, nav.nav--active, .nav-inner, .nav-logo-btn, .nav-logo-img, .nav-logo-name, .nav-links-desktop, .nav-cta, .nav-mobile-dropdown, .nav-mobile-link, .nav-mobile-link--accent to homepage.css using semantic tokens throughout. Also fixed .nav-link font-size from hardcoded 14px to var(--text-sm). Three rgba() values retained: two for frosted-glass translucency (no opaque token equivalent) and one for hairline divider — all annotated with inline comments.",
       "date": "2026-05-05",
-      "resolvedIn": "0dfd99f"
+      "resolvedDate": "2026-05-05",
+      "resolvedIn": "0dfd99f",
+      "resolvedInVersion": "0.6.0"
     },
     {
       "id": "audit-decorative-radius-no-token",
       "status": "open",
+      "area": "tokens",
+      "severity": "moderate",
       "title": "Several decorative border-radius values have no exact token (2px, 3px, 8px)",
       "body": "Audit found border-radius: 2px (.hero-scroll-dot, .mobile-menu-btn span, article hr divider), 3px (scrollbar thumb, .footer-brand-logo), and 8px (.mobile-menu-btn, hidden .footer-email-row button) in homepage.css with no corresponding token. The token scale goes --radius-xs (4px), --radius-sm (6px), --radius-md (12px). These are all decorative micro-chrome elements. Decision: either add --radius-2xs: 2px and --radius-2sm: 3px / 8px tokens, or accept raw values for sub-4px decorative radii. Currently left as-is pending token scale decision.",
       "date": "2026-05-05"
