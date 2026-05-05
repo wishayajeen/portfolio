@@ -1,0 +1,17 @@
+---
+// IconButton — circular icon-only button, 32×32px.
+// Slot: pass a Lucide icon (or inline SVG) at size={20}.
+// `label` is required — used as aria-label for accessibility.
+
+interface Props {
+  label: string;
+  class?: string;
+  [key: string]: any;
+}
+
+const { label, class: className, ...rest } = Astro.props;
+---
+
+<button class:list={['icon-btn', className]} aria-label={label} {...rest}>
+  <slot />
+</button>

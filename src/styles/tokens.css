@@ -38,6 +38,7 @@
   --bg-primary:        var(--color-white);
   --bg-dark:           var(--color-black);
   --bg-accent:         var(--color-yellow);
+  --bg-accent-dim:     var(--color-yellow-dim);
   --bg-surface:        var(--color-gray-100);
   --bg-surface-raised: var(--color-pure-white);
   --bg-inverse:        var(--color-gray-900);

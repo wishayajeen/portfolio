@@ -1,11 +1,11 @@
 {
   "name": "Jeen Design System",
-  "version": "0.5.6",
+  "version": "0.5.7",
   "lastUpdated": "2026-05-04",
   "release": {
-    "version": "0.5.6",
+    "version": "0.5.7",
     "lastUpdated": "2026-05-04",
-    "notes": "IA fix: removed component sections (Buttons, Badges, Cards, Links, Inputs) from /foundations; /components upgraded with Purpose, Props, Usage rules, When not to use for all 4 components; Input planned section added; TOC trimmed to 9 sections."
+    "notes": "New component: IconButton (circular, 32×32px, icon 20×20px). New token: --bg-accent-dim aliased to --color-yellow-dim. Showcased in /components section 05."
   },
   "owner": "Jeen (wishayajeen)",
   "coOwner": "Pocky",
@@ -301,6 +301,21 @@
       },
       "externalProp": "Adds target='_blank' rel='noopener noreferrer' automatically",
       "description": "Unified link component mapping 5 active semantic variants to existing link classes. variant='subtle' is deprecated (0.5.1) — not used in product."
+    },
+    {
+      "id": "icon-button",
+      "label": "Icon Button",
+      "category": "ui",
+      "status": "stable",
+      "file": "src/components/system/IconButton.astro",
+      "type": "astro",
+      "hydration": null,
+      "props": ["label", "class"],
+      "slots": ["default"],
+      "cssClass": "icon-btn",
+      "size": "32×32px",
+      "iconSize": "20×20px",
+      "description": "Circular icon-only button. Transparent by default; hover/active shows --bg-accent-dim. label prop is required for accessibility."
     }
   ],
 

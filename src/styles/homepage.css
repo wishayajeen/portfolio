@@ -1652,3 +1652,26 @@ body {
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-md);
 }
+
+/* ── Icon Button ── */
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-full);
+  border: none;
+  background: transparent;
+  color: var(--fg-primary);
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+  transition: background var(--duration-fast);
+}
+.icon-btn:hover,
+.icon-btn:active { background: var(--bg-accent-dim); }
+.icon-btn:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
