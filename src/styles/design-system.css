@@ -72,7 +72,7 @@ a.ds-topbar-title { box-shadow: none; text-decoration: none; }
     font-size: var(--text-sm);
   }
   /* Animate .mobile-menu-btn to × when menu is open (mirrors Header.jsx inline logic) */
-  .ds-topbar.menu-open .mobile-menu-btn span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+  .ds-topbar.menu-open .mobile-menu-btn span:nth-child(1) { transform: rotate(45deg) translate(4px, 4px); }
   .ds-topbar.menu-open .mobile-menu-btn span:nth-child(2) { opacity: 0; }
   .ds-topbar.menu-open .mobile-menu-btn span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
 }
