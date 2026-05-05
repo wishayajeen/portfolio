@@ -1101,30 +1101,7 @@ body {
 
 /* .footer-contact-link removed — global <a> box-shadow pattern applies */
 
-.footer-copy-btn {
-  width: 16px;
-  height: 16px;
-  border: none;
-  background: transparent;
-  color: var(--color-gray-500);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  padding: 0;
-  transition: color var(--duration-fast), opacity var(--duration-fast);
-}
 
-.footer-copy-btn:hover {
-  color: var(--fg-primary);
-  opacity: 1;
-}
-
-.footer-copy-icon {
-  width: 14px;
-  height: 14px;
-  display: block;
-}
 
 .footer-contact-divider {
   color: var(--fg-primary); /* on --bg-accent (yellow): only --color-black passes */

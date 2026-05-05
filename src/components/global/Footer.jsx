@@ -78,8 +78,8 @@ export default function Footer({ pockyProfileSrc }) {
               ) : (
                 <div className="footer-email-copy-group">
                   <a href={`mailto:${contactEmail}`}>{contactEmail}</a>
-                  <button type="button" className="footer-copy-btn" onClick={copyEmail} aria-label="Copy email address">
-                    <Copy size={14} aria-hidden="true" />
+                  <button type="button" className="icon-btn" onClick={copyEmail} aria-label="Copy email address">
+                    <Copy size={20} aria-hidden="true" />
                   </button>
                 </div>
               )}
