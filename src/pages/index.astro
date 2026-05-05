@@ -15,14 +15,11 @@ import AboutSection from '../components/home/AboutSection.astro'
 import logoUrl from '../assets/logo.svg'
 import pockyIdleUrl from '../assets/pocky-idle.svg'
 import pockyProfileUrl from '../assets/pocky-profile.svg'
-import copyIconUrl from '../assets/feather_copy.svg?url'
-
 import { getCollection } from 'astro:content'
 
 const logoSrc         = typeof logoUrl         === 'string' ? logoUrl         : logoUrl.src;
 const pockyIdleSrc    = typeof pockyIdleUrl    === 'string' ? pockyIdleUrl    : pockyIdleUrl.src;
 const pockyProfileSrc = typeof pockyProfileUrl === 'string' ? pockyProfileUrl : pockyProfileUrl.src;
-const copyIconSrc     = typeof copyIconUrl     === 'string' ? copyIconUrl     : copyIconUrl.src;
 
 const MONTHS = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
 const allDiary    = await getCollection('diary');
@@ -48,7 +45,7 @@ const diaryTotal = allDiary.length;
 
   <!-- Deferred interactive sections: hydrate when they enter the viewport -->
   <WorkSection client:visible />
-  <Footer client:visible pockyProfileSrc={pockyProfileSrc} copyIconSrc={copyIconSrc} />
+  <Footer client:visible pockyProfileSrc={pockyProfileSrc} />
 
   <!-- Edit-mode tweaks panel: client-only, uses window APIs -->
   <TweaksPanel client:only="react" />

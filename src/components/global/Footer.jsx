@@ -1,6 +1,7 @@
 import { useState } from 'react';
+import { Copy } from 'lucide-react';
 
-export default function Footer({ pockyProfileSrc, copyIconSrc }) {
+export default function Footer({ pockyProfileSrc }) {
   const [email, setEmail] = useState('');
   const [sent, setSent] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -78,7 +79,7 @@ export default function Footer({ pockyProfileSrc, copyIconSrc }) {
                 <div className="footer-email-copy-group">
                   <a href={`mailto:${contactEmail}`}>{contactEmail}</a>
                   <button type="button" className="footer-copy-btn" onClick={copyEmail} aria-label="Copy email address">
-                    <img src={copyIconSrc} alt="" className="footer-copy-icon" aria-hidden="true" />
+                    <Copy size={14} aria-hidden="true" />
                   </button>
                 </div>
               )}
