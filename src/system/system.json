@@ -1,11 +1,11 @@
 {
   "name": "Jeen Design System",
-  "version": "0.5.9",
+  "version": "0.6.0",
   "lastUpdated": "2026-05-05",
   "release": {
-    "version": "0.5.9",
+    "version": "0.6.0",
     "lastUpdated": "2026-05-05",
-    "notes": "Audit fixes: replace 2× hardcoded border-radius: 12px with var(--radius-md) in homepage.css; add IconButton to component-inventory.md. Warnings logged for raw values in Header.jsx (no-token hex, font-family strings, boxShadow) and minor decorative radii."
+    "notes": "Refactor Header.jsx: replace all inline styles with CSS classes in homepage.css. Nav, logo, CTA, mobile dropdown, hamburger animation now fully token-driven. Resolves header-jsx-raw-values open discrepancy."
   },
   "owner": "Jeen (wishayajeen)",
   "coOwner": "Pocky",
@@ -614,10 +614,11 @@
     },
     {
       "id": "header-jsx-raw-values",
-      "status": "open",
+      "status": "resolved",
       "title": "Header.jsx uses hardcoded hex, font-family strings, and raw box-shadow values",
-      "body": "Header.jsx was written as a React island and uses inline style objects which cannot reference CSS custom properties directly. Violations: #FFFFFF background on logo img, #FAFAFA and #F3FE52 and #0A0A0A colour literals, 'Space Grotesk' and 'DM Sans' font-family strings, borderRadius: 99 (should be var(--radius-full) via class), boxShadow: '2px 2px 0 0 #0A0A0A' and '3px 3px 0 0 #0A0A0A' (should be --shadow-sm / --shadow-md via class). Resolution requires either refactoring Header.jsx to use CSS classes (preferred) or accepting these as a React island limitation. Decision deferred.",
-      "date": "2026-05-05"
+      "body": "Refactored Header.jsx to remove all inline style objects. Added CSS classes nav, nav.nav--active, .nav-inner, .nav-logo-btn, .nav-logo-img, .nav-logo-name, .nav-links-desktop, .nav-cta, .nav-mobile-dropdown, .nav-mobile-link, .nav-mobile-link--accent to homepage.css using semantic tokens throughout. Also fixed .nav-link font-size from hardcoded 14px to var(--text-sm). Three rgba() values retained: two for frosted-glass translucency (no opaque token equivalent) and one for hairline divider — all annotated with inline comments.",
+      "date": "2026-05-05",
+      "resolvedIn": "0dfd99f"
     },
     {
       "id": "audit-decorative-radius-no-token",
