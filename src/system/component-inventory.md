@@ -350,7 +350,6 @@ src/components/system/Link.astro
 | `nav` | `.nav-link` | dark | `--fg-on-dark-primary`, pill shape, no underline | text → `--fg-on-dark-accent` (yellow) |
 | `back` | `.back-link` | dark | `--fg-on-dark-label` (muted), no underline | text → `--fg-on-dark-primary` |
 | `footer-nav` | `.footer-nav-link` | dark | `--fg-on-dark-label` (muted), no underline | text → `--fg-on-dark-primary` |
-| ~~`subtle`~~ | `.link-subtle` | light | **DEPRECATED (0.5.1)** — not used in any product page | — |
 
 **`default` gets no CSS class.** It relies entirely on the global `a { }` rule in `tokens.css`.
 
@@ -392,7 +391,6 @@ src/components/system/Link.astro
 - Do not use `default` on dark surfaces — `--fg-primary` (black) text with a dark box-shadow on a dark background is invisible
 - Do not use `on-dark`, `nav`, `back`, or `footer-nav` on light surfaces — all four use white or muted white text, which will be unreadable on light backgrounds
 - Do not use `nav` when you need a true anchor with a visible URL — `nav` is styled as a button; use `default` for visible inline links
-- **Do not use `subtle`** — it is deprecated (0.5.1). Use `default` instead.
 - Do not use `back` for any link that is not a backwards navigation — the `margin-bottom: 40px` it carries assumes it sits above article header content
 - Do not use Link inside React files — it is an Astro component and cannot be imported into `.jsx`
 
@@ -514,7 +512,7 @@ import Badge from '../system/Badge.astro';
 All four components are `.astro` files. They **cannot be imported into `.jsx` React files** (Header.jsx, Footer.jsx, WorkSection.jsx, TweaksPanel.jsx). In React files, use the raw CSS class names directly.
 
 ### No new CSS
-These components introduce no net CSS of their own (`.link-subtle` was added for Link but is now deprecated). All visual output comes from pre-existing classes in `src/styles/homepage.css`. If a visual change is needed, update the CSS class — not the component.
+These components introduce no net CSS of their own. All visual output comes from pre-existing classes in `src/styles/homepage.css`. If a visual change is needed, update the CSS class — not the component.
 
 ### No hardcoded values
 Components never contain hardcoded hex colours, spacing, or font values. All visual behaviour is driven by CSS tokens. If a component appears wrong, check `homepage.css` and `tokens.css`, not the component file.

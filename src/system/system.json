@@ -1,11 +1,11 @@
 {
   "name": "Jeen Design System",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "lastUpdated": "2026-05-05",
   "release": {
-    "version": "0.6.0",
+    "version": "0.6.1",
     "lastUpdated": "2026-05-05",
-    "notes": "Refactor Header.jsx: replace all inline styles with CSS classes in homepage.css. Nav, logo, CTA, mobile dropdown, hamburger animation now fully token-driven. Resolves header-jsx-raw-values open discrepancy."
+    "notes": "Remove Link variant subtle — CSS class (.link-subtle), component prop/map, and all DS documentation and inventory entries removed."
   },
   "owner": "Jeen (wishayajeen)",
   "coOwner": "Pocky",
@@ -282,9 +282,6 @@
       "props": ["href", "variant", "external"],
       "slots": ["default"],
       "variants": ["default", "on-dark", "nav", "back", "footer-nav"],
-      "deprecatedVariants": {
-        "subtle": { "since": "0.5.1", "reason": "Not used in any product page. Class .link-subtle retained in homepage.css for backwards safety but do not add new usages." }
-      },
       "cssClasses": {
         "default": "(global a)",
         "on-dark": "hero-social-link",
@@ -300,7 +297,7 @@
         "footer-nav": "dark — plain nav item, white on hover, no underline"
       },
       "externalProp": "Adds target='_blank' rel='noopener noreferrer' automatically",
-      "description": "Unified link component mapping 5 active semantic variants to existing link classes. variant='subtle' is deprecated (0.5.1) — not used in product."
+      "description": "Unified link component mapping 5 semantic variants to existing link classes."
     },
     {
       "id": "icon-button",
@@ -563,10 +560,11 @@
     },
     {
       "id": "link-subtle-deprecated",
-      "status": "decision",
-      "title": "Link variant='subtle' deprecated — not used in any product page",
-      "body": "variant='subtle' (.link-subtle) was added during the Link component refactor but was never used in any product page (index.astro, diary, [slug].astro). Deprecated in 0.5.1: class retained in homepage.css for backwards safety, variant kept functional but marked as do-not-use. Re-evaluate if a genuine prose-link use case arises.",
-      "date": "2026-05-02"
+      "status": "resolved",
+      "title": "Link variant='subtle' removed from system",
+      "body": "variant='subtle' (.link-subtle) was deprecated in 0.5.1 and never used in any product page. Fully removed in 0.6.1: CSS class deleted from homepage.css, variant removed from Link.astro type and variantClass map, all DS documentation and inventory entries cleaned up.",
+      "date": "2026-05-05",
+      "resolvedIn": "829c4e2"
     },
     {
       "id": "footer-copy-btn-contrast",

@@ -9,15 +9,12 @@
  *   back        → .back-link (dark surface, muted color, no underline)
  *   footer-nav  → .footer-nav-link (dark surface, plain nav item, no underline)
  *
- * DEPRECATED variants (kept functional, do not use in new code):
- *   subtle      → .link-subtle — deprecated; not used in any product page (2025-05-02)
- *
  * external: adds target="_blank" rel="noopener noreferrer" automatically.
  */
 
 interface Props {
   href: string;
-  variant?: 'default' | 'on-dark' | 'nav' | 'back' | 'footer-nav' | 'subtle';
+  variant?: 'default' | 'on-dark' | 'nav' | 'back' | 'footer-nav';
   external?: boolean;
   class?: string;
   [key: string]: any;
@@ -33,7 +30,6 @@ const {
 
 const variantClass: Record<string, string> = {
   default:       '',
-  subtle:        'link-subtle',
   'on-dark':     'hero-social-link',
   nav:           'nav-link',
   back:          'back-link',
