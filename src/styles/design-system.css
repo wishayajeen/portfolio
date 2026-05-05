@@ -41,6 +41,66 @@ body {
 /* Topbar title as anchor — suppress global <a> box-shadow underline on dark bg */
 a.ds-topbar-title { box-shadow: none; text-decoration: none; }
 
+/* ── Topbar hamburger (hidden on desktop) ── */
+.ds-topbar-ham {
+  display: none;
+  margin-left: auto;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  width: 32px;
+  height: 32px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+}
+.ds-topbar-ham span {
+  display: block;
+  width: 16px;
+  height: 1.5px;
+  background: var(--fg-on-dark-primary);
+  border-radius: 2px;
+  transition: transform var(--duration-fast), opacity var(--duration-fast);
+}
+/* Animate to × when menu is open */
+.ds-topbar.menu-open .ds-topbar-ham span:nth-child(1) { transform: translateY(5.5px) rotate(45deg); }
+.ds-topbar.menu-open .ds-topbar-ham span:nth-child(2) { opacity: 0; }
+.ds-topbar.menu-open .ds-topbar-ham span:nth-child(3) { transform: translateY(-5.5px) rotate(-45deg); }
+
+/* ── Mobile: collapse tabs into dropdown ── */
+@media (max-width: 640px) {
+  .ds-topbar {
+    padding: var(--space-3) var(--space-4);
+    position: relative; /* dropdown anchors to topbar */
+    flex-wrap: nowrap;
+  }
+  .ds-topbar-sep { display: none; } /* remove breadcrumb slash to save space */
+  .ds-topbar-ham { display: flex; }
+  .ds-topbar-tabs {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--bg-dark);
+    border-top: var(--border-on-dark);
+    flex-direction: column;
+    padding: var(--space-3) var(--space-4);
+    gap: var(--space-2);
+    margin-left: 0;
+    z-index: 99;
+  }
+  .ds-topbar.menu-open .ds-topbar-tabs { display: flex; }
+  .ds-topbar-tabs .footer-nav-link {
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-xs);
+    font-size: var(--text-sm);
+  }
+}
+
 /* ── Index page nav cards ── */
 .ds-nav-card {
   display: block;
