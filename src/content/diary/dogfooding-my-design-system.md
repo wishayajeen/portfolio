@@ -73,7 +73,7 @@ Instead of just fixing issues and moving on…
 
 I started logging them.
 
-![Design system discrepancy tracking showing decision, resolved, and open issues rendered on the site](../../assets/discrepancies-list.png)
+![Design system discrepancy tracking showing decision, resolved, and open issues rendered on the site](../../assets/diary/discrepancies-list.png)
 
 Inside `system.json`.
 
