@@ -2,7 +2,7 @@
 title: "Dogfooding My Design System: When the System Starts Keeping Itself Honest"
 description: "I didn't plan it, but my portfolio became a test lab for my own design system — and that changed how I think about documentation, automation, and honesty."
 date: 2026-05-06
-tag: "Design System"
+tag: "Workflow"
 readTime: "6 min"
 ---
 
@@ -73,6 +73,8 @@ Instead of just fixing issues and moving on…
 
 I started logging them.
 
+![Design system discrepancy tracking showing decision, resolved, and open issues rendered on the site](../../assets/discrepancies-list.png)
+
 Inside `system.json`.
 
 Each issue has structure:
@@ -111,7 +113,7 @@ And here's the key part:
 > The result of that review feeds back into `system.json`
 
 So the loop becomes:
-```
+```markdown
 build → review → log → render → repeat
 ```
 
@@ -168,7 +170,7 @@ Right now I have a layer (`system.json`) that sits between:
 - the code (components, CSS, pages)
 - and the UI (design system site)
 
-```
+```markdown
 Code → system.json → UI
 ```
 
