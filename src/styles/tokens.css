@@ -66,7 +66,7 @@
   --border-primary:    1.5px solid var(--color-black);
   --border-subtle:     1px solid var(--color-gray-200);   /* dividers on light surfaces */
   --border-on-dark:    1px solid var(--color-gray-700);   /* dividers on --bg-dark (#0A0A0A) — decorative, not text */
-  --border-accent:     2px solid var(--color-yellow);
+  --border-accent:     4px solid var(--color-yellow-dim);
 
   /* Interactive */
   --color-focus:       var(--color-yellow);

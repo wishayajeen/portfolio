@@ -1674,6 +1674,21 @@ nav.site-nav.menu-open .mobile-menu-btn span:nth-child(3) { transform: rotate(-4
   border-radius: 2px;
 }
 
+/* Blockquotes */
+.article-content blockquote {
+  border-left: var(--border-accent);
+  background: var(--color-yellow-pale);
+  margin: 24px 0;
+  padding: var(--space-3) var(--space-5);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+.article-content blockquote p {
+  margin-bottom: 0;
+  color: var(--fg-primary);
+  font-style: italic;
+}
+
 /* Inline code */
 .article-content :not(pre) > code {
   font-family: var(--font-mono);
