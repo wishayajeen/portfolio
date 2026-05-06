@@ -1,4 +1,4 @@
-Audited: 2026-05-05 | Commit: 3d7dd5a
-Diff-scoped audit (18 files changed since 05b7bcf).
-2 violations fixed, 2 open warnings logged. Build clean.
-Future runs may use diff-scoped mode.
+Audited: 2026-05-05 | Commit: 3de3f3a
+Diff-scoped audit — no code files changed, system.json only.
+Always-scoped contrast check: 1 pre-existing violation (article-meta-contrast, open critical, tracked).
+Build clean. system.json final dashboard-readiness cleanup committed as v0.6.3.

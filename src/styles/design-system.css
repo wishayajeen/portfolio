@@ -643,4 +643,16 @@ a.ds-topbar-title { box-shadow: none; text-decoration: none; }
   .ds-page    { padding: 0 var(--space-4) var(--space-20); }
   .type-meta  { min-width: 100px; }
   .type-specimen { gap: var(--space-3); }
+
+  /* Tables — horizontal scroll within card so they never bleed on mobile */
+  .ds-card:has(> .ds-table) {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: var(--space-3) 0;
+  }
+  .ds-card:has(> .ds-table) .ds-table th,
+  .ds-card:has(> .ds-table) .ds-table td {
+    padding: var(--space-2) var(--space-3);
+  }
+  .ds-table { min-width: 480px; }
 }
