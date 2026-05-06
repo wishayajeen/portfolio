@@ -1,11 +1,11 @@
 {
   "name": "Jeen Design System",
-  "version": "0.6.3",
-  "lastUpdated": "2026-05-05",
+  "version": "0.6.4",
+  "lastUpdated": "2026-05-06",
   "release": {
-    "version": "0.6.3",
-    "lastUpdated": "2026-05-05",
-    "notes": "Final dashboard-readiness cleanup: variants:[] on all components, complete routeUsesSections, fix stale stylesheet path, add capability paths, remove deprecated-foregrounds from token categories, move link-tokens to relationships.linkTokenBehavior, stats._meta, content autoSync signal, addedInVersion on all components, componentUsedInSections, openCriticalDiscrepancies + diaryEntryCount in stats, componentCategories registry."
+    "version": "0.6.4",
+    "lastUpdated": "2026-05-06",
+    "notes": "Added second diary entry: 'Dogfooding My Design System'. Updated diaryEntryCount to 2."
   },
   "owner": "Jeen (wishayajeen)",
   "coOwner": "Pocky",
@@ -20,7 +20,7 @@
     "componentCount": 9,
     "variantTotal": 15,
     "totalInstances": null,
-    "diaryEntryCount": 1,
+    "diaryEntryCount": 2,
     "openDiscrepancies": 6,
     "openCriticalDiscrepancies": 2,
     "resolvedDiscrepancies": 8,
