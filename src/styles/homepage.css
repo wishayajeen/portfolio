@@ -1521,6 +1521,8 @@ nav.site-nav.menu-open .mobile-menu-btn span:nth-child(3) { transform: rotate(-4
     align-items: flex-start !important;
   }
 
+  .work-row:hover .work-expand { max-height: 400px; }
+
   #footer > div:first-child,
   .footer-cta {
     padding: 40px 20px !important;
