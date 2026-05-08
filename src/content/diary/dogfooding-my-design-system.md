@@ -1,218 +1,210 @@
 ---
-title: "Dogfooding My Design System: When the System Starts Keeping Itself Honest"
-description: "I didn't plan it, but my portfolio became a test lab for my own design system — and that changed how I think about documentation, automation, and honesty."
-date: 2026-05-06
+title: "Dogfooding My Design System: Building Something That Watches Itself"
+description: "My portfolio became a test lab for my own design system — and that changed how I think about documentation, automation, and honesty."
+date: 2026-05-08
 tag: "Workflow"
-readTime: "6 min"
+readTime: "5 min"
 ---
 
-Alright, I didn't plan this… but my portfolio accidentally turned into a test lab for my own design system 😅
+Alright, I didn’t plan this… but my portfolio accidentally turned into a test lab for my own design system 😅
 
-I've been trying to build what I call an "agentic" design system — not just components, but something that can **describe itself, track its own issues, and eventually be queried**.
+I’ve been trying to build what I call an “agentic” design system — not just components, but something that can **describe itself, track its own issues, and eventually be queried**.
 
-And somewhere along the way, I realized:
+And somewhere along the way:
 
-> I'm not just building a system… I'm *dogfooding* it.
+> I’m not just building a system… I’m *dogfooding* it.
 
 ---
 
-## It started simple (and a bit naive)
+## It started simple
 
 At first, it was just:
-- tokens
-- components
-- a design system page
+- tokens  
+- components  
+- a design system page  
 
-Pretty standard stuff.
+Then I added `system.json`.
 
-Then I added something called `system.json`.
-
-It's just a structured file that describes the system itself:
-- what components exist
-- what tokens exist
-- what pages exist
-- what issues exist
+It’s a structured file that describes the system:
+- components  
+- tokens  
+- pages  
+- issues  
 
 Kind of like:
 
-> a system keeping notes about itself… in a way machines can read
+> a system keeping notes about itself… in a machine-readable way
 
 And that changed everything.
 
-Instead of:
-> "I know what's in my system"
+---
 
-It became:
-> "My system should know what's in my system"
+## Then reality hit
+
+As I kept building (with AI helping), things got messy fast:
+
+- docs ≠ UI  
+- components missing from documentation  
+- tokens drifting  
+- duplication everywhere  
+
+Pretty normal for design systems.
+
+But AI made it happen **faster**.
 
 ---
 
-## Then things got messy (very familiar messy)
+## Working with AI is fast… until it isn’t
 
-If you've worked on a design system, you'll probably recognize this:
+My setup:
+- ChatGPT → planning  
+- Claude Code → implementation  
 
-- the docs say one thing, UI does another
-- components exist but aren't documented
-- tokens drift from actual usage
-- the same thing shows up in multiple places
+At first, it felt magical.
 
-In my case, I even had:
-- Buttons documented under *Foundations*
-- Links explained twice
-- Inputs floating around with no clear home
+But once I cared about details:
 
-Classic design system drift.
+- I started digging into CSS myself  
+- fixing issues manually  
+- sometimes not even asking Claude  
 
-👉 The kind that usually lives across Figma files, Notion docs, and people's heads… and never stays in sync.
+Because:
+
+> it’s often faster to fix than to explain
+
+And vague prompts?
+
+👉 Always come back with surprises 😅
 
 ---
 
-## So I tried something different
+## So I changed how I work
 
-Instead of just fixing issues and moving on…
+I added a `CLAUDE.md` rulebook:
 
-I started logging them.
+- don’t invent tokens  
+- don’t rename values  
+- no hardcoded styles  
+- always check source of truth  
 
-![Design system discrepancy tracking showing decision, resolved, and open issues rendered on the site](../../assets/diary/discrepancies-list.png)
+Then I made that source of truth explicit.
 
-Inside `system.json`.
+---
 
-Each issue has structure:
-- status: open / resolved / decision
-- area: tokens / component / a11y / architecture
-- severity: critical / moderate / low
+## Then I made the system review itself
 
-Then I wired my design system page to read from it.
+I created `/review-ds` — a design system audit step.
+
+It checks:
+- token usage  
+- hardcoded values  
+- accessibility  
+- duplication  
+
+At first, it was just a checklist.
+
+But there was a problem.
+
+---
+
+## The problem with audits
+
+They go stale immediately.
+
+Fix something → outdated  
+Add something → incomplete  
+
+And once it’s outdated:
+
+👉 it’s useless
+
+---
+
+## So I connected everything
+
+Instead of just reviewing…
+
+I made the system **log results into `system.json`**  
+(the same file that powers the UI)
 
 So now:
-- if something is broken → it shows up on the site
-- if something is fixed → it shows up on the site
-- if I make a decision → it shows up on the site
+- issues are logged  
+- decisions are logged  
+- fixes are logged  
 
-No more:
-
-> "I think I fixed this last week?"
-
-The system literally tells me what's going on.
+And they show up directly on the site.
+![Design system discrepancy tracking showing decision, resolved, and open issues rendered on the site](../../assets/diary/discrepancies-list.png)
 
 ---
 
-## And then I added a review loop
-
-I created a small command called `/review-ds`.
-
-It's basically a **design system linter for my codebase** — it checks:
-
-- hardcoded colors instead of tokens
-- unsafe color usage
-- duplicated components
-- missing system usage
-
-And here's the key part:
-
-> The result of that review feeds back into `system.json`
-
-So the loop becomes:
+## The loop now looks like this
 ```markdown
 build → review → log → render → repeat
 ```
 
-Which means:
-- the system gets stricter over time
-- I stop relying on memory
-- everything becomes visible
-
 ---
 
-## The mindset shift
-
-At some point, something clicked.
+## That’s when it clicked
 
 I stopped thinking:
 
-> "I need to keep this clean"
+> “I need to keep this clean”
 
 And started thinking:
 
-> "The system should keep itself honest"
-
-That's a very different mindset.
+> “The system should keep itself honest”
 
 ---
 
-## Even the structure wasn't safe
+## Even the structure wasn’t safe
 
-I split my design system into:
-- Foundations (tokens, principles)
-- Components (actual UI)
+I split the system into:
+- Foundations (rules)  
+- Components (implementation)  
 
-Sounds obvious.
+And still had:
+- components leaking into foundations  
+- duplication  
+- misplaced content  
 
-But I still ended up with components leaking into Foundations.
+So I had to enforce:
 
-So I had to enforce a rule:
-
-> Foundations = rules
-> Components = implementation
-
-And clean everything again.
-
-That was a good reminder:
-
-Even the structure of a system needs… a system.
+> Foundations = rules  
+> Components = implementation  
 
 ---
 
-## The part that made it "click"
+## The missing layer
 
-Right now I have a layer (`system.json`) that sits between:
-
-- the code (components, CSS, pages)
-- and the UI (design system site)
+`system.json` now sits between:
 
 ```markdown
 Code → system.json → UI
 ```
 
-That means:
-- the UI doesn't guess
-- the system doesn't rely on memory
-- everything is explicit
+Which means:
+- no guessing  
+- no relying on memory  
+- everything is explicit  
 
-And more importantly:
-
-> it becomes something both humans **and machines** can understand
+👉 understandable by both humans and **machines**
 
 ---
 
 ## What this changed for me
 
-A few things became very obvious:
-
-### 1. Documentation always drifts
-
-Unless it's connected to real data.
-
-### 2. Design systems shouldn't live in people's heads
-
-They should **store and expose their own state**.
-
-### 3. Automation isn't about speed
-
-It's about **honesty**.
+- documentation always drifts unless tied to data
+- systems shouldn’t rely on memory  
+- AI doesn’t remove structure problems — it exposes them  
+- automation isn’t about speed, it’s about **honesty**
 
 ---
 
 ## Where this is going
 
-Right now I have:
-- a system that tracks its own discrepancies
-- a structure that separates rules from implementation
-- a JSON layer that describes everything
-
-Next step:
-- a dashboard to see system health
-- "Ask Pocky" to query the system directly
+Next:
+- a dashboard to see system health  
+- “Ask Pocky” to query the system  
 
 ---
 
@@ -220,25 +212,16 @@ Next step:
 
 This started as a portfolio.
 
-Now it feels more like:
+Now it feels like:
 
-> a system that's slowly learning how to explain itself
-
-…and I'm just trying to keep up 😄
+> a system that’s learning how to explain itself
 
 ---
 
-## If you're building a design system
+## If you’re building a design system
 
-Try this:
+Next time you fix something:
 
-Next time you fix something, don't just fix it.
-
-👉 **Log it.**
-
-Even if it's just:
-- what broke
-- why
-- and what you decided
+👉 don’t just fix it — log it
 
 That alone changes how your system evolves.
