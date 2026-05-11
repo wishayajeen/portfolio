@@ -132,7 +132,7 @@ So now:
 - decisions are logged  
 - fixes are logged  
 
-And they show up directly on the site.
+And they show up directly on the [site](../../pages/design-system/dashboard).
 ![Design system discrepancy tracking showing decision, resolved, and open issues rendered on the site](../../assets/diary/discrepancies-list.png)
 
 ---
