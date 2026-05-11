@@ -1,4 +1,4 @@
-Audited: 2026-05-05 | Commit: 3de3f3a
-Diff-scoped audit — no code files changed, system.json only.
-Always-scoped contrast check: 1 pre-existing violation (article-meta-contrast, open critical, tracked).
-Build clean. system.json final dashboard-readiness cleanup committed as v0.6.3.
+Audited: 2026-05-09 | Commit: 3040794
+Diff-scoped audit — tokens.css, system.json, CLAUDE.md changed.
+Always-scoped contrast check: 1 pre-existing open critical violation (article-meta-contrast) — tracked in system.json, not introduced in this diff.
+Build clean. Source-of-truth alignment pass committed as v0.6.5.

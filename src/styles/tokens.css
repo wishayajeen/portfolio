@@ -56,12 +56,6 @@
   --fg-on-dark-accent:     var(--color-yellow);       /* yellow text ON dark bg — ~17.6:1 */
   /* ⚠️ NEVER use --color-gray-500 (#6A6A60), --color-gray-700 (#3A3A35), or --color-gray-900 (#1A1A15) as text on #0A0A0A — all fail WCAG AA */
 
-  /* Deprecated link tokens — replaced by global <a> box-shadow underline pattern */
-  /* --fg-link:          var(--color-black);   */
-  /* --fg-link-hover:    var(--color-yellow);  */
-  /* --fg-nav-link:      var(--color-white);   */
-  /* --fg-nav-link-hover: var(--color-yellow); */
-
   /* Borders */
   --border-primary:    1.5px solid var(--color-black);
   --border-subtle:     1px solid var(--color-gray-200);   /* dividers on light surfaces */

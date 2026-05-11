@@ -1,11 +1,11 @@
 {
   "name": "Jeen Design System",
-  "version": "0.6.4",
-  "lastUpdated": "2026-05-06",
+  "version": "0.6.5",
+  "lastUpdated": "2026-05-09",
   "release": {
-    "version": "0.6.4",
-    "lastUpdated": "2026-05-06",
-    "notes": "Added second diary entry: 'Dogfooding My Design System'. Updated diaryEntryCount to 2."
+    "version": "0.6.5",
+    "lastUpdated": "2026-05-09",
+    "notes": "Source-of-truth alignment: synced diary entries in content.collections, removed deprecated link tokens from tokens.css, updated CLAUDE.md routes and inventory references."
   },
   "owner": "Jeen (wishayajeen)",
   "coOwner": "Pocky",
@@ -441,7 +441,7 @@
         "path": "src/content/diary/",
         "format": "markdown",
         "autoSync": false,
-        "lastSynced": "2026-05-05",
+        "lastSynced": "2026-05-09",
         "frontmatterSchema": ["title", "date", "tag", "readTime", "description"],
         "entries": [
           {
@@ -450,6 +450,13 @@
             "date": "2026-04-28",
             "tag": "Tutorial",
             "readTime": "4 min"
+          },
+          {
+            "slug": "dogfooding-my-design-system",
+            "title": "Dogfooding My Design System: Building Something That Watches Itself",
+            "date": "2026-05-08",
+            "tag": "Workflow",
+            "readTime": "5 min"
           }
         ]
       }

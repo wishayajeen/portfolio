@@ -14,8 +14,11 @@ src/
 │   └── Layout.astro
 ├── pages/
 │   ├── index.astro
-│   ├── design-system.astro
-│   ├── diary.astro
+│   ├── design-system/
+│   │   ├── index.astro        ← hub: overview + navigation
+│   │   ├── foundations.astro  ← tokens, color, type, spacing, principles
+│   │   ├── components.astro   ← live component demos + props tables
+│   │   └── dashboard.astro    ← discrepancies, decisions, stats
 │   └── diary/
 │       └── [slug].astro
 ├── components/
@@ -35,15 +38,17 @@ src/
 ├── content/
 │   └── diary/
 ├── system/
-│   ├── system.json
+│   ├── system.json            ← machine-readable registry (authoritative for components, tokens, stats, discrepancies)
 │   ├── system-rules.md
-│   └── component-inventory.md
+│   └── component-inventory.md ← full component docs (purpose, props, variants, usage rules)
 ├── styles/
 │   ├── tokens.css
 │   ├── homepage.css
-│   ├── article.css
 │   └── design-system.css
 └── assets/
+    ├── brand/
+    ├── pocky/
+    └── diary/
 ```
 
 ### React in this project
@@ -59,7 +64,7 @@ Hydration directives:
 
 Rule: **If a section needs React state → `.jsx` file with `export default`, used as an Astro island. If a section is static → `.astro` component (server-rendered, zero hydration cost).**
 
-Pages should assemble components. Components should reuse existing tokens and CSS classes. The `design-system.astro` page is documentation/dashboard — not the source of truth.
+Pages should assemble components. Components should reuse existing tokens and CSS classes. The design system routes (`/design-system/*`) are documentation/dashboard — not the source of truth.
 
 ---
 
@@ -68,8 +73,9 @@ Pages should assemble components. Components should reuse existing tokens and CS
 - All design tokens live in `src/styles/tokens.css`. This is the only place token values are defined.
 - Existing CSS classes are the first option before writing new styles.
 - `Layout.astro` (`src/layouts/Layout.astro`) must be used for all pages. It accepts `title` and `description` props (both optional, with defaults) and a `<slot name="head">` for page-specific head content.
-- **Never** create a standalone page shell (`<html>`, `<head>`, `<body>`). All pages — including `design-system.astro` — go through `Layout.astro`.
-- Page-specific stylesheets (e.g. `design-system.css`) are imported in the page frontmatter as a global import: `import '/src/styles/design-system.css'`.
+- **Never** create a standalone page shell (`<html>`, `<head>`, `<body>`). All pages — including design system routes — go through `Layout.astro`.
+- Page-specific stylesheets (e.g. `design-system.css`) are imported in the page frontmatter as a bare import: `import '/src/styles/design-system.css'`. All four `/design-system/*` pages share this import.
+- **Component and token inventory live in `src/system/system.json` and `src/system/component-inventory.md`** — check these before adding a new component or token.
 
 ---
 
@@ -145,7 +151,7 @@ These are hard rules. Violating them ships a WCAG AA failure.
 
 Before writing any new CSS class:
 1. Check `homepage.css` for an existing class that covers this use case.
-2. Check `design-system.astro`'s `<style>` block for DS-scoped classes.
+2. Check `design-system.css` for DS-scoped classes (used by all `/design-system/*` pages).
 3. If an existing class is close but needs a modifier, add a modifier variant — do not create a parallel class.
 4. Only create a new class if nothing existing can be extended.
 5. Do not change existing components or classes unless explicitly instructed.
@@ -161,7 +167,11 @@ New component files go in `src/components/`. New shared styles go in the relevan
 
 ### Pages
 - `src/pages/index.astro` — thin assembler: static `.astro` components + React islands (`client:load` / `client:visible` / `client:only`)
-- `src/pages/design-system.astro` — DS viewer; uses `Layout.astro` like all other pages
+- `src/pages/design-system/index.astro` — DS hub: overview, stats, navigation to sub-routes
+- `src/pages/design-system/foundations.astro` — tokens, color, typography, spacing, shadows, borders, principles
+- `src/pages/design-system/components.astro` — live component demos + props/variants tables
+- `src/pages/design-system/dashboard.astro` — discrepancies, decisions, and system stats from `system.json`
+- `src/pages/diary/[slug].astro` — individual article pages from content collection
 
 ### Global components (`src/components/global/`)
 - `Header.jsx` — fixed nav with scroll + mobile menu state; `client:load`; props: `logoSrc`
@@ -179,12 +189,12 @@ New component files go in `src/components/`. New shared styles go in the relevan
 - `Badge.astro` — label/tag pill; variants: `tag`, `diary-tag`, `work-tag`, `skill`, `coming-soon`
 - `Button.astro` — CTA button; variants: `primary`, `secondary`; renders `<a>` if `href` provided
 - `Card.astro` — card container; variants: `default`, `accent`, `diary`; renders `<a>` if `href` provided
-- `Link.astro` — anchor component; variants: `default`, `subtle`, `on-dark`, `nav`, `back`, `footer-nav`; `external` prop adds `target="_blank" rel="noopener noreferrer"`
+- `Link.astro` — anchor component; variants: `default`, `on-dark`, `nav`, `back`, `footer-nav`; `external` prop adds `target="_blank" rel="noopener noreferrer"`
 
 ### Stylesheets
-- `src/styles/tokens.css` — all design tokens (colors, type, spacing, shadows, radii, animation)
+- `src/styles/tokens.css` — all design tokens (colors, type, spacing, shadows, radii, animation). **Single source of truth for all token values.**
 - `src/styles/homepage.css` — all homepage + shared component styles (loaded via `Layout.astro`)
-- `src/styles/design-system.css` — DS-page-scoped styles (imported in `design-system.astro` frontmatter only)
+- `src/styles/design-system.css` — DS-page-scoped styles (imported in all four `/design-system/*` page frontmatters)
 
 ### Homepage component classes (`homepage.css`)
 
@@ -213,13 +223,13 @@ New component files go in `src/components/`. New shared styles go in the relevan
 `article-page`, `article-header`, `article-header-inner`, `article-eyebrow`, `article-title`, `article-description`, `article-meta`, `article-content`, `article-footer`, `article-footer-inner`
 
 **Link utilities** *(also serve as Link component variant targets)*
-`back-link` (dark surface, muted→white), `link-subtle` (light surface, secondary underline), `nav-link` (dark surface, pill), `hero-social-link` (dark surface, box-shadow), `footer-nav-link` (dark surface, plain)
+`back-link` (dark surface, muted→white), `nav-link` (dark surface, pill), `hero-social-link` (dark surface, box-shadow), `footer-nav-link` (dark surface, plain)
 
 **Animation utilities**
 `fade-up`, `fade-up-1`, `fade-up-2`, `fade-up-3`, `fade-up-4`
 
-### Design system page classes (`design-system.astro`)
-These are scoped to the DS page only. Do not reuse in other pages.
+### Design system page classes (`design-system.css`)
+These classes are scoped to the `/design-system/*` routes only (`design-system.css`). Do not reuse in other pages.
 
 **Layout:** `ds-page`, `ds-topbar`, `ds-topbar-sep`, `ds-topbar-title`, `ds-hero`, `ds-hero-inner`, `ds-hero-eyebrow`, `ds-hero-title`, `ds-hero-sub`, `ds-hero-meta`, `ds-hero-meta-item`, `ds-section`, `ds-section-header`, `ds-section-num`, `ds-section-title`, `ds-subsection`, `ds-sub-label`, `ds-row`, `ds-col`, `ds-divider`, `ds-card`, `ds-code`, `toc`, `toc-dot`, `ds-footer`, `ds-footer-inner`, `ds-footer-link`
 
