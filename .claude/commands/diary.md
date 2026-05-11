@@ -9,7 +9,7 @@ Publish a new diary entry to the site using the existing content collection, fro
 A diary entry is a Markdown file in `src/content/diary/` that the site picks up automatically through Astro's content collection. The homepage (`PlaygroundSection.astro`) and the article page (`[slug].astro`) both read from this collection dynamically — no manual page or list update is needed.
 
 The only two things that need explicit post-work are:
-1. **`system.json`** — `stats.diaryEntryCount` must be kept in sync; bump version and update release notes.
+1. **`system.json`** — `stats.diaryEntryCount`, `content.collections[0].entries[]`, `lastSynced`, version, and release notes must all be kept in sync.
 2. **Build verification** — confirm the new entry compiles cleanly before committing.
 
 ---
@@ -65,15 +65,26 @@ readTime: "<N min>"
 Open `src/system/system.json` and make these changes:
 
 1. **`stats.diaryEntryCount`** — increment by 1.
-2. **`version`** — patch bump (e.g. `0.6.4` → `0.6.5`).
-3. **`lastUpdated`** — set to today's date `YYYY-MM-DD`.
-4. **`release.version`** — match the new version.
-5. **`release.lastUpdated`** — match today's date.
-6. **`release.notes`** — one-line summary, e.g.: `"Added diary entry: '<title>'. Bumped diaryEntryCount to N."`
+2. **`content.collections[0].entries[]`** — append a new object for this entry:
+   ```json
+   {
+     "slug": "<slug>",
+     "title": "<title>",
+     "date": "YYYY-MM-DD",
+     "tag": "<tag>",
+     "readTime": "<N min>"
+   }
+   ```
+3. **`content.collections[0].lastSynced`** — set to today's date `YYYY-MM-DD`.
+4. **`version`** — patch bump (e.g. `0.6.4` → `0.6.5`).
+5. **`lastUpdated`** — set to today's date `YYYY-MM-DD`.
+6. **`release.version`** — match the new version.
+7. **`release.lastUpdated`** — match today's date.
+8. **`release.notes`** — one-line summary, e.g.: `"Added diary entry: '<title>'. Bumped diaryEntryCount to N."`
 
 Keep the top-level `version` and `lastUpdated` in sync with `release` — they are the canonical values the DS page reads.
 
-Also update `content.collections[0]` if it has a `lastSynced` field — set it to today's date.
+**Rule:** `entries[].length` must always equal `stats.diaryEntryCount`. If they diverge, the entries array is wrong — fix it before committing.
 
 ---
 
@@ -122,7 +133,7 @@ Output a short summary:
 - **Route**: /diary/<slug>/
 - **Tag**: <tag>
 - **Read time**: <N min>
-- **system.json**: diaryEntryCount → N, version → X.Y.Z
+- **system.json**: diaryEntryCount → N, entries[] → N items, version → X.Y.Z
 - **Build**: PASSED — 7 pages built (or however many)
 - **Commit**: <short SHA>
 

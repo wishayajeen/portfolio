@@ -28,6 +28,42 @@ List the files being audited before starting.
 
 ---
 
+## Step 1b: Structural drift check — ALWAYS run regardless of scope
+
+This step runs on every audit, file-scoped or diff-scoped. It verifies that `system.json` reflects actual disk state. Run these three checks using shell commands:
+
+**A. Route files exist**
+
+For each entry in `system.json routes[]`, check that `route.file` exists on disk:
+```bash
+# example
+ls src/pages/design-system/index.astro
+```
+- File exists → OK
+- File missing → **violation**: `system.json routes[] has stale entry for "<path>" — file not found`
+
+**B. Component files exist**
+
+For each entry in `system.json components[]`, check that `component.file` exists on disk:
+```bash
+ls src/components/system/Badge.astro
+```
+- File exists → OK
+- File missing → **violation**: `system.json components[] has stale entry for "<file>" — file not found`
+
+**C. Diary entries are in sync**
+
+Compare `system.json content.collections[0].entries[].slug` against actual `.md` filenames in `src/content/diary/`:
+```bash
+ls src/content/diary/
+```
+- A slug in `entries[]` with no matching `.md` file → **violation**: `entries[] has stale slug "<slug>" — no matching file`
+- A `.md` file in `src/content/diary/` with no matching slug in `entries[]` → **violation**: `diary file "<slug>.md" not in system.json entries[] — run /diary or add manually`
+
+Report each violation in the Step 1b section before continuing. These are blocking — structural drift means the dashboard and audit are reading wrong data.
+
+---
+
 ## Step 2: Hardcoded hex values
 
 Grep each audited file for hex color patterns: `#[0-9A-Fa-f]{3,6}`.
@@ -85,12 +121,12 @@ Flag each match with: `[file]:[line] — raw value "[value]" should use token "[
 
 ## Step 5: New classes that duplicate existing system classes
 
-Read the component/class inventory in `CLAUDE.md`.
+Read `src/system/class-inventory.md` for the full CSS class reference (homepage, design system, article, animation utility classes).
 
 For every new CSS class found in the diff (diff-scoped) or new file (file-scoped):
-- Check if an existing class in `homepage.css` or `design-system.astro` already covers the same purpose.
+- Check if an existing class in `class-inventory.md` already covers the same purpose.
 - If a near-duplicate exists → flag as **duplication risk** with the existing class name.
-- If the class is a genuine addition (new component, new section) → mark as **OK — new**.
+- If the class is a genuine addition (new component, new section) → mark as **OK — new**, then add it to the relevant section of `class-inventory.md`.
 
 ---
 
