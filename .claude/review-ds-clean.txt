@@ -1,4 +1,5 @@
-Audited: 2026-05-09 | Commit: 3040794
-Diff-scoped audit — tokens.css, system.json, CLAUDE.md changed.
-Always-scoped contrast check: 1 pre-existing open critical violation (article-meta-contrast) — tracked in system.json, not introduced in this diff.
-Build clean. Source-of-truth alignment pass committed as v0.6.5.
+Audited: 2026-05-09 | Commit: 50dccf9
+Diff-scoped audit — diary.md, review-ds.md, CLAUDE.md changed (no auditable CSS/code files).
+Step 1b structural check: all routes, components, diary entries OK.
+Always-scoped contrast: 1 pre-existing open critical violation (article-meta-contrast) — tracked.
+Build clean. Drift prevention fixes committed.
