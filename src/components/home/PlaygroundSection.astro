@@ -19,7 +19,7 @@ const { diaryEntries, diaryTotal } = Astro.props;
 
 const experiments = [
   { tag: 'Experiment', title: 'Ask Pocky', desc: 'My AI design agent — query the design system, my process, and work history via chat.', accent: true, comingSoon: true },
-  { tag: 'Experiment', title: 'Design dashboard', desc: 'A live public view of the system — components, colors, decisions, all in one place.', accent: false, comingSoon: true },
+  { tag: 'Experiment', title: 'Design dashboard', desc: 'A live public view of the system — components, colors, decisions, all in one place.', accent: false, href: '/design-system/dashboard' },
   { tag: 'Experiment', title: 'Component sandbox', desc: 'Interactive playground to test and compose components from the design system in real time.', accent: false, comingSoon: true },
   { tag: 'AI Product', title: 'PersonaLens.app', desc: 'Get realistic AI-driven feedback on your designs from simulated user personas.', accent: false, href: 'https://www.personalens.app/' },
 ];
@@ -47,7 +47,7 @@ const experiments = [
         <Card
           variant={exp.accent ? 'accent' : 'default'}
           href={exp.href}
-          {...(exp.href ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+          {...(exp.href?.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
         >
           <div class="play-card-header">
             <Badge variant="tag" label={exp.tag} />
