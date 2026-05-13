@@ -36,7 +36,7 @@ export default function Header({ logoSrc }) {
           {[['Playground', 'playground'], ['About', 'about'], ['Work', 'work']].map(([label, id]) => (
             <button key={id} className="nav-link" onClick={() => scrollTo(id)}>{label}</button>
           ))}
-          <button className="nav-cta" onClick={() => scrollTo('footer')}>Say hi →</button>
+          <a href="/design-system" className="nav-cta">See System →</a>
         </div>
 
         {/* Mobile hamburger */}
@@ -48,13 +48,14 @@ export default function Header({ logoSrc }) {
       {/* Mobile dropdown */}
       {menuOpen && (
         <div className="nav-mobile-dropdown">
-          {[['Playground', 'playground'], ['About', 'about'], ['Work', 'work'], ['Say hi →', 'footer']].map(([label, id]) => (
+          {[['Playground', 'playground'], ['About', 'about'], ['Work', 'work']].map(([label, id]) => (
             <button
               key={id}
-              className={`nav-mobile-link${id === 'footer' ? ' nav-mobile-link--accent' : ''}`}
+              className="nav-mobile-link"
               onClick={() => scrollTo(id)}
             >{label}</button>
           ))}
+          <a href="/design-system" className="nav-mobile-link nav-mobile-link--accent">See System →</a>
         </div>
       )}
     </nav>
