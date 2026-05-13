@@ -147,6 +147,24 @@ These are hard rules. Violating them ships a WCAG AA failure.
 
 ---
 
+## Element type rules
+
+**Never change an element's HTML tag unless explicitly instructed.**
+
+When a task only asks to update text, a link destination, or a click handler — the element type (`<button>`, `<a>`, `<span>`, etc.) must stay the same.
+
+| Situation | Correct approach |
+|---|---|
+| Button destination changes from scroll to URL | Keep `<button>`, update `onClick` to `window.location.href = '/path'` |
+| Button text changes | Keep `<button>`, update text only |
+| Element needs to be a real link (right-click, tab nav, SEO) | Swap to `<a>` intentionally and handle ALL style side-effects upfront |
+
+**Why this matters:** `<button>` and `<a>` have different browser defaults — `line-height`, `display`, `color`, `text-decoration`, `box-shadow`. Swapping element type without auditing every inherited style causes cascading visual regressions that require multiple fix rounds. The global `a {}` rule in `tokens.css` (underline box-shadow, yellow hover color) will override any existing class styles on `<a>` elements unless explicitly countered.
+
+**Rule:** If you find yourself adding `text-decoration: none`, `display: inline-block`, `line-height`, or `color` overrides to fix a freshly-changed element — stop. That is a sign the element type was wrong to begin with.
+
+---
+
 ## Component reuse rules
 
 Before writing any new CSS class:
