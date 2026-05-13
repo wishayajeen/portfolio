@@ -1,11 +1,11 @@
 {
   "name": "Jeen Design System",
-  "version": "0.6.6",
+  "version": "0.6.7",
   "lastUpdated": "2026-05-13",
   "release": {
-    "version": "0.6.6",
+    "version": "0.6.7",
     "lastUpdated": "2026-05-13",
-    "notes": "Dashboard v1 shipped: 6-section observability page powered by system.json. All dash-* classes added to design-system.css and class-inventory.md. Audit clean."
+    "notes": "Added failure-modes.md: taxonomy of AI collaboration failure patterns. Added governance block to system.json. Linked from CLAUDE.md inventory table."
   },
   "owner": "Jeen (wishayajeen)",
   "coOwner": "Pocky",
@@ -33,6 +33,13 @@
     "components": "src/components/",
     "content": "src/content/",
     "system": "src/system/system.json"
+  },
+
+  "governance": {
+    "rules": "CLAUDE.md",
+    "componentDocs": "src/system/component-inventory.md",
+    "classIndex": "src/system/class-inventory.md",
+    "failureModes": "src/system/failure-modes.md"
   },
 
   "stack": {

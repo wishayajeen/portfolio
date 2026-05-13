@@ -202,6 +202,7 @@ Before adding a component, class, token, or page — check the authoritative sou
 | All CSS classes (homepage, DS, article, utilities) | `src/system/class-inventory.md` |
 | Machine-readable registry (routes, stats, discrepancies) | `src/system/system.json` |
 | Token names and values | `src/styles/tokens.css` |
+| Recurring AI collaboration failure patterns | `src/system/failure-modes.md` |
 
 ---
 
