@@ -36,7 +36,7 @@ export default function Header({ logoSrc }) {
           {[['Playground', 'playground'], ['About', 'about'], ['Work', 'work']].map(([label, id]) => (
             <button key={id} className="nav-link" onClick={() => scrollTo(id)}>{label}</button>
           ))}
-          <a href="/design-system" className="nav-cta">See System →</a>
+          <button className="nav-cta" onClick={() => window.location.href = '/design-system'}>See System →</button>
         </div>
 
         {/* Mobile hamburger */}
@@ -55,7 +55,7 @@ export default function Header({ logoSrc }) {
               onClick={() => scrollTo(id)}
             >{label}</button>
           ))}
-          <a href="/design-system" className="nav-mobile-link nav-mobile-link--accent">See System →</a>
+          <button className="nav-mobile-link nav-mobile-link--accent" onClick={() => window.location.href = '/design-system'}>See System →</button>
         </div>
       )}
     </nav>

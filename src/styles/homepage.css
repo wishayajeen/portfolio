@@ -112,7 +112,6 @@ nav.site-nav.nav--active {
   font-family: var(--font-body);
   font-size: var(--text-sm);
   font-weight: 600;
-  line-height: 1.32; /* matches original button height: (39.5px - 18px padding - 3px border) ÷ 14px font-size */
   background: var(--bg-accent);
   color: var(--fg-accent);
   padding: 9px 20px;
@@ -122,13 +121,10 @@ nav.site-nav.nav--active {
   margin-left: var(--space-2);
   transition: transform var(--duration-fast), box-shadow var(--duration-fast);
   box-shadow: var(--shadow-sm);
-  display: inline-block;
-  text-decoration: none;
 }
 .nav-cta:hover {
   transform: translateY(-1px);
   box-shadow: var(--shadow-md);
-  color: var(--fg-accent); /* override global a:hover yellow */
 }
 /* Hamburger → × when mobile menu is open */
 nav.site-nav.menu-open .mobile-menu-btn span:nth-child(1) { transform: rotate(45deg) translate(4px, 4px); }
@@ -153,13 +149,8 @@ nav.site-nav.menu-open .mobile-menu-btn span:nth-child(3) { transform: rotate(-4
   cursor: pointer;
   padding: 14px 0;
   text-align: left;
-  display: block;
-  text-decoration: none;
-  width: 100%;
 }
 .nav-mobile-link--accent { color: var(--fg-on-dark-accent); }
-.nav-mobile-link:hover { color: var(--fg-on-dark-primary); box-shadow: none; } /* override global a:hover yellow */
-.nav-mobile-link--accent:hover { color: var(--fg-on-dark-accent); } /* keep accent yellow on hover */
 
 .nav-link {
   font-family: var(--font-body);
@@ -376,15 +367,10 @@ nav.site-nav.menu-open .mobile-menu-btn span:nth-child(3) { transform: rotate(-4
   border: 1.5px solid rgba(250, 250, 250, 0.2);
   cursor: pointer;
   transition: border-color var(--duration-fast), background var(--duration-fast);
-  display: inline-block;
-  text-decoration: none;
-  box-shadow: none; /* override global a {} underline box-shadow */
 }
 .hero-cta-secondary:hover {
   border-color: rgba(250, 250, 250, 0.5); /* --color-white at 50% opacity: glass hover border */
   background: rgba(250, 250, 250, 0.05);  /* --color-white at 5% opacity: glass hover fill */
-  color: var(--fg-on-dark-primary); /* override global a:hover yellow */
-  box-shadow: none; /* override global a:hover fill */
 }
 
 .hero-social-row {
