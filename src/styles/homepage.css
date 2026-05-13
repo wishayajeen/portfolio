@@ -112,7 +112,7 @@ nav.site-nav.nav--active {
   font-family: var(--font-body);
   font-size: var(--text-sm);
   font-weight: 600;
-  line-height: 1; /* match button default — body line-height 1.7 inflates <a> height */
+  line-height: 1.32; /* matches original button height: (39.5px - 18px padding - 3px border) ÷ 14px font-size */
   background: var(--bg-accent);
   color: var(--fg-accent);
   padding: 9px 20px;
