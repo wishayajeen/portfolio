@@ -147,6 +147,20 @@ These are hard rules. Violating them ships a WCAG AA failure.
 
 ---
 
+## Architectural invariants
+
+Before changing an element:
+- preserve semantics unless explicitly instructed
+- preserve element type unless required
+- preserve existing token inheritance behavior
+- preserve component contract behavior
+- prefer behavior changes over structural rewrites
+
+If multiple CSS fixes become necessary after a small change:
+STOP and reassess the original assumption.
+
+---
+
 ## Element type rules
 
 **Never change an element's HTML tag unless explicitly instructed.**
