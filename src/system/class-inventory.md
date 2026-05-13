@@ -57,3 +57,18 @@ Scoped to `/design-system/*` routes only. Do not reuse in other pages.
 
 ### Display helpers
 `swatch-grid`, `swatch-item`, `swatch-color`, `swatch-info`, `swatch-name`, `swatch-hex`, `swatch-use`, `semantic-grid`, `semantic-chip`, `semantic-dot`, `semantic-info`, `semantic-token`, `semantic-hex`, `semantic-desc`, `dark-text-demo`, `dark-text-item`, `dark-text-sample`, `dark-text-token`, `dark-text-ratio`, `type-specimen`, `type-meta`, `type-sample`, `space-row`, `space-bar`, `space-label`, `shadow-box`, `shadow-item`, `shadow-meta`, `radius-box`, `bg-swatch`, `bg-label`, `anim-row`, `anim-demo`, `anim-info`, `anim-name`, `anim-value`, `border-token-row`, `border-token-preview`, `border-token-demo`, `border-token-info`, `border-token-name`, `border-token-value`, `border-token-use`
+
+### Dashboard (`/design-system/dashboard` only)
+**Section intro:** `dash-section-desc`
+
+**System Pulse (§01):** `dash-pulse`, `dash-stat`, `dash-stat--warn`, `dash-stat--critical`, `dash-stat--ok`, `dash-stat-value`, `dash-stat-label`, `dash-stat-sub`
+
+**System Health (§02):** `dash-counts`, `dash-count-item`, `dash-count-num`, `dash-count-num--critical`, `dash-count-desc`, `dash-counts-divider`, `dash-spotlight`, `dash-spotlight-card`, `dash-spotlight-card--critical`, `dash-spotlight-eyebrow`, `dash-spotlight-title`, `dash-spotlight-body`, `dash-spotlight-date`, `dash-issue-list`, `dash-issue-row`, `dash-issue-badges`, `dash-issue-content`, `dash-issue-title`, `dash-issue-body`, `dash-issue-date`
+
+**Token Overview (§03):** `dash-token-grid`, `dash-token-cat`, `dash-token-cat-left`, `dash-token-cat-icon`, `dash-token-name`, `dash-token-sub`, `dash-token-count`, `dash-color-model`, `dash-color-group`, `dash-color-group-label`, `dash-color-group-desc`, `dash-color-pills`, `dash-rules-list`, `dash-rule-row`, `dash-rule-body`
+
+**Component Overview (§04):** `dash-comp-grid`, `dash-comp-cat`, `dash-comp-cat-header`, `dash-comp-cat-label`, `dash-comp-cat-count`, `dash-comp-cat-desc`, `dash-comp-list`, `dash-comp-item`, `dash-comp-item-left`, `dash-comp-item-right`, `dash-comp-name`, `dash-comp-file`, `dash-comp-variants`, `dash-comp-adopted`, `dash-comp-isolated`, `dash-comp-status`, `dash-comp-status--stable`, `dash-comp-status--experimental`
+
+**Relationships (§05):** `dash-rel-block`, `dash-rel-row`, `dash-rel-key`, `dash-rel-values`, `dash-rel-pill`, `dash-rel-empty`
+
+**Recent Activity (§06):** `dash-timeline`, `dash-timeline-item`, `dash-timeline-dot`, `dash-timeline-dot--release`, `dash-timeline-dot--diary`, `dash-timeline-dot--resolved`, `dash-timeline-dot--open`, `dash-timeline-dot--decision`, `dash-timeline-content`, `dash-timeline-meta`, `dash-timeline-title`, `dash-timeline-body`

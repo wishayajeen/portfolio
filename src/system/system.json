@@ -1,11 +1,11 @@
 {
   "name": "Jeen Design System",
-  "version": "0.6.5",
-  "lastUpdated": "2026-05-09",
+  "version": "0.6.6",
+  "lastUpdated": "2026-05-13",
   "release": {
-    "version": "0.6.5",
-    "lastUpdated": "2026-05-09",
-    "notes": "Source-of-truth alignment: synced diary entries in content.collections, removed deprecated link tokens from tokens.css, updated CLAUDE.md routes and inventory references."
+    "version": "0.6.6",
+    "lastUpdated": "2026-05-13",
+    "notes": "Dashboard v1 shipped: 6-section observability page powered by system.json. All dash-* classes added to design-system.css and class-inventory.md. Audit clean."
   },
   "owner": "Jeen (wishayajeen)",
   "coOwner": "Pocky",
@@ -744,6 +744,14 @@
       "title": "Several decorative border-radius values have no exact token (2px, 3px, 8px)",
       "body": "Audit found border-radius: 2px (.hero-scroll-dot, .mobile-menu-btn span, article hr divider), 3px (scrollbar thumb, .footer-brand-logo), and 8px (.mobile-menu-btn, hidden .footer-email-row button) in homepage.css with no corresponding token. The token scale goes --radius-xs (4px), --radius-sm (6px), --radius-md (12px). These are all decorative micro-chrome elements. Decision: either add --radius-2xs: 2px and --radius-2sm: 3px / 8px tokens, or accept raw values for sub-4px decorative radii. Currently left as-is pending token scale decision.",
       "date": "2026-05-05"
+    },
+    {
+      "id": "dashboard-rgba-tint-overlays",
+      "status": "decision",
+      "area": "tokens",
+      "title": "rgba() tints used in dash-stat state modifiers — intentional, no token equivalent",
+      "body": "dashboard v1 stat cards use rgba() tints derived from --color-warning (yellow 6%), --color-error (red 6%), and --color-success (green 6%) for subtle state backgrounds (.dash-stat--warn, --critical, --ok). CLAUDE.md permits rgba tints for subtle overlays when documented. No token for semi-transparent status surfaces exists. Annotated with inline comments in design-system.css.",
+      "date": "2026-05-13"
     }
   ]
 }

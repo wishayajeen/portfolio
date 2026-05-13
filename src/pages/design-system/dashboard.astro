@@ -3,14 +3,130 @@ import Layout from '../../layouts/Layout.astro';
 import '/src/styles/design-system.css';
 import systemData from '../../system/system.json';
 
-const title = "Dashboard — Design System — Jeen";
-const description = "Discrepancies, decisions, and audit history for the Jeen design system.";
+const title       = "Dashboard — Design System — Jeen";
+const description = "System health, discrepancy tracking, token and component overview for the Jeen design system.";
 
-const resolvedCount  = systemData.discrepancies.filter((d: any) => d.status === 'resolved').length;
-const openCount      = systemData.discrepancies.filter((d: any) => d.status === 'open').length;
-const decisionCount  = systemData.discrepancies.filter((d: any) => d.status === 'decision').length;
+// ── Discrepancies
+const disc       = systemData.discrepancies as any[];
+const openDisc   = disc.filter(d => d.status === 'open');
+const resolvedDisc = disc.filter(d => d.status === 'resolved');
+const decisionDisc = disc.filter(d => d.status === 'decision');
 
-const statusBadgeClass: Record<string, string> = {
+const criticalOpen = openDisc.filter(d => d.severity === 'critical');
+const moderateOpen = openDisc.filter(d => d.severity === 'moderate');
+const lowOpen      = openDisc.filter(d => d.severity === 'low' || !d.severity);
+
+const latestCritical = criticalOpen[0] ?? null;
+const latestResolved = [...resolvedDisc]
+  .sort((a, b) => ((b.resolvedDate ?? b.date) > (a.resolvedDate ?? a.date) ? 1 : -1))[0] ?? null;
+const latestDecision = [...decisionDisc]
+  .sort((a, b) => (b.date > a.date ? 1 : -1))[0] ?? null;
+
+// ── A11y
+const a11yOpen = openDisc.filter(d => d.area === 'a11y');
+
+// ── Token counts
+const tc = systemData.tokens.categories as any;
+const tokenSummary = [
+  {
+    cat: 'Color', icon: '◉',
+    count: tc.color.primitives.length + tc.color.status.length +
+           tc.color['semantic-backgrounds'].length + tc.color['semantic-foregrounds'].length +
+           tc.color['on-dark-text'].length + tc.color.interactive.length,
+    note: '6 sub-groups — primitive, semantic, on-dark, interactive',
+  },
+  {
+    cat: 'Spacing', icon: '⇔',
+    count: tc.spacing.scale.length + tc.spacing.layout.length,
+    note: `Scale (${tc.spacing.scale.length}) + layout (${tc.spacing.layout.length}) · base ${tc.spacing.base}`,
+  },
+  {
+    cat: 'Typography', icon: 'T',
+    count: tc.typography.families.length + tc.typography.scale.length +
+           tc.typography.leading.length + tc.typography.tracking.length,
+    note: '3 families, 12-step scale, leading, tracking',
+  },
+  {
+    cat: 'Shadow', icon: '◫',
+    count: tc.shadow['hard-offset'].length + tc.shadow.soft.length,
+    note: `${tc.shadow['hard-offset'].length} hard-offset + ${tc.shadow.soft.length} soft`,
+  },
+  {
+    cat: 'Radius', icon: '◜',
+    count: tc.radius.scale.length,
+    note: '7-step scale — none → full',
+  },
+  {
+    cat: 'Border', icon: '▭',
+    count: tc.border.tokens.length,
+    note: tc.border.note,
+  },
+  {
+    cat: 'Animation', icon: '◌',
+    count: tc.animation.easing.length + tc.animation.duration.length,
+    note: '3 easings + 3 durations',
+  },
+];
+
+// ── Components
+const components = systemData.components as any[];
+const catDefs    = systemData.componentCategories as Record<string, string>;
+const catGroups  = Object.entries(catDefs).map(([key, desc]) => ({
+  key, desc,
+  items: components.filter(c => c.category === key),
+  variantTotal: components.filter(c => c.category === key)
+    .reduce((s: number, c: any) => s + (c.variants?.length ?? 0), 0),
+}));
+
+// Which component IDs are imported by at least one section
+const sectComp = systemData.relationships.sectionsUseComponents as Record<string, any>;
+const adoptedIds = new Set(
+  Object.entries(sectComp)
+    .filter(([k]) => k !== 'note')
+    .flatMap(([, v]) => (Array.isArray(v) ? v : []))
+);
+
+// ── Relationships helpers
+const routeUsesComp    = systemData.relationships.routeUsesComponents as Record<string, string[]>;
+const routeUsesSect    = systemData.relationships.routeUsesSections    as Record<string, string[]>;
+const compUsedInSects  = systemData.relationships.componentUsedInSections as Record<string, any>;
+
+// ── Activity timeline — merge disc + diary + release, sort by date desc
+const diaryEntries = systemData.content.collections[0].entries as any[];
+const allActivity = [
+  ...disc.map(d => ({
+    type: 'discrepancy',
+    date: d.resolvedDate ?? d.date,
+    status: d.status as string,
+    severity: d.severity as string | undefined,
+    area: d.area as string,
+    title: d.title as string,
+    body: (d.body as string).length > 120 ? (d.body as string).slice(0, 120) + '…' : d.body as string,
+  })),
+  ...diaryEntries.map(e => ({
+    type: 'diary',
+    date: e.date as string,
+    status: undefined,
+    severity: undefined,
+    area: 'content',
+    title: e.title as string,
+    body: `${e.tag} · ${e.readTime} read → /diary/${e.slug}`,
+  })),
+  {
+    type: 'release',
+    date: systemData.lastUpdated,
+    status: undefined,
+    severity: undefined,
+    area: 'system',
+    title: `v${systemData.version} released`,
+    body: systemData.release.notes,
+  },
+]
+  .sort((a, b) => (b.date > a.date ? 1 : b.date < a.date ? -1 : 0))
+  .slice(0, 14);
+
+// ── Badge helpers
+const statusBadge: Record<string, string> = {
   resolved: 'ds-badge ds-badge-success',
   open:     'ds-badge ds-badge-yellow',
   decision: 'ds-badge ds-badge-outline',
@@ -20,19 +136,24 @@ const statusLabel: Record<string, string> = {
   open:     'Open',
   decision: 'Decision',
 };
+const severityBadge: Record<string, string> = {
+  critical: 'ds-badge ds-badge-error',
+  moderate: 'ds-badge ds-badge-yellow',
+  low:      'ds-badge ds-badge-outline',
+};
 ---
 
 <Layout title={title} description={description}>
 
-<!-- Sticky topbar -->
+<!-- ── Sticky topbar ─────────────────────────────────── -->
 <div class="ds-topbar" id="ds-topbar">
   <a href="/" class="back-link">← Jeen.work</a>
   <span class="ds-topbar-sep">/</span>
   <a href="/design-system" class="ds-topbar-title">Design System</a>
   <div class="ds-topbar-tabs">
     <a href="/design-system/foundations" class="footer-nav-link">Foundations</a>
-    <a href="/design-system/components" class="footer-nav-link">Components</a>
-    <a href="/design-system/dashboard" class="footer-nav-link" aria-current="page">Dashboard</a>
+    <a href="/design-system/components"  class="footer-nav-link">Components</a>
+    <a href="/design-system/dashboard"   class="footer-nav-link" aria-current="page">Dashboard</a>
   </div>
   <button class="mobile-menu-btn" aria-label="Toggle navigation" aria-expanded="false">
     <span></span><span></span><span></span>
@@ -50,82 +171,421 @@ const statusLabel: Record<string, string> = {
   });
 </script>
 
-<!-- Hero -->
+<!-- ── Hero ─────────────────────────────────────────── -->
 <div class="ds-hero">
   <div class="ds-hero-inner">
     <p class="ds-hero-eyebrow">jeen design system — v{systemData.version}</p>
     <h1 class="ds-hero-title">Dashboard</h1>
+    <p class="ds-hero-sub">{systemData.description}</p>
+    <div class="ds-hero-meta">
+      <span class="ds-hero-meta-item">Last updated <strong>{systemData.lastUpdated}</strong></span>
+      <span class="ds-hero-meta-item">Owner <strong>{systemData.owner}</strong></span>
+      <span class="ds-hero-meta-item">Stack <strong>{systemData.stack.framework} + {systemData.stack.react.split(' ')[0]} {systemData.stack.react.split(' ')[1]}</strong></span>
+      <span class="ds-hero-meta-item">Deploy <strong>{systemData.stack.deployment}</strong></span>
+    </div>
   </div>
 </div>
 
 <div class="ds-page">
 
-  <!-- ── STATS ── -->
-  <section class="ds-section" id="stats">
+  <!-- ═══════════════════════════════════════════════════
+       01 — SYSTEM PULSE
+  ════════════════════════════════════════════════════ -->
+  <section class="ds-section" id="pulse">
     <div class="ds-section-header">
-      <h2 class="ds-section-title">System stats</h2>
+      <span class="ds-section-num">01</span>
+      <h2 class="ds-section-title">System pulse</h2>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:var(--space-4);margin-bottom:var(--space-8);">
-      <div class="ds-card" style="text-align:center;">
-        <p style="font-family:var(--font-display);font-size:var(--text-4xl);font-weight:700;color:var(--fg-primary);margin:0 0 var(--space-1);">{systemData.routes.length}</p>
-        <p style="font-family:var(--font-mono);font-size:var(--text-xs);color:var(--fg-secondary);margin:0;text-transform:uppercase;letter-spacing:var(--tracking-wider);">Routes</p>
+    <p class="dash-section-desc">Snapshot of the design system at v{systemData.version}. All values sourced from <code class="ds-code">system.json → stats</code>.</p>
+
+    <div class="dash-pulse">
+      <div class="dash-stat">
+        <span class="dash-stat-value">{systemData.stats.tokenCount}</span>
+        <span class="dash-stat-label">Tokens</span>
+        <span class="dash-stat-sub">7 categories</span>
       </div>
-      <div class="ds-card" style="text-align:center;">
-        <p style="font-family:var(--font-display);font-size:var(--text-4xl);font-weight:700;color:var(--fg-primary);margin:0 0 var(--space-1);">{systemData.components.length}</p>
-        <p style="font-family:var(--font-mono);font-size:var(--text-xs);color:var(--fg-secondary);margin:0;text-transform:uppercase;letter-spacing:var(--tracking-wider);">Components</p>
+      <div class="dash-stat">
+        <span class="dash-stat-value">{systemData.stats.componentCount}</span>
+        <span class="dash-stat-label">Components</span>
+        <span class="dash-stat-sub">{systemData.stats.variantTotal} variants total</span>
       </div>
-      <div class="ds-card" style="text-align:center;">
-        <p style="font-family:var(--font-display);font-size:var(--text-4xl);font-weight:700;color:var(--fg-primary);margin:0 0 var(--space-1);">{systemData.sections.length}</p>
-        <p style="font-family:var(--font-mono);font-size:var(--text-xs);color:var(--fg-secondary);margin:0;text-transform:uppercase;letter-spacing:var(--tracking-wider);">Sections</p>
+      <div class="dash-stat">
+        <span class="dash-stat-value">{systemData.stats.variantTotal}</span>
+        <span class="dash-stat-label">Variants</span>
+        <span class="dash-stat-sub">across {systemData.stats.componentCount} components</span>
       </div>
-      <div class="ds-card" style="text-align:center;">
-        <p style="font-family:var(--font-display);font-size:var(--text-4xl);font-weight:700;color:var(--fg-primary);margin:0 0 var(--space-1);">{systemData.discrepancies.length}</p>
-        <p style="font-family:var(--font-mono);font-size:var(--text-xs);color:var(--fg-secondary);margin:0;text-transform:uppercase;letter-spacing:var(--tracking-wider);">Discrepancies</p>
+      <div class="dash-stat">
+        <span class="dash-stat-value">{systemData.stats.diaryEntryCount}</span>
+        <span class="dash-stat-label">Diary entries</span>
+        <span class="dash-stat-sub">published articles</span>
+      </div>
+      <div class="dash-stat">
+        <span class="dash-stat-value">{systemData.routes.length}</span>
+        <span class="dash-stat-label">Routes</span>
+        <span class="dash-stat-sub">including DS sub-routes</span>
+      </div>
+      <div class={`dash-stat${systemData.stats.openDiscrepancies > 0 ? ' dash-stat--warn' : ''}`}>
+        <span class="dash-stat-value">{systemData.stats.openDiscrepancies}</span>
+        <span class="dash-stat-label">Open issues</span>
+        <span class="dash-stat-sub">{systemData.stats.resolvedDiscrepancies} resolved</span>
+      </div>
+      <div class={`dash-stat${systemData.stats.openCriticalDiscrepancies > 0 ? ' dash-stat--critical' : ''}`}>
+        <span class="dash-stat-value">{systemData.stats.openCriticalDiscrepancies}</span>
+        <span class="dash-stat-label">Critical</span>
+        <span class="dash-stat-sub">open critical issues</span>
+      </div>
+      <div class={`dash-stat${a11yOpen.length > 0 ? ' dash-stat--warn' : ' dash-stat--ok'}`}>
+        <span class="dash-stat-value">{a11yOpen.length > 0 ? a11yOpen.length : '✓'}</span>
+        <span class="dash-stat-label">A11y status</span>
+        <span class="dash-stat-sub">{a11yOpen.length > 0 ? `${a11yOpen.length} WCAG issues open` : 'No open violations'}</span>
       </div>
     </div>
   </section>
 
-  <!-- ── DISCREPANCIES ── -->
-  <section class="ds-section" id="discrepancies">
+  <!-- ═══════════════════════════════════════════════════
+       02 — SYSTEM HEALTH
+  ════════════════════════════════════════════════════ -->
+  <section class="ds-section" id="health">
     <div class="ds-section-header">
-      <span class="ds-section-num">15</span>
-      <h2 class="ds-section-title">Discrepancies & decisions</h2>
+      <span class="ds-section-num">02</span>
+      <h2 class="ds-section-title">System health</h2>
     </div>
-    <p style="font-size:var(--text-sm);color:var(--fg-secondary);margin-bottom:var(--space-2);">
-      Sourced from <code class="ds-code">system.json → discrepancies</code>. Updated automatically by <code class="ds-code">/review-ds</code> when issues are found or fixed.
-    </p>
-    <div style="display:flex;gap:var(--space-3);margin-bottom:var(--space-6);font-size:var(--text-xs);font-family:var(--font-mono);">
-      <span><span class="ds-badge ds-badge-success" style="font-size:10px;">Resolved</span> {resolvedCount} — fixed and shipped</span>
-      <span><span class="ds-badge ds-badge-yellow" style="font-size:10px;">Open</span> {openCount} — known, needs action</span>
-      <span><span class="ds-badge ds-badge-outline" style="font-size:10px;">Decision</span> {decisionCount} — intentional deviation</span>
+    <p class="dash-section-desc">All issues tracked in <code class="ds-code">system.json → discrepancies</code>, updated by <code class="ds-code">/review-ds</code>.</p>
+
+    <!-- Status + severity counts -->
+    <div class="dash-counts">
+      <div class="dash-count-item">
+        <span class="dash-count-num">{resolvedDisc.length}</span>
+        <span class="ds-badge ds-badge-success">Resolved</span>
+        <span class="dash-count-desc">Fixed and shipped</span>
+      </div>
+      <div class="dash-count-item">
+        <span class="dash-count-num">{openDisc.length}</span>
+        <span class="ds-badge ds-badge-yellow">Open</span>
+        <span class="dash-count-desc">Known, needs action</span>
+      </div>
+      <div class="dash-count-item">
+        <span class="dash-count-num">{decisionDisc.length}</span>
+        <span class="ds-badge ds-badge-outline">Decision</span>
+        <span class="dash-count-desc">Intentional deviation</span>
+      </div>
+      <div class="dash-counts-divider"></div>
+      <div class="dash-count-item">
+        <span class="dash-count-num dash-count-num--critical">{criticalOpen.length}</span>
+        <span class="ds-badge ds-badge-error">Critical</span>
+        <span class="dash-count-desc">Open critical</span>
+      </div>
+      <div class="dash-count-item">
+        <span class="dash-count-num">{moderateOpen.length}</span>
+        <span class="ds-badge ds-badge-yellow">Moderate</span>
+        <span class="dash-count-desc">Open moderate</span>
+      </div>
+      <div class="dash-count-item">
+        <span class="dash-count-num">{lowOpen.length}</span>
+        <span class="ds-badge ds-badge-outline">Low</span>
+        <span class="dash-count-desc">Open low / no severity</span>
+      </div>
     </div>
 
-    {systemData.discrepancies.map((disc) => (
-      <div class="disc-card">
-        <div class="disc-card-header">
-          <span class={statusBadgeClass[disc.status]}>{statusLabel[disc.status]}</span>
-          <h3 class="disc-card-title">{disc.title}</h3>
+    <!-- Spotlight: latest critical / resolved / decision -->
+    <div class="ds-sub-label" style="margin-top:var(--space-8);">Spotlight</div>
+    <div class="dash-spotlight">
+      {latestCritical && (
+        <div class="dash-spotlight-card dash-spotlight-card--critical">
+          <span class="dash-spotlight-eyebrow">Latest critical</span>
+          <div style="display:flex;gap:var(--space-2);align-items:center;flex-wrap:wrap;">
+            <span class="ds-badge ds-badge-error">Critical</span>
+            {latestCritical.area && <span class="ds-badge ds-badge-outline">{latestCritical.area}</span>}
+          </div>
+          <p class="dash-spotlight-title">{latestCritical.title}</p>
+          <p class="dash-spotlight-body">{latestCritical.body}</p>
+          <span class="dash-spotlight-date">Logged {latestCritical.date}</span>
         </div>
-        <p class="disc-card-body">{disc.body}</p>
-        {disc.resolvedIn && (
-          <p style="margin:var(--space-2) 0 0;font-size:10px;font-family:var(--font-mono);color:var(--fg-secondary);">
-            resolved in commit {disc.resolvedIn} · {disc.date}
-          </p>
-        )}
-        {!disc.resolvedIn && (
-          <p style="margin:var(--space-2) 0 0;font-size:10px;font-family:var(--font-mono);color:var(--fg-secondary);">
-            logged {disc.date}
-          </p>
-        )}
+      )}
+      {latestResolved && (
+        <div class="dash-spotlight-card">
+          <span class="dash-spotlight-eyebrow">Latest resolved</span>
+          <div style="display:flex;gap:var(--space-2);align-items:center;flex-wrap:wrap;">
+            <span class="ds-badge ds-badge-success">Resolved</span>
+            {latestResolved.resolvedInVersion && <span class="ds-badge ds-badge-outline">v{latestResolved.resolvedInVersion}</span>}
+          </div>
+          <p class="dash-spotlight-title">{latestResolved.title}</p>
+          <p class="dash-spotlight-body">{latestResolved.body}</p>
+          <span class="dash-spotlight-date">{latestResolved.resolvedIn ? `Resolved in ${latestResolved.resolvedIn}` : ''} · {latestResolved.resolvedDate ?? latestResolved.date}</span>
+        </div>
+      )}
+      {latestDecision && (
+        <div class="dash-spotlight-card">
+          <span class="dash-spotlight-eyebrow">Latest decision</span>
+          <div style="display:flex;gap:var(--space-2);align-items:center;">
+            <span class="ds-badge ds-badge-outline">Decision</span>
+          </div>
+          <p class="dash-spotlight-title">{latestDecision.title}</p>
+          <p class="dash-spotlight-body">{latestDecision.body}</p>
+          <span class="dash-spotlight-date">Logged {latestDecision.date}</span>
+        </div>
+      )}
+    </div>
+
+    <!-- All open issues -->
+    {openDisc.length > 0 && (
+      <>
+        <div class="ds-sub-label" style="margin-top:var(--space-8);">All open issues ({openDisc.length})</div>
+        <div class="dash-issue-list">
+          {openDisc.map((d: any) => (
+            <div class="dash-issue-row">
+              <div class="dash-issue-badges">
+                {d.severity && <span class={severityBadge[d.severity] ?? 'ds-badge ds-badge-outline'}>{d.severity}</span>}
+                {d.area && <span class="ds-badge ds-badge-outline">{d.area}</span>}
+              </div>
+              <div class="dash-issue-content">
+                <p class="dash-issue-title">{d.title}</p>
+                <p class="dash-issue-body">{d.body}</p>
+              </div>
+              <span class="dash-issue-date">{d.date}</span>
+            </div>
+          ))}
+        </div>
+      </>
+    )}
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       03 — TOKEN OVERVIEW
+  ════════════════════════════════════════════════════ -->
+  <section class="ds-section" id="tokens">
+    <div class="ds-section-header">
+      <span class="ds-section-num">03</span>
+      <h2 class="ds-section-title">Token overview</h2>
+    </div>
+    <p class="dash-section-desc"><strong>{systemData.stats.tokenCount} tokens</strong> across {tokenSummary.length} categories. Source of truth: <code class="ds-code">{systemData.tokens.sourceFile}</code>. Values: <code class="ds-code">system.json → tokens.categories</code>.</p>
+
+    <div class="dash-token-grid">
+      {tokenSummary.map(t => (
+        <div class="dash-token-cat">
+          <div class="dash-token-cat-left">
+            <span class="dash-token-cat-icon">{t.icon}</span>
+            <div>
+              <p class="dash-token-name">{t.cat}</p>
+              <p class="dash-token-sub">{t.note}</p>
+            </div>
+          </div>
+          <span class="dash-token-count">{t.count}</span>
+        </div>
+      ))}
+    </div>
+
+    <!-- Semantic vs primitive split for color -->
+    <div class="ds-sub-label" style="margin-top:var(--space-8);">Color semantic model</div>
+    <div class="dash-color-model">
+      <div class="dash-color-group">
+        <p class="dash-color-group-label">Primitive ({tc.color.primitives.length + tc.color.status.length})</p>
+        <p class="dash-color-group-desc">Raw values — use in DS documentation only, never in product code</p>
+        <div class="dash-color-pills">
+          {[...tc.color.primitives, ...tc.color.status].map((t: string) => (
+            <span class="dash-rel-pill"><code class="ds-code">--{t}</code></span>
+          ))}
+        </div>
       </div>
-    ))}
+      <div class="dash-color-group">
+        <p class="dash-color-group-label">Semantic ({tc.color['semantic-backgrounds'].length + tc.color['semantic-foregrounds'].length + tc.color['on-dark-text'].length + tc.color.interactive.length})</p>
+        <p class="dash-color-group-desc">Intent-named — use in all product code; describes purpose not value</p>
+        <div class="dash-color-pills">
+          {[...tc.color['semantic-backgrounds'], ...tc.color['semantic-foregrounds'], ...tc.color['on-dark-text'], ...tc.color.interactive].map((t: string) => (
+            <span class="dash-rel-pill"><code class="ds-code">--{t}</code></span>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <!-- Token rules -->
+    <div class="ds-sub-label" style="margin-top:var(--space-8);">Token rules</div>
+    <div class="dash-rules-list">
+      {Object.entries(systemData.tokens.rules).map(([k, v]) => (
+        <div class="dash-rule-row">
+          <code class="ds-code">{k}</code>
+          <span class="dash-rule-body">{v as string}</span>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       04 — COMPONENT OVERVIEW
+  ════════════════════════════════════════════════════ -->
+  <section class="ds-section" id="components">
+    <div class="ds-section-header">
+      <span class="ds-section-num">04</span>
+      <h2 class="ds-section-title">Component overview</h2>
+    </div>
+    <p class="dash-section-desc"><strong>{systemData.stats.componentCount} components</strong>, {systemData.stats.variantTotal} variants. Adoption = at least one direct import in a homepage section via <code class="ds-code">sectionsUseComponents</code>.</p>
+
+    <div class="dash-comp-grid">
+      {catGroups.map(cg => (
+        <div class="dash-comp-cat">
+          <div class="dash-comp-cat-header">
+            <span class="dash-comp-cat-label">{cg.key}</span>
+            <span class="dash-comp-cat-count">{cg.items.length} component{cg.items.length !== 1 ? 's' : ''}{cg.variantTotal > 0 ? ` · ${cg.variantTotal} variant${cg.variantTotal !== 1 ? 's' : ''}` : ''}</span>
+          </div>
+          <p class="dash-comp-cat-desc">{cg.desc}</p>
+          <div class="dash-comp-list">
+            {cg.items.map((c: any) => (
+              <div class="dash-comp-item">
+                <div class="dash-comp-item-left">
+                  <span class="dash-comp-name">{c.label}</span>
+                  <span class="dash-comp-file">{c.file.split('/').pop()}</span>
+                </div>
+                <div class="dash-comp-item-right">
+                  {c.variants && c.variants.length > 0 && (
+                    <span class="dash-comp-variants">{c.variants.length}v</span>
+                  )}
+                  {adoptedIds.has(c.id)
+                    ? <span class="dash-comp-adopted">adopted</span>
+                    : <span class="dash-comp-isolated">isolated</span>
+                  }
+                  <span class={`dash-comp-status dash-comp-status--${c.status}`}>{c.status}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Which sections consume which components -->
+    <div class="ds-sub-label" style="margin-top:var(--space-8);">Component adoption by section</div>
+    <p class="dash-section-desc" style="margin-bottom:var(--space-4);">Only tracks direct <code class="ds-code">src/components/system/*</code> imports — raw CSS class usage is not counted.</p>
+    <div class="dash-rel-block">
+      {components
+        .filter((c: any) => c.category === 'ui')
+        .map((c: any) => {
+          const usedIn = (compUsedInSects as any)[c.id];
+          const sections = Array.isArray(usedIn) ? usedIn : [];
+          return (
+            <div class="dash-rel-row">
+              <span class="dash-rel-key"><code class="ds-code">{c.id}</code></span>
+              <div class="dash-rel-values">
+                {sections.length > 0
+                  ? sections.map((s: string) => <span class="dash-rel-pill">{s}</span>)
+                  : <span class="dash-rel-empty">not adopted — available but unused in sections</span>
+                }
+              </div>
+            </div>
+          );
+        })
+      }
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       05 — RELATIONSHIPS
+  ════════════════════════════════════════════════════ -->
+  <section class="ds-section" id="relationships">
+    <div class="ds-section-header">
+      <span class="ds-section-num">05</span>
+      <h2 class="ds-section-title">Relationships</h2>
+    </div>
+    <p class="dash-section-desc">How routes, sections, and components connect. Sourced from <code class="ds-code">system.json → relationships</code>.</p>
+
+    <!-- Route → Sections -->
+    <div class="ds-sub-label">Routes → Sections</div>
+    <div class="dash-rel-block" style="margin-bottom:var(--space-8);">
+      {Object.entries(routeUsesSect).map(([route, sections]) => (
+        <div class="dash-rel-row">
+          <span class="dash-rel-key"><code class="ds-code">/{route.replace('home', '')}</code></span>
+          <div class="dash-rel-values">
+            {(sections as string[]).length > 0
+              ? (sections as string[]).map(s => <span class="dash-rel-pill">{s}</span>)
+              : <span class="dash-rel-empty">no sections</span>
+            }
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Route → Components -->
+    <div class="ds-sub-label">Routes → Components</div>
+    <div class="dash-rel-block" style="margin-bottom:var(--space-8);">
+      {Object.entries(routeUsesComp).map(([route, comps]) => (
+        <div class="dash-rel-row">
+          <span class="dash-rel-key"><code class="ds-code">/{route.replace('home', '')}</code></span>
+          <div class="dash-rel-values">
+            {(comps as string[]).length > 0
+              ? (comps as string[]).map(c => <span class="dash-rel-pill">{c}</span>)
+              : <span class="dash-rel-empty">none</span>
+            }
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Sections → Components -->
+    <div class="ds-sub-label">Sections → System Components</div>
+    <div class="dash-rel-block">
+      {Object.entries(sectComp)
+        .filter(([k]) => k !== 'note')
+        .map(([section, comps]) => (
+          <div class="dash-rel-row">
+            <span class="dash-rel-key"><code class="ds-code">{section}</code></span>
+            <div class="dash-rel-values">
+              {Array.isArray(comps) && comps.length > 0
+                ? (comps as string[]).map(c => <span class="dash-rel-pill">{c}</span>)
+                : <span class="dash-rel-empty">no system component imports</span>
+              }
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       06 — RECENT ACTIVITY
+  ════════════════════════════════════════════════════ -->
+  <section class="ds-section" id="activity">
+    <div class="ds-section-header">
+      <span class="ds-section-num">06</span>
+      <h2 class="ds-section-title">Recent activity</h2>
+    </div>
+    <p class="dash-section-desc">Merged timeline of discrepancies, diary entries, and releases. Latest first.</p>
+
+    <div class="dash-timeline">
+      {allActivity.map((item: any) => {
+        const dotMod = item.type === 'release'     ? 'dash-timeline-dot--release'
+                     : item.type === 'diary'        ? 'dash-timeline-dot--diary'
+                     : item.status === 'resolved'   ? 'dash-timeline-dot--resolved'
+                     : item.status === 'open'        ? 'dash-timeline-dot--open'
+                     : 'dash-timeline-dot--decision';
+        return (
+          <div class="dash-timeline-item">
+            <span class={`dash-timeline-dot ${dotMod}`}></span>
+            <div class="dash-timeline-content">
+              <div class="dash-timeline-meta">
+                <span>{item.date}</span>
+                {item.type === 'discrepancy' && item.status && (
+                  <span class={statusBadge[item.status]} style="font-size:10px;">{statusLabel[item.status]}</span>
+                )}
+                {item.type === 'diary' && <span class="ds-badge ds-badge-outline" style="font-size:10px;">Diary</span>}
+                {item.type === 'release' && <span class="ds-badge ds-badge-yellow" style="font-size:10px;">Release</span>}
+                {item.severity && <span class={severityBadge[item.severity] ?? 'ds-badge ds-badge-outline'} style="font-size:10px;">{item.severity}</span>}
+              </div>
+              <p class="dash-timeline-title">{item.title}</p>
+              <p class="dash-timeline-body">{item.body}</p>
+            </div>
+          </div>
+        );
+      })}
+    </div>
   </section>
 
 </div><!-- end .ds-page -->
 
-<!-- Footer -->
+<!-- ── Footer ────────────────────────────────────────── -->
 <div class="ds-footer">
-  <div class="ds-footer-inner" style="justify-content: center;">
+  <div class="ds-footer-inner">
+    <span style="font-family:var(--font-mono);font-size:var(--text-xs);color:var(--fg-on-dark-label);">
+      v{systemData.version} · {systemData.lastUpdated} · {systemData.stats.tokenCount} tokens · {systemData.stats.componentCount} components
+    </span>
     <a href="#" onclick="window.scrollTo({ top: 0, behavior: 'smooth' }); return false;" class="ds-footer-link">↑ Top</a>
   </div>
 </div>

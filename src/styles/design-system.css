@@ -656,3 +656,510 @@ a.ds-topbar-title { box-shadow: none; text-decoration: none; }
   }
   .ds-table { min-width: 480px; }
 }
+
+/* ============================================================
+   DASHBOARD — dash-* classes
+   Used exclusively by src/pages/design-system/dashboard.astro
+   ============================================================ */
+
+/* ── Section intro description ── */
+.dash-section-desc {
+  font-size: var(--text-sm);
+  color: var(--fg-secondary);
+  margin: var(--space-2) 0 var(--space-6);
+  line-height: 1.6;
+}
+
+/* ── 01 SYSTEM PULSE ── */
+.dash-pulse {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-4);
+}
+.dash-stat {
+  background: var(--bg-surface-raised);
+  border: var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: var(--space-5) var(--space-5) var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  transition: box-shadow var(--duration-fast) var(--ease-out);
+}
+.dash-stat--warn   { border-color: var(--color-warning); background: rgba(243, 254, 82, 0.06); /* yellow tint on surface — no exact token */ }
+.dash-stat--critical { border-color: var(--color-error); background: rgba(255, 68, 68, 0.06); /* red tint on surface — no exact token */ }
+.dash-stat--ok     { border-color: var(--color-success); background: rgba(61, 254, 135, 0.06); /* green tint on surface — no exact token */ }
+.dash-stat-value {
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+  font-weight: 700;
+  color: var(--fg-primary);
+  line-height: 1;
+}
+.dash-stat-label {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--fg-primary);
+}
+.dash-stat-sub {
+  font-size: var(--text-xs);
+  color: var(--fg-secondary);
+}
+
+/* ── 02 SYSTEM HEALTH — counts ── */
+.dash-counts {
+  display: flex;
+  gap: var(--space-6);
+  align-items: flex-start;
+  flex-wrap: wrap;
+  padding: var(--space-5) var(--space-6);
+  background: var(--bg-surface-raised);
+  border: var(--border-subtle);
+  border-radius: var(--radius-md);
+}
+.dash-count-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  min-width: 72px;
+}
+.dash-count-num {
+  font-family: var(--font-display);
+  font-size: var(--text-4xl);
+  font-weight: 700;
+  color: var(--fg-primary);
+  line-height: 1;
+}
+.dash-count-num--critical { color: var(--color-error); }
+.dash-count-desc {
+  font-size: var(--text-xs);
+  color: var(--fg-secondary);
+  text-align: center;
+}
+.dash-counts-divider {
+  width: 1px;
+  align-self: stretch;
+  background: var(--color-gray-200);
+  margin: 0 var(--space-2);
+}
+
+/* ── 02 SYSTEM HEALTH — spotlight ── */
+.dash-spotlight {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-4);
+}
+.dash-spotlight-card {
+  background: var(--bg-surface-raised);
+  border: var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+.dash-spotlight-card--critical {
+  border-color: var(--color-error);
+  background: rgba(255, 68, 68, 0.04); /* subtle error tint — no token for this surface */
+}
+.dash-spotlight-eyebrow {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--fg-secondary);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+}
+.dash-spotlight-title {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--fg-primary);
+  line-height: 1.4;
+  margin: 0;
+}
+.dash-spotlight-body {
+  font-size: var(--text-xs);
+  color: var(--fg-secondary);
+  line-height: 1.6;
+  margin: 0;
+  flex: 1;
+}
+.dash-spotlight-date {
+  font-size: var(--text-xs);
+  color: var(--fg-secondary);
+  font-family: var(--font-mono);
+}
+
+/* ── 02 SYSTEM HEALTH — issue list ── */
+.dash-issue-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+.dash-issue-row {
+  display: grid;
+  grid-template-columns: 120px 1fr auto;
+  gap: var(--space-4);
+  align-items: start;
+  padding: var(--space-4);
+  background: var(--bg-surface-raised);
+  border: var(--border-subtle);
+  border-radius: var(--radius-md);
+}
+.dash-issue-badges {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding-top: 2px;
+}
+.dash-issue-content { display: flex; flex-direction: column; gap: var(--space-1); }
+.dash-issue-title {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--fg-primary);
+  margin: 0;
+}
+.dash-issue-body {
+  font-size: var(--text-xs);
+  color: var(--fg-secondary);
+  line-height: 1.5;
+  margin: 0;
+}
+.dash-issue-date {
+  font-size: var(--text-xs);
+  color: var(--fg-secondary);
+  font-family: var(--font-mono);
+  white-space: nowrap;
+}
+
+/* ── 03 TOKEN OVERVIEW — grid ── */
+.dash-token-grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.dash-token-cat {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-4) var(--space-5);
+  background: var(--bg-surface-raised);
+  border: var(--border-subtle);
+  border-radius: var(--radius-md);
+}
+.dash-token-cat-left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+.dash-token-cat-icon {
+  font-size: var(--text-xl);
+  color: var(--fg-secondary);
+  width: 28px;
+  text-align: center;
+  flex-shrink: 0;
+}
+.dash-token-name {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--fg-primary);
+  margin: 0 0 var(--space-1);
+}
+.dash-token-sub {
+  font-size: var(--text-xs);
+  color: var(--fg-secondary);
+  margin: 0;
+}
+.dash-token-count {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  color: var(--fg-primary);
+  flex-shrink: 0;
+}
+
+/* ── 03 TOKEN OVERVIEW — color model ── */
+.dash-color-model {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+}
+.dash-color-group {
+  background: var(--bg-surface-raised);
+  border: var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+.dash-color-group-label {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--fg-primary);
+  margin: 0;
+}
+.dash-color-group-desc {
+  font-size: var(--text-xs);
+  color: var(--fg-secondary);
+  line-height: 1.5;
+  margin: 0;
+}
+.dash-color-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+/* ── 03 TOKEN OVERVIEW — rules ── */
+.dash-rules-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.dash-rule-row {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: var(--space-4);
+  align-items: baseline;
+  padding: var(--space-3) var(--space-4);
+  background: var(--bg-surface-raised);
+  border: var(--border-subtle);
+  border-radius: var(--radius-sm);
+}
+.dash-rule-body {
+  font-size: var(--text-sm);
+  color: var(--fg-secondary);
+  line-height: 1.5;
+}
+
+/* ── 04 COMPONENT OVERVIEW ── */
+.dash-comp-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-4);
+}
+.dash-comp-cat {
+  background: var(--bg-surface-raised);
+  border: var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+.dash-comp-cat-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+.dash-comp-cat-label {
+  font-size: var(--text-base);
+  font-weight: 700;
+  color: var(--fg-primary);
+  text-transform: capitalize;
+}
+.dash-comp-cat-count {
+  font-size: var(--text-xs);
+  color: var(--fg-secondary);
+}
+.dash-comp-cat-desc {
+  font-size: var(--text-xs);
+  color: var(--fg-secondary);
+  line-height: 1.5;
+  margin: 0;
+}
+.dash-comp-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-top: var(--space-1);
+}
+.dash-comp-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  background: var(--bg-surface);
+}
+.dash-comp-item-left {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.dash-comp-item-right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-shrink: 0;
+}
+.dash-comp-name {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--fg-primary);
+}
+.dash-comp-file {
+  font-size: var(--text-xs);
+  color: var(--fg-secondary);
+  font-family: var(--font-mono);
+}
+.dash-comp-variants {
+  font-size: var(--text-xs);
+  color: var(--fg-secondary);
+  font-family: var(--font-mono);
+}
+.dash-comp-adopted {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--fg-primary);
+  background: var(--color-success);
+  padding: 1px 6px;
+  border-radius: var(--radius-xs);
+}
+.dash-comp-isolated {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--fg-secondary);
+  background: var(--bg-surface);
+  border: var(--border-subtle);
+  padding: 1px 6px;
+  border-radius: var(--radius-xs);
+}
+.dash-comp-status {
+  font-size: var(--text-xs);
+  font-weight: 500;
+  padding: 1px 6px;
+  border-radius: var(--radius-xs);
+  text-transform: capitalize;
+}
+.dash-comp-status--stable       { color: var(--fg-secondary); background: var(--bg-surface); border: var(--border-subtle); }
+.dash-comp-status--experimental { color: var(--fg-primary); background: var(--bg-accent); }
+
+/* ── RELATIONSHIPS ── */
+.dash-rel-block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.dash-rel-row {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: var(--space-4);
+  align-items: start;
+  padding: var(--space-3) var(--space-4);
+  background: var(--bg-surface-raised);
+  border: var(--border-subtle);
+  border-radius: var(--radius-sm);
+}
+.dash-rel-key {
+  font-size: var(--text-sm);
+  color: var(--fg-primary);
+  font-weight: 600;
+  padding-top: 2px;
+}
+.dash-rel-values {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  align-items: center;
+}
+.dash-rel-pill {
+  font-size: var(--text-xs);
+  color: var(--fg-primary);
+  background: var(--bg-surface);
+  border: var(--border-subtle);
+  padding: 2px 8px;
+  border-radius: var(--radius-xs);
+}
+.dash-rel-empty {
+  font-size: var(--text-xs);
+  color: var(--fg-secondary);
+  font-style: italic;
+}
+
+/* ── 06 RECENT ACTIVITY — timeline ── */
+.dash-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  position: relative;
+  padding-left: var(--space-8);
+}
+.dash-timeline::before {
+  content: '';
+  position: absolute;
+  left: 7px;
+  top: 8px;
+  bottom: 8px;
+  width: 1px;
+  background: var(--color-gray-200);
+}
+.dash-timeline-item {
+  position: relative;
+  padding-bottom: var(--space-6);
+  display: flex;
+  gap: var(--space-4);
+}
+.dash-timeline-dot {
+  position: absolute;
+  left: calc(-1 * var(--space-8) + 2px);
+  top: 5px;
+  width: 12px;
+  height: 12px;
+  border-radius: var(--radius-full);
+  border: 2px solid var(--bg-surface);
+  flex-shrink: 0;
+  z-index: 1;
+}
+.dash-timeline-dot--release  { background: var(--color-yellow); }
+.dash-timeline-dot--diary    { background: var(--fg-primary); }
+.dash-timeline-dot--resolved { background: var(--color-success); }
+.dash-timeline-dot--open     { background: var(--color-warning); }
+.dash-timeline-dot--decision { background: var(--color-gray-400); }
+.dash-timeline-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+}
+.dash-timeline-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  font-size: var(--text-xs);
+  color: var(--fg-secondary);
+  font-family: var(--font-mono);
+}
+.dash-timeline-title {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--fg-primary);
+  margin: 0;
+}
+.dash-timeline-body {
+  font-size: var(--text-xs);
+  color: var(--fg-secondary);
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* ── Dashboard responsive ── */
+@media (max-width: 768px) {
+  .dash-pulse         { grid-template-columns: repeat(2, 1fr); }
+  .dash-spotlight     { grid-template-columns: 1fr; }
+  .dash-comp-grid     { grid-template-columns: 1fr; }
+  .dash-color-model   { grid-template-columns: 1fr; }
+  .dash-counts        { gap: var(--space-4); }
+  .dash-counts-divider { display: none; }
+  .dash-issue-row     { grid-template-columns: 1fr; }
+  .dash-issue-date    { display: none; }
+  .dash-rel-row       { grid-template-columns: 1fr; }
+  .dash-rel-key       { padding-top: 0; }
+  .dash-rule-row      { grid-template-columns: 1fr; gap: var(--space-2); }
+}
