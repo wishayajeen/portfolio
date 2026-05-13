@@ -121,6 +121,8 @@ nav.site-nav.nav--active {
   margin-left: var(--space-2);
   transition: transform var(--duration-fast), box-shadow var(--duration-fast);
   box-shadow: var(--shadow-sm);
+  display: inline-block;
+  text-decoration: none;
 }
 .nav-cta:hover {
   transform: translateY(-1px);
@@ -149,6 +151,9 @@ nav.site-nav.menu-open .mobile-menu-btn span:nth-child(3) { transform: rotate(-4
   cursor: pointer;
   padding: 14px 0;
   text-align: left;
+  display: block;
+  text-decoration: none;
+  width: 100%;
 }
 .nav-mobile-link--accent { color: var(--fg-on-dark-accent); }
 
@@ -372,6 +377,8 @@ nav.site-nav.menu-open .mobile-menu-btn span:nth-child(3) { transform: rotate(-4
   border: 1.5px solid rgba(250, 250, 250, 0.2);
   cursor: pointer;
   transition: border-color var(--duration-fast), background var(--duration-fast);
+  display: inline-block;
+  text-decoration: none;
 }
 
 .hero-social-row {
