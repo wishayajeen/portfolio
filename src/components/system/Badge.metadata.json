@@ -1,0 +1,140 @@
+{
+  "id": "badge",
+  "label": "Badge",
+  "file": "src/components/system/Badge.astro",
+  "addedInVersion": "0.3.0",
+  "status": "stable",
+  "astroOnly": true,
+
+  "purpose": "Maps a semantic variant prop to existing badge/tag classes in homepage.css. Renders labels, category tags, and status indicators. Introduces no new CSS. Has no interactive states — never use as a button or link.",
+
+  "contentModel": "label-prop",
+
+  "props": [
+    {
+      "name": "label",
+      "type": "string",
+      "required": true,
+      "default": null,
+      "description": "Visible text content. Plain string only — no HTML or JSX. Badge has no slot."
+    },
+    {
+      "name": "variant",
+      "type": "'tag' | 'diary-tag' | 'work-tag' | 'skill' | 'coming-soon'",
+      "required": false,
+      "default": "tag",
+      "description": "Controls which CSS class and DOM structure is rendered. coming-soon has a different DOM (two spans) — see allowedHTMLOutput."
+    },
+    {
+      "name": "...rest",
+      "type": "any",
+      "required": false,
+      "default": null,
+      "description": "Spread onto the root span element. Acceptable uses: style overrides, data-* attributes. Do not pass class — use the variant system instead."
+    }
+  ],
+
+  "variants": [
+    {
+      "id": "tag",
+      "cssClass": "play-card-tag",
+      "surface": "light",
+      "description": "Yellow pill, black text, border, full radius. Category label for play-cards. Use on --bg-primary or --bg-surface only."
+    },
+    {
+      "id": "diary-tag",
+      "cssClass": "diary-tag",
+      "surface": "light",
+      "description": "Yellow background, black text, border, xs radius. Category label for diary cards. Use on --bg-primary only."
+    },
+    {
+      "id": "work-tag",
+      "cssClass": "work-tag",
+      "surface": "dark",
+      "description": "Dark background (--color-gray-900), --fg-on-dark-label text, xs radius. Row type label in the work section. Use on --bg-dark only."
+    },
+    {
+      "id": "skill",
+      "cssClass": "about-skill-tag",
+      "surface": "dark (about card)",
+      "description": "Black pill (--color-black bg), yellow text (--fg-on-dark-accent), full radius, border. Skills/tag pills in the about section. Use on the dark about card surface only."
+    },
+    {
+      "id": "coming-soon",
+      "cssClass": "work-coming-soon-badge",
+      "surface": "any",
+      "description": "Red text (--color-error) with an animated dot. DOM is structurally different — see allowedHTMLOutput. Indicates an item is not yet live."
+    }
+  ],
+
+  "allowedHTMLOutput": ["span"],
+  "renderRule": "Always renders as <span>. tag, diary-tag, work-tag, skill: single <span class='[variant-class]'>. coming-soon: outer <span class='work-coming-soon-badge'> containing an inner <span class='work-coming-soon-dot'> followed by the label text.",
+
+  "domDetail": {
+    "tag":         "<span class='play-card-tag'>Label</span>",
+    "diary-tag":   "<span class='diary-tag'>Label</span>",
+    "work-tag":    "<span class='work-tag'>Label</span>",
+    "skill":       "<span class='about-skill-tag'>Label</span>",
+    "coming-soon": "<span class='work-coming-soon-badge'><span class='work-coming-soon-dot'></span>Label</span>"
+  },
+
+  "accessibility": [
+    "Badge has no interactive states — do not give it onClick, tabIndex, or role='button'",
+    "tag and diary-tag use yellow background on light surfaces — the black text (#0A0A0A) provides sufficient contrast",
+    "skill uses yellow text (--fg-on-dark-accent) on a black background — safe per WCAG AA",
+    "coming-soon uses --color-error (red) as its only contrast signal — do not remove the dot animation as it is also a motion cue",
+    "label must be plain text — screen readers read it directly"
+  ],
+
+  "whenToUse": [
+    "tag: category labels on play-cards in the Playground section",
+    "diary-tag: entry type labels on diary cards",
+    "work-tag: row type labels in the work section (on dark surface)",
+    "skill: skills/tag list in the about section",
+    "coming-soon: any item that is not yet live — indicates status, not category"
+  ],
+
+  "whenNotToUse": [
+    "tag or diary-tag on dark surfaces — yellow badge on dark background lacks contrast and is contextually wrong",
+    "skill on light surfaces — black pill with yellow text on white has poor visual hierarchy and is out of context",
+    "work-tag on light surfaces — dark pill on white is technically readable but contextually wrong",
+    "coming-soon where the parent already sets color: --color-error — avoids double-red",
+    "As a navigation element, button, or link — Badge is display-only with no interactive states",
+    "When content needs to change dynamically or carry event handlers — use a raw element instead"
+  ],
+
+  "knownRawCSSMimics": [
+    {
+      "cssClass": "about-skill-tag",
+      "mapsToVariant": "skill",
+      "element": "span",
+      "foundIn": ["src/components/home/AboutSection.astro:35"],
+      "runtimeCount": "6 (one per skills array item)",
+      "migrationStatus": "feasible",
+      "migrationNote": "AboutSection.astro is an Astro file — can import Badge and use <Badge variant='skill' label={s} /> in the map."
+    },
+    {
+      "cssClass": "work-tag",
+      "mapsToVariant": "work-tag",
+      "element": "span",
+      "foundIn": ["src/components/home/WorkSection.jsx:74"],
+      "runtimeCount": "3 (one per project)",
+      "migrationStatus": "blocked",
+      "migrationNote": "WorkSection.jsx is a React island — cannot import Badge.astro. Must use raw CSS class."
+    },
+    {
+      "cssClass": "work-coming-soon-badge",
+      "mapsToVariant": "coming-soon",
+      "element": "span",
+      "foundIn": ["src/components/home/WorkSection.jsx:79"],
+      "runtimeCount": "2 (conditional, comingSoon projects)",
+      "migrationStatus": "blocked",
+      "migrationNote": "WorkSection.jsx is a React island — cannot import Badge.astro. Also: raw usage in JSX manually includes work-coming-soon-dot as a separate <span>, matching the Badge DOM output."
+    }
+  ],
+
+  "usageConstraints": {
+    "canImportInJSX": false,
+    "reason": "Badge.astro cannot be imported into .jsx React islands (WorkSection.jsx, Footer.jsx, Header.jsx, TweaksPanel.jsx). In JSX, use the raw CSS class on a <span> and manually replicate the DOM for coming-soon (outer span + inner dot span)."
+  }
+}

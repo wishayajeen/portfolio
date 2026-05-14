@@ -1,0 +1,111 @@
+{
+  "id": "button",
+  "label": "Button",
+  "file": "src/components/system/Button.astro",
+  "addedInVersion": "0.3.0",
+  "status": "stable",
+  "astroOnly": true,
+
+  "purpose": "Maps a variant prop to the two existing CTA button classes in homepage.css. Renders as <a> when href is provided, <button> otherwise. Introduces no new CSS.",
+
+  "contentModel": "label-prop",
+
+  "props": [
+    {
+      "name": "label",
+      "type": "string",
+      "required": true,
+      "default": null,
+      "description": "Button text. No HTML — plain string only. Button has no slot."
+    },
+    {
+      "name": "variant",
+      "type": "'primary' | 'secondary'",
+      "required": false,
+      "default": "primary",
+      "description": "Controls which CSS class is applied. primary = yellow CTA. secondary = ghost, dark surface only."
+    },
+    {
+      "name": "href",
+      "type": "string",
+      "required": false,
+      "default": null,
+      "description": "If provided, renders <a href={href}>. Without href, renders <button>. Do not pass href and also add role='button' — pick one element type."
+    },
+    {
+      "name": "class",
+      "type": "string",
+      "required": false,
+      "default": null,
+      "description": "Appended to the generated class string after the variant class. Never replaces it."
+    },
+    {
+      "name": "...rest",
+      "type": "any",
+      "required": false,
+      "default": null,
+      "description": "Spread onto the root element. Use for onClick, data-*, disabled, aria-*, type attributes."
+    }
+  ],
+
+  "variants": [
+    {
+      "id": "primary",
+      "cssClass": "hero-cta-primary",
+      "surface": "any",
+      "description": "Yellow background (--bg-accent), black text (--color-black), yellow glow shadow. Lifts on hover (translateY -2px, larger shadow). Presses on active (translateY +2px, no shadow). Works on any surface."
+    },
+    {
+      "id": "secondary",
+      "cssClass": "hero-cta-secondary",
+      "surface": "dark only",
+      "description": "Transparent background, white text (--fg-on-dark-primary), glass border. Hover brightens border and adds subtle white fill. ONLY use on --bg-dark surfaces. White text is invisible on light backgrounds."
+    }
+  ],
+
+  "allowedHTMLOutput": ["a", "button"],
+  "renderRule": "href provided → renders as <a>. No href → renders as <button>. The prop alone controls element type — do not override with role attributes.",
+
+  "accessibility": [
+    "label prop is the full accessible name — must be descriptive (not just 'Click here')",
+    "When rendered as <a>, href must be a real destination — not '#' or 'javascript:void(0)'",
+    "secondary variant uses white text; placing it on a light surface creates ~1:1 contrast — fails WCAG AA",
+    "Do not add disabled without also providing a visual indication — the disabled attribute removes it from tab order"
+  ],
+
+  "whenToUse": [
+    "primary: main calls-to-action anywhere on the site — hero CTAs, card CTAs, article footers",
+    "secondary: secondary actions placed directly on --bg-dark sections, typically alongside a primary button"
+  ],
+
+  "whenNotToUse": [
+    "secondary on light surfaces (--bg-primary, --bg-surface) or yellow surfaces (--bg-accent) — white text is invisible",
+    "For inline text navigation within a paragraph — use Link instead",
+    "For icon-only actions — label is required and must be text; use IconButton for icon-only",
+    "As a decorative element — Button always has interactive semantics (button or anchor role)"
+  ],
+
+  "knownRawCSSMimics": [
+    {
+      "cssClass": "hero-cta-primary",
+      "mapsToVariant": "primary",
+      "element": "a",
+      "foundIn": ["src/components/home/Hero.astro:46"],
+      "migrationStatus": "feasible",
+      "migrationNote": "Hero.astro is an Astro file — can import and use <Button variant='primary'>."
+    },
+    {
+      "cssClass": "hero-cta-secondary",
+      "mapsToVariant": "secondary",
+      "element": "button",
+      "foundIn": ["src/components/home/Hero.astro:51"],
+      "migrationStatus": "feasible",
+      "migrationNote": "Hero.astro is an Astro file — can import and use <Button variant='secondary'>."
+    }
+  ],
+
+  "usageConstraints": {
+    "canImportInJSX": false,
+    "reason": "Button.astro cannot be imported into .jsx React islands (Header.jsx, Footer.jsx, WorkSection.jsx, TweaksPanel.jsx). Use raw class .hero-cta-primary / .hero-cta-secondary directly in JSX."
+  }
+}

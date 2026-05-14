@@ -2,13 +2,14 @@
 import Layout from '../../layouts/Layout.astro';
 import '/src/styles/design-system.css';
 import systemData from '../../system/system.json';
+import generatedData from '../../system/system.generated.json';
 
 const title       = "Dashboard — Design System — Jeen";
 const description = "System health, discrepancy tracking, token and component overview for the Jeen design system.";
 
-// ── Discrepancies
-const disc       = systemData.discrepancies as any[];
-const openDisc   = disc.filter(d => d.status === 'open');
+// ── Registry data (system.json)
+const disc         = systemData.discrepancies as any[];
+const openDisc     = disc.filter(d => d.status === 'open');
 const resolvedDisc = disc.filter(d => d.status === 'resolved');
 const decisionDisc = disc.filter(d => d.status === 'decision');
 
@@ -22,53 +23,38 @@ const latestResolved = [...resolvedDisc]
 const latestDecision = [...decisionDisc]
   .sort((a, b) => (b.date > a.date ? 1 : -1))[0] ?? null;
 
-// ── A11y
 const a11yOpen = openDisc.filter(d => d.area === 'a11y');
 
 // ── Token counts
 const tc = systemData.tokens.categories as any;
 const tokenSummary = [
-  {
-    cat: 'Color', icon: '◉',
+  { cat: 'Color', icon: '◉',
     count: tc.color.primitives.length + tc.color.status.length +
            tc.color['semantic-backgrounds'].length + tc.color['semantic-foregrounds'].length +
            tc.color['on-dark-text'].length + tc.color.interactive.length,
-    note: '6 sub-groups — primitive, semantic, on-dark, interactive',
-  },
-  {
-    cat: 'Spacing', icon: '⇔',
+    note: '6 sub-groups — primitive, semantic, on-dark, interactive' },
+  { cat: 'Spacing', icon: '⇔',
     count: tc.spacing.scale.length + tc.spacing.layout.length,
-    note: `Scale (${tc.spacing.scale.length}) + layout (${tc.spacing.layout.length}) · base ${tc.spacing.base}`,
-  },
-  {
-    cat: 'Typography', icon: 'T',
+    note: `Scale (${tc.spacing.scale.length}) + layout (${tc.spacing.layout.length}) · base ${tc.spacing.base}` },
+  { cat: 'Typography', icon: 'T',
     count: tc.typography.families.length + tc.typography.scale.length +
            tc.typography.leading.length + tc.typography.tracking.length,
-    note: '3 families, 12-step scale, leading, tracking',
-  },
-  {
-    cat: 'Shadow', icon: '◫',
+    note: '3 families, 12-step scale, leading, tracking' },
+  { cat: 'Shadow', icon: '◫',
     count: tc.shadow['hard-offset'].length + tc.shadow.soft.length,
-    note: `${tc.shadow['hard-offset'].length} hard-offset + ${tc.shadow.soft.length} soft`,
-  },
-  {
-    cat: 'Radius', icon: '◜',
+    note: `${tc.shadow['hard-offset'].length} hard-offset + ${tc.shadow.soft.length} soft` },
+  { cat: 'Radius', icon: '◜',
     count: tc.radius.scale.length,
-    note: '7-step scale — none → full',
-  },
-  {
-    cat: 'Border', icon: '▭',
+    note: '7-step scale — none → full' },
+  { cat: 'Border', icon: '▭',
     count: tc.border.tokens.length,
-    note: tc.border.note,
-  },
-  {
-    cat: 'Animation', icon: '◌',
+    note: tc.border.note },
+  { cat: 'Animation', icon: '◌',
     count: tc.animation.easing.length + tc.animation.duration.length,
-    note: '3 easings + 3 durations',
-  },
+    note: '3 easings + 3 durations' },
 ];
 
-// ── Components
+// ── Component registry data
 const components = systemData.components as any[];
 const catDefs    = systemData.componentCategories as Record<string, string>;
 const catGroups  = Object.entries(catDefs).map(([key, desc]) => ({
@@ -78,68 +64,94 @@ const catGroups  = Object.entries(catDefs).map(([key, desc]) => ({
     .reduce((s: number, c: any) => s + (c.variants?.length ?? 0), 0),
 }));
 
-// Which component IDs are imported by at least one section
-const sectComp = systemData.relationships.sectionsUseComponents as Record<string, any>;
-const adoptedIds = new Set(
-  Object.entries(sectComp)
-    .filter(([k]) => k !== 'note')
-    .flatMap(([, v]) => (Array.isArray(v) ? v : []))
+const compLabelMap: Record<string, string> = Object.fromEntries(
+  components.map((c: any) => [c.id, c.label])
 );
 
-// ── Relationships helpers
-const routeUsesComp    = systemData.relationships.routeUsesComponents as Record<string, string[]>;
-const routeUsesSect    = systemData.relationships.routeUsesSections    as Record<string, string[]>;
-const compUsedInSects  = systemData.relationships.componentUsedInSections as Record<string, any>;
+// ── Relationship helpers
+const routeUsesComp   = systemData.relationships.routeUsesComponents as Record<string, string[]>;
+const routeUsesSect   = systemData.relationships.routeUsesSections as Record<string, string[]>;
+const sectComp        = systemData.relationships.sectionsUseComponents as Record<string, any>;
 
-// ── Activity timeline — merge disc + diary + release, sort by date desc
+// ── Observability data (system.generated.json)
+const gen           = generatedData as any;
+const genComponents = gen.components as any[];
+const genMap        = Object.fromEntries(genComponents.map((c: any) => [c.id, c])) as Record<string, any>;
+
+const adoptedCount  = gen.summary.adoptionStatusCounts['adopted'] as number;
+const partialCount  = gen.summary.adoptionStatusCounts['partially-adopted'] as number;
+const rawOnlyCount  = gen.summary.adoptionStatusCounts['raw-pattern-only'] as number;
+
+const importSourceInstances  = gen.summary.totalImportBasedInstances.sourceInstances as number;
+const importRuntimeInstances = gen.summary.totalImportBasedInstances.estimatedRuntimeInstances as number;
+const rawProductOccurrences  = gen.summary.totalRawMimicInstances.productScope.sourceOccurrences as number;
+const rawDSOccurrences       = gen.summary.totalRawMimicInstances.dsPagesScope.sourceOccurrences as number;
+const blockedUsagesTotal     = genComponents.reduce((s: number, c: any) => s + (c.blockedUsages?.length ?? 0), 0);
+const feasibleCount          = gen.summary.migrationOpportunities.feasible.length as number;
+const permBlockedCount       = gen.summary.migrationOpportunities.permanentlyBlocked.length as number;
+const migratedCount          = (gen.summary.migrationOpportunities.migrated as string[]).length;
+
+// ── UI components for adoption table (badge, button, card, link, icon-button)
+const uiComponents = genComponents.filter((c: any) =>
+  (systemData.components as any[]).find((s: any) => s.id === c.id && s.category === 'ui')
+);
+
+// ── Raw mimics flattened
+const productMimics = genComponents.flatMap((c: any) =>
+  (c.rawCssMimics as any[])
+    .filter((m: any) => m.scope === 'product')
+    .map((m: any) => ({ ...m, componentId: c.id, componentLabel: compLabelMap[c.id] ?? c.id }))
+);
+const dsMimics = genComponents.flatMap((c: any) =>
+  (c.rawCssMimics as any[])
+    .filter((m: any) => m.scope === 'ds-pages')
+    .map((m: any) => ({ ...m, componentId: c.id, componentLabel: compLabelMap[c.id] ?? c.id }))
+);
+
+// ── Activity timeline
 const diaryEntries = systemData.content.collections[0].entries as any[];
 const allActivity = [
   ...disc.map(d => ({
-    type: 'discrepancy',
-    date: d.resolvedDate ?? d.date,
-    status: d.status as string,
-    severity: d.severity as string | undefined,
-    area: d.area as string,
-    title: d.title as string,
+    type: 'discrepancy', date: d.resolvedDate ?? d.date,
+    status: d.status as string, severity: d.severity as string | undefined,
+    area: d.area as string, title: d.title as string,
     body: (d.body as string).length > 120 ? (d.body as string).slice(0, 120) + '…' : d.body as string,
   })),
   ...diaryEntries.map(e => ({
-    type: 'diary',
-    date: e.date as string,
-    status: undefined,
-    severity: undefined,
-    area: 'content',
-    title: e.title as string,
+    type: 'diary', date: e.date as string, status: undefined, severity: undefined,
+    area: 'content', title: e.title as string,
     body: `${e.tag} · ${e.readTime} read → /diary/${e.slug}`,
   })),
-  {
-    type: 'release',
-    date: systemData.lastUpdated,
-    status: undefined,
-    severity: undefined,
-    area: 'system',
-    title: `v${systemData.version} released`,
-    body: systemData.release.notes,
-  },
+  { type: 'release', date: systemData.lastUpdated, status: undefined, severity: undefined,
+    area: 'system', title: `v${systemData.version} released`, body: systemData.release.notes },
 ]
   .sort((a, b) => (b.date > a.date ? 1 : b.date < a.date ? -1 : 0))
   .slice(0, 14);
 
 // ── Badge helpers
-const statusBadge: Record<string, string> = {
-  resolved: 'ds-badge ds-badge-success',
-  open:     'ds-badge ds-badge-yellow',
-  decision: 'ds-badge ds-badge-outline',
+const statusBadge:   Record<string, string> = { resolved: 'ds-badge ds-badge-success', open: 'ds-badge ds-badge-yellow', decision: 'ds-badge ds-badge-outline' };
+const statusLabel:   Record<string, string> = { resolved: 'Resolved', open: 'Open', decision: 'Decision' };
+const severityBadge: Record<string, string> = { critical: 'ds-badge ds-badge-error', moderate: 'ds-badge ds-badge-yellow', low: 'ds-badge ds-badge-outline' };
+
+const adoptionBadge: Record<string, string> = {
+  'adopted':           'ds-badge ds-badge-success',
+  'partially-adopted': 'ds-badge ds-badge-yellow',
+  'raw-pattern-only':  'ds-badge ds-badge-outline',
+  'blocked':           'ds-badge ds-badge-coming',
+  'not-used':          'ds-badge ds-badge-ghost',
 };
-const statusLabel: Record<string, string> = {
-  resolved: 'Resolved',
-  open:     'Open',
-  decision: 'Decision',
+const adoptionLabel: Record<string, string> = {
+  'adopted':           'Adopted',
+  'partially-adopted': 'Partially adopted',
+  'raw-pattern-only':  'Raw pattern only',
+  'blocked':           'Blocked',
+  'not-used':          'Not used',
 };
-const severityBadge: Record<string, string> = {
-  critical: 'ds-badge ds-badge-error',
-  moderate: 'ds-badge ds-badge-yellow',
-  low:      'ds-badge ds-badge-outline',
+const migrationBadge: Record<string, string> = {
+  'feasible':            'ds-badge ds-badge-success',
+  'partially-feasible':  'ds-badge ds-badge-yellow',
+  'blocked':             'ds-badge ds-badge-coming',
+  'permanently-blocked': 'ds-badge ds-badge-error',
 };
 ---
 
@@ -189,14 +201,14 @@ const severityBadge: Record<string, string> = {
 <div class="ds-page">
 
   <!-- ═══════════════════════════════════════════════════
-       01 — SYSTEM PULSE
+       01 — SYSTEM OVERVIEW
   ════════════════════════════════════════════════════ -->
-  <section class="ds-section" id="pulse">
+  <section class="ds-section" id="overview">
     <div class="ds-section-header">
       <span class="ds-section-num">01</span>
-      <h2 class="ds-section-title">System pulse</h2>
+      <h2 class="ds-section-title">System overview</h2>
     </div>
-    <p class="dash-section-desc">Snapshot of the design system at v{systemData.version}. All values sourced from <code class="ds-code">system.json → stats</code>.</p>
+    <p class="dash-section-desc">Registry snapshot at v{systemData.version}. All values sourced from <code class="ds-code">system.json → stats</code>.</p>
 
     <div class="dash-pulse">
       <div class="dash-stat">
@@ -210,11 +222,6 @@ const severityBadge: Record<string, string> = {
         <span class="dash-stat-sub">{systemData.stats.variantTotal} variants total</span>
       </div>
       <div class="dash-stat">
-        <span class="dash-stat-value">{systemData.stats.variantTotal}</span>
-        <span class="dash-stat-label">Variants</span>
-        <span class="dash-stat-sub">across {systemData.stats.componentCount} components</span>
-      </div>
-      <div class="dash-stat">
         <span class="dash-stat-value">{systemData.stats.diaryEntryCount}</span>
         <span class="dash-stat-label">Diary entries</span>
         <span class="dash-stat-sub">published articles</span>
@@ -225,12 +232,12 @@ const severityBadge: Record<string, string> = {
         <span class="dash-stat-sub">including DS sub-routes</span>
       </div>
       <div class={`dash-stat${systemData.stats.openDiscrepancies > 0 ? ' dash-stat--warn' : ''}`}>
-        <span class="dash-stat-value">{systemData.stats.openDiscrepancies}</span>
+        <span class="dash-stat-value">{openDisc.length}</span>
         <span class="dash-stat-label">Open issues</span>
-        <span class="dash-stat-sub">{systemData.stats.resolvedDiscrepancies} resolved</span>
+        <span class="dash-stat-sub">{resolvedDisc.length} resolved</span>
       </div>
       <div class={`dash-stat${systemData.stats.openCriticalDiscrepancies > 0 ? ' dash-stat--critical' : ''}`}>
-        <span class="dash-stat-value">{systemData.stats.openCriticalDiscrepancies}</span>
+        <span class="dash-stat-value">{criticalOpen.length}</span>
         <span class="dash-stat-label">Critical</span>
         <span class="dash-stat-sub">open critical issues</span>
       </div>
@@ -243,11 +250,250 @@ const severityBadge: Record<string, string> = {
   </section>
 
   <!-- ═══════════════════════════════════════════════════
-       02 — SYSTEM HEALTH
+       02 — CODE OBSERVABILITY
+  ════════════════════════════════════════════════════ -->
+  <section class="ds-section" id="observability">
+    <div class="ds-section-header">
+      <span class="ds-section-num">02</span>
+      <h2 class="ds-section-title">Code observability</h2>
+    </div>
+    <p class="dash-section-desc">Observed usage from static analysis of <code class="ds-code">src/</code>. Source: <code class="ds-code">system.generated.json</code> ({gen._meta.generatedAt}). Independent of <code class="ds-code">system.json</code> registry declarations.</p>
+
+    <!-- Observability pulse stats -->
+    <div class="dash-pulse" style="margin-bottom:var(--space-8);">
+      <div class="dash-stat">
+        <span class="dash-stat-value">{importSourceInstances}</span>
+        <span class="dash-stat-label">Direct adoption</span>
+        <span class="dash-stat-sub">import-based · ~{importRuntimeInstances} runtime</span>
+      </div>
+      <div class={`dash-stat${rawProductOccurrences > 0 ? ' dash-stat--warn' : ' dash-stat--ok'}`}>
+        <span class="dash-stat-value">{rawProductOccurrences}</span>
+        <span class="dash-stat-label">Raw (product)</span>
+        <span class="dash-stat-sub">CSS-only, no component import</span>
+      </div>
+      <div class="dash-stat">
+        <span class="dash-stat-value">{rawDSOccurrences}</span>
+        <span class="dash-stat-label">Raw (DS pages)</span>
+        <span class="dash-stat-sub">link classes in /design-system/* routes</span>
+      </div>
+      <div class={`dash-stat${migratedCount > 0 ? ' dash-stat--ok' : ''}`}>
+        <span class="dash-stat-value">{migratedCount}</span>
+        <span class="dash-stat-label">Migrated</span>
+        <span class="dash-stat-sub">raw patterns converted this phase</span>
+      </div>
+      <div class={`dash-stat${adoptedCount < 3 ? ' dash-stat--warn' : ''}`}>
+        <span class="dash-stat-value">{adoptedCount}</span>
+        <span class="dash-stat-label">Adopted</span>
+        <span class="dash-stat-sub">of 5 UI components</span>
+      </div>
+      <div class="dash-stat">
+        <span class="dash-stat-value">{partialCount}</span>
+        <span class="dash-stat-label">Partial</span>
+        <span class="dash-stat-sub">imports + raw patterns coexist</span>
+      </div>
+      <div class={`dash-stat${rawOnlyCount > 0 ? ' dash-stat--warn' : ' dash-stat--ok'}`}>
+        <span class="dash-stat-value">{rawOnlyCount}</span>
+        <span class="dash-stat-label">Raw only</span>
+        <span class="dash-stat-sub">CSS class, no imports</span>
+      </div>
+      <div class="dash-stat">
+        <span class="dash-stat-value">{blockedUsagesTotal}</span>
+        <span class="dash-stat-label">Blocked</span>
+        <span class="dash-stat-sub">{permBlockedCount} permanent · React island constraint</span>
+      </div>
+    </div>
+
+    <!-- Component adoption table -->
+    <div class="ds-sub-label">Component adoption</div>
+    <p class="dash-section-desc" style="margin-top:calc(-1 * var(--space-2));margin-bottom:var(--space-4);">
+      UI components only. Adoption status reflects direct <code class="ds-code">import</code> usage in product files, not DS showcase.
+    </p>
+    <div class="ds-card" style="padding:0;overflow:hidden;">
+      <table class="ds-table">
+        <thead>
+          <tr>
+            <th>Component</th>
+            <th>Status</th>
+            <th>Imports</th>
+            <th>Runtime</th>
+            <th>Raw patterns</th>
+            <th>Variants</th>
+          </tr>
+        </thead>
+        <tbody>
+          {uiComponents.map((c: any) => {
+            const sysComp = (systemData.components as any[]).find((s: any) => s.id === c.id);
+            const directVariants   = (c.variantsUsedDirectly  as string[]).join(', ')  || '—';
+            const rawVariants      = (c.variantsUsedViaRawCSS as string[]).join(', ')  || '—';
+            const unusedVariants   = (c.variantsNotUsed       as string[]).join(', ')  || '—';
+            const rawCount         = (c.rawCssMimics as any[]).length;
+            const hasBlocker       = (c.blockedUsages as any[]).length > 0;
+            return (
+              <tr>
+                <td>
+                  <span class="dash-comp-name">{sysComp?.label ?? c.id}</span>
+                  <div class="dash-comp-file">{sysComp?.file.split('/').pop()}</div>
+                </td>
+                <td>
+                  <span class={adoptionBadge[c.adoptionStatus] ?? 'ds-badge ds-badge-outline'}>
+                    {adoptionLabel[c.adoptionStatus] ?? c.adoptionStatus}
+                  </span>
+                </td>
+                <td class="mono">{c.directSourceInstances}</td>
+                <td class="mono">
+                  {c.estimatedRuntimeInstances > 0 ? `~${c.estimatedRuntimeInstances}` : '0'}
+                </td>
+                <td class="mono">
+                  {rawCount > 0
+                    ? <span style="color:var(--fg-primary);font-weight:600;">{rawCount}</span>
+                    : <span style="color:var(--fg-secondary);">0</span>
+                  }
+                </td>
+                <td>
+                  <div style="display:flex;flex-direction:column;gap:2px;">
+                    {(c.variantsUsedDirectly as string[]).length > 0 && (
+                      <span style="font-size:11px;color:var(--fg-secondary);">import: <code class="ds-code">{directVariants}</code></span>
+                    )}
+                    {(c.variantsUsedViaRawCSS as string[]).length > 0 && (
+                      <span style="font-size:11px;color:var(--fg-secondary);">raw: <code class="ds-code">{rawVariants}</code></span>
+                    )}
+                    {(c.variantsNotUsed as string[]).length > 0 && (
+                      <span style="font-size:11px;color:var(--fg-secondary);">unused: {unusedVariants}</span>
+                    )}
+                    {(c.variantsUsedDirectly as string[]).length === 0 && (c.variantsUsedViaRawCSS as string[]).length === 0 && '—'}
+                  </div>
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Migration opportunities -->
+    <div class="ds-sub-label" style="margin-top:var(--space-8);">Migration opportunities</div>
+    <div class="dash-rel-block" style="margin-bottom:var(--space-8);">
+      <div class="dash-rel-row">
+        <span class="dash-rel-key"><span class="ds-badge ds-badge-success">Migrated</span></span>
+        <div class="dash-rel-values">
+          {(gen.summary.migrationOpportunities.migrated as string[]).map((s: string) => (
+            <span class="dash-rel-pill">{s}</span>
+          ))}
+        </div>
+      </div>
+      <div class="dash-rel-row">
+        <span class="dash-rel-key"><span class="ds-badge ds-badge-outline">Feasible</span></span>
+        <div class="dash-rel-values">
+          {(gen.summary.migrationOpportunities.feasible as string[]).map((s: string) => (
+            <span class="dash-rel-pill">{s}</span>
+          ))}
+        </div>
+      </div>
+      <div class="dash-rel-row">
+        <span class="dash-rel-key"><span class="ds-badge ds-badge-coming">Blocked</span></span>
+        <div class="dash-rel-values">
+          {(gen.summary.migrationOpportunities.blocked as string[]).map((s: string) => (
+            <span class="dash-rel-pill">{s}</span>
+          ))}
+        </div>
+      </div>
+      <div class="dash-rel-row">
+        <span class="dash-rel-key"><span class="ds-badge ds-badge-error">Permanently blocked</span></span>
+        <div class="dash-rel-values">
+          {(gen.summary.migrationOpportunities.permanentlyBlocked as string[]).map((s: string) => (
+            <span class="dash-rel-pill">{s}</span>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <!-- Raw CSS patterns — product scope -->
+    {productMimics.length > 0 && (
+      <>
+        <div class="ds-sub-label">Raw CSS patterns — product code</div>
+        <p class="dash-section-desc" style="margin-top:calc(-1 * var(--space-2));margin-bottom:var(--space-4);">
+          These CSS classes are applied directly in source files instead of using the corresponding system component. Does not include DS showcase (<code class="ds-code">components.astro</code>).
+        </p>
+        <div class="ds-card" style="padding:0;overflow:hidden;margin-bottom:var(--space-6);">
+          <table class="ds-table">
+            <thead>
+              <tr>
+                <th>Component</th>
+                <th>Class</th>
+                <th>Variant</th>
+                <th>Element</th>
+                <th>Instances</th>
+                <th>Migration</th>
+              </tr>
+            </thead>
+            <tbody>
+              {productMimics.map((m: any) => (
+                <tr>
+                  <td class="mono">{m.componentLabel}</td>
+                  <td><code class="ds-code">.{m.cssClass}</code></td>
+                  <td class="mono">{m.mapsToVariant}</td>
+                  <td class="mono">&lt;{m.element}&gt;</td>
+                  <td class="mono">{m.runtimeCount}</td>
+                  <td>
+                    <span class={migrationBadge[m.migrationStatus] ?? 'ds-badge ds-badge-outline'}>
+                      {m.migrationStatus.replace(/-/g, ' ')}
+                    </span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </>
+    )}
+
+    <!-- Raw CSS patterns — DS pages -->
+    {dsMimics.length > 0 && (
+      <>
+        <div class="ds-sub-label">Raw CSS patterns — design system pages</div>
+        <p class="dash-section-desc" style="margin-top:calc(-1 * var(--space-2));margin-bottom:var(--space-4);">
+          Raw link classes used in DS route navigation. Ironic: <code class="ds-code">components.astro</code> imports <code class="ds-code">Link</code> for demos but still uses raw classes in its own nav.
+        </p>
+        <div class="ds-card" style="padding:0;overflow:hidden;">
+          <table class="ds-table">
+            <thead>
+              <tr>
+                <th>Component</th>
+                <th>Class</th>
+                <th>Variant</th>
+                <th>Files</th>
+                <th>Instances</th>
+                <th>Migration</th>
+              </tr>
+            </thead>
+            <tbody>
+              {dsMimics.map((m: any) => (
+                <tr>
+                  <td class="mono">{m.componentLabel}</td>
+                  <td><code class="ds-code">.{m.cssClass}</code></td>
+                  <td class="mono">{m.mapsToVariant}</td>
+                  <td class="mono" style="font-size:10px;">{(m.foundIn as string[]).length} files</td>
+                  <td class="mono">{m.runtimeCount}</td>
+                  <td>
+                    <span class={migrationBadge[m.migrationStatus] ?? 'ds-badge ds-badge-outline'}>
+                      {m.migrationStatus.replace(/-/g, ' ')}
+                    </span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </>
+    )}
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       03 — SYSTEM HEALTH
   ════════════════════════════════════════════════════ -->
   <section class="ds-section" id="health">
     <div class="ds-section-header">
-      <span class="ds-section-num">02</span>
+      <span class="ds-section-num">03</span>
       <h2 class="ds-section-title">System health</h2>
     </div>
     <p class="dash-section-desc">All issues tracked in <code class="ds-code">system.json → discrepancies</code>, updated by <code class="ds-code">/review-ds</code>.</p>
@@ -287,7 +533,7 @@ const severityBadge: Record<string, string> = {
       </div>
     </div>
 
-    <!-- Spotlight: latest critical / resolved / decision -->
+    <!-- Spotlight -->
     <div class="ds-sub-label" style="margin-top:var(--space-8);">Spotlight</div>
     <div class="dash-spotlight">
       {latestCritical && (
@@ -351,11 +597,11 @@ const severityBadge: Record<string, string> = {
   </section>
 
   <!-- ═══════════════════════════════════════════════════
-       03 — TOKEN OVERVIEW
+       04 — TOKEN OVERVIEW
   ════════════════════════════════════════════════════ -->
   <section class="ds-section" id="tokens">
     <div class="ds-section-header">
-      <span class="ds-section-num">03</span>
+      <span class="ds-section-num">04</span>
       <h2 class="ds-section-title">Token overview</h2>
     </div>
     <p class="dash-section-desc"><strong>{systemData.stats.tokenCount} tokens</strong> across {tokenSummary.length} categories. Source of truth: <code class="ds-code">{systemData.tokens.sourceFile}</code>. Values: <code class="ds-code">system.json → tokens.categories</code>.</p>
@@ -375,7 +621,6 @@ const severityBadge: Record<string, string> = {
       ))}
     </div>
 
-    <!-- Semantic vs primitive split for color -->
     <div class="ds-sub-label" style="margin-top:var(--space-8);">Color semantic model</div>
     <div class="dash-color-model">
       <div class="dash-color-group">
@@ -398,7 +643,6 @@ const severityBadge: Record<string, string> = {
       </div>
     </div>
 
-    <!-- Token rules -->
     <div class="ds-sub-label" style="margin-top:var(--space-8);">Token rules</div>
     <div class="dash-rules-list">
       {Object.entries(systemData.tokens.rules).map(([k, v]) => (
@@ -411,14 +655,14 @@ const severityBadge: Record<string, string> = {
   </section>
 
   <!-- ═══════════════════════════════════════════════════
-       04 — COMPONENT OVERVIEW
+       05 — COMPONENT REGISTRY
   ════════════════════════════════════════════════════ -->
   <section class="ds-section" id="components">
     <div class="ds-section-header">
-      <span class="ds-section-num">04</span>
-      <h2 class="ds-section-title">Component overview</h2>
+      <span class="ds-section-num">05</span>
+      <h2 class="ds-section-title">Component registry</h2>
     </div>
-    <p class="dash-section-desc"><strong>{systemData.stats.componentCount} components</strong>, {systemData.stats.variantTotal} variants. Adoption = at least one direct import in a homepage section via <code class="ds-code">sectionsUseComponents</code>.</p>
+    <p class="dash-section-desc"><strong>{systemData.stats.componentCount} components</strong> from <code class="ds-code">system.json → components</code>. Adoption status is code-observed (<code class="ds-code">system.generated.json</code>), not registry-declared.</p>
 
     <div class="dash-comp-grid">
       {catGroups.map(cg => (
@@ -429,63 +673,48 @@ const severityBadge: Record<string, string> = {
           </div>
           <p class="dash-comp-cat-desc">{cg.desc}</p>
           <div class="dash-comp-list">
-            {cg.items.map((c: any) => (
-              <div class="dash-comp-item">
-                <div class="dash-comp-item-left">
-                  <span class="dash-comp-name">{c.label}</span>
-                  <span class="dash-comp-file">{c.file.split('/').pop()}</span>
+            {cg.items.map((c: any) => {
+              const gen = genMap[c.id];
+              return (
+                <div class="dash-comp-item">
+                  <div class="dash-comp-item-left">
+                    <span class="dash-comp-name">{c.label}</span>
+                    <span class="dash-comp-file">{c.file.split('/').pop()}</span>
+                  </div>
+                  <div class="dash-comp-item-right">
+                    {c.variants && c.variants.length > 0 && (
+                      <span class="dash-comp-variants">{c.variants.length}v</span>
+                    )}
+                    {gen
+                      ? <span class={adoptionBadge[gen.adoptionStatus] ?? 'ds-badge ds-badge-outline'} style="font-size:10px;padding:1px 6px;">
+                          {adoptionLabel[gen.adoptionStatus] ?? gen.adoptionStatus}
+                        </span>
+                      : null
+                    }
+                    <span class={`dash-comp-status dash-comp-status--${c.status}`}>{c.status}</span>
+                  </div>
                 </div>
-                <div class="dash-comp-item-right">
-                  {c.variants && c.variants.length > 0 && (
-                    <span class="dash-comp-variants">{c.variants.length}v</span>
-                  )}
-                  {adoptedIds.has(c.id)
-                    ? <span class="dash-comp-adopted">adopted</span>
-                    : <span class="dash-comp-isolated">isolated</span>
-                  }
-                  <span class={`dash-comp-status dash-comp-status--${c.status}`}>{c.status}</span>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       ))}
     </div>
-
-    <!-- Which sections consume which components -->
-    <div class="ds-sub-label" style="margin-top:var(--space-8);">Component adoption by section</div>
-    <p class="dash-section-desc" style="margin-bottom:var(--space-4);">Only tracks direct <code class="ds-code">src/components/system/*</code> imports — raw CSS class usage is not counted.</p>
-    <div class="dash-rel-block">
-      {components
-        .filter((c: any) => c.category === 'ui')
-        .map((c: any) => {
-          const usedIn = (compUsedInSects as any)[c.id];
-          const sections = Array.isArray(usedIn) ? usedIn : [];
-          return (
-            <div class="dash-rel-row">
-              <span class="dash-rel-key"><code class="ds-code">{c.id}</code></span>
-              <div class="dash-rel-values">
-                {sections.length > 0
-                  ? sections.map((s: string) => <span class="dash-rel-pill">{s}</span>)
-                  : <span class="dash-rel-empty">not adopted — available but unused in sections</span>
-                }
-              </div>
-            </div>
-          );
-        })
-      }
-    </div>
   </section>
 
   <!-- ═══════════════════════════════════════════════════
-       05 — RELATIONSHIPS
+       06 — REGISTRY RELATIONSHIPS
   ════════════════════════════════════════════════════ -->
   <section class="ds-section" id="relationships">
     <div class="ds-section-header">
-      <span class="ds-section-num">05</span>
-      <h2 class="ds-section-title">Relationships</h2>
+      <span class="ds-section-num">06</span>
+      <h2 class="ds-section-title">Registry relationships</h2>
     </div>
-    <p class="dash-section-desc">How routes, sections, and components connect. Sourced from <code class="ds-code">system.json → relationships</code>.</p>
+    <p class="dash-section-desc">
+      Declared relationships from <code class="ds-code">system.json → relationships</code>.
+      <strong>These are registry-declared intent, not code-observed adoption counts.</strong>
+      For actual usage data, see section 02 Code Observability.
+    </p>
 
     <!-- Route → Sections -->
     <div class="ds-sub-label">Routes → Sections</div>
@@ -519,8 +748,8 @@ const severityBadge: Record<string, string> = {
       ))}
     </div>
 
-    <!-- Sections → Components -->
-    <div class="ds-sub-label">Sections → System Components</div>
+    <!-- Sections → Components (registry-declared) -->
+    <div class="ds-sub-label">Sections → Components (declared imports)</div>
     <div class="dash-rel-block">
       {Object.entries(sectComp)
         .filter(([k]) => k !== 'note')
@@ -530,7 +759,7 @@ const severityBadge: Record<string, string> = {
             <div class="dash-rel-values">
               {Array.isArray(comps) && comps.length > 0
                 ? (comps as string[]).map(c => <span class="dash-rel-pill">{c}</span>)
-                : <span class="dash-rel-empty">no system component imports</span>
+                : <span class="dash-rel-empty">no system component imports declared</span>
               }
             </div>
           </div>
@@ -540,11 +769,11 @@ const severityBadge: Record<string, string> = {
   </section>
 
   <!-- ═══════════════════════════════════════════════════
-       06 — RECENT ACTIVITY
+       07 — RECENT ACTIVITY
   ════════════════════════════════════════════════════ -->
   <section class="ds-section" id="activity">
     <div class="ds-section-header">
-      <span class="ds-section-num">06</span>
+      <span class="ds-section-num">07</span>
       <h2 class="ds-section-title">Recent activity</h2>
     </div>
     <p class="dash-section-desc">Merged timeline of discrepancies, diary entries, and releases. Latest first.</p>

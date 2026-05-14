@@ -1,4 +1,7 @@
 ---
+import Button from '../system/Button.astro';
+import Link from '../system/Link.astro';
+
 interface Props {
   pockyIdleSrc: string;
 }
@@ -28,8 +31,8 @@ const { pockyIdleSrc } = Astro.props;
           <!-- underline squiggle -->
           <svg class="hero-headline-squiggle" viewBox="0 0 220 18" preserveAspectRatio="none" height="14">
             <!-- Paintbrush-style: thick tapered stroke with slight roughness -->
-            <path d="M4 12 Q30 5 70 10 Q110 15 150 9 Q180 5 216 11" stroke="#F3FE52" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0.5" />
-            <path d="M2 11 Q40 6 80 11 Q120 16 160 8 Q188 4 218 10" stroke="#F3FE52" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M4 12 Q30 5 70 10 Q110 15 150 9 Q180 5 216 11" style="stroke:var(--color-yellow)" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0.5" />
+            <path d="M2 11 Q40 6 80 11 Q120 16 160 8 Q188 4 218 10" style="stroke:var(--color-yellow)" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round" />
           </svg>
         </span>
       </h1>
@@ -41,24 +44,15 @@ const { pockyIdleSrc } = Astro.props;
 
       <!-- CTAs -->
       <div class="fade-up fade-up-4 hero-ctas">
-        <a
-          href="/design-system"
-          class="hero-cta-primary"
-          style="text-decoration: none;">
-          See the system
-        </a>
-        <button
-          class="hero-cta-secondary"
-          onclick="window.location.href='/design-system/dashboard'">
-          Explore dashboard →
-        </button>
+        <Button variant="primary" href="/design-system" label="See the system" />
+        <Button variant="secondary" label="Explore dashboard →" onclick="window.location.href='/design-system/dashboard'" />
       </div>
 
       <!-- Quick links row -->
       <div class="hero-social-row">
         <span class="hero-social-label">Find me on</span>
-        <a href="https://github.com/wishayajeen" target="_blank" rel="noopener noreferrer" class="hero-social-link">GitHub</a>
-        <a href="https://www.linkedin.com/in/wsjeen/" target="_blank" rel="noopener noreferrer" class="hero-social-link">LinkedIn</a>
+        <Link href="https://github.com/wishayajeen" variant="on-dark" external>GitHub</Link>
+        <Link href="https://www.linkedin.com/in/wsjeen/" variant="on-dark" external>LinkedIn</Link>
       </div>
     </div>
 

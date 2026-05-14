@@ -199,10 +199,15 @@ Before adding a component, class, token, or page — check the authoritative sou
 | What you need | Where to look |
 |---|---|
 | System components (Badge, Button, Card, Link) | `src/system/component-inventory.md` |
+| Component contracts (props, variants, HTML output, mimics) | `src/components/system/*.metadata.json` |
 | All CSS classes (homepage, DS, article, utilities) | `src/system/class-inventory.md` |
 | Machine-readable registry (routes, stats, discrepancies) | `src/system/system.json` |
+| Actual code-derived adoption data | `src/system/system.generated.json` |
 | Token names and values | `src/styles/tokens.css` |
 | Recurring AI collaboration failure patterns | `src/system/failure-modes.md` |
+
+**Rule: Dashboard adoption data must come from `system.generated.json`, not manually inferred `system.json` relationships.**
+`system.json` is the *intended* registry. `system.generated.json` is *observed* usage — import counts, raw CSS mimics, adoption status, and migration blockers derived from actual source files. Never use `system.json`'s `relationships` block as the source for adoption metrics shown in the dashboard.
 
 ---
 

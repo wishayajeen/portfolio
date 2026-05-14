@@ -1,0 +1,356 @@
+{
+  "_meta": {
+    "generatedAt": "2026-05-14",
+    "methodology": "Manual static analysis — grep + file read across src/. Component imports, JSX/Astro element occurrences, and raw CSS class usage each catalogued by file and line number. Runtime instance counts are estimates derived from current data arrays (experiments: 4, diary entries: 2, work projects: 3, skills: 6). This file will be replaced by automated generation in a future phase.",
+    "lastUpdatedNote": "Phase 4 migration: Hero.astro, AboutSection.astro, and diary/[slug].astro migrated from raw CSS patterns to system components. Button fully adopted, Link partially adopted, Badge skill variant migrated.",
+    "scope": {
+      "included": [
+        "src/components/home/*.astro",
+        "src/components/home/*.jsx",
+        "src/components/global/*.jsx",
+        "src/pages/index.astro",
+        "src/pages/diary/[slug].astro"
+      ],
+      "excluded": [
+        "src/pages/design-system/components.astro — imports all 5 components for documentation demos only, not product usage",
+        "src/pages/design-system/index.astro",
+        "src/pages/design-system/foundations.astro",
+        "src/pages/design-system/dashboard.astro",
+        "src/components/system/*.astro — component definition files themselves"
+      ],
+      "note": "DS pages (design-system/*) use back-link and footer-nav-link raw classes for page navigation. These are catalogued separately under Link rawCssMimics with scope 'ds-pages'."
+    },
+    "approximateFields": [
+      "estimatedRuntimeInstances — depends on live data (diary entries, experiments, projects, nav items)",
+      "runtimeCount in rawCssMimics entries that are inside loops or dynamic renders"
+    ]
+  },
+
+  "components": [
+
+    {
+      "id": "badge",
+      "metadataFile": "src/components/system/Badge.metadata.json",
+      "adoptionStatus": "partially-adopted",
+
+      "directImportFiles": [
+        "src/components/home/PlaygroundSection.astro",
+        "src/components/home/AboutSection.astro"
+      ],
+
+      "directSourceInstances": 4,
+      "directSourceInstanceDetail": [
+        { "file": "src/components/home/PlaygroundSection.astro", "line": 53, "variant": "tag",        "context": "inside experiments.map()" },
+        { "file": "src/components/home/PlaygroundSection.astro", "line": 55, "variant": "coming-soon","context": "conditional inside experiments.map(), exp.comingSoon === true" },
+        { "file": "src/components/home/PlaygroundSection.astro", "line": 87, "variant": "diary-tag",  "context": "inside diaryEntries.map()" },
+        { "file": "src/components/home/AboutSection.astro",      "line": 37, "variant": "skill",      "context": "inside skills.map() — Phase 4 migration from about-skill-tag raw span" }
+      ],
+
+      "estimatedRuntimeInstances": 14,
+      "estimatedRuntimeBreakdown": {
+        "tag":         4,
+        "coming-soon": 2,
+        "diary-tag":   2,
+        "skill":       6,
+        "note": "Based on 4 experiments (2 comingSoon), 2 diary entries, 6 skills."
+      },
+
+      "variantsUsedDirectly":   ["tag", "coming-soon", "diary-tag", "skill"],
+      "variantsUsedViaRawCSS":  ["work-tag"],
+      "variantsNotUsed":        [],
+
+      "rawCssMimics": [
+        {
+          "cssClass": "work-tag",
+          "mapsToVariant": "work-tag",
+          "element": "span",
+          "scope": "product",
+          "foundIn": ["src/components/home/WorkSection.jsx:74"],
+          "runtimeCount": "3 (one per project, static data)",
+          "migrationStatus": "blocked",
+          "migrationNote": "WorkSection.jsx is a React island — cannot import Badge.astro."
+        },
+        {
+          "cssClass": "work-coming-soon-badge",
+          "mapsToVariant": "coming-soon",
+          "element": "span",
+          "scope": "product",
+          "foundIn": ["src/components/home/WorkSection.jsx:79"],
+          "runtimeCount": "2 (conditional on comingSoon: true, 2 of 3 projects)",
+          "migrationStatus": "blocked",
+          "migrationNote": "WorkSection.jsx is a React island. Raw JSX manually replicates the two-span DOM structure (outer badge + inner dot span) — correctly matches Badge.astro output."
+        }
+      ],
+
+      "blockedUsages": [
+        {
+          "file": "src/components/home/WorkSection.jsx",
+          "classes": ["work-tag", "work-coming-soon-badge"],
+          "reason": "React island cannot import Astro components. Permanently blocked unless WorkSection is converted to Astro or Badge is ported to React."
+        }
+      ]
+    },
+
+    {
+      "id": "card",
+      "metadataFile": "src/components/system/Card.metadata.json",
+      "adoptionStatus": "adopted",
+
+      "directImportFiles": [
+        "src/components/home/PlaygroundSection.astro"
+      ],
+
+      "directSourceInstances": 2,
+      "directSourceInstanceDetail": [
+        { "file": "src/components/home/PlaygroundSection.astro", "line": 47, "variant": "default or accent", "context": "inside experiments.map(), variant driven by exp.accent flag" },
+        { "file": "src/components/home/PlaygroundSection.astro", "line": 79, "variant": "diary",             "context": "inside diaryEntries.map()" }
+      ],
+
+      "estimatedRuntimeInstances": 6,
+      "estimatedRuntimeBreakdown": {
+        "accent":  1,
+        "default": 3,
+        "diary":   2,
+        "note": "Based on 4 experiments (1 with accent:true) + 2 diary entries."
+      },
+
+      "variantsUsedDirectly":   ["default", "accent", "diary"],
+      "variantsUsedViaRawCSS":  [],
+      "variantsNotUsed":        [],
+
+      "rawCssMimics": [],
+
+      "blockedUsages": [],
+
+      "notes": "Only system component with zero raw CSS mimics. 100% import-based wherever it appears in product code."
+    },
+
+    {
+      "id": "button",
+      "metadataFile": "src/components/system/Button.metadata.json",
+      "adoptionStatus": "adopted",
+
+      "directImportFiles": [
+        "src/components/home/Hero.astro"
+      ],
+
+      "directSourceInstances": 2,
+      "directSourceInstanceDetail": [
+        { "file": "src/components/home/Hero.astro", "line": 47, "variant": "primary",   "context": "CTA — renders as <a href='/design-system'>. Phase 4 migration from hero-cta-primary raw <a>." },
+        { "file": "src/components/home/Hero.astro", "line": 48, "variant": "secondary", "context": "CTA — renders as <button> with onclick nav. Phase 4 migration from hero-cta-secondary raw <button>." }
+      ],
+
+      "estimatedRuntimeInstances": 2,
+
+      "variantsUsedDirectly":   ["primary", "secondary"],
+      "variantsUsedViaRawCSS":  [],
+      "variantsNotUsed":        [],
+
+      "rawCssMimics": [],
+
+      "blockedUsages": [],
+
+      "notes": "Fully adopted after Phase 4 migration. Both hero CTAs migrated from raw classes to <Button>. Zero remaining raw class usages in product code."
+    },
+
+    {
+      "id": "link",
+      "metadataFile": "src/components/system/Link.metadata.json",
+      "adoptionStatus": "partially-adopted",
+
+      "directImportFiles": [
+        "src/components/home/Hero.astro",
+        "src/pages/diary/[slug].astro"
+      ],
+
+      "directSourceInstances": 5,
+      "directSourceInstanceDetail": [
+        { "file": "src/components/home/Hero.astro",        "line": 54, "variant": "on-dark", "context": "GitHub social link — external. Phase 4 migration from hero-social-link raw <a>." },
+        { "file": "src/components/home/Hero.astro",        "line": 55, "variant": "on-dark", "context": "LinkedIn social link — external. Phase 4 migration from hero-social-link raw <a>." },
+        { "file": "src/pages/diary/[slug].astro",          "line": 24, "variant": "back",    "context": "Article header back-home link. Phase 4 migration." },
+        { "file": "src/pages/diary/[slug].astro",          "line": 50, "variant": "back",    "context": "Article footer back-home link. Phase 4 migration." },
+        { "file": "src/pages/diary/[slug].astro",          "line": 51, "variant": "back",    "context": "Article footer scroll-to-top link — passes onclick via rest props. Phase 4 migration." }
+      ],
+
+      "estimatedRuntimeInstances": 5,
+
+      "variantsUsedDirectly":   ["on-dark", "back"],
+      "variantsUsedViaRawCSS":  ["nav", "footer-nav", "back"],
+      "variantsNotUsed":        ["default"],
+
+      "rawCssMimics": [
+        {
+          "cssClass": "nav-link",
+          "mapsToVariant": "nav",
+          "element": "button",
+          "scope": "product",
+          "foundIn": ["src/components/global/Header.jsx:37"],
+          "runtimeCount": "N (one per nav item, dynamic — rendered via map over nav sections)",
+          "migrationStatus": "permanently-blocked",
+          "migrationNote": "Two independent blockers: (1) Header.jsx is a React island — cannot import Link.astro. (2) These are <button> elements with onClick scroll-to-section behavior; Link always renders <a> and cannot carry click-handler-only scroll navigation. Both blockers must be resolved simultaneously to migrate."
+        },
+        {
+          "cssClass": "footer-nav-link",
+          "mapsToVariant": "footer-nav",
+          "element": "button",
+          "scope": "product",
+          "foundIn": ["src/components/global/Footer.jsx:116"],
+          "runtimeCount": "N (scroll-to-section items, dynamic)",
+          "migrationStatus": "permanently-blocked",
+          "migrationNote": "Same dual blocker as Header nav-link: React island + onClick scroll behavior requiring <button> element."
+        },
+        {
+          "cssClass": "footer-nav-link",
+          "mapsToVariant": "footer-nav",
+          "element": "a",
+          "scope": "product",
+          "foundIn": ["src/components/global/Footer.jsx:145"],
+          "runtimeCount": "N (external social/nav links, dynamic)",
+          "migrationStatus": "blocked",
+          "migrationNote": "Footer.jsx is a React island — cannot import Link.astro. Could migrate if Footer were converted to Astro."
+        },
+        {
+          "cssClass": "back-link",
+          "mapsToVariant": "back",
+          "element": "a",
+          "scope": "ds-pages",
+          "foundIn": [
+            "src/pages/design-system/index.astro:23",
+            "src/pages/design-system/dashboard.astro:161",
+            "src/pages/design-system/components.astro:20",
+            "src/pages/design-system/foundations.astro:14"
+          ],
+          "runtimeCount": "4 (one per DS route, static)",
+          "migrationStatus": "feasible",
+          "migrationNote": "All DS pages are Astro files. components.astro already imports Link for demos — could reuse the same import."
+        },
+        {
+          "cssClass": "footer-nav-link",
+          "mapsToVariant": "footer-nav",
+          "element": "a",
+          "scope": "ds-pages",
+          "foundIn": [
+            "src/pages/design-system/dashboard.astro:165",
+            "src/pages/design-system/dashboard.astro:166",
+            "src/pages/design-system/dashboard.astro:167",
+            "src/pages/design-system/components.astro:24",
+            "src/pages/design-system/components.astro:25",
+            "src/pages/design-system/components.astro:26",
+            "src/pages/design-system/foundations.astro:18",
+            "src/pages/design-system/foundations.astro:19",
+            "src/pages/design-system/foundations.astro:20"
+          ],
+          "runtimeCount": "9 (3 per DS route, static)",
+          "migrationStatus": "feasible",
+          "migrationNote": "All DS pages are Astro files — feasible to use <Link variant='footer-nav'>. components.astro already has Link imported. Ironic: the DS components showcase page uses raw link classes in its own navigation."
+        }
+      ],
+
+      "blockedUsages": [
+        {
+          "file": "src/components/global/Header.jsx",
+          "classes": ["nav-link"],
+          "reason": "React island + onClick scroll-to-section behavior. Link renders <a> only — cannot substitute a scroll handler button."
+        },
+        {
+          "file": "src/components/global/Footer.jsx",
+          "classes": ["footer-nav-link"],
+          "reason": "React island. The <button> instances (scroll-to-section) are additionally permanently blocked by element type constraint."
+        }
+      ],
+
+      "notes": "Partially adopted after Phase 4 migration. on-dark (Hero social links) and back (diary pages) variants now use direct imports. nav and footer-nav remain raw — permanently blocked by React island + scroll-button constraint. back-link still raw in DS pages (feasible, not yet migrated). The default variant is not used anywhere in product code."
+    },
+
+    {
+      "id": "icon-button",
+      "metadataFile": "src/components/system/IconButton.metadata.json",
+      "adoptionStatus": "raw-pattern-only",
+
+      "directImportFiles": [],
+
+      "directSourceInstances": 0,
+      "estimatedRuntimeInstances": 0,
+
+      "variantsUsedDirectly":   [],
+      "variantsUsedViaRawCSS":  [],
+      "variantsNotUsed":        [],
+
+      "rawCssMimics": [
+        {
+          "cssClass": "icon-btn",
+          "mapsToVariant": "default",
+          "element": "button",
+          "scope": "product",
+          "foundIn": ["src/components/global/Footer.jsx:73"],
+          "runtimeCount": "1 (copy email button, static)",
+          "migrationStatus": "blocked",
+          "migrationNote": "Footer.jsx is a React island — cannot import IconButton.astro. The raw pattern is the documented correct fallback: <button className='icon-btn' aria-label='...'><Icon size={20} /></button>. This is not a defect."
+        }
+      ],
+
+      "blockedUsages": [
+        {
+          "file": "src/components/global/Footer.jsx",
+          "classes": ["icon-btn"],
+          "reason": "React island cannot import Astro components. Blocked unless Footer is converted to Astro or IconButton is ported to React."
+        }
+      ],
+
+      "notes": "Single known usage, architecturally blocked. No usage in any Astro file — there is no feasible migration opportunity in the current codebase without a structural change."
+    }
+
+  ],
+
+  "summary": {
+    "adoptionStatusCounts": {
+      "adopted":           2,
+      "partially-adopted": 2,
+      "raw-pattern-only":  1,
+      "blocked":           0,
+      "not-used":          0
+    },
+    "totalImportBasedInstances": {
+      "sourceInstances":           13,
+      "estimatedRuntimeInstances": 27,
+      "note": "Badge (4 source / ~14 runtime) + Card (2 source / ~6 runtime) + Button (2 source / 2 runtime) + Link (5 source / 5 runtime)"
+    },
+    "totalRawMimicInstances": {
+      "productScope": {
+        "sourceOccurrences": 5,
+        "estimatedRuntimeInstances": "~N+5",
+        "note": "nav-link (N dynamic) + footer-nav-link as button (N dynamic) + footer-nav-link as a (N dynamic) + work-tag (3) + work-coming-soon-badge (2). Hero and diary raw patterns migrated in Phase 4."
+      },
+      "dsPagesScope": {
+        "sourceOccurrences": 13,
+        "estimatedRuntimeInstances": 13,
+        "note": "Static — 4 back-link + 9 footer-nav-link across DS route pages. Not yet migrated."
+      }
+    },
+    "migrationOpportunities": {
+      "feasible": [
+        "design-system/index.astro — Link back (line 23)",
+        "design-system/dashboard.astro — Link back + footer-nav ×4",
+        "design-system/components.astro — Link back + footer-nav ×4",
+        "design-system/foundations.astro — Link back + footer-nav ×4"
+      ],
+      "permanentlyBlocked": [
+        "Header.jsx nav-link — React island + scroll-to-section button behavior",
+        "Footer.jsx footer-nav-link as button — React island + scroll-to-section button behavior"
+      ],
+      "blocked": [
+        "WorkSection.jsx work-tag — React island",
+        "WorkSection.jsx work-coming-soon-badge — React island",
+        "Footer.jsx footer-nav-link as a — React island",
+        "Footer.jsx icon-btn — React island"
+      ],
+      "migrated": [
+        "Hero.astro — Button primary → <Button variant='primary'>",
+        "Hero.astro — Button secondary → <Button variant='secondary'>",
+        "Hero.astro — Link on-dark ×2 → <Link variant='on-dark' external>",
+        "AboutSection.astro — Badge skill ×6 → <Badge variant='skill'>",
+        "diary/[slug].astro — Link back ×3 → <Link variant='back'> (including scroll-to-top via onclick rest prop)"
+      ]
+    }
+  }
+}

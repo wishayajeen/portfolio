@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
+import Link from '../../components/system/Link.astro';
 
 export async function getStaticPaths() {
   const diaryEntries = await getCollection('diary');
@@ -20,7 +21,7 @@ const { Content } = await render(entry);
 
     <div class="article-header">
       <div class="article-header-inner">
-        <a href="/" class="back-link">← Back home</a>
+        <Link href="/" variant="back">← Back home</Link>
         <p class="article-eyebrow">{entry.data.tag}</p>
         <h1 class="article-title">{entry.data.title}</h1>
         <p class="article-description">{entry.data.description}</p>
@@ -46,8 +47,8 @@ const { Content } = await render(entry);
 
     <div class="article-footer">
       <div class="article-footer-inner">
-        <a href="/" class="back-link">← Back home</a>
-        <a href="#" onclick="window.scrollTo({ top: 0, behavior: 'smooth' }); return false;" class="back-link">↑ Top</a>
+        <Link href="/" variant="back">← Back home</Link>
+        <Link href="#" variant="back" onclick="window.scrollTo({ top: 0, behavior: 'smooth' }); return false;">↑ Top</Link>
       </div>
     </div>
 

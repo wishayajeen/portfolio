@@ -1,0 +1,182 @@
+{
+  "id": "link",
+  "label": "Link",
+  "file": "src/components/system/Link.astro",
+  "addedInVersion": "0.3.0",
+  "status": "stable",
+  "astroOnly": true,
+
+  "purpose": "Unified anchor component. Covers all link contexts across the site through a single variant prop. Always renders as <a> — never a button. Replaces 6 previously ad-hoc link styles (nav-link, hero-social-link, footer-link, footer-contact-link, social-pill, article-back-link). The external prop adds target and rel attributes automatically.",
+
+  "contentModel": "slot",
+
+  "props": [
+    {
+      "name": "href",
+      "type": "string",
+      "required": true,
+      "default": null,
+      "description": "Destination URL. Always required — Link has no buttonless fallback. Use Button for actions that do not navigate."
+    },
+    {
+      "name": "variant",
+      "type": "'default' | 'on-dark' | 'nav' | 'back' | 'footer-nav'",
+      "required": false,
+      "default": "default",
+      "description": "Controls which CSS class is applied and which surface the link is designed for. Surface matching is mandatory — see accessibility rules."
+    },
+    {
+      "name": "external",
+      "type": "boolean",
+      "required": false,
+      "default": false,
+      "description": "When true, adds target='_blank' rel='noopener noreferrer'. Required for all links that open in a new tab. Do not add target='_blank' manually and omit external — the rel will be missing."
+    },
+    {
+      "name": "class",
+      "type": "string",
+      "required": false,
+      "default": null,
+      "description": "Appended to the generated class string. Use for one-off overrides only."
+    },
+    {
+      "name": "...rest",
+      "type": "any",
+      "required": false,
+      "default": null,
+      "description": "Spread onto the <a> element. Use for aria-label, data-*, aria-current."
+    }
+  ],
+
+  "variants": [
+    {
+      "id": "default",
+      "cssClass": null,
+      "surface": "light",
+      "restState": "--fg-primary text, box-shadow underline",
+      "hoverState": "box-shadow floods dark, text → --fg-on-dark-accent (yellow)",
+      "description": "No CSS class applied — relies entirely on the global a {} rule in tokens.css. For inline links in body copy, articles, or any light surface. The global rule applies automatically to bare <a> elements too."
+    },
+    {
+      "id": "on-dark",
+      "cssClass": "hero-social-link",
+      "surface": "dark",
+      "restState": "--fg-on-dark-primary text, box-shadow underline",
+      "hoverState": "box-shadow floods light, text → --fg-primary (dark)",
+      "description": "Inline links within dark-surface sections (hero social row, dark callout blocks). Mirror of default — same underline pattern, inverted colors."
+    },
+    {
+      "id": "nav",
+      "cssClass": "nav-link",
+      "surface": "dark",
+      "restState": "--fg-on-dark-primary text, pill shape, no underline",
+      "hoverState": "text → --fg-on-dark-accent (yellow)",
+      "description": "Navigation items styled as pill-buttons. Used in the header nav. Always renders as <a> — if an action needs a click handler instead of navigation, use a raw <button> with class='nav-link'."
+    },
+    {
+      "id": "back",
+      "cssClass": "back-link",
+      "surface": "dark",
+      "restState": "--fg-on-dark-label (muted), no underline",
+      "hoverState": "text → --fg-on-dark-primary (white)",
+      "description": "Back/return navigation from detail pages. Carries margin-bottom: 40px — intentional for the article/page header context. Use only at the top of a dark page header where back navigation belongs."
+    },
+    {
+      "id": "footer-nav",
+      "cssClass": "footer-nav-link",
+      "surface": "dark",
+      "restState": "--fg-on-dark-label (muted), no underline",
+      "hoverState": "text → --fg-on-dark-primary (white)",
+      "description": "Plain text navigation items in the footer bottom bar. No pill shape — just text color transitions. Distinct from back: no margin, no arrow implied."
+    }
+  ],
+
+  "allowedHTMLOutput": ["a"],
+  "renderRule": "Always renders as <a>. There are no conditional element types. If you need a <button> that looks like nav-link or footer-nav-link (for onClick scroll behavior), use a raw <button> with the CSS class directly — Link cannot be used for this.",
+
+  "accessibility": [
+    "href is always required — do not pass '#' or 'javascript:void(0)' as href",
+    "Surface matching is mandatory: default (--fg-primary) on dark surfaces produces ~1.1:1 contrast — invisible. on-dark/nav/back/footer-nav use white/muted white — invisible on light surfaces",
+    "external prop must be used for any link opening in a new tab — it adds rel='noopener noreferrer' which prevents window.opener exploitation",
+    "back variant carries margin-bottom: 40px — if used outside an article/page header context, override with class or a wrapper",
+    "default variant applies no class — the element will render with no class attribute. This is correct; do not add class='default' as a workaround",
+    "For links with icon-only content (no visible text), always add aria-label via ...rest"
+  ],
+
+  "whenToUse": [
+    "default: inline links in body copy, diary article content, or any light surface where a prominent underlined link is appropriate",
+    "on-dark: inline links within dark sections (hero social row, dark callout blocks)",
+    "nav: navigation items that look like pills and navigate to anchors or pages (header nav links)",
+    "back: 'Back' or 'return' navigation at the top of a detail page (article back link, DS page top bar)",
+    "footer-nav: plain text navigation links in the footer bottom bar or DS sub-nav"
+  ],
+
+  "whenNotToUse": [
+    "default on dark surfaces — --fg-primary (black) text on --bg-dark is invisible",
+    "on-dark, nav, back, or footer-nav on light surfaces — all use white or muted white text, unreadable on light backgrounds",
+    "nav when you need a visible URL in browser status bar — nav is styled as a button shape; use default for traditional visible link appearance",
+    "back for any link that is not backwards navigation — the bottom margin assumes article/page header context",
+    "Inside React files (.jsx) — Link.astro cannot be imported into JSX islands",
+    "In place of Button when an action does not navigate — Link always renders <a>; actions without destinations need <button>"
+  ],
+
+  "knownRawCSSMimics": [
+    {
+      "cssClass": "hero-social-link",
+      "mapsToVariant": "on-dark",
+      "element": "a",
+      "foundIn": [
+        "src/components/home/Hero.astro:60",
+        "src/components/home/Hero.astro:61"
+      ],
+      "runtimeCount": "2 (GitHub, LinkedIn)",
+      "migrationStatus": "feasible",
+      "migrationNote": "Hero.astro is an Astro file — can import Link and use <Link variant='on-dark' external>."
+    },
+    {
+      "cssClass": "nav-link",
+      "mapsToVariant": "nav",
+      "element": "button",
+      "foundIn": ["src/components/global/Header.jsx:37"],
+      "runtimeCount": "N (one per nav item, onClick scroll-to-section)",
+      "migrationStatus": "permanently-blocked",
+      "migrationNote": "Two blockers: (1) Header.jsx is a React island — cannot import Link.astro. (2) These are <button> elements driving onClick scroll behavior; Link always renders <a> and cannot carry click-handler-only scroll navigation."
+    },
+    {
+      "cssClass": "footer-nav-link",
+      "mapsToVariant": "footer-nav",
+      "element": "button",
+      "foundIn": ["src/components/global/Footer.jsx:116"],
+      "runtimeCount": "N (scroll-to-section items)",
+      "migrationStatus": "permanently-blocked",
+      "migrationNote": "Same dual blocker as Header nav-link: React island + onClick scroll behavior. Must remain <button> with raw CSS class."
+    },
+    {
+      "cssClass": "footer-nav-link",
+      "mapsToVariant": "footer-nav",
+      "element": "a",
+      "foundIn": ["src/components/global/Footer.jsx:145"],
+      "runtimeCount": "N (external links: GitHub, LinkedIn, etc.)",
+      "migrationStatus": "blocked",
+      "migrationNote": "Footer.jsx is a React island — cannot import Link.astro. Could be migrated if Footer were converted to Astro."
+    },
+    {
+      "cssClass": "back-link",
+      "mapsToVariant": "back",
+      "element": "a",
+      "foundIn": [
+        "src/pages/diary/[slug].astro:23",
+        "src/pages/diary/[slug].astro:49",
+        "src/pages/diary/[slug].astro:50"
+      ],
+      "runtimeCount": "3 (top back home, bottom back home, bottom scroll-to-top)",
+      "migrationStatus": "feasible",
+      "migrationNote": "diary/[slug].astro is an Astro file. Note: the scroll-to-top link (line 50) uses onclick='window.scrollTo...' — if migrated to Link, the onclick behavior would need to be handled differently (data attribute + inline script, or keep as raw <a>)."
+    }
+  ],
+
+  "usageConstraints": {
+    "canImportInJSX": false,
+    "reason": "Link.astro cannot be imported into .jsx React islands. Additionally, nav-link and footer-nav-link as <button> elements are permanently blocked from migration because Link always renders <a> — the <button> element type is required for scroll-to-section behavior."
+  }
+}

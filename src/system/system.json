@@ -1,11 +1,11 @@
 {
   "name": "Jeen Design System",
-  "version": "0.6.7",
-  "lastUpdated": "2026-05-13",
+  "version": "0.6.12",
+  "lastUpdated": "2026-05-14",
   "release": {
-    "version": "0.6.7",
-    "lastUpdated": "2026-05-13",
-    "notes": "Added failure-modes.md: taxonomy of AI collaboration failure patterns. Added governance block to system.json. Linked from CLAUDE.md inventory table."
+    "version": "0.6.12",
+    "lastUpdated": "2026-05-14",
+    "notes": "Phase 4 migration + audit: Hero, AboutSection, diary pages migrated to system components (Button adopted, Link partially adopted, Badge skill variant). Fixed Hero.astro SVG squiggle hardcoded hex → var(--color-yellow). resolvedDiscrepancies: 12."
   },
   "owner": "Jeen (wishayajeen)",
   "coOwner": "Pocky",
@@ -21,10 +21,10 @@
     "variantTotal": 15,
     "totalInstances": null,
     "diaryEntryCount": 2,
-    "openDiscrepancies": 6,
-    "openCriticalDiscrepancies": 2,
-    "resolvedDiscrepancies": 8,
-    "decisionDiscrepancies": 2
+    "openDiscrepancies": 5,
+    "openCriticalDiscrepancies": 1,
+    "resolvedDiscrepancies": 11,
+    "decisionDiscrepancies": 3
   },
 
   "sourceOfTruth": {
@@ -33,6 +33,14 @@
     "components": "src/components/",
     "content": "src/content/",
     "system": "src/system/system.json"
+  },
+
+  "observability": {
+    "generatedRegistry": "src/system/system.generated.json",
+    "componentMetadata": "src/components/system/*.metadata.json",
+    "purpose": "system.generated.json records actual code-derived usage — import counts, raw CSS mimics, adoption status, and migration blockers. It is separate from this file, which is the intended registry. Dashboard adoption data must come from system.generated.json, not from this file's relationships block.",
+    "methodology": "Manual static analysis as of 2026-05-14. Future: automated grep-based generation.",
+    "lastGeneratedAt": "2026-05-14"
   },
 
   "governance": {
@@ -366,7 +374,7 @@
       "design-system-foundations": ["layout"],
       "design-system-components": ["layout"],
       "design-system-dashboard": ["layout"],
-      "diary-slug": ["layout"]
+      "diary-slug": ["layout", "link"]
     },
     "routeUsesSections": {
       "home": ["hero", "playground", "about", "work"],
@@ -395,17 +403,17 @@
     },
     "sectionsUseComponents": {
       "note": "Only lists src/components/system/* imports — raw CSS class usage in a section does not count.",
-      "hero":       [],
+      "hero":       ["button", "link"],
       "playground": ["card", "badge"],
-      "about":      [],
+      "about":      ["badge"],
       "work":       []
     },
     "componentUsedInSections": {
       "_note": "Inverse of sectionsUseComponents. Only populated for components with at least one direct import.",
-      "badge":       ["playground"],
+      "badge":       ["playground", "about"],
       "card":        ["playground"],
-      "button":      [],
-      "link":        [],
+      "button":      ["hero"],
+      "link":        ["hero"],
       "icon-button": [],
       "header":      [],
       "footer":      [],
@@ -677,12 +685,13 @@
     },
     {
       "id": "footer-copy-btn-contrast",
-      "status": "open",
+      "status": "resolved",
       "area": "a11y",
-      "severity": "critical",
-      "title": ".footer-copy-btn uses --color-gray-500 on dark surface — WCAG AA fail",
-      "body": "homepage.css line ~1105: .footer-copy-btn has color:var(--color-gray-500) (#6A6A60). Footer background is --bg-dark (#0A0A0A). Contrast ratio ~1.6:1 — fails WCAG AA. Should use --fg-on-dark-label (~5:1) or --fg-on-dark-secondary (~9:1).",
-      "date": "2026-05-04"
+      "title": ".footer-copy-btn contrast — resolved: class renamed, surface changed",
+      "body": "Originally tracked as .footer-copy-btn with --color-gray-500 on dark surface. Audit 2026-05-14: class .footer-copy-btn no longer exists. Copy button now uses .icon-btn (color: --fg-primary = black) inside .footer-cta (background: --bg-accent = yellow). Black on yellow contrast ~17.6:1 — passes WCAG AA. Discrepancy was stale.",
+      "date": "2026-05-04",
+      "resolvedDate": "2026-05-14",
+      "resolvedIn": "5efb7e8"
     },
     {
       "id": "article-meta-contrast",
@@ -759,6 +768,26 @@
       "title": "rgba() tints used in dash-stat state modifiers — intentional, no token equivalent",
       "body": "dashboard v1 stat cards use rgba() tints derived from --color-warning (yellow 6%), --color-error (red 6%), and --color-success (green 6%) for subtle state backgrounds (.dash-stat--warn, --critical, --ok). CLAUDE.md permits rgba tints for subtle overlays when documented. No token for semi-transparent status surfaces exists. Annotated with inline comments in design-system.css.",
       "date": "2026-05-13"
+    },
+    {
+      "id": "hero-svg-squiggle-hex",
+      "status": "resolved",
+      "area": "tokens",
+      "severity": "low",
+      "title": "Hero.astro SVG squiggle used hardcoded #F3FE52 instead of --color-yellow token",
+      "body": "The decorative squiggle SVG in Hero.astro used stroke='#F3FE52' as a presentation attribute — a hardcoded hex where --color-yellow token exists. SVG presentation attributes cannot use CSS var() directly; fixed by switching to style='stroke:var(--color-yellow)' inline style, which supports custom properties. Consistent with .hero-headline-accent { color: var(--color-yellow) } in homepage.css.",
+      "date": "2026-05-14",
+      "resolvedIn": "5efb7e8"
+    },
+    {
+      "id": "dashboard-status-colors-as-text",
+      "status": "resolved",
+      "area": "a11y",
+      "severity": "moderate",
+      "title": "dashboard.astro used --color-warning and --color-success as inline text colors on light surface",
+      "body": "Phase 3 dashboard rewrite introduced three inline contrast violations: (1) color:var(--color-warning) = #F3FE52 (yellow) as text on ds-table light surface (~1:1 contrast); (2) color:var(--color-success) = #3DFE87 (neon green) as text on ds-table light surface (~1.3:1); (3) color:var(--fg-tertiary) at 11px on light surface (2.6:1, fails AA). Fixed: replaced with --fg-primary (bold emphasis) and --fg-secondary (secondary text) respectively. --color-warning and --color-success are safe as backgrounds or on --bg-dark; never use as text on light surfaces.",
+      "date": "2026-05-14",
+      "resolvedIn": "5efb7e8"
     }
   ]
 }

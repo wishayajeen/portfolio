@@ -1,4 +1,6 @@
 ---
+import Badge from '../system/Badge.astro';
+
 interface Props {
   logoSrc: string;
 }
@@ -32,7 +34,7 @@ const stats = [
           </p>
         </div>
         <div class="about-skills">
-          {skills.map((s) => <span class="about-skill-tag">{s}</span>)}
+          {skills.map((s) => <Badge variant="skill" label={s} />)}
         </div>
       </div>
 

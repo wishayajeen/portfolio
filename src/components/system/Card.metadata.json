@@ -1,0 +1,111 @@
+{
+  "id": "card",
+  "label": "Card",
+  "file": "src/components/system/Card.astro",
+  "addedInVersion": "0.3.0",
+  "status": "stable",
+  "astroOnly": true,
+
+  "purpose": "Outer container shell for card-pattern UI. Imposes layout and surface styling only — inner content is entirely free-form via <slot />. Renders as <a> when href is provided (whole card is clickable), <div> otherwise. Introduces no new CSS.",
+
+  "contentModel": "slot",
+
+  "props": [
+    {
+      "name": "variant",
+      "type": "'default' | 'accent' | 'diary'",
+      "required": false,
+      "default": "default",
+      "description": "Controls the CSS class(es) applied to the card shell. Each variant has a distinct layout and surface."
+    },
+    {
+      "name": "href",
+      "type": "string",
+      "required": false,
+      "default": null,
+      "description": "If provided, the entire card becomes an <a> element. Without href, renders as <div>. Do not put other interactive elements (buttons, inputs) inside a Card with href — that creates invalid nested interactives."
+    },
+    {
+      "name": "class",
+      "type": "string",
+      "required": false,
+      "default": null,
+      "description": "Appended to the generated class string after the variant class(es). Never replaces them."
+    },
+    {
+      "name": "...rest",
+      "type": "any",
+      "required": false,
+      "default": null,
+      "description": "Spread onto the root element. Use for target, rel, aria-label, data-* attributes."
+    }
+  ],
+
+  "variants": [
+    {
+      "id": "default",
+      "cssClass": "play-card",
+      "surface": "light",
+      "layout": "column, gap 14px",
+      "description": "Light surface (--bg-primary), hard offset shadow (--shadow-md), border (--border-primary). Lifts on hover (translateY -2px, --shadow-hover). Standard experiment card in the Playground section."
+    },
+    {
+      "id": "accent",
+      "cssClasses": ["play-card", "play-card--accent"],
+      "surface": "light (yellow)",
+      "layout": "column, gap 14px",
+      "description": "Yellow surface (--bg-accent), same shadow and hover as default. Badge tag variant inverts automatically inside accent card (.play-card--accent .play-card-tag: black bg + yellow text). Use sparingly — one accent card per group maximum.",
+      "note": "Applies both play-card and play-card--accent classes."
+    },
+    {
+      "id": "diary",
+      "cssClass": "diary-card",
+      "surface": "light",
+      "layout": "row, align-items: center",
+      "description": "Light surface (--bg-primary), row layout for date-block + content + arrow icon. Hard offset shadow and hover lift same as default. Distinct from default/accent — inner content pattern is different and not interchangeable."
+    }
+  ],
+
+  "allowedHTMLOutput": ["a", "div"],
+  "renderRule": "href provided → renders as <a> (whole card is a link). No href → renders as <div>. Element type is controlled solely by the href prop.",
+
+  "slotStructure": {
+    "note": "Card imposes no inner template. However, each variant has an established inner structure. Follow these for visual consistency.",
+    "default": "play-card-header (Badge + optional coming-soon Badge) → div (play-card-title + play-card-desc) → span.play-card-cta",
+    "accent": "Same inner structure as default",
+    "diary": "div.diary-date-block (diary-date-day + diary-date-month) → div.diary-content (diary-title + diary-meta[Badge + diary-read-time]) → svg.diary-arrow"
+  },
+
+  "accessibility": [
+    "Do not nest interactive elements (buttons, inputs, links) inside a Card that has href — the card is already an <a> and nested interactives are invalid HTML",
+    "When Card has href, add aria-label if the slot content alone is not descriptive enough for screen readers",
+    "The hardcoded SVG arrow stroke (#0A0A0A) in the diary slot pattern is intentional for light surfaces only — do not use the diary pattern on dark surfaces"
+  ],
+
+  "whenToUse": [
+    "default: standard experiment or project cards in the Playground section",
+    "accent: featured or highlighted experiment (use sparingly — one per group max)",
+    "diary: diary/article entry rows in the Playground diary list"
+  ],
+
+  "whenNotToUse": [
+    "diary variant for experiment content — the row layout has no space for a description block",
+    "default or accent variants for diary entries — the column layout has no date-block or arrow pattern",
+    "Nesting interactive elements (buttons, links, inputs) inside a Card with href — creates invalid nested interactives",
+    "Adding custom background, border, or radius styles to the slot content — Card owns the surface",
+    "As a non-card layout primitive — Card carries card-specific styles (shadow, hover lift, border) that are wrong for generic containers"
+  ],
+
+  "knownRawCSSMimics": [],
+
+  "notes": [
+    "accent variant on yellow surface automatically inverts the play-card-tag Badge color (.play-card--accent .play-card-tag applies black bg + yellow text). This is automatic — no extra work needed.",
+    "The diary SVG arrow uses stroke='#0A0A0A' (hardcoded). This is intentional for the light diary card surface. Do not change without a system-level decision.",
+    "Card has no raw CSS mimics found in product code — it is the only system component with 100% import-based usage wherever it appears."
+  ],
+
+  "usageConstraints": {
+    "canImportInJSX": false,
+    "reason": "Card.astro cannot be imported into .jsx React islands (WorkSection.jsx, Footer.jsx, Header.jsx, TweaksPanel.jsx). React islands that need card-like structure must use raw CSS classes (play-card, diary-card) directly."
+  }
+}

@@ -1,6 +1,8 @@
-Audited: 2026-05-13 | Commit: 12a2f20
-Diff-scoped audit — dashboard.astro, design-system.css changed.
+Audited: 2026-05-14 | Commit: 5efb7e8
+Diff-scoped audit — dashboard.astro (Phase 5 IA cleanup), Hero.astro, AboutSection.astro, diary/[slug].astro carried forward from Phase 4.
 Step 1b structural check: all routes, components, diary entries OK.
-Always-scoped contrast: 2 pre-existing open critical violations (footer-copy-btn-contrast, article-meta-contrast) — tracked in discrepancies.
-All dash-* classes added to class-inventory.md. rgba() tints documented as decision entry.
-Build clean. Dashboard v1 shipped (v0.6.6).
+Always-scoped contrast: article-meta-contrast still open critical (pre-existing, no change). No new violations.
+Step 2 hex: zero hex values in any diffed file.
+Step 4: no raw token values in diffed files.
+Step 5/6: no new CSS classes, no standalone shells.
+Build clean (7 pages, 2.00s). Phase 5 dashboard IA cleanup complete.

@@ -1,0 +1,113 @@
+{
+  "id": "icon-button",
+  "label": "Icon Button",
+  "file": "src/components/system/IconButton.astro",
+  "addedInVersion": "0.5.7",
+  "status": "stable",
+  "astroOnly": true,
+
+  "purpose": "Circular icon-only action button. Wraps any Lucide icon (or inline SVG) in a 32×32px circle with a transparent background. Hover and active states reveal --bg-accent-dim (dim yellow). label prop is always required and becomes aria-label. Renders as <button> only — never <a>.",
+
+  "contentModel": "slot",
+
+  "props": [
+    {
+      "name": "label",
+      "type": "string",
+      "required": true,
+      "default": null,
+      "description": "Accessible name for the button. Becomes aria-label on the root <button> element. Required — omitting it fails WCAG SC 4.1.2. Must describe the action, not the icon (e.g. 'Copy email address', not 'Copy icon')."
+    },
+    {
+      "name": "class",
+      "type": "string",
+      "required": false,
+      "default": null,
+      "description": "Appended to 'icon-btn' via class:list. For one-off overrides only. Do not use to change background, width, height, or border-radius — those are controlled by .icon-btn in homepage.css."
+    },
+    {
+      "name": "...rest",
+      "type": "any",
+      "required": false,
+      "default": null,
+      "description": "Spread onto the <button> element. Use for onClick, type, disabled, data-* attributes."
+    }
+  ],
+
+  "variants": [],
+  "variantNote": "No named variants. There is one visual form. Hover and active states are CSS-driven and automatic.",
+
+  "states": [
+    {
+      "name": "default",
+      "description": "Transparent background, --fg-primary icon color"
+    },
+    {
+      "name": "hover",
+      "description": "--bg-accent-dim (#E8F23D at reduced opacity) background, icon color unchanged"
+    },
+    {
+      "name": "active",
+      "description": "Same as hover (background visible, no additional transform)"
+    },
+    {
+      "name": "focus-visible",
+      "description": "2px --color-focus outline, 2px offset"
+    }
+  ],
+
+  "dimensions": {
+    "button": "32×32px",
+    "icon": "20×20px",
+    "note": "Dimensions are hard-coded in .icon-btn. Do not override width, height, or border-radius inline."
+  },
+
+  "allowedHTMLOutput": ["button"],
+  "renderRule": "Always renders as <button>. Never <a>. For icon-based navigation links, use Link with an icon in the slot.",
+
+  "domOutput": "<button class='icon-btn' aria-label='[label]'>[slotted icon]</button>",
+
+  "accessibility": [
+    "label is never optional — aria-label is the only accessible name; there is no visible text label",
+    "label must describe the action, not the icon shape ('Copy email address', not 'Copy')",
+    "Icon must be aria-hidden — in .astro files, Lucide icons from @lucide/astro are aria-hidden by default; in .jsx files using lucide-react, add aria-hidden={true} to the icon",
+    "32×32px minimum touch target is enforced by .icon-btn — do not shrink it",
+    "Focus ring (2px --color-focus outline) must not be suppressed — do not add outline:none"
+  ],
+
+  "whenToUse": [
+    "Icon-only actions where the action context makes the intent clear (copy, share, dismiss, bookmark, like, more options)",
+    "Toolbar-style rows of multiple actions where visible text labels would be too dense",
+    "Utility actions adjacent to content (copy email, share article)"
+  ],
+
+  "whenNotToUse": [
+    "When a visible text label is available — use Button instead; visible labels are always more accessible than icon-only",
+    "As a navigation link — use Link; IconButton always renders <button>, never <a>",
+    "At a size other than 32×32px — dimensions are hard-coded; do not resize with inline styles",
+    "With text content in the slot — the slot is for an icon only; text alongside an icon breaks the circular shape"
+  ],
+
+  "iconGuidance": {
+    "inAstroFiles": "Import from @lucide/astro. Use size={20} (no braces needed in Astro: size=20).",
+    "inJSXFiles": "Import from lucide-react. Use size={20} with JSX braces. Add aria-hidden={true} to the icon element.",
+    "inlineSVG": "Acceptable. Set width='20' height='20'. Add aria-hidden='true' to the SVG."
+  },
+
+  "knownRawCSSMimics": [
+    {
+      "cssClass": "icon-btn",
+      "mapsToVariant": "default",
+      "element": "button",
+      "foundIn": ["src/components/global/Footer.jsx:73"],
+      "runtimeCount": "1 (copy email button)",
+      "migrationStatus": "blocked",
+      "migrationNote": "Footer.jsx is a React island — cannot import IconButton.astro. The raw pattern in Footer.jsx is the documented correct approach for React contexts: <button type='button' className='icon-btn' aria-label='...'><Icon size={20} aria-hidden={true} /></button>."
+    }
+  ],
+
+  "usageConstraints": {
+    "canImportInJSX": false,
+    "reason": "IconButton.astro cannot be imported into .jsx React islands. In React files, use a raw <button className='icon-btn' aria-label='...'> with a lucide-react icon at size={20} and aria-hidden={true}. This is the documented fallback pattern."
+  }
+}
