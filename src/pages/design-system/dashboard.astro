@@ -108,6 +108,23 @@ const dsMimics = genComponents.flatMap((c: any) =>
     .map((m: any) => ({ ...m, componentId: c.id, componentLabel: compLabelMap[c.id] ?? c.id }))
 );
 
+// ── Roadmap
+const roadmap = systemData.roadmap as any[];
+const roadmapNext    = roadmap.filter((r: any) => r.status === 'next');
+const roadmapPlanned = roadmap.filter((r: any) => r.status === 'planned');
+const roadmapLater   = roadmap.filter((r: any) => r.status === 'later');
+
+const roadmapStatusBadge: Record<string, string> = {
+  next:    'ds-badge ds-badge-success',
+  planned: 'ds-badge ds-badge-yellow',
+  later:   'ds-badge ds-badge-outline',
+};
+const roadmapPriorityBadge: Record<string, string> = {
+  high:   'ds-badge ds-badge-error',
+  medium: 'ds-badge ds-badge-yellow',
+  low:    'ds-badge ds-badge-outline',
+};
+
 // ── Activity timeline
 const diaryEntries = systemData.content.collections[0].entries as any[];
 const allActivity = [
@@ -805,6 +822,80 @@ const migrationBadge: Record<string, string> = {
         );
       })}
     </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       08 — ROADMAP
+  ════════════════════════════════════════════════════ -->
+  <section class="ds-section" id="roadmap">
+    <div class="ds-section-header">
+      <span class="ds-section-num">08</span>
+      <h2 class="ds-section-title">Roadmap</h2>
+    </div>
+    <p class="dash-section-desc">Upcoming system work. Source: <code class="ds-code">system.json → roadmap</code>.</p>
+
+    {roadmapNext.length > 0 && (
+      <>
+        <div class="ds-sub-label">Next</div>
+        <div class="dash-issue-list" style="margin-bottom:var(--space-8);">
+          {roadmapNext.map((r: any) => (
+            <div class="dash-issue-row" style="border-left:3px solid var(--color-success);padding-left:var(--space-4);">
+              <div class="dash-issue-badges">
+                <span class={roadmapStatusBadge[r.status]}>Next</span>
+                <span class={roadmapPriorityBadge[r.priority]}>{r.priority}</span>
+              </div>
+              <div class="dash-issue-content">
+                <p class="dash-issue-title">{r.title}</p>
+                <p class="dash-issue-body">{r.description}</p>
+                {r.outcome && <p class="dash-issue-body" style="margin-top:var(--space-1);font-style:italic;">→ {r.outcome}</p>}
+              </div>
+            </div>
+          ))}
+        </div>
+      </>
+    )}
+
+    {roadmapPlanned.length > 0 && (
+      <>
+        <div class="ds-sub-label">Planned</div>
+        <div class="dash-issue-list" style="margin-bottom:var(--space-8);">
+          {roadmapPlanned.map((r: any) => (
+            <div class="dash-issue-row">
+              <div class="dash-issue-badges">
+                <span class={roadmapStatusBadge[r.status]}>Planned</span>
+                <span class={roadmapPriorityBadge[r.priority]}>{r.priority}</span>
+              </div>
+              <div class="dash-issue-content">
+                <p class="dash-issue-title">{r.title}</p>
+                <p class="dash-issue-body">{r.description}</p>
+                {r.outcome && <p class="dash-issue-body" style="margin-top:var(--space-1);font-style:italic;">→ {r.outcome}</p>}
+              </div>
+            </div>
+          ))}
+        </div>
+      </>
+    )}
+
+    {roadmapLater.length > 0 && (
+      <>
+        <div class="ds-sub-label">Later</div>
+        <div class="dash-issue-list">
+          {roadmapLater.map((r: any) => (
+            <div class="dash-issue-row">
+              <div class="dash-issue-badges">
+                <span class={roadmapStatusBadge[r.status]}>Later</span>
+                <span class={roadmapPriorityBadge[r.priority]}>{r.priority}</span>
+              </div>
+              <div class="dash-issue-content">
+                <p class="dash-issue-title">{r.title}</p>
+                <p class="dash-issue-body">{r.description}</p>
+                {r.outcome && <p class="dash-issue-body" style="margin-top:var(--space-1);font-style:italic;">→ {r.outcome}</p>}
+              </div>
+            </div>
+          ))}
+        </div>
+      </>
+    )}
   </section>
 
 </div><!-- end .ds-page -->

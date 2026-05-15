@@ -1,11 +1,11 @@
 {
   "name": "Jeen Design System",
-  "version": "0.6.12",
-  "lastUpdated": "2026-05-14",
+  "version": "0.6.13",
+  "lastUpdated": "2026-05-15",
   "release": {
-    "version": "0.6.12",
-    "lastUpdated": "2026-05-14",
-    "notes": "Phase 4 migration + audit: Hero, AboutSection, diary pages migrated to system components (Button adopted, Link partially adopted, Badge skill variant). Fixed Hero.astro SVG squiggle hardcoded hex → var(--color-yellow). resolvedDiscrepancies: 12."
+    "version": "0.6.13",
+    "lastUpdated": "2026-05-15",
+    "notes": "Add roadmap[] to system.json with 5 items (next/planned/later). Render as section 08 on dashboard. Phase 6 observability automation also ships in this version."
   },
   "owner": "Jeen (wishayajeen)",
   "coOwner": "Pocky",
@@ -788,6 +788,49 @@
       "body": "Phase 3 dashboard rewrite introduced three inline contrast violations: (1) color:var(--color-warning) = #F3FE52 (yellow) as text on ds-table light surface (~1:1 contrast); (2) color:var(--color-success) = #3DFE87 (neon green) as text on ds-table light surface (~1.3:1); (3) color:var(--fg-tertiary) at 11px on light surface (2.6:1, fails AA). Fixed: replaced with --fg-primary (bold emphasis) and --fg-secondary (secondary text) respectively. --color-warning and --color-success are safe as backgrounds or on --bg-dark; never use as text on light surfaces.",
       "date": "2026-05-14",
       "resolvedIn": "5efb7e8"
+    }
+  ],
+
+  "roadmap": [
+    {
+      "id": "dashboard-communication-layer",
+      "title": "Improve dashboard communication layer",
+      "status": "next",
+      "priority": "high",
+      "description": "Refactor how system data is surfaced on the dashboard — clearer data provenance, better separation between registry-declared intent and code-observed adoption, and tighter section descriptions.",
+      "outcome": "Dashboard becomes self-explanatory to a first-time visitor without needing external context."
+    },
+    {
+      "id": "regression-tracking",
+      "title": "Add regression tracking",
+      "status": "next",
+      "priority": "high",
+      "description": "Extend the observability script to detect regressions: raw CSS mimics appearing in files that previously used direct imports, or variant usage dropping out of variantsUsedDirectly.",
+      "outcome": "Migrations cannot silently regress. The script flags regressions on every run."
+    },
+    {
+      "id": "analyze-system-in-review-ds",
+      "title": "Integrate analyze-system into /review-ds",
+      "status": "planned",
+      "priority": "high",
+      "description": "Make /review-ds automatically run npm run analyze-system before auditing, so system.generated.json is always fresh and adoption data in the audit report reflects the current diff.",
+      "outcome": "Single command produces both fresh observability data and a complete audit report. No manual regeneration step."
+    },
+    {
+      "id": "ask-pocky-v0",
+      "title": "Ask Pocky v0",
+      "status": "planned",
+      "priority": "medium",
+      "description": "First version of the AI agent interface — allow visitors to query the design system through Pocky. Backed by system.json and system.generated.json as structured context.",
+      "outcome": "Visitors can ask questions like 'which components are partially adopted?' and get accurate, data-driven answers directly from the system."
+    },
+    {
+      "id": "component-sandbox",
+      "title": "Component sandbox",
+      "status": "later",
+      "priority": "medium",
+      "description": "An interactive playground where visitors can configure component props and see live rendered output. Each system component (Badge, Button, Card, Link, IconButton) would have a sandbox pane on the components page.",
+      "outcome": "The components page becomes a hands-on reference, not just documentation."
     }
   ]
 }

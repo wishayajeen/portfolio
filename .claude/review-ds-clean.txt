@@ -1,7 +1,10 @@
-Audited: 2026-05-15 | Commit: 73dce30
-Diff-scoped audit — scripts/analyze-system.mjs (new), src/system/observability.md (new), package.json, system.generated.json (regenerated).
+Audited: 2026-05-15 | Commit: eb13a54
+Diff-scoped audit — dashboard.astro (section 08 roadmap), system.json (roadmap[] + v0.6.13).
 Step 1b structural check: all routes, components, diary entries OK.
 Always-scoped contrast: article-meta-contrast still open critical (pre-existing). No new violations.
-Step 2: no hex values in new/modified files.
-Step 4/5/6: no raw token values, no new CSS classes, no standalone shells.
-Build clean (7 pages, 1.97s). Phase 6 observability automation complete (v0.6.12 — no system.json bump needed, no structural/component changes).
+Step 2: hex values in system.json are inside documentation body strings — exempt.
+Step 4: no raw token values in diffed files.
+Step 5: zero new CSS classes — roadmap section reuses dash-issue-*, ds-sub-label, ds-badge-*.
+Step 5b: no system component files changed.
+Step 6: no standalone shells.
+Build clean (7 pages, 1.96s). Roadmap section added (v0.6.13).
