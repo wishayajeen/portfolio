@@ -1,8 +1,7 @@
-Audited: 2026-05-14 | Commit: 5efb7e8
-Diff-scoped audit — dashboard.astro (Phase 5 IA cleanup), Hero.astro, AboutSection.astro, diary/[slug].astro carried forward from Phase 4.
+Audited: 2026-05-15 | Commit: 73dce30
+Diff-scoped audit — scripts/analyze-system.mjs (new), src/system/observability.md (new), package.json, system.generated.json (regenerated).
 Step 1b structural check: all routes, components, diary entries OK.
-Always-scoped contrast: article-meta-contrast still open critical (pre-existing, no change). No new violations.
-Step 2 hex: zero hex values in any diffed file.
-Step 4: no raw token values in diffed files.
-Step 5/6: no new CSS classes, no standalone shells.
-Build clean (7 pages, 2.00s). Phase 5 dashboard IA cleanup complete.
+Always-scoped contrast: article-meta-contrast still open critical (pre-existing). No new violations.
+Step 2: no hex values in new/modified files.
+Step 4/5/6: no raw token values, no new CSS classes, no standalone shells.
+Build clean (7 pages, 1.97s). Phase 6 observability automation complete (v0.6.12 — no system.json bump needed, no structural/component changes).
