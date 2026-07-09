@@ -1,11 +1,11 @@
 {
   "name": "Jeen Design System",
-  "version": "0.6.13",
-  "lastUpdated": "2026-05-15",
+  "version": "0.6.14",
+  "lastUpdated": "2026-07-09",
   "release": {
-    "version": "0.6.13",
-    "lastUpdated": "2026-05-15",
-    "notes": "Add roadmap[] to system.json with 5 items (next/planned/later). Render as section 08 on dashboard. Phase 6 observability automation also ships in this version."
+    "version": "0.6.14",
+    "lastUpdated": "2026-07-09",
+    "notes": "Added diary entry: 'I Let AI Audit 10 Web Pages While I Made Tea ☕'. Bumped diaryEntryCount to 3."
   },
   "owner": "Jeen (wishayajeen)",
   "coOwner": "Pocky",
@@ -20,7 +20,7 @@
     "componentCount": 9,
     "variantTotal": 15,
     "totalInstances": null,
-    "diaryEntryCount": 2,
+    "diaryEntryCount": 3,
     "openDiscrepancies": 5,
     "openCriticalDiscrepancies": 1,
     "resolvedDiscrepancies": 11,
@@ -456,7 +456,7 @@
         "path": "src/content/diary/",
         "format": "markdown",
         "autoSync": false,
-        "lastSynced": "2026-05-09",
+        "lastSynced": "2026-07-09",
         "frontmatterSchema": ["title", "date", "tag", "readTime", "description"],
         "entries": [
           {
@@ -472,6 +472,13 @@
             "date": "2026-05-08",
             "tag": "Workflow",
             "readTime": "5 min"
+          },
+          {
+            "slug": "i-let-ai-audit-10-web-pages-while-i-made-tea",
+            "title": "I Let AI Audit 10 Web Pages While I Made Tea ☕",
+            "date": "2026-05-14",
+            "tag": "Tutorial",
+            "readTime": "7 min"
           }
         ]
       }
