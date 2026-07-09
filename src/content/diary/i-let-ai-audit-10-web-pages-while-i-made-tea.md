@@ -1,7 +1,7 @@
 ---
 title: "I Let AI Audit 10 Web Pages While I Made Tea ☕"
 description: "How I used Claude Code, Playwright, and ChatGPT to automate a typography audit and save hours of repetitive work."
-date: 2026-05-14
+date: 2026-07-09
 tag: "Tutorial"
 readTime: "7 min"
 ---
