@@ -213,6 +213,8 @@ The real value is having a complete inventory of everything the browser found. W
 
 This inventory became my source of truth for reviewing and validating AI's work throughout the rest of the audit.
 
+![Per-page typography inventory table showing Style ID, font family, size, weight, line height, letter spacing, color, and section for each unique text style found on a page](../../assets/diary/typography-inventory.png)
+
 ---
 
 ## Step 5 — Time for a Different AI
@@ -266,6 +268,8 @@ Instead of manually comparing every font size across ten pages, I could immediat
 - Is this actually from a third-party widget?
 
 Now *that's* the interesting work.
+
+![Typography Mapping Table showing existing styles grouped by proposed design system token, with current usage, pages found, and inventory references](../../assets/diary/mapping-table.png)
 
 ---
 
