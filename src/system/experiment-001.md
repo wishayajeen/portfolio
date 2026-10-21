@@ -2,46 +2,47 @@
 
 **Status:** Active  
 **Owner:** Jeen (wishayajeen) + Claude  
-**Goal:** Measure whether structured design system context improves AI agent accuracy on real implementation tasks.  
+**Goal:** Measure whether documentation structure affects how reliably AI agents discover and apply existing design system rules on real implementation tasks.  
 **Talk context:** XConf Brazil 2026 (Nov 5, 2026) — content freeze target: Oct 26, 2026.
 
 ---
 
 ## The question
 
-Does the way design system knowledge is structured and delivered to an AI agent affect how accurately it implements tasks?
+Does the structure of design system documentation affect how reliably an AI agent discovers and applies existing rules when implementing a real task?
 
 ---
 
 ## Test task
 
-**Hero CTA button behavior change.**
+**Hero CTA component change.**
 
-The hero section (`src/components/home/Hero.astro`) contains:
+The hero section (`src/components/home/Hero.astro`) currently contains:
 
 ```astro
-<button onclick="window.location.href='/design-system/dashboard'">Explore dashboard →</button>
+<Button variant="secondary" label="Explore dashboard →" onclick="window.location.href='/design-system/dashboard'" />
 ```
 
-**Task prompt given to the agent:**
+`Button.astro` renders as `<button>` when no `href` is passed, and as `<a href="...">` when `href` is passed. The `.hero-cta-secondary` class it applies already contains overrides for the global `a {}` cascade.
+
+**Task prompt given to the agent (identical across all conditions and runs):**
 
 > "The hero CTA should link to /design-system/dashboard. Make it work like a proper link so users can right-click, open in a new tab, and it shows up in tab navigation."
 
-This is a trap task. The request implies swapping `<button>` to `<a>`. The correct answer depends on whether the agent knows:
-1. The global `a {}` rule in `tokens.css` applies box-shadow underlines and yellow hover color to all `<a>` elements
-2. The project's architectural invariant: preserve element type unless explicitly required to change it
-3. The failure mode documented in `failure-modes.md`
+**What the task actually tests:**
+The task tests whether the agent discovers and uses the existing component API (`Button.astro href` prop) rather than introducing a raw `<a>` element or a different approach. The correct implementation is a single prop change on the existing component. Agents who don't know `Button.astro` exists, or don't read its API, are more likely to reach for a raw element or write new CSS.
 
-**Correct answer:** The button should become an `<a>` element, but the agent must handle ALL style side-effects upfront — specifically resetting `box-shadow`, `color`, `text-decoration`, and any line-height differences from the global `a {}` rule. The agent that simply swaps the element type without addressing the cascade fails.
+**Note on task design:** Because `Button.astro` handles the link rendering and cascade internally, an agent that discovers the component API faces minimal cascade risk — the component already manages it. This makes the primary test about component discovery and system knowledge, not cascade awareness in isolation. If the dry run reveals this makes the task too trivial to distinguish between conditions, the task prompt or baseline state will be revisited before freezing the protocol.
 
 **Pass / fail criteria:**
 
 | Criterion | Pass | Fail |
 |---|---|---|
-| Element type | `<a>` (link semantics explicitly requested) | Stays as `<button>` with `onclick` |
-| Cascade awareness | Resets or anticipates global `a {}` side-effects | Doesn't acknowledge cascade risk |
-| Visual correctness | No regressions in button appearance | Global `a {}` styles bleed through |
-| Reasoning shown | Agent explains why it's handling the cascade | Agent swaps element silently |
+| Functional correctness | Link navigates to `/design-system/dashboard` with native link semantics | `onclick` approach retained; no real link behavior |
+| Implementation approach | Uses `Button.astro` with `href` prop | Introduces raw `<a>` element or new CSS |
+| Cleanup | Removes orphaned `onclick` prop | Leaves `onclick` alongside `href` |
+| Visual correctness | No regressions in button appearance | Cascade styles bleed or layout breaks |
+| Reasoning shown | Agent explains component API discovery | Agent acts without referencing existing components |
 
 ---
 
@@ -49,35 +50,35 @@ This is a trap task. The request implies swapping `<button>` to `<a>`. The corre
 
 ### Condition A — Existing repo (current guardrails baseline)
 
-The agent works in the repository as it currently exists, including `CLAUDE.md` (which documents the element-type rule and links the `tokens.css` global `a {}` rule explicitly).
+The agent works in the repository as it currently exists. `CLAUDE.md` is present and unmodified — it documents architectural constraints and element-type rules. The agent has normal repository access.
 
-> **Framing note (pending):** Condition A is not zero-context. `CLAUDE.md` already documents the exact rule that makes this task a trap. This makes A a "guardrails baseline" — testing whether the agent actually reads and applies documented rules, not whether it can reason from scratch.
->
-> **Decision needed:** Should we remove or redact the element-type section from `CLAUDE.md` for Condition A runs to create a truer zero-context baseline? Or document A as "existing guardrails" and accept that limitation in the write-up?
->
-> _(User to confirm before runs begin)_
+**Condition A is a guardrails baseline** — it measures how accurately the agent implements the task using the repository as it currently stands, without any additional documentation structure. It is not a zero-context baseline.
 
-**Context given:** Normal `claude` session in this repo. No extra files or instructions.
+**Context given:** Normal repository session. No extra files, no additional instructions beyond the task prompt.
 
 ---
 
 ### Condition B — Consolidated document
 
-The agent receives a single flat document containing all design system knowledge relevant to this task (tokens summary, component contracts, element-type rules, `a {}` cascade warning, failure modes).
+The agent has the same repository access as Condition A, including `CLAUDE.md`. Additionally, it receives a single consolidated document covering the full design system knowledge: token usage, component contracts, architectural rules, and failure modes. The agent is instructed to consult this document.
 
-**Context given:** The document is passed as a system prompt or prepended as a context file. The agent does not navigate the repo.
+The consolidated document contains knowledge equivalent to Condition C's modular architecture. The variable is organization, not content.
 
-**What this tests:** Does having everything in one place — rather than distributed across files — improve accuracy? Or does a single large document create noise?
+**Context given:** Normal repository session + consolidated design system document. Agent instructed to consult the provided document.
+
+**What this tests:** Does a single organized document improve accuracy compared to navigating a distributed repository?
 
 ---
 
-### Condition C — DESIGN.md routing (modular entry point)
+### Condition C — Modular architecture (DESIGN.md routing)
 
-The agent starts from [`DESIGN.md`](../../DESIGN.md) and navigates to the relevant authoritative files itself (tokens, component inventory, failure modes) before attempting the task.
+The agent has the same repository access as Condition A, including `CLAUDE.md`. Additionally, it is instructed to read `DESIGN.md` first, which routes to the knowledge architecture in `src/system/design-system/` (foundations, component CRDs, governance).
 
-**Context given:** The agent is told to read `DESIGN.md` first. It must route itself to the correct files.
+The underlying design knowledge available is equivalent to Condition B. The variable is whether a modular, navigable structure improves how the agent discovers and applies relevant rules.
 
-**What this tests:** Does a structured entry point that routes to authoritative sources outperform both the flat doc and the existing-guardrails baseline?
+**Context given:** Normal repository session. Agent instructed to read `DESIGN.md` first before starting the task.
+
+**What this tests:** Does a routed, modular documentation structure produce different outcomes than a consolidated document or the existing repository baseline?
 
 ---
 
@@ -99,9 +100,10 @@ To isolate the variable (context structure), hold everything else constant:
 ## Execution plan
 
 ### Before runs
-- [ ] Pin a commit hash as the base state for all runs
-- [ ] Confirm Condition A framing (see note above)
-- [ ] Write the Condition B consolidated document
+- [ ] Pin a commit hash as the base state for all runs (freeze before any further documentation migrations)
+- [ ] Write the Condition B consolidated document (full system knowledge, equivalent to Condition C)
+- [ ] Conduct dry run to validate task prompt and evaluation process
+- [ ] Freeze the protocol after the dry run — no changes during live runs
 - [ ] Verify Hero.astro is still in baseline state
 
 ### Run protocol (per condition, per run)
@@ -121,12 +123,15 @@ To isolate the variable (context structure), hold everything else constant:
 
 ## Hypothesis
 
-Condition C (DESIGN.md routing) will outperform B (consolidated) and A (existing repo) because:
-- It forces the agent to read authoritative files rather than relying on memory or a long flat document
-- Routing to specific files surfaces relevant constraints at decision time
-- It mirrors how human designers actually use a design system — navigate to what you need
+Documentation structure may improve how reliably agents discover and apply existing system rules. Each condition adds a different type of structure above the existing baseline, so observable differences in implementation correctness (functional, semantic, visual, cleanup) are attributable to structure rather than content.
 
-B may outperform A because a consolidated document reduces the chance the agent misses a rule distributed across files. A may already perform well if the agent reads `CLAUDE.md` carefully — this is one reason the Condition A framing matters.
+**Open questions the experiment may help answer:**
+- Does Condition A (existing repo + CLAUDE.md) already produce reliable outcomes, making additional structure unnecessary?
+- Does consolidation (B) help or create noise for an agent that can read files directly?
+- Does modular navigation (C) produce different outcomes from consolidation when underlying knowledge is equivalent?
+- Does the task design (trivially solvable by reading Button.astro) create a ceiling effect across all conditions?
+
+The experiment is exploratory at 3 runs per condition. Results will be reported honestly, including null results and ceiling effects.
 
 ---
 

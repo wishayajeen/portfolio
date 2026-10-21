@@ -52,6 +52,16 @@ The dashboard at `/design-system/dashboard` renders these entries. Edit them in 
 
 The audit history in `src/system/failure-modes.md` is separate from the discrepancy log. `failure-modes.md` is a taxonomy of recurring AI collaboration failure patterns — it documents systemic risks, not instance-level issues. Do not edit it to log individual discrepancies.
 
+## Authority model
+
+`CLAUDE.md` currently serves two purposes: agent-operational instructions (constraints, element type rules, checklist) and design rationale (contrast tables, token explanations). That dual role is a historical artifact — it was the first-loaded, always-available file.
+
+Long-term, the `src/system/design-system/` folder is the intended home for design rationale, principles, and decisions. `CLAUDE.md` should slim down to operational instructions and pointers. Until that migration is complete:
+
+- **For agent constraints and hard rules:** `CLAUDE.md` is authoritative
+- **For design reasoning and "why":** `foundations.md`, component CRDs, and this folder are the emerging authority
+- **Do not duplicate rules between the two** — if a rule exists in CLAUDE.md, link to it from here rather than restating it
+
 ## Roadmap
 
 The roadmap is currently tracked in `system.json roadmap[]`. This location is under review — a dependency audit of `dashboard.astro` is needed to determine whether the roadmap data is consumed there before any migration. Until that audit is complete, continue adding roadmap items to `system.json roadmap[]`.

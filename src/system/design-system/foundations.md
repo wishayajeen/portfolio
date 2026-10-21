@@ -37,7 +37,9 @@ The most common mistake: using `--fg-secondary` or `--fg-tertiary` on a dark sur
 
 ## Why `--fg-tertiary` is restricted
 
-`--fg-tertiary` (#9A9A90) passes WCAG AA on dark surfaces (~5:1) but **fails** on light surfaces (~2.6:1). It is labelled "light bg only" in the token table because it was designed for labeled/secondary text on `--bg-dark`, not for general body text on `--bg-primary` or `--bg-surface`.
+`--fg-tertiary` (#9A9A90) is designed for **light surfaces only**. It fails WCAG AA at ~2.6:1 on `--bg-primary` and `--bg-surface`, and should not be used for body text or any readable text smaller than large display size.
+
+For dark surfaces, the corresponding token is `--fg-on-dark-label` (same underlying color value, ~5:1 on `--bg-dark`, safe for large text). Use the right token for the surface — the names encode which surface each token belongs to. Mixing them is a semantic error even when the raw contrast happens to pass.
 
 Use `--fg-secondary` as the minimum contrast for any readable text on light surfaces.
 
@@ -47,15 +49,15 @@ The global `a {}` rule in `tokens.css` applies to **all `<a>` elements sitewide*
 - `box-shadow`: yellow offset underline effect
 - `color` on `:hover`: yellow (`--color-yellow`)
 
-This cascade cannot be escaped by adding a class — it applies before any class-scoped styles. Any component or element that renders as `<a>` must override these defaults explicitly.
+A class selector has higher specificity than an element selector, so a class-scoped rule **can** override these global styles. The risk is not that overriding is impossible — it's that any `<a>` element without an explicit overriding class will inherit the global styles by default.
 
-**What needs overriding:**
-1. `box-shadow` (the underline effect)
-2. `color` on `:hover` (yellow bleeds through)
-3. `text-decoration` (browser defaults differ from `<button>`)
-4. `line-height` (different default from `<button>`)
+**What may need overriding** (audit each one; not all always apply):
+- `box-shadow` — the underline effect
+- `color` on `:hover` — yellow bleeds through
+- `text-decoration` — browser defaults differ between `<a>` and `<button>`
+- `line-height` — different default from `<button>`
 
-**What already handles this:** `Button.astro` (via `.hero-cta-primary`), `Link.astro` (via its own variants). If you add a new `<a>` element outside these components, you must handle all four explicitly.
+**What already handles this:** `Button.astro` (via `.hero-cta-primary` and `.hero-cta-secondary`), `Link.astro` (via its own variants). When using these components, the overrides are in place. If you add a raw `<a>` element outside these components, audit all four properties explicitly.
 
 → For documented failure patterns from missing these overrides: [`failure-modes.md` → Architectural Blindness](../failure-modes.md), [Semantic Element Drift](../failure-modes.md)
 → For the element type decision rule: [`CLAUDE.md` → Element type rules](../../../CLAUDE.md#element-type-rules)
