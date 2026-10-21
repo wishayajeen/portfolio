@@ -31,11 +31,20 @@ The guiding principle: **one authoritative origin per decision, not one file con
 
 Tokens are the only source of truth for colors, radii, shadows, and type. Never hardcode a hex value, font name, or spacing value if a token exists.
 
-### Components — what exists and how to use it
+### Design knowledge — foundations, components, patterns, governance
+| What | File |
+|---|---|
+| Token usage principles, surface model, cascade architecture | [`src/system/design-system/foundations.md`](./src/system/design-system/foundations.md) |
+| Component index, ownership table, cross-cutting rules | [`src/system/design-system/components.md`](./src/system/design-system/components.md) |
+| Per-component design intent (CRDs) | `src/system/design-system/components/*.crd.md` *(M2b/M2c — in progress)* |
+| Versioning, contribution process, discrepancy log | [`src/system/design-system/governance.md`](./src/system/design-system/governance.md) |
+| Composition patterns | [`src/system/design-system/patterns.md`](./src/system/design-system/patterns.md) *(stub)* |
+
+### Components — machine-readable
 | What | File |
 |---|---|
 | Machine-readable component registry | [`src/system/system.json`](./src/system/system.json) |
-| Human-readable component docs | [`src/system/component-inventory.md`](./src/system/component-inventory.md) |
+| Human-readable component docs (current monolith) | [`src/system/component-inventory.md`](./src/system/component-inventory.md) |
 | Component contracts (props, variants, HTML output) | `src/components/system/*.metadata.json` |
 | Actual adoption data (import counts, mimics) | [`src/system/system.generated.json`](./src/system/system.generated.json) |
 
