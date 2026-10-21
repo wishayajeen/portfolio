@@ -1,11 +1,11 @@
 {
   "name": "Jeen Design System",
-  "version": "0.6.14",
-  "lastUpdated": "2026-07-09",
+  "version": "0.6.15",
+  "lastUpdated": "2026-10-21",
   "release": {
-    "version": "0.6.14",
-    "lastUpdated": "2026-07-09",
-    "notes": "Added diary entry: 'I Let AI Audit 10 Web Pages While I Made Tea ☕'. Bumped diaryEntryCount to 3."
+    "version": "0.6.15",
+    "lastUpdated": "2026-10-21",
+    "notes": "Milestone 1: added DESIGN.md (agent entry point), experiment-001.md, and agentEntryPoint to governance in system.json."
   },
   "owner": "Jeen (wishayajeen)",
   "coOwner": "Pocky",
@@ -44,10 +44,12 @@
   },
 
   "governance": {
+    "agentEntryPoint": "DESIGN.md",
     "rules": "CLAUDE.md",
     "componentDocs": "src/system/component-inventory.md",
     "classIndex": "src/system/class-inventory.md",
-    "failureModes": "src/system/failure-modes.md"
+    "failureModes": "src/system/failure-modes.md",
+    "experiments": "src/system/experiment-001.md"
   },
 
   "stack": {
