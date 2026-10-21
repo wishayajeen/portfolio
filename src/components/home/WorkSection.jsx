@@ -5,6 +5,16 @@ const projects = [
   {
     num: '01',
     tag: 'Talk',
+    title: 'Your Design System Has a New User: AI',
+    desc: 'Exploring how design systems must evolve from human-oriented component libraries into structured knowledge that AI agents can understand, use, and act upon. Sharing practical principles for making design systems AI-ready, grounded in real-world experience and agentic design system experiments.',
+    year: '2026',
+    role: 'Speaker',
+    tools: ['Google Slides', 'Claude'],
+    comingSoon: true,
+  },
+  {
+    num: '02',
+    tag: 'Talk',
     title: 'From Dead to Living: Building a Design System with AI',
     desc: 'A 30-minute talk on how AI changes the way we build and evolve design systems, from static libraries to living systems.',
     year: '2026',
@@ -13,7 +23,7 @@ const projects = [
     href: 'https://youtu.be/v6-77V0hZZo?si=Lxy-qAV6TwpbaX9U',
   },
   {
-    num: '02',
+    num: '03',
     tag: 'AI product design',
     comingSoon: true,
     title: 'Agentic Network Submission (ANS)',
@@ -23,7 +33,7 @@ const projects = [
     tools: ['Figma', 'UXPilot'],
   },
   {
-    num: '03',
+    num: '04',
     tag: 'Design System',
     comingSoon: true,
     title: 'Design System × Marketplace — from fragmented to unified',
