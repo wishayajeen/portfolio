@@ -10,7 +10,7 @@ const projects = [
     year: '2026',
     role: 'Speaker',
     tools: ['Google Slides', 'Claude'],
-    comingSoon: true,
+    href: '/work/xconf-americas-2026',
   },
   {
     num: '02',

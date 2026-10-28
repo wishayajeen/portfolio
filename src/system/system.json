@@ -1,16 +1,15 @@
 {
   "name": "Jeen Design System",
-  "version": "0.6.15",
-  "lastUpdated": "2026-10-21",
+  "version": "0.6.16",
+  "lastUpdated": "2026-10-27",
   "release": {
-    "version": "0.6.15",
-    "lastUpdated": "2026-10-21",
-    "notes": "Milestone 1: added DESIGN.md (agent entry point), experiment-001.md, and agentEntryPoint to governance in system.json."
+    "version": "0.6.16",
+    "lastUpdated": "2026-10-27",
+    "notes": "Added /work/xconf-americas-2026 companion page and selection-controls.crd.md (XConf educational example)."
   },
   "owner": "Jeen (wishayajeen)",
   "coOwner": "Pocky",
   "description": "A living, AI-queryable design system that is also the portfolio. Design decisions exist as structured data — visible through a dashboard, queryable through an agent.",
-
   "stats": {
     "_meta": {
       "maintenance": "Manually maintained — update alongside version bumps",
@@ -26,7 +25,6 @@
     "resolvedDiscrepancies": 11,
     "decisionDiscrepancies": 3
   },
-
   "sourceOfTruth": {
     "tokens": "src/styles/tokens.css",
     "styles": "src/styles/homepage.css",
@@ -34,7 +32,6 @@
     "content": "src/content/",
     "system": "src/system/system.json"
   },
-
   "observability": {
     "generatedRegistry": "src/system/system.generated.json",
     "componentMetadata": "src/components/system/*.metadata.json",
@@ -42,7 +39,6 @@
     "methodology": "Manual static analysis as of 2026-05-14. Future: automated grep-based generation.",
     "lastGeneratedAt": "2026-05-14"
   },
-
   "governance": {
     "agentEntryPoint": "DESIGN.md",
     "rules": "CLAUDE.md",
@@ -51,7 +47,6 @@
     "failureModes": "src/system/failure-modes.md",
     "experiments": "src/system/experiment-001.md"
   },
-
   "stack": {
     "framework": "Astro 6",
     "react": "React 19 via @astrojs/react islands",
@@ -60,7 +55,6 @@
     "deployment": "Vercel",
     "analytics": "@vercel/analytics"
   },
-
   "routes": [
     {
       "id": "home",
@@ -97,9 +91,14 @@
       "path": "/diary/[slug]",
       "file": "src/pages/diary/[slug].astro",
       "description": "Individual diary / article pages rendered from markdown content"
+    },
+    {
+      "id": "work-xconf-americas-2026",
+      "path": "/work/xconf-americas-2026",
+      "file": "src/pages/work/xconf-americas-2026.astro",
+      "description": "XConf Americas 2026 talk companion page — Your Design System Has a New User: AI"
     }
   ],
-
   "sections": [
     {
       "id": "hero",
@@ -110,8 +109,14 @@
       "type": "static",
       "hydration": null,
       "description": "Full-viewport opening section with headline, CTAs, social links, scroll indicator, and Pocky mascot",
-      "props": ["pockyIdleSrc"],
-      "features": ["smooth-scroll via .js-scroll-to", "fade-up entrance animations", "SVG squiggle accent"]
+      "props": [
+        "pockyIdleSrc"
+      ],
+      "features": [
+        "smooth-scroll via .js-scroll-to",
+        "fade-up entrance animations",
+        "SVG squiggle accent"
+      ]
     },
     {
       "id": "playground",
@@ -122,13 +127,33 @@
       "type": "static",
       "hydration": null,
       "description": "Experiment cards grid and diary entry list",
-      "props": ["diaryEntries", "diaryTotal"],
+      "props": [
+        "diaryEntries",
+        "diaryTotal"
+      ],
       "content": {
         "experiments": [
-          { "title": "Ask Pocky", "tag": "Experiment", "status": "coming-soon" },
-          { "title": "Design dashboard", "tag": "Experiment", "status": "coming-soon" },
-          { "title": "Component sandbox", "tag": "Experiment", "status": "coming-soon" },
-          { "title": "PersonaLens.app", "tag": "AI Product", "status": "live", "href": "https://www.personalens.app/" }
+          {
+            "title": "Ask Pocky",
+            "tag": "Experiment",
+            "status": "coming-soon"
+          },
+          {
+            "title": "Design dashboard",
+            "tag": "Experiment",
+            "status": "coming-soon"
+          },
+          {
+            "title": "Component sandbox",
+            "tag": "Experiment",
+            "status": "coming-soon"
+          },
+          {
+            "title": "PersonaLens.app",
+            "tag": "AI Product",
+            "status": "live",
+            "href": "https://www.personalens.app/"
+          }
         ],
         "diary": "dynamic — loaded from src/content/diary/ via getCollection"
       }
@@ -142,13 +167,24 @@
       "type": "static",
       "hydration": null,
       "description": "About section with bio, skills, and profile card with stats",
-      "props": ["logoSrc"],
+      "props": [
+        "logoSrc"
+      ],
       "content": {
         "role": "Agentic System Designer @Thoughtworks",
         "stats": [
-          { "num": "10+", "label": "Years designing" },
-          { "num": "22+", "label": "Projects shipped" },
-          { "num": "3",   "label": "Talks given" }
+          {
+            "num": "10+",
+            "label": "Years designing"
+          },
+          {
+            "num": "22+",
+            "label": "Projects shipped"
+          },
+          {
+            "num": "3",
+            "label": "Talks given"
+          }
         ],
         "skills": [
           "Agentic Design systems",
@@ -178,7 +214,11 @@
             "title": "From Dead to Living: Building a Design System with AI",
             "year": "2026",
             "role": "Speaker",
-            "tools": ["Figma Slides", "Figma MCP", "Claude Code"]
+            "tools": [
+              "Figma Slides",
+              "Figma MCP",
+              "Claude Code"
+            ]
           },
           {
             "num": "02",
@@ -186,7 +226,10 @@
             "title": "Agentic Network Submission (ANS)",
             "year": "2025",
             "role": "Design lead",
-            "tools": ["Figma", "UXPilot"]
+            "tools": [
+              "Figma",
+              "UXPilot"
+            ]
           },
           {
             "num": "03",
@@ -194,19 +237,19 @@
             "title": "Design System × Marketplace — from fragmented to unified",
             "year": "2023",
             "role": "Solo — design + build",
-            "tools": ["Figma"]
+            "tools": [
+              "Figma"
+            ]
           }
         ]
       }
     }
   ],
-
   "componentCategories": {
-    "layout":  "Global page infrastructure — shell, header, footer. Required on every page. Not subject to variant expansion.",
-    "ui":      "Reusable design system primitives — Badge, Button, Card, Link, IconButton. These carry variants and are the building blocks of product pages.",
-    "system":  "Internal tooling — TweaksPanel and future edit-mode overlays. Not for product use; may use window APIs."
+    "layout": "Global page infrastructure — shell, header, footer. Required on every page. Not subject to variant expansion.",
+    "ui": "Reusable design system primitives — Badge, Button, Card, Link, IconButton. These carry variants and are the building blocks of product pages.",
+    "system": "Internal tooling — TweaksPanel and future edit-mode overlays. Not for product use; may use window APIs."
   },
-
   "components": [
     {
       "id": "header",
@@ -217,9 +260,14 @@
       "file": "src/components/global/Header.jsx",
       "type": "react-island",
       "hydration": "client:load",
-      "props": ["logoSrc"],
+      "props": [
+        "logoSrc"
+      ],
       "variants": [],
-      "state": ["scrolled", "menuOpen"],
+      "state": [
+        "scrolled",
+        "menuOpen"
+      ],
       "description": "Fixed navigation bar with scroll-aware style change and mobile menu toggle"
     },
     {
@@ -231,9 +279,16 @@
       "file": "src/components/global/Footer.jsx",
       "type": "react-island",
       "hydration": "client:visible",
-      "props": ["pockyProfileSrc", "copyIconSrc"],
+      "props": [
+        "pockyProfileSrc",
+        "copyIconSrc"
+      ],
       "variants": [],
-      "state": ["email", "sent", "copied"],
+      "state": [
+        "email",
+        "sent",
+        "copied"
+      ],
       "description": "CTA band with email capture, copy-to-clipboard, social links, and site credits"
     },
     {
@@ -247,9 +302,17 @@
       "hydration": "client:only=\"react\"",
       "props": [],
       "variants": [],
-      "state": ["visible", "tweaks"],
+      "state": [
+        "visible",
+        "tweaks"
+      ],
       "description": "Edit-mode overlay panel activated by postMessage from parent frame; exposes accent color, work style, and scroll indicator toggles",
-      "editableKeys": ["heroHeadline", "accentColor", "showScrollHint", "workStyle"]
+      "editableKeys": [
+        "heroHeadline",
+        "accentColor",
+        "showScrollHint",
+        "workStyle"
+      ]
     },
     {
       "id": "layout",
@@ -260,9 +323,15 @@
       "file": "src/layouts/Layout.astro",
       "type": "astro",
       "hydration": null,
-      "props": ["title", "description"],
+      "props": [
+        "title",
+        "description"
+      ],
       "variants": [],
-      "slots": ["default", "head"],
+      "slots": [
+        "default",
+        "head"
+      ],
       "description": "Global page shell — all pages must use this. Injects tokens.css, homepage.css, and Vercel Analytics."
     },
     {
@@ -274,8 +343,17 @@
       "file": "src/components/system/Badge.astro",
       "type": "astro",
       "hydration": null,
-      "props": ["label", "variant"],
-      "variants": ["tag", "diary-tag", "work-tag", "skill", "coming-soon"],
+      "props": [
+        "label",
+        "variant"
+      ],
+      "variants": [
+        "tag",
+        "diary-tag",
+        "work-tag",
+        "skill",
+        "coming-soon"
+      ],
       "cssClasses": {
         "tag": "play-card-tag",
         "diary-tag": "diary-tag",
@@ -294,8 +372,15 @@
       "file": "src/components/system/Button.astro",
       "type": "astro",
       "hydration": null,
-      "props": ["label", "variant", "href"],
-      "variants": ["primary", "secondary"],
+      "props": [
+        "label",
+        "variant",
+        "href"
+      ],
+      "variants": [
+        "primary",
+        "secondary"
+      ],
       "cssClasses": {
         "primary": "hero-cta-primary",
         "secondary": "hero-cta-secondary"
@@ -311,9 +396,18 @@
       "file": "src/components/system/Card.astro",
       "type": "astro",
       "hydration": null,
-      "props": ["variant", "href"],
-      "slots": ["default"],
-      "variants": ["default", "accent", "diary"],
+      "props": [
+        "variant",
+        "href"
+      ],
+      "slots": [
+        "default"
+      ],
+      "variants": [
+        "default",
+        "accent",
+        "diary"
+      ],
       "cssClasses": {
         "default": "play-card",
         "accent": "play-card play-card--accent",
@@ -330,9 +424,21 @@
       "file": "src/components/system/Link.astro",
       "type": "astro",
       "hydration": null,
-      "props": ["href", "variant", "external"],
-      "slots": ["default"],
-      "variants": ["default", "on-dark", "nav", "back", "footer-nav"],
+      "props": [
+        "href",
+        "variant",
+        "external"
+      ],
+      "slots": [
+        "default"
+      ],
+      "variants": [
+        "default",
+        "on-dark",
+        "nav",
+        "back",
+        "footer-nav"
+      ],
       "cssClasses": {
         "default": "(global a)",
         "on-dark": "hero-social-link",
@@ -341,10 +447,10 @@
         "footer-nav": "footer-nav-link"
       },
       "surfaces": {
-        "default":    "light — box-shadow underline, floods dark on hover, yellow text",
-        "on-dark":    "dark — box-shadow underline, floods light on hover, dark text",
-        "nav":        "dark — pill button shape, yellow on hover",
-        "back":       "dark — muted color, white on hover, no underline",
+        "default": "light — box-shadow underline, floods dark on hover, yellow text",
+        "on-dark": "dark — box-shadow underline, floods light on hover, dark text",
+        "nav": "dark — pill button shape, yellow on hover",
+        "back": "dark — muted color, white on hover, no underline",
         "footer-nav": "dark — plain nav item, white on hover, no underline"
       },
       "externalProp": "Adds target='_blank' rel='noopener noreferrer' automatically",
@@ -359,27 +465,54 @@
       "file": "src/components/system/IconButton.astro",
       "type": "astro",
       "hydration": null,
-      "props": ["label", "class"],
-      "slots": ["default"],
+      "props": [
+        "label",
+        "class"
+      ],
+      "slots": [
+        "default"
+      ],
       "variants": [],
-      "cssClasses": { "default": "icon-btn" },
+      "cssClasses": {
+        "default": "icon-btn"
+      },
       "size": "32×32px",
       "iconSize": "20×20px",
       "description": "Circular icon-only button. Transparent by default; hover/active shows --bg-accent-dim. label prop is required for accessibility."
     }
   ],
-
   "relationships": {
     "routeUsesComponents": {
-      "home": ["layout", "header", "footer", "tweaks-panel"],
-      "design-system": ["layout"],
-      "design-system-foundations": ["layout"],
-      "design-system-components": ["layout"],
-      "design-system-dashboard": ["layout"],
-      "diary-slug": ["layout", "link"]
+      "home": [
+        "layout",
+        "header",
+        "footer",
+        "tweaks-panel"
+      ],
+      "design-system": [
+        "layout"
+      ],
+      "design-system-foundations": [
+        "layout"
+      ],
+      "design-system-components": [
+        "layout"
+      ],
+      "design-system-dashboard": [
+        "layout"
+      ],
+      "diary-slug": [
+        "layout",
+        "link"
+      ]
     },
     "routeUsesSections": {
-      "home": ["hero", "playground", "about", "work"],
+      "home": [
+        "hero",
+        "playground",
+        "about",
+        "work"
+      ],
       "design-system": [],
       "design-system-foundations": [],
       "design-system-components": [],
@@ -387,70 +520,274 @@
       "diary-slug": []
     },
     "componentUsesTokens": {
-      "header": ["bg-dark", "fg-on-dark-primary", "fg-on-dark-secondary", "fg-on-dark-accent", "fg-on-dark-label", "bg-accent", "border-on-dark", "text-sm", "radius-full", "shadow-sm", "duration-fast", "ease-out"],
-      "footer": ["bg-dark", "fg-on-dark-primary", "fg-on-dark-secondary", "fg-on-dark-accent", "fg-on-dark-label", "bg-accent", "border-on-dark", "radius-md", "shadow-lg", "duration-fast"],
-      "tweaks-panel": ["bg-primary", "fg-primary", "bg-accent", "border-primary", "shadow-lg", "radius-md", "font-display", "font-body"],
-      "layout": ["bg-primary", "fg-primary", "font-body", "text-base", "leading-relaxed"],
-      "badge": ["color-yellow", "color-black", "fg-on-dark-label", "fg-on-dark-accent", "color-error", "radius-full", "radius-xs", "border-primary"],
-      "button": ["color-yellow", "color-black", "fg-on-dark-primary", "radius-full", "duration-fast", "ease-spring"],
-      "card": ["bg-primary", "bg-accent", "border-primary", "radius-md", "shadow-md", "ease-spring", "duration-fast"],
-      "link": ["fg-primary", "fg-secondary", "fg-on-dark-primary", "fg-on-dark-label", "fg-on-dark-accent", "duration-fast", "ease-out"],
-      "icon-button": ["fg-primary", "bg-accent-dim", "color-focus", "radius-full", "duration-fast"]
+      "header": [
+        "bg-dark",
+        "fg-on-dark-primary",
+        "fg-on-dark-secondary",
+        "fg-on-dark-accent",
+        "fg-on-dark-label",
+        "bg-accent",
+        "border-on-dark",
+        "text-sm",
+        "radius-full",
+        "shadow-sm",
+        "duration-fast",
+        "ease-out"
+      ],
+      "footer": [
+        "bg-dark",
+        "fg-on-dark-primary",
+        "fg-on-dark-secondary",
+        "fg-on-dark-accent",
+        "fg-on-dark-label",
+        "bg-accent",
+        "border-on-dark",
+        "radius-md",
+        "shadow-lg",
+        "duration-fast"
+      ],
+      "tweaks-panel": [
+        "bg-primary",
+        "fg-primary",
+        "bg-accent",
+        "border-primary",
+        "shadow-lg",
+        "radius-md",
+        "font-display",
+        "font-body"
+      ],
+      "layout": [
+        "bg-primary",
+        "fg-primary",
+        "font-body",
+        "text-base",
+        "leading-relaxed"
+      ],
+      "badge": [
+        "color-yellow",
+        "color-black",
+        "fg-on-dark-label",
+        "fg-on-dark-accent",
+        "color-error",
+        "radius-full",
+        "radius-xs",
+        "border-primary"
+      ],
+      "button": [
+        "color-yellow",
+        "color-black",
+        "fg-on-dark-primary",
+        "radius-full",
+        "duration-fast",
+        "ease-spring"
+      ],
+      "card": [
+        "bg-primary",
+        "bg-accent",
+        "border-primary",
+        "radius-md",
+        "shadow-md",
+        "ease-spring",
+        "duration-fast"
+      ],
+      "link": [
+        "fg-primary",
+        "fg-secondary",
+        "fg-on-dark-primary",
+        "fg-on-dark-label",
+        "fg-on-dark-accent",
+        "duration-fast",
+        "ease-out"
+      ],
+      "icon-button": [
+        "fg-primary",
+        "bg-accent-dim",
+        "color-focus",
+        "radius-full",
+        "duration-fast"
+      ]
     },
     "sectionUsesTokens": {
-      "hero": ["bg-dark", "fg-on-dark-primary", "fg-on-dark-secondary", "fg-on-dark-accent", "bg-accent", "border-accent", "radius-full", "shadow-lg", "ease-spring", "duration-fast"],
-      "playground": ["bg-primary", "fg-primary", "fg-secondary", "bg-accent", "border-primary", "shadow-md", "radius-md", "ease-spring"],
-      "about": ["bg-surface", "bg-surface-raised", "fg-primary", "fg-secondary", "border-subtle", "shadow-md", "radius-md"],
-      "work": ["bg-dark", "fg-on-dark-primary", "fg-on-dark-secondary", "fg-on-dark-accent", "fg-on-dark-label", "bg-accent", "border-on-dark", "ease-out", "duration-fast"]
+      "hero": [
+        "bg-dark",
+        "fg-on-dark-primary",
+        "fg-on-dark-secondary",
+        "fg-on-dark-accent",
+        "bg-accent",
+        "border-accent",
+        "radius-full",
+        "shadow-lg",
+        "ease-spring",
+        "duration-fast"
+      ],
+      "playground": [
+        "bg-primary",
+        "fg-primary",
+        "fg-secondary",
+        "bg-accent",
+        "border-primary",
+        "shadow-md",
+        "radius-md",
+        "ease-spring"
+      ],
+      "about": [
+        "bg-surface",
+        "bg-surface-raised",
+        "fg-primary",
+        "fg-secondary",
+        "border-subtle",
+        "shadow-md",
+        "radius-md"
+      ],
+      "work": [
+        "bg-dark",
+        "fg-on-dark-primary",
+        "fg-on-dark-secondary",
+        "fg-on-dark-accent",
+        "fg-on-dark-label",
+        "bg-accent",
+        "border-on-dark",
+        "ease-out",
+        "duration-fast"
+      ]
     },
     "sectionsUseComponents": {
       "note": "Only lists src/components/system/* imports — raw CSS class usage in a section does not count.",
-      "hero":       ["button", "link"],
-      "playground": ["card", "badge"],
-      "about":      ["badge"],
-      "work":       []
+      "hero": [
+        "button",
+        "link"
+      ],
+      "playground": [
+        "card",
+        "badge"
+      ],
+      "about": [
+        "badge"
+      ],
+      "work": []
     },
     "componentUsedInSections": {
       "_note": "Inverse of sectionsUseComponents. Only populated for components with at least one direct import.",
-      "badge":       ["playground", "about"],
-      "card":        ["playground"],
-      "button":      ["hero"],
-      "link":        ["hero"],
+      "badge": [
+        "playground",
+        "about"
+      ],
+      "card": [
+        "playground"
+      ],
+      "button": [
+        "hero"
+      ],
+      "link": [
+        "hero"
+      ],
       "icon-button": [],
-      "header":      [],
-      "footer":      [],
-      "layout":      [],
-      "tweaks-panel":[]
+      "header": [],
+      "footer": [],
+      "layout": [],
+      "tweaks-panel": []
     },
     "linkTokenBehavior": {
       "_note": "Documents which existing surface tokens each Link variant uses. No isolated link tokens exist — links reuse fg/bg tokens by surface context.",
-      "default":    { "rest": "fg-primary",          "hover-text": "fg-on-dark-accent", "hover-bg-flood": "fg-primary" },
-      "on-dark":    { "rest": "fg-on-dark-primary",   "hover-text": "fg-primary",        "hover-bg-flood": "fg-on-dark-primary" },
-      "nav":        { "rest": "fg-on-dark-primary",   "hover-text": "fg-on-dark-accent" },
-      "back":       { "rest": "fg-on-dark-label",     "hover-text": "fg-on-dark-primary" },
-      "footer-nav": { "rest": "fg-on-dark-label",     "hover-text": "fg-on-dark-primary" }
+      "default": {
+        "rest": "fg-primary",
+        "hover-text": "fg-on-dark-accent",
+        "hover-bg-flood": "fg-primary"
+      },
+      "on-dark": {
+        "rest": "fg-on-dark-primary",
+        "hover-text": "fg-primary",
+        "hover-bg-flood": "fg-on-dark-primary"
+      },
+      "nav": {
+        "rest": "fg-on-dark-primary",
+        "hover-text": "fg-on-dark-accent"
+      },
+      "back": {
+        "rest": "fg-on-dark-label",
+        "hover-text": "fg-on-dark-primary"
+      },
+      "footer-nav": {
+        "rest": "fg-on-dark-label",
+        "hover-text": "fg-on-dark-primary"
+      }
     },
     "tokenUsedByComponents": {
       "_note": "Lists system components (components[]) only. First version — covers highest-impact tokens.",
-      "bg-dark":            ["header", "footer"],
-      "bg-accent":          ["header", "footer", "tweaks-panel", "button", "card"],
-      "bg-accent-dim":      ["icon-button"],
-      "bg-primary":         ["layout", "tweaks-panel"],
-      "fg-primary":         ["layout", "icon-button"],
-      "fg-on-dark-primary": ["header", "footer", "link"],
-      "fg-on-dark-accent":  ["header", "footer", "link"],
-      "fg-on-dark-label":   ["header", "footer", "link"],
-      "color-focus":        ["icon-button"],
-      "radius-full":        ["button", "icon-button"],
-      "radius-md":          ["footer", "card", "tweaks-panel"],
-      "shadow-lg":          ["footer", "tweaks-panel"],
-      "shadow-sm":          ["header"],
-      "duration-fast":      ["header", "footer", "button", "card", "link", "icon-button"],
-      "ease-spring":        ["button", "card"],
-      "ease-out":           ["header", "link"]
+      "bg-dark": [
+        "header",
+        "footer"
+      ],
+      "bg-accent": [
+        "header",
+        "footer",
+        "tweaks-panel",
+        "button",
+        "card"
+      ],
+      "bg-accent-dim": [
+        "icon-button"
+      ],
+      "bg-primary": [
+        "layout",
+        "tweaks-panel"
+      ],
+      "fg-primary": [
+        "layout",
+        "icon-button"
+      ],
+      "fg-on-dark-primary": [
+        "header",
+        "footer",
+        "link"
+      ],
+      "fg-on-dark-accent": [
+        "header",
+        "footer",
+        "link"
+      ],
+      "fg-on-dark-label": [
+        "header",
+        "footer",
+        "link"
+      ],
+      "color-focus": [
+        "icon-button"
+      ],
+      "radius-full": [
+        "button",
+        "icon-button"
+      ],
+      "radius-md": [
+        "footer",
+        "card",
+        "tweaks-panel"
+      ],
+      "shadow-lg": [
+        "footer",
+        "tweaks-panel"
+      ],
+      "shadow-sm": [
+        "header"
+      ],
+      "duration-fast": [
+        "header",
+        "footer",
+        "button",
+        "card",
+        "link",
+        "icon-button"
+      ],
+      "ease-spring": [
+        "button",
+        "card"
+      ],
+      "ease-out": [
+        "header",
+        "link"
+      ]
     }
   },
-
   "content": {
     "collections": [
       {
@@ -459,7 +796,13 @@
         "format": "markdown",
         "autoSync": false,
         "lastSynced": "2026-07-09",
-        "frontmatterSchema": ["title", "date", "tag", "readTime", "description"],
+        "frontmatterSchema": [
+          "title",
+          "date",
+          "tag",
+          "readTime",
+          "description"
+        ],
         "entries": [
           {
             "slug": "creating-this-website-in-2-days",
@@ -486,44 +829,163 @@
       }
     ]
   },
-
   "tokens": {
     "sourceFile": "src/styles/tokens.css",
     "categories": {
       "color": {
-        "primitives": ["color-black", "color-white", "color-pure-white", "color-yellow", "color-yellow-dim", "color-yellow-pale", "color-gray-50", "color-gray-100", "color-gray-200", "color-gray-300", "color-gray-400", "color-gray-500", "color-gray-700", "color-gray-900"],
-        "status": ["color-success", "color-warning", "color-error", "color-info"],
-        "semantic-backgrounds": ["bg-primary", "bg-dark", "bg-accent", "bg-accent-dim", "bg-surface", "bg-surface-raised", "bg-inverse"],
-        "semantic-foregrounds": ["fg-primary", "fg-secondary", "fg-tertiary", "fg-inverse", "fg-accent"],
-        "on-dark-text": ["fg-on-dark-primary", "fg-on-dark-secondary", "fg-on-dark-label", "fg-on-dark-accent"],
-        "interactive": ["color-focus", "color-cta", "color-cta-hover"]
+        "primitives": [
+          "color-black",
+          "color-white",
+          "color-pure-white",
+          "color-yellow",
+          "color-yellow-dim",
+          "color-yellow-pale",
+          "color-gray-50",
+          "color-gray-100",
+          "color-gray-200",
+          "color-gray-300",
+          "color-gray-400",
+          "color-gray-500",
+          "color-gray-700",
+          "color-gray-900"
+        ],
+        "status": [
+          "color-success",
+          "color-warning",
+          "color-error",
+          "color-info"
+        ],
+        "semantic-backgrounds": [
+          "bg-primary",
+          "bg-dark",
+          "bg-accent",
+          "bg-accent-dim",
+          "bg-surface",
+          "bg-surface-raised",
+          "bg-inverse"
+        ],
+        "semantic-foregrounds": [
+          "fg-primary",
+          "fg-secondary",
+          "fg-tertiary",
+          "fg-inverse",
+          "fg-accent"
+        ],
+        "on-dark-text": [
+          "fg-on-dark-primary",
+          "fg-on-dark-secondary",
+          "fg-on-dark-label",
+          "fg-on-dark-accent"
+        ],
+        "interactive": [
+          "color-focus",
+          "color-cta",
+          "color-cta-hover"
+        ]
       },
       "border": {
-        "tokens": ["border-primary", "border-subtle", "border-on-dark", "border-accent"],
+        "tokens": [
+          "border-primary",
+          "border-subtle",
+          "border-on-dark",
+          "border-accent"
+        ],
         "note": "Pick by surface: border-primary/subtle on light, border-on-dark on --bg-dark, border-accent for highlights"
       },
       "shadow": {
-        "hard-offset": ["shadow-xs", "shadow-sm", "shadow-md", "shadow-lg", "shadow-xl", "shadow-hover"],
-        "soft": ["shadow-soft-sm", "shadow-soft-md"],
+        "hard-offset": [
+          "shadow-xs",
+          "shadow-sm",
+          "shadow-md",
+          "shadow-lg",
+          "shadow-xl",
+          "shadow-hover"
+        ],
+        "soft": [
+          "shadow-soft-sm",
+          "shadow-soft-md"
+        ],
         "note": "Hard offset shadows define the doodle/comic aesthetic. Soft shadows for elevated modals."
       },
       "radius": {
-        "scale": ["radius-none", "radius-xs", "radius-sm", "radius-md", "radius-lg", "radius-xl", "radius-full"]
+        "scale": [
+          "radius-none",
+          "radius-xs",
+          "radius-sm",
+          "radius-md",
+          "radius-lg",
+          "radius-xl",
+          "radius-full"
+        ]
       },
       "spacing": {
-        "scale": ["space-1", "space-2", "space-3", "space-4", "space-5", "space-6", "space-8", "space-10", "space-12", "space-16", "space-20", "space-24", "space-32"],
-        "layout": ["content-max-width", "content-padding", "section-padding-y", "grid-gap"],
+        "scale": [
+          "space-1",
+          "space-2",
+          "space-3",
+          "space-4",
+          "space-5",
+          "space-6",
+          "space-8",
+          "space-10",
+          "space-12",
+          "space-16",
+          "space-20",
+          "space-24",
+          "space-32"
+        ],
+        "layout": [
+          "content-max-width",
+          "content-padding",
+          "section-padding-y",
+          "grid-gap"
+        ],
         "base": "8px"
       },
       "typography": {
-        "families": ["font-display", "font-body", "font-mono"],
-        "scale": ["text-xs", "text-sm", "text-base", "text-lg", "text-xl", "text-2xl", "text-3xl", "text-4xl", "text-5xl", "text-6xl", "text-7xl", "text-8xl"],
-        "leading": ["leading-tight", "leading-snug", "leading-normal", "leading-relaxed"],
-        "tracking": ["tracking-tight", "tracking-normal", "tracking-wide", "tracking-wider"]
+        "families": [
+          "font-display",
+          "font-body",
+          "font-mono"
+        ],
+        "scale": [
+          "text-xs",
+          "text-sm",
+          "text-base",
+          "text-lg",
+          "text-xl",
+          "text-2xl",
+          "text-3xl",
+          "text-4xl",
+          "text-5xl",
+          "text-6xl",
+          "text-7xl",
+          "text-8xl"
+        ],
+        "leading": [
+          "leading-tight",
+          "leading-snug",
+          "leading-normal",
+          "leading-relaxed"
+        ],
+        "tracking": [
+          "tracking-tight",
+          "tracking-normal",
+          "tracking-wide",
+          "tracking-wider"
+        ]
       },
       "animation": {
-        "easing": ["ease-spring", "ease-out", "ease-in-out"],
-        "duration": ["duration-fast", "duration-base", "duration-slow"]
+        "easing": [
+          "ease-spring",
+          "ease-out",
+          "ease-in-out"
+        ],
+        "duration": [
+          "duration-fast",
+          "duration-base",
+          "duration-slow"
+        ]
       }
     },
     "rules": {
@@ -535,7 +997,6 @@
       "a11yYellowSurface": "Only --color-black on yellow — all other values fail contrast"
     }
   },
-
   "stylesheets": [
     {
       "file": "src/styles/tokens.css",
@@ -556,7 +1017,6 @@
       "purpose": "DS dashboard page styles — not for use in product pages"
     }
   ],
-
   "capabilities": [
     {
       "id": "design-system-dashboard",
@@ -602,14 +1062,12 @@
       "description": "This file — structured, relational representation of the design system for AI querying, tooling, and automation"
     }
   ],
-
   "mascot": {
     "name": "Pocky",
     "species": "Cat",
     "role": "AI agent and co-owner of the design system",
     "description": "Pocky is Jeen's cat-turned-AI-agent. The interface for querying the design system. Knows everything."
   },
-
   "discrepancies": [
     {
       "id": "fg-tertiary-contrast",
@@ -799,7 +1257,6 @@
       "resolvedIn": "5efb7e8"
     }
   ],
-
   "roadmap": [
     {
       "id": "dashboard-communication-layer",

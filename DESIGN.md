@@ -36,7 +36,8 @@ Tokens are the only source of truth for colors, radii, shadows, and type. Never 
 |---|---|
 | Token usage principles, surface model, cascade architecture | [`src/system/design-system/foundations.md`](./src/system/design-system/foundations.md) |
 | Component index, ownership table, cross-cutting rules | [`src/system/design-system/components.md`](./src/system/design-system/components.md) |
-| Per-component design intent (CRDs) | `src/system/design-system/components/*.crd.md` *(M2b/M2c — in progress)* |
+| Per-component design intent (CRDs) | `src/system/design-system/components/*.crd.md` *(portfolio components — M2b/M2c in progress)* |
+| Selection controls *(XConf 2026 educational example — fictional Acme product, not a portfolio component)* | [`src/system/design-system/components/selection-controls.crd.md`](./src/system/design-system/components/selection-controls.crd.md) |
 | Versioning, contribution process, discrepancy log | [`src/system/design-system/governance.md`](./src/system/design-system/governance.md) |
 | Composition patterns | [`src/system/design-system/patterns.md`](./src/system/design-system/patterns.md) *(stub)* |
 
