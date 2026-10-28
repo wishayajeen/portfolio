@@ -400,7 +400,10 @@ const rawBase = 'https://raw.githubusercontent.com/wishayajeen/portfolio/main';
     tab-size: 2;
   }
 
-  /* ── Rendered CRD markdown ── */
+  /* ── Rendered CRD markdown ──
+     Children injected via set:html don't carry the Astro scoping attribute,
+     so descendant selectors must escape scoping with :global() while the
+     wrapper class (.xconf-md-body) remains scoped for specificity containment. ── */
   .xconf-md-body {
     font-family: var(--font-body);
     font-size: var(--text-sm);
@@ -408,10 +411,9 @@ const rawBase = 'https://raw.githubusercontent.com/wishayajeen/portfolio/main';
     color: var(--fg-secondary);
     background: var(--bg-surface);
     padding: var(--space-8) var(--space-6);
-    overflow-x: auto;
   }
-  .xconf-md-body h1,
-  .xconf-md-body h2 {
+  .xconf-md-body :global(h1),
+  .xconf-md-body :global(h2) {
     font-family: var(--font-display);
     font-size: var(--text-base);
     font-weight: 700;
@@ -420,35 +422,35 @@ const rawBase = 'https://raw.githubusercontent.com/wishayajeen/portfolio/main';
     padding-bottom: var(--space-2);
     border-bottom: var(--border-subtle);
   }
-  .xconf-md-body h1:first-child,
-  .xconf-md-body h2:first-child { margin-top: 0; }
-  .xconf-md-body h3 {
+  .xconf-md-body :global(h1:first-child),
+  .xconf-md-body :global(h2:first-child) { margin-top: 0; }
+  .xconf-md-body :global(h3) {
     font-family: var(--font-display);
     font-size: var(--text-sm);
     font-weight: 700;
     color: var(--fg-primary);
     margin: var(--space-6) 0 var(--space-2);
   }
-  .xconf-md-body p {
+  .xconf-md-body :global(p) {
     margin: 0 0 var(--space-4);
     max-width: 72ch;
   }
-  .xconf-md-body ul,
-  .xconf-md-body ol {
+  .xconf-md-body :global(ul),
+  .xconf-md-body :global(ol) {
     padding-left: var(--space-6);
     margin: 0 0 var(--space-4);
   }
-  .xconf-md-body li { margin-bottom: var(--space-1); }
-  .xconf-md-body blockquote {
-    border-left: 3px solid var(--border-accent);
+  .xconf-md-body :global(li) { margin-bottom: var(--space-1); }
+  .xconf-md-body :global(blockquote) {
+    border-left: 3px solid var(--color-yellow-dim);
     padding: var(--space-3) var(--space-5);
     margin: var(--space-4) 0;
     background: rgba(243, 254, 82, 0.05); /* subtle yellow tint from --color-yellow — accent callout */
     border-radius: 0 var(--radius-xs) var(--radius-xs) 0;
     color: var(--fg-secondary);
   }
-  .xconf-md-body blockquote p { margin: 0; }
-  .xconf-md-body code {
+  .xconf-md-body :global(blockquote p) { margin: 0; }
+  .xconf-md-body :global(code) {
     font-family: var(--font-mono);
     font-size: 0.9em;
     background: var(--bg-surface-raised);
@@ -457,7 +459,7 @@ const rawBase = 'https://raw.githubusercontent.com/wishayajeen/portfolio/main';
     border: var(--border-subtle);
     color: var(--fg-primary);
   }
-  .xconf-md-body pre {
+  .xconf-md-body :global(pre) {
     background: var(--bg-surface-raised);
     border: var(--border-subtle);
     border-radius: var(--radius-xs);
@@ -465,20 +467,26 @@ const rawBase = 'https://raw.githubusercontent.com/wishayajeen/portfolio/main';
     overflow-x: auto;
     margin: var(--space-4) 0;
   }
-  .xconf-md-body pre code {
+  .xconf-md-body :global(pre code) {
     background: none;
     border: none;
     padding: 0;
     font-size: var(--text-xs);
     line-height: 1.65;
   }
-  .xconf-md-body table {
-    width: 100%;
+  /* Tables: scrollable wrapper added by micromark output wrapping logic isn't
+     present, so we make the table itself horizontally scrollable via a
+     display:block trick while keeping collapse borders. */
+  .xconf-md-body :global(table) {
+    display: block;
+    width: max-content;
+    max-width: 100%;
+    overflow-x: auto;
     border-collapse: collapse;
     font-size: var(--text-xs);
     margin: var(--space-4) 0;
   }
-  .xconf-md-body th {
+  .xconf-md-body :global(th) {
     text-align: left;
     padding: var(--space-2) var(--space-3);
     border-bottom: 1px solid var(--border-primary);
@@ -486,19 +494,19 @@ const rawBase = 'https://raw.githubusercontent.com/wishayajeen/portfolio/main';
     color: var(--fg-primary);
     white-space: nowrap;
   }
-  .xconf-md-body td {
+  .xconf-md-body :global(td) {
     padding: var(--space-2) var(--space-3);
     border-bottom: var(--border-subtle);
     vertical-align: top;
   }
-  .xconf-md-body a {
+  .xconf-md-body :global(a) {
     color: var(--fg-primary);
     text-decoration: underline;
     text-underline-offset: 3px;
     box-shadow: none; /* override global a {} */
   }
-  .xconf-md-body a:hover { opacity: 0.7; box-shadow: none; }
-  .xconf-md-body hr {
+  .xconf-md-body :global(a:hover) { opacity: 0.7; box-shadow: none; }
+  .xconf-md-body :global(hr) {
     border: none;
     border-top: var(--border-subtle);
     margin: var(--space-8) 0;
