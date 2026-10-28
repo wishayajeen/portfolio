@@ -20,11 +20,10 @@ const designMdExcerpt = designMdFull
   .slice(dsKnowledgeStart, nextH3 > dsKnowledgeStart ? nextH3 : undefined)
   .trim();
 
-// Render CRD markdown to HTML using Astro's bundled micromark + GFM
-const crdHtml = micromark(crdRaw, {
-  extensions: [gfm()],
-  htmlExtensions: [gfmHtml()],
-});
+// Render both markdown files to HTML using Astro's bundled micromark + GFM
+const mdOpts = { extensions: [gfm()], htmlExtensions: [gfmHtml()] };
+const designMdHtml = micromark(designMdExcerpt, mdOpts);
+const crdHtml = micromark(crdRaw, mdOpts);
 
 const repoBase = 'https://github.com/wishayajeen/portfolio/blob/main';
 const rawBase = 'https://raw.githubusercontent.com/wishayajeen/portfolio/main';
@@ -95,7 +94,7 @@ const rawBase = 'https://raw.githubusercontent.com/wishayajeen/portfolio/main';
             >Raw →</a>
           </div>
         </div>
-        <pre class="xconf-code-block">{designMdExcerpt}</pre>
+        <div class="xconf-md-body" set:html={designMdHtml} />
       </div>
     </section>
 
