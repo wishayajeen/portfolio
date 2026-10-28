@@ -1,12 +1,14 @@
 ---
 import fs from 'node:fs';
 import path from 'node:path';
+import { micromark } from 'micromark';
+import { gfm, gfmHtml } from 'micromark-extension-gfm';
 import Layout from '../../layouts/Layout.astro';
 import '/src/styles/design-system.css';
 
 const root = process.cwd();
 const designMdFull = fs.readFileSync(path.join(root, 'DESIGN.md'), 'utf-8');
-const crdFull = fs.readFileSync(
+const crdRaw = fs.readFileSync(
   path.join(root, 'src/system/design-system/components/selection-controls.crd.md'),
   'utf-8'
 );
@@ -18,7 +20,14 @@ const designMdExcerpt = designMdFull
   .slice(dsKnowledgeStart, nextH3 > dsKnowledgeStart ? nextH3 : undefined)
   .trim();
 
+// Render CRD markdown to HTML using Astro's bundled micromark + GFM
+const crdHtml = micromark(crdRaw, {
+  extensions: [gfm()],
+  htmlExtensions: [gfmHtml()],
+});
+
 const repoBase = 'https://github.com/wishayajeen/portfolio/blob/main';
+const rawBase = 'https://raw.githubusercontent.com/wishayajeen/portfolio/main';
 ---
 
 <Layout
@@ -46,6 +55,10 @@ const repoBase = 'https://github.com/wishayajeen/portfolio/blob/main';
         agents can discover rules, apply constraints correctly, and produce work that matches the system's intent. The result
         is a design system that works for both audiences without duplicating information.
       </p>
+      <div class="xconf-recording-placeholder">
+        <span class="xconf-recording-icon" aria-hidden="true">▶</span>
+        Talk recording — coming soon
+      </div>
     </div>
   </div>
 
@@ -67,12 +80,20 @@ const repoBase = 'https://github.com/wishayajeen/portfolio/blob/main';
       <div class="xconf-file-card">
         <div class="xconf-file-card-header">
           <span class="xconf-file-name">DESIGN.md — Design knowledge section</span>
-          <a
-            href={`${repoBase}/DESIGN.md`}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="xconf-file-link"
-          >View on GitHub →</a>
+          <div class="xconf-file-links">
+            <a
+              href={`${repoBase}/DESIGN.md`}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="xconf-file-link"
+            >GitHub →</a>
+            <a
+              href={`${rawBase}/DESIGN.md`}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="xconf-file-link"
+            >Raw →</a>
+          </div>
         </div>
         <pre class="xconf-code-block">{designMdExcerpt}</pre>
       </div>
@@ -93,14 +114,22 @@ const repoBase = 'https://github.com/wishayajeen/portfolio/blob/main';
       <div class="xconf-file-card">
         <div class="xconf-file-card-header">
           <span class="xconf-file-name">selection-controls.crd.md</span>
-          <a
-            href={`${repoBase}/src/system/design-system/components/selection-controls.crd.md`}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="xconf-file-link"
-          >View on GitHub →</a>
+          <div class="xconf-file-links">
+            <a
+              href={`${repoBase}/src/system/design-system/components/selection-controls.crd.md`}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="xconf-file-link"
+            >GitHub →</a>
+            <a
+              href={`${rawBase}/src/system/design-system/components/selection-controls.crd.md`}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="xconf-file-link"
+            >Raw →</a>
+          </div>
         </div>
-        <pre class="xconf-code-block">{crdFull}</pre>
+        <div class="xconf-md-body" set:html={crdHtml} />
       </div>
       <p class="xconf-credit">
         CRD approach inspired by <a href="https://www.youtube.com/watch?v=JeJhPtsbIGA" target="_blank" rel="noopener noreferrer" class="xconf-credit-link">Cassie Groos</a>. Example adapted for this talk.
@@ -129,52 +158,52 @@ const repoBase = 'https://github.com/wishayajeen/portfolio/blob/main';
         <div class="xconf-panel">
           <div class="xconf-panel-head">
             <span class="xconf-panel-label xconf-panel-label--before">AI-generated example</span>
-            <span class="xconf-drift-badge">3 design drifts</span>
+            <span class="xconf-drift-badge">Control-pattern drift</span>
           </div>
           <div class="xconf-screen">
             <p class="xconf-screen-title">Notification preferences</p>
 
             <div class="xconf-setting-row">
               <div class="xconf-setting-text">
-                <span class="xconf-setting-label">Email notifications</span>
+                <label class="xconf-setting-label" for="before-email">Email notifications</label>
                 <span class="xconf-setting-desc">Receive updates and alerts via email</span>
               </div>
-              <label class="xconf-checkbox" aria-label="Email notifications">
-                <input type="checkbox" checked />
-                <span class="xconf-checkbox-box"></span>
+              <label class="xconf-checkbox" for="before-email">
+                <input type="checkbox" id="before-email" checked aria-label="Email notifications" />
+                <span class="xconf-checkbox-box" aria-hidden="true"></span>
               </label>
             </div>
 
             <div class="xconf-setting-row">
               <div class="xconf-setting-text">
-                <span class="xconf-setting-label">SMS notifications</span>
+                <label class="xconf-setting-label" for="before-sms">SMS notifications</label>
                 <span class="xconf-setting-desc">Get text messages for important alerts</span>
               </div>
-              <label class="xconf-checkbox" aria-label="SMS notifications">
-                <input type="checkbox" checked />
-                <span class="xconf-checkbox-box"></span>
+              <label class="xconf-checkbox" for="before-sms">
+                <input type="checkbox" id="before-sms" checked aria-label="SMS notifications" />
+                <span class="xconf-checkbox-box" aria-hidden="true"></span>
               </label>
             </div>
 
             <div class="xconf-setting-row">
               <div class="xconf-setting-text">
-                <span class="xconf-setting-label">Push notifications</span>
+                <label class="xconf-setting-label" for="before-push">Push notifications</label>
                 <span class="xconf-setting-desc">Browser and mobile push alerts</span>
               </div>
-              <label class="xconf-checkbox" aria-label="Push notifications">
-                <input type="checkbox" />
-                <span class="xconf-checkbox-box"></span>
+              <label class="xconf-checkbox" for="before-push">
+                <input type="checkbox" id="before-push" aria-label="Push notifications" />
+                <span class="xconf-checkbox-box" aria-hidden="true"></span>
               </label>
             </div>
 
             <div class="xconf-setting-row">
               <div class="xconf-setting-text">
-                <span class="xconf-setting-label">Marketing emails</span>
+                <label class="xconf-setting-label" for="before-marketing">Marketing emails</label>
                 <span class="xconf-setting-desc">Product updates and announcements</span>
               </div>
-              <label class="xconf-switch" aria-label="Marketing emails">
-                <input type="checkbox" role="switch" checked />
-                <span class="xconf-switch-track"></span>
+              <label class="xconf-switch" for="before-marketing">
+                <input type="checkbox" role="switch" id="before-marketing" checked aria-label="Marketing emails" />
+                <span class="xconf-switch-track" aria-hidden="true"></span>
               </label>
             </div>
           </div>
@@ -191,45 +220,45 @@ const repoBase = 'https://github.com/wishayajeen/portfolio/blob/main';
 
             <div class="xconf-setting-row">
               <div class="xconf-setting-text">
-                <span class="xconf-setting-label">Email notifications</span>
+                <label class="xconf-setting-label" for="after-email">Email notifications</label>
                 <span class="xconf-setting-desc">Receive updates and alerts via email</span>
               </div>
-              <label class="xconf-switch" aria-label="Email notifications">
-                <input type="checkbox" role="switch" checked />
-                <span class="xconf-switch-track"></span>
+              <label class="xconf-switch" for="after-email">
+                <input type="checkbox" role="switch" id="after-email" checked aria-label="Email notifications" />
+                <span class="xconf-switch-track" aria-hidden="true"></span>
               </label>
             </div>
 
             <div class="xconf-setting-row">
               <div class="xconf-setting-text">
-                <span class="xconf-setting-label">SMS notifications</span>
+                <label class="xconf-setting-label" for="after-sms">SMS notifications</label>
                 <span class="xconf-setting-desc">Get text messages for important alerts</span>
               </div>
-              <label class="xconf-switch" aria-label="SMS notifications">
-                <input type="checkbox" role="switch" checked />
-                <span class="xconf-switch-track"></span>
+              <label class="xconf-switch" for="after-sms">
+                <input type="checkbox" role="switch" id="after-sms" checked aria-label="SMS notifications" />
+                <span class="xconf-switch-track" aria-hidden="true"></span>
               </label>
             </div>
 
             <div class="xconf-setting-row">
               <div class="xconf-setting-text">
-                <span class="xconf-setting-label">Push notifications</span>
+                <label class="xconf-setting-label" for="after-push">Push notifications</label>
                 <span class="xconf-setting-desc">Browser and mobile push alerts</span>
               </div>
-              <label class="xconf-switch" aria-label="Push notifications">
-                <input type="checkbox" role="switch" />
-                <span class="xconf-switch-track"></span>
+              <label class="xconf-switch" for="after-push">
+                <input type="checkbox" role="switch" id="after-push" aria-label="Push notifications" />
+                <span class="xconf-switch-track" aria-hidden="true"></span>
               </label>
             </div>
 
             <div class="xconf-setting-row">
               <div class="xconf-setting-text">
-                <span class="xconf-setting-label">Marketing emails</span>
+                <label class="xconf-setting-label" for="after-marketing">Marketing emails</label>
                 <span class="xconf-setting-desc">Product updates and announcements</span>
               </div>
-              <label class="xconf-switch" aria-label="Marketing emails">
-                <input type="checkbox" role="switch" checked />
-                <span class="xconf-switch-track"></span>
+              <label class="xconf-switch" for="after-marketing">
+                <input type="checkbox" role="switch" id="after-marketing" checked aria-label="Marketing emails" />
+                <span class="xconf-switch-track" aria-hidden="true"></span>
               </label>
             </div>
           </div>
@@ -276,7 +305,23 @@ const repoBase = 'https://github.com/wishayajeen/portfolio/blob/main';
     line-height: var(--leading-relaxed);
     color: var(--fg-on-dark-secondary);
     max-width: 680px;
-    margin-bottom: 0;
+    margin-bottom: var(--space-6);
+  }
+  .xconf-recording-placeholder {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3);
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    color: var(--fg-on-dark-label);
+    border: 1px solid rgba(250, 250, 250, 0.15);
+    border-radius: var(--radius-full);
+    padding: var(--space-2) var(--space-4);
+    margin-top: var(--space-2);
+  }
+  .xconf-recording-icon {
+    font-size: 10px;
+    opacity: 0.6;
   }
 
   /* ── Page content top padding ── */
@@ -304,7 +349,7 @@ const repoBase = 'https://github.com/wishayajeen/portfolio/blob/main';
     max-width: 620px;
   }
 
-  /* ── File card (code preview) ── */
+  /* ── File card ── */
   .xconf-file-card {
     border: var(--border-primary);
     border-radius: var(--radius-md);
@@ -328,6 +373,11 @@ const repoBase = 'https://github.com/wishayajeen/portfolio/blob/main';
     color: var(--fg-on-dark-secondary);
     font-weight: 500;
   }
+  .xconf-file-links {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+  }
   .xconf-file-link {
     font-family: var(--font-body);
     font-size: var(--text-xs);
@@ -348,6 +398,110 @@ const repoBase = 'https://github.com/wishayajeen/portfolio/blob/main';
     margin: 0;
     white-space: pre;
     tab-size: 2;
+  }
+
+  /* ── Rendered CRD markdown ── */
+  .xconf-md-body {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    line-height: var(--leading-relaxed);
+    color: var(--fg-secondary);
+    background: var(--bg-surface);
+    padding: var(--space-8) var(--space-6);
+    overflow-x: auto;
+  }
+  .xconf-md-body h1,
+  .xconf-md-body h2 {
+    font-family: var(--font-display);
+    font-size: var(--text-base);
+    font-weight: 700;
+    color: var(--fg-primary);
+    margin: var(--space-8) 0 var(--space-3);
+    padding-bottom: var(--space-2);
+    border-bottom: var(--border-subtle);
+  }
+  .xconf-md-body h1:first-child,
+  .xconf-md-body h2:first-child { margin-top: 0; }
+  .xconf-md-body h3 {
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: 700;
+    color: var(--fg-primary);
+    margin: var(--space-6) 0 var(--space-2);
+  }
+  .xconf-md-body p {
+    margin: 0 0 var(--space-4);
+    max-width: 72ch;
+  }
+  .xconf-md-body ul,
+  .xconf-md-body ol {
+    padding-left: var(--space-6);
+    margin: 0 0 var(--space-4);
+  }
+  .xconf-md-body li { margin-bottom: var(--space-1); }
+  .xconf-md-body blockquote {
+    border-left: 3px solid var(--border-accent);
+    padding: var(--space-3) var(--space-5);
+    margin: var(--space-4) 0;
+    background: rgba(243, 254, 82, 0.05); /* subtle yellow tint from --color-yellow — accent callout */
+    border-radius: 0 var(--radius-xs) var(--radius-xs) 0;
+    color: var(--fg-secondary);
+  }
+  .xconf-md-body blockquote p { margin: 0; }
+  .xconf-md-body code {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+    background: var(--bg-surface-raised);
+    padding: 1px 5px;
+    border-radius: var(--radius-xs);
+    border: var(--border-subtle);
+    color: var(--fg-primary);
+  }
+  .xconf-md-body pre {
+    background: var(--bg-surface-raised);
+    border: var(--border-subtle);
+    border-radius: var(--radius-xs);
+    padding: var(--space-4);
+    overflow-x: auto;
+    margin: var(--space-4) 0;
+  }
+  .xconf-md-body pre code {
+    background: none;
+    border: none;
+    padding: 0;
+    font-size: var(--text-xs);
+    line-height: 1.65;
+  }
+  .xconf-md-body table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--text-xs);
+    margin: var(--space-4) 0;
+  }
+  .xconf-md-body th {
+    text-align: left;
+    padding: var(--space-2) var(--space-3);
+    border-bottom: 1px solid var(--border-primary);
+    font-weight: 700;
+    color: var(--fg-primary);
+    white-space: nowrap;
+  }
+  .xconf-md-body td {
+    padding: var(--space-2) var(--space-3);
+    border-bottom: var(--border-subtle);
+    vertical-align: top;
+  }
+  .xconf-md-body a {
+    color: var(--fg-primary);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    box-shadow: none; /* override global a {} */
+  }
+  .xconf-md-body a:hover { opacity: 0.7; box-shadow: none; }
+  .xconf-md-body hr {
+    border: none;
+    border-top: var(--border-subtle);
+    margin: var(--space-8) 0;
   }
 
   /* ── Before/after comparison ── */
@@ -433,6 +587,7 @@ const repoBase = 'https://github.com/wishayajeen/portfolio/blob/main';
     font-size: var(--text-sm);
     font-weight: 600;
     color: var(--fg-primary);
+    cursor: pointer;
   }
   .xconf-setting-desc {
     font-family: var(--font-body);
@@ -448,14 +603,14 @@ const repoBase = 'https://github.com/wishayajeen/portfolio/blob/main';
     margin: 0;
   }
 
-  /* ── Custom checkbox ── */
+  /* ── Custom checkbox — min 44×44px touch target ── */
   .xconf-checkbox {
     position: relative;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 24px;
-    height: 24px;
+    min-width: 44px;
+    min-height: 44px;
     cursor: pointer;
     flex-shrink: 0;
   }
@@ -494,13 +649,19 @@ const repoBase = 'https://github.com/wishayajeen/portfolio/blob/main';
     border-left: none;
     transform: rotate(45deg);
   }
+  .xconf-checkbox input[type="checkbox"]:focus-visible + .xconf-checkbox-box {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 2px;
+  }
 
-  /* ── CSS switch ── */
+  /* ── CSS switch — min 44×44px touch target ── */
   .xconf-switch {
     position: relative;
-    display: inline-block;
-    width: 46px;
-    height: 26px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
     cursor: pointer;
     flex-shrink: 0;
   }
@@ -515,11 +676,13 @@ const repoBase = 'https://github.com/wishayajeen/portfolio/blob/main';
     z-index: 1;
   }
   .xconf-switch-track {
-    position: absolute;
-    inset: 0;
+    width: 46px;
+    height: 26px;
     border-radius: var(--radius-full);
     background: var(--fg-tertiary);
     transition: background var(--duration-fast) var(--ease-out);
+    position: relative;
+    flex-shrink: 0;
   }
   .xconf-switch-track::after {
     content: '';
@@ -538,6 +701,10 @@ const repoBase = 'https://github.com/wishayajeen/portfolio/blob/main';
   }
   .xconf-switch input[type="checkbox"]:checked + .xconf-switch-track::after {
     transform: translateX(20px);
+  }
+  .xconf-switch input[type="checkbox"]:focus-visible + .xconf-switch-track {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 2px;
   }
 
   /* ── Credit line (after CRD) ── */
