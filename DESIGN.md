@@ -1,6 +1,6 @@
 # DESIGN.md — AI Entry Point for the Jeen Design System
 
-This file is a routing map. It does not contain design decisions — it points to where they live.
+This file provides high-level product context and design decision orientation. Detailed requirements and implementation rules live in their authoritative sources — linked below.
 
 If you are an AI agent working in this codebase, start here.
 
@@ -8,7 +8,9 @@ If you are an AI agent working in this codebase, start here.
 
 ## What this system is
 
-A living design system that doubles as a portfolio. Tokens, components, and rules are documented as structured data so both humans and AI agents can read and act on them correctly.
+A personal portfolio showcasing work and thinking at the intersection of design systems, product design, and AI — and a public experiment in building a design system that AI agents can read and act on correctly. Tokens, components, and rules are documented as structured data so both humans and AI agents can discover constraints, apply them correctly, and produce work that matches the system's intent.
+
+Visitors are exploring design work, professional expertise, technical experiments, and the thinking behind design decisions. The core experience goal is to make complex design and technical ideas approachable without sacrificing depth, credibility, or craft.
 
 The guiding principle: **one authoritative origin per decision, not one file containing every decision**.
 
@@ -56,6 +58,33 @@ Tokens are the only source of truth for colors, radii, shadows, and type. Never 
 | Static sections | `.astro` components in `src/components/home/` and `src/components/global/` |
 | Interactive islands | `.jsx` components with `client:load`, `client:visible`, or `client:only="react"` |
 | Global styles | [`src/styles/tokens.css`](./src/styles/tokens.css), [`src/styles/homepage.css`](./src/styles/homepage.css), [`src/styles/design-system.css`](./src/styles/design-system.css) |
+
+---
+
+## How to approach design decisions
+
+Before choosing a layout, component, or visual treatment:
+
+1. **Understand purpose first** — identify the page's goal and the visitor's primary task before deciding on structure or components.
+2. **Reuse before creating** — check the component inventory, class inventory, and token set before writing anything new.
+3. **Follow documented intent** — use CRDs and `foundations.md` for design rationale; do not infer rules from visual similarity alone.
+4. **Preserve the visual language** — do not change the established palette, type scale, spacing rhythm, or interaction patterns unless a change is explicitly requested.
+5. **Name gaps, don't fill them** — when requirements are missing, ambiguous, or contradictory, surface the uncertainty rather than inventing a convention.
+
+These principles apply alongside the mandatory constraints in `CLAUDE.md`, which always take precedence.
+
+---
+
+## Decision boundaries — where constraints live
+
+`DESIGN.md` orients; the files below govern. Read them before acting.
+
+| What you need | Where it lives |
+|---|---|
+| Mandatory implementation and accessibility constraints | [`CLAUDE.md`](./CLAUDE.md) |
+| Token usage reasoning and surface rules | [`src/system/design-system/foundations.md`](./src/system/design-system/foundations.md) |
+| Component selection and design intent | Component inventory + CRDs (`src/system/design-system/components/*.crd.md`) |
+| Actual token names and values | [`src/styles/tokens.css`](./src/styles/tokens.css) |
 
 ---
 
