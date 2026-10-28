@@ -114,7 +114,7 @@ These constraints reflect Acme's product decisions, not universal UI rules.
 
 These references point to actual files in this portfolio's repository. They are relevant to implementing real selection controls in the portfolio; they do not define or approve an Acme Switch component.
 
-- **Token values:** [`src/styles/tokens.css`](../../../../styles/tokens.css) — `--color-cta`, `--border-primary`, `--border-subtle`, `--radius-xs`, `--radius-full`
+- **Token values:** [`src/styles/tokens.css`](../../../styles/tokens.css) — `--color-cta`, `--border-primary`, `--border-subtle`, `--radius-xs`, `--radius-full`
 - **Accessibility contrast rules:** [`CLAUDE.md` → Accessibility contrast rules](../../../../CLAUDE.md#accessibility-contrast-rules)
 - **Component index (portfolio components):** [`src/system/design-system/components.md`](../components.md)
 - **Surface model and token families:** [`src/system/design-system/foundations.md`](../foundations.md)
