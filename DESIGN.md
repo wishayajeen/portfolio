@@ -1,4 +1,4 @@
-# DESIGN.md — AI Entry Point for the Jeen Design System
+# DESIGN.md — AI Entry Point
 
 This file provides high-level product context and design decision orientation. Detailed requirements and implementation rules live in their authoritative sources — linked below.
 
@@ -39,9 +39,11 @@ Tokens are the only source of truth for colors, radii, shadows, and type. Never 
 | Token usage principles, surface model, cascade architecture | [`src/system/design-system/foundations.md`](./src/system/design-system/foundations.md) |
 | Component index, ownership table, cross-cutting rules | [`src/system/design-system/components.md`](./src/system/design-system/components.md) |
 | Per-component design intent (CRDs) | `src/system/design-system/components/*.crd.md` *(portfolio components — M2b/M2c in progress)* |
-| Selection controls *(XConf 2026 educational example — fictional Acme product, not a portfolio component)* | [`src/system/design-system/components/selection-controls.crd.md`](./src/system/design-system/components/selection-controls.crd.md) |
 | Versioning, contribution process, discrepancy log | [`src/system/design-system/governance.md`](./src/system/design-system/governance.md) |
 | Composition patterns | [`src/system/design-system/patterns.md`](./src/system/design-system/patterns.md) *(stub)* |
+
+> **⚠️ Educational example — not an authoritative portfolio CRD**
+> [`src/system/design-system/components/selection-controls.crd.md`](./src/system/design-system/components/selection-controls.crd.md) was created as an illustrative example for the XConf Americas 2026 talk "Your Design System Has a New User: AI." It demonstrates the CRD format using a fictional product called **Acme**. No Acme component exists in this portfolio's design system. Do not treat it as an implemented requirement for jeensdesign.com.
 
 ### Components — machine-readable
 | What | File |
