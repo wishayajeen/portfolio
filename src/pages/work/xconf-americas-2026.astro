@@ -20,10 +20,17 @@ const designMdExcerpt = designMdFull
   .slice(dsKnowledgeStart, nextH3 > dsKnowledgeStart ? nextH3 : undefined)
   .trim();
 
+// Extract only the "Best practices" section from the Switch CRD
+const bpStart = crdRaw.indexOf('\n## Best practices');
+const bpEnd = crdRaw.indexOf('\n## ', bpStart + 1);
+const crdBestPractices = crdRaw
+  .slice(bpStart, bpEnd > bpStart ? bpEnd : undefined)
+  .trim();
+
 // Render both markdown files to HTML using Astro's bundled micromark + GFM
 const mdOpts = { extensions: [gfm()], htmlExtensions: [gfmHtml()] };
 const designMdHtml = micromark(designMdExcerpt, mdOpts);
-const crdHtml = micromark(crdRaw, mdOpts);
+const crdHtml = micromark(crdBestPractices, mdOpts);
 
 const repoBase = 'https://github.com/wishayajeen/portfolio/blob/main';
 const rawBase = 'https://raw.githubusercontent.com/wishayajeen/portfolio/main';
@@ -114,20 +121,14 @@ const rawBase = 'https://raw.githubusercontent.com/wishayajeen/portfolio/main';
       </p>
       <div class="xconf-file-card">
         <div class="xconf-file-card-header">
-          <span class="xconf-file-name">switch.crd.md</span>
+          <span class="xconf-file-name">switch.crd.md — Best practices</span>
           <div class="xconf-file-links">
             <a
               href={`${repoBase}/src/system/design-system/components/switch.crd.md`}
               target="_blank"
               rel="noopener noreferrer"
               class="xconf-file-link"
-            >GitHub →</a>
-            <a
-              href={`${rawBase}/src/system/design-system/components/switch.crd.md`}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="xconf-file-link"
-            >Raw →</a>
+            >Full CRD →</a>
           </div>
         </div>
         <div class="xconf-md-body" set:html={crdHtml} />
