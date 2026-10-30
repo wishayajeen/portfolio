@@ -42,8 +42,12 @@ Tokens are the only source of truth for colors, radii, shadows, and type. Never 
 | Versioning, contribution process, discrepancy log | [`src/system/design-system/governance.md`](./src/system/design-system/governance.md) |
 | Composition patterns | [`src/system/design-system/patterns.md`](./src/system/design-system/patterns.md) *(stub)* |
 
-> **⚠️ Educational example — not an authoritative portfolio CRD**
-> [`src/system/design-system/components/selection-controls.crd.md`](./src/system/design-system/components/selection-controls.crd.md) was created as an illustrative example for the XConf Americas 2026 talk "Your Design System Has a New User: AI." It demonstrates the CRD format using a fictional product called **Acme**. No Acme component exists in this portfolio's design system. Do not treat it as an implemented requirement for jeensdesign.com.
+> **⚠️ Educational examples — not authoritative portfolio CRDs**
+> The following CRDs were created as illustrative examples for the XConf Americas 2026 talk "Your Design System Has a New User: AI." They demonstrate the CRD format using a fictional product called **Acme**. No Acme component exists in this portfolio's design system. Do not treat them as implemented requirements for jeensdesign.com.
+>
+> - [`src/system/design-system/components/switch.crd.md`](./src/system/design-system/components/switch.crd.md)
+> - [`src/system/design-system/components/checkbox.crd.md`](./src/system/design-system/components/checkbox.crd.md)
+> - [`src/system/design-system/components/radio-group.crd.md`](./src/system/design-system/components/radio-group.crd.md)
 
 ### Components — machine-readable
 | What | File |

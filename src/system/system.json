@@ -1,11 +1,11 @@
 {
   "name": "Jeen Design System",
-  "version": "0.6.16",
-  "lastUpdated": "2026-10-27",
+  "version": "0.6.17",
+  "lastUpdated": "2026-10-29",
   "release": {
-    "version": "0.6.16",
-    "lastUpdated": "2026-10-27",
-    "notes": "Added /work/xconf-americas-2026 companion page and selection-controls.crd.md (XConf educational example)."
+    "version": "0.6.17",
+    "lastUpdated": "2026-10-29",
+    "notes": "Split selection-controls.crd.md into three standalone CRDs: switch.crd.md, checkbox.crd.md, radio-group.crd.md. Updated DESIGN.md navigation and xconf companion page to reference switch.crd.md."
   },
   "owner": "Jeen (wishayajeen)",
   "coOwner": "Pocky",
