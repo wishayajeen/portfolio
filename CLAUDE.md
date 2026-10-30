@@ -194,7 +194,7 @@ New component files go in `src/components/`. New shared styles go in the relevan
 
 ## Entry point for AI agents
 
-If you are an AI agent starting cold, read `DESIGN.md` (repo root) first. It is a routing map to all authoritative files — tokens, components, classes, failure modes, and experiments.
+If you are an AI agent starting cold, read `ds-map.md` (repo root) first. It is a navigation map to all authoritative files — tokens, components, classes, failure modes, and experiments.
 
 ---
 
