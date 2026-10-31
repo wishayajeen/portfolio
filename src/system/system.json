@@ -1,11 +1,11 @@
 {
   "name": "Jeen Design System",
-  "version": "0.6.18",
+  "version": "0.6.19",
   "lastUpdated": "2026-10-30",
   "release": {
-    "version": "0.6.18",
+    "version": "0.6.19",
     "lastUpdated": "2026-10-30",
-    "notes": "Renamed DESIGN.md to ds-map.md. Updated all references in CLAUDE.md, experiment-001.md, system.json, and xconf companion page."
+    "notes": "Reverted ds-map.md back to DESIGN.md. Updated title to Design System Knowledge Entry Point. Restored all references."
   },
   "owner": "Jeen (wishayajeen)",
   "coOwner": "Pocky",
@@ -40,7 +40,7 @@
     "lastGeneratedAt": "2026-05-14"
   },
   "governance": {
-    "agentEntryPoint": "ds-map.md",
+    "agentEntryPoint": "DESIGN.md",
     "rules": "CLAUDE.md",
     "componentDocs": "src/system/component-inventory.md",
     "classIndex": "src/system/class-inventory.md",

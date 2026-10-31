@@ -70,13 +70,13 @@ The consolidated document contains knowledge equivalent to Condition C's modular
 
 ---
 
-### Condition C — Modular architecture (ds-map.md routing)
+### Condition C — Modular architecture (DESIGN.md routing)
 
-The agent has the same repository access as Condition A, including `CLAUDE.md`. Additionally, it is instructed to read `ds-map.md` first, which routes to the knowledge architecture in `src/system/design-system/` (foundations, component CRDs, governance).
+The agent has the same repository access as Condition A, including `CLAUDE.md`. Additionally, it is instructed to read `DESIGN.md` first, which routes to the knowledge architecture in `src/system/design-system/` (foundations, component CRDs, governance).
 
 The underlying design knowledge available is equivalent to Condition B. The variable is whether a modular, navigable structure improves how the agent discovers and applies relevant rules.
 
-**Context given:** Normal repository session. Agent instructed to read `ds-map.md` first before starting the task.
+**Context given:** Normal repository session. Agent instructed to read `DESIGN.md` first before starting the task.
 
 **What this tests:** Does a routed, modular documentation structure produce different outcomes than a consolidated document or the existing repository baseline?
 

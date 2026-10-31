@@ -7,13 +7,13 @@ import Layout from '../../layouts/Layout.astro';
 import '/src/styles/design-system.css';
 
 const root = process.cwd();
-const designMdFull = fs.readFileSync(path.join(root, 'ds-map.md'), 'utf-8');
+const designMdFull = fs.readFileSync(path.join(root, 'DESIGN.md'), 'utf-8');
 const crdRaw = fs.readFileSync(
   path.join(root, 'src/system/design-system/components/switch.crd.md'),
   'utf-8'
 );
 
-// Extract the "Design knowledge" section from ds-map.md
+// Extract the "Design knowledge" section from DESIGN.md
 const dsKnowledgeStart = designMdFull.indexOf('### Design knowledge');
 const nextH3 = designMdFull.indexOf('\n### ', dsKnowledgeStart + 1);
 const designMdExcerpt = designMdFull
@@ -38,7 +38,7 @@ const rawBase = 'https://raw.githubusercontent.com/wishayajeen/portfolio/main';
 
 <Layout
   title="Your Design System Has a New User: AI — Jeen"
-  description="XConf Americas 2026 talk companion. How structured design knowledge — ds-map.md routing and Component Requirements Documents — makes design systems accessible to AI agents."
+  description="XConf Americas 2026 talk companion. How structured design knowledge — DESIGN.md routing and Component Requirements Documents — makes design systems accessible to AI agents."
 >
 
   <!-- Sticky topbar -->
@@ -67,7 +67,7 @@ const rawBase = 'https://raw.githubusercontent.com/wishayajeen/portfolio/main';
   <!-- Page content -->
   <main class="ds-page">
 
-    <!-- Section 01: ds-map.md -->
+    <!-- Section 01: DESIGN.md -->
     <section class="ds-section">
       <div class="ds-section-header">
         <span class="ds-section-num">01</span>
@@ -75,22 +75,22 @@ const rawBase = 'https://raw.githubusercontent.com/wishayajeen/portfolio/main';
       </div>
       <p class="xconf-prose">
         A design system documented only in Figma, or scattered across wiki pages and Notion docs, is invisible to an AI
-        agent. <code class="ds-code">ds-map.md</code> acts as a machine-readable navigation map — it tells an agent where to
-        find tokens, component requirements, architectural rules, and constraints, without duplicating any of them. One
-        origin per decision; the map just points.
+        agent. <code class="ds-code">DESIGN.md</code> acts as the design-system knowledge entry point — it provides
+        context, design principles, and decision guidance, and tells an agent where to find tokens, component requirements,
+        architectural rules, and constraints, without duplicating any of them. One origin per decision; the map just points.
       </p>
       <div class="xconf-file-card">
         <div class="xconf-file-card-header">
-          <span class="xconf-file-name">ds-map.md — Design knowledge section</span>
+          <span class="xconf-file-name">DESIGN.md — Design knowledge section</span>
           <div class="xconf-file-links">
             <a
-              href={`${repoBase}/ds-map.md`}
+              href={`${repoBase}/DESIGN.md`}
               target="_blank"
               rel="noopener noreferrer"
               class="xconf-file-link"
             >GitHub →</a>
             <a
-              href={`${rawBase}/ds-map.md`}
+              href={`${rawBase}/DESIGN.md`}
               target="_blank"
               rel="noopener noreferrer"
               class="xconf-file-link"

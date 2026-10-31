@@ -1,6 +1,6 @@
-# ds-map.md — Design System Knowledge Map
+# DESIGN.md — Design System Knowledge Entry Point
 
-This file is a navigation layer for AI agents and contributors. It points to the authoritative sources for design knowledge — tokens, components, rules, patterns — without duplicating the information they contain.
+This file is the design-system knowledge entry point for AI agents and contributors. It provides product context, design philosophy, and high-level decision guidance, and points to the authoritative sources for detailed specifications — tokens, components, rules, patterns — without duplicating the information they contain.
 
 If you are an AI agent working in this codebase, start here.
 
@@ -83,7 +83,7 @@ These principles apply alongside the mandatory constraints in `CLAUDE.md`, which
 
 ## Decision boundaries — where constraints live
 
-`ds-map.md` orients; the files below govern. Read them before acting.
+`DESIGN.md` orients; the files below govern. Read them before acting.
 
 | What you need | Where it lives |
 |---|---|
